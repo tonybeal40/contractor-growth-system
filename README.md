@@ -1,6 +1,41 @@
-# Contractor Growth System
+# All-Pro Construction & Landscape
 
-This project documents a practical system for growing a local construction business using Google Maps visibility, SEO service pages, and organic lead generation.
+This repository contains the digital presence strategy and website files for All-Pro Construction & Landscape.
+
+Location
+New Athens IL
+Metro East Illinois / St Louis region
+
+Phone
+618-620-1012
+
+Experience
+23+ years in business
+
+Primary Services
+
+Deck construction
+Kitchen remodeling
+Bathroom remodeling
+Patios
+Concrete work
+Fencing
+Landscaping
+Retaining walls
+General home renovations
+
+Purpose of this repository
+
+Document the company reputation and online listings
+Create a contractor website
+Improve local SEO
+Generate inbound homeowner calls
+
+---
+
+## Contractor Growth System
+
+This project also documents a practical system for growing a local construction business using Google Maps visibility, SEO service pages, and organic lead generation.
 
 The goal is to help a contractor generate consistent inbound calls without relying entirely on paid lead platforms like HomeAdvisor or Angi.
 
@@ -10,8 +45,8 @@ The system combines:
 • Local SEO service pages  
 • Project photo documentation  
 • Customer reviews  
-• simple contractor website  
-• optional lead generation website
+• Simple contractor website  
+• Optional lead generation website
 
 This repository contains the strategy, documentation, and website templates needed to implement the system.
 
