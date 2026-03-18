@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tonybeal.net/contractor-growth-system/sitemap.xml
