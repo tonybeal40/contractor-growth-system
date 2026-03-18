@@ -12,16 +12,20 @@
 </head>
 <body>
 
-<nav>
+<nav class="nav" id="nav">
   <div class="nav-inner">
-    <div class="nav-logo"><a href="index.html" style="color:inherit;"><span>All-Pro</span> Construction &amp; Landscape</a></div>
+    <div class="nav-logo">
+      <a href="index.html" style="color:inherit;"><span>All-Pro</span> Construction
+      <small>&amp; Landscape · Belleville IL</small></a>
+    </div>
     <ul class="nav-links">
       <li><a href="index.html#services">Services</a></li>
-      <li><a href="index.html#why-us">Why Us</a></li>
-      <li><a href="index.html#areas">Service Areas</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
+      <li><a href="index.html#why">Why Us</a></li>
+      <li><a href="index.html#reviews">Reviews</a></li>
+      <li><a href="index.html#areas">Areas</a></li>
       <li><a href="index.html#contact" class="nav-cta">Free Estimate</a></li>
     </ul>
+    <div class="nav-phone">📞 <strong><a href="tel:6182925320" style="color:inherit;">618-292-5320</a></strong></div>
   </div>
 </nav>
 
@@ -92,36 +96,68 @@
   </div>
 </div>
 
-<footer>
+<footer class="footer">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <div class="nav-logo"><span>All-Pro</span> Construction &amp; Landscape</div>
-        <p>Concrete contractor serving Belleville IL and Metro East. Licensed, insured, and built on accountability.</p>
+        <div class="nav-logo">
+          <span>All-Pro</span> Construction
+          <small>&amp; Landscape</small>
+        </div>
+        <p>Belleville IL's trusted contractor for decks, fencing, landscaping, concrete, and remodeling. Locally owned. 23 years. Owner on every job.</p>
+        <div class="footer-badge">
+          <span class="stars">★★★★★</span> 4.7 · 40 Reviews · HomeAdvisor
+        </div>
       </div>
       <div class="footer-col">
         <h4>Services</h4>
         <ul>
-          <li><a href="roofing.html">Roofing</a></li>
-          <li><a href="remodeling.html">Remodeling</a></li>
+          <li><a href="decks.html">Decks &amp; Porches</a></li>
+          <li><a href="fencing.html">Fencing</a></li>
+          <li><a href="landscaping.html">Landscaping</a></li>
           <li><a href="concrete.html">Concrete</a></li>
-          <li><a href="framing.html">Framing</a></li>
+          <li><a href="patios.html">Patios &amp; Walls</a></li>
+          <li><a href="remodeling.html">Remodeling</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Service Areas</h4>
+        <ul>
+          <li><span>Belleville, IL</span></li>
+          <li><span>O'Fallon, IL</span></li>
+          <li><span>Edwardsville, IL</span></li>
+          <li><span>Fairview Heights, IL</span></li>
+          <li><span>Collinsville, IL</span></li>
+          <li><a href="index.html#areas">+ 19 more cities →</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
         <ul>
-          <li><a href="tel:6182925320">618-292-5320</a></li>
-          <li><a href="index.html#contact">Free Estimate</a></li>
+          <li><a href="tel:6182925320">📞 618-292-5320</a></li>
+          <li><a href="index.html#contact">Free Estimate →</a></li>
+          <li><span>Belleville, IL</span></li>
+          <li><span>Licensed &amp; Insured</span></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 All-Pro Construction &amp; Landscape — Belleville, IL. All rights reserved.</p>
+      <p>© 2026 All-Pro Construction &amp; Landscape · Belleville, IL · All rights reserved.</p>
+      <p>Licensed &amp; Insured · 4.7 ⭐ HomeAdvisor · 23 Years Serving Metro East</p>
     </div>
   </div>
 </footer>
 
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
 
