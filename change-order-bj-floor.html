@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Change Order – Flooring Revision | All Pro Construction</title>
+<meta name="robots" content="noindex,nofollow"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Inter',sans-serif;background:#f0f0f0;color:#111;font-size:13px;line-height:1.7}
+
+/* ── PRINT BUTTON BAR ── */
+.print-bar{background:#1a1a1a;padding:10px 32px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:100}
+.print-bar-label{color:#999;font-size:10px;letter-spacing:1px;text-transform:uppercase}
+.btn-print{background:#fff;color:#1a1a1a;border:none;padding:9px 22px;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.5px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:background 0.15s}
+.btn-print:hover{background:#e0e0e0}
+.btn-print.primary{background:#c8102e;color:#fff}
+.btn-print.primary:hover{background:#a00e26}
+
+/* ── PAGE ── */
+.page{max-width:780px;margin:28px auto;background:#fff;box-shadow:0 2px 24px rgba(0,0,0,0.12);padding:0}
+
+/* ── HEADER ── */
+.doc-header{background:#1a1a1a;color:#fff;padding:32px 40px 28px;display:flex;justify-content:space-between;align-items:flex-start}
+.co-name{font-size:22px;font-weight:700;letter-spacing:-0.3px;margin-bottom:4px}
+.co-tagline{font-size:10px;color:#999;text-transform:uppercase;letter-spacing:1.5px}
+.co-contact{font-size:10px;color:#bbb;line-height:1.9;text-align:right}
+.co-contact a{color:#ccc;text-decoration:none}
+
+/* ── DOC TITLE BAND ── */
+.doc-title-band{background:#c8102e;color:#fff;padding:14px 40px;display:flex;justify-content:space-between;align-items:center}
+.doc-title-band h1{font-size:16px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase}
+.doc-badge{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);padding:4px 12px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+
+/* ── META TABLE ── */
+.meta-table{display:grid;grid-template-columns:1fr 1fr;border-bottom:2px solid #1a1a1a}
+.meta-col{padding:20px 40px}
+.meta-col:first-child{border-right:1px solid #e0e0e0}
+.meta-label{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:#888;font-weight:600;margin-bottom:3px}
+.meta-value{font-size:13px;font-weight:600;color:#111}
+.meta-value.small{font-size:11px;font-weight:400;color:#333}
+
+/* ── BODY ── */
+.doc-body{padding:32px 40px}
+
+.section-title{font-size:9px;text-transform:uppercase;letter-spacing:2px;font-weight:700;color:#888;border-bottom:1px solid #e0e0e0;padding-bottom:6px;margin-bottom:14px}
+
+.scope-box{background:#f8f8f8;border-left:4px solid #c8102e;padding:14px 18px;margin-bottom:24px;font-size:12px;line-height:1.75;color:#222}
+.scope-box strong{color:#1a1a1a}
+
+/* ── COST TABLE ── */
+.cost-table{width:100%;border-collapse:collapse;margin-bottom:24px;font-size:12px}
+.cost-table thead tr{background:#1a1a1a;color:#fff}
+.cost-table thead th{padding:10px 14px;text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:1px;font-weight:600}
+.cost-table thead th:last-child{text-align:right}
+.cost-table tbody tr{border-bottom:1px solid #eee}
+.cost-table tbody tr:hover{background:#fafafa}
+.cost-table td{padding:10px 14px;vertical-align:top}
+.cost-table td:last-child{text-align:right;font-weight:600;white-space:nowrap}
+.cost-table .subrow td{background:#f8f8f8;font-size:11px;color:#555}
+.cost-table .subrow td:first-child{padding-left:28px}
+.cost-table .subtotal td{background:#f0f0f0;font-weight:600;color:#333}
+.cost-table .total-row td{background:#1a1a1a;color:#fff;font-size:14px;font-weight:700;padding:12px 14px}
+.cost-table .total-row td:last-child{text-align:right;font-size:16px}
+
+/* ── PAYMENT TERMS ── */
+.terms-box{background:#fff8f8;border:1.5px solid #c8102e;padding:18px 20px;margin-bottom:24px}
+.terms-title{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;color:#c8102e;margin-bottom:10px}
+.terms-body{font-size:12px;line-height:1.8;color:#222}
+.terms-body strong{color:#1a1a1a}
+.deadline-pill{display:inline-block;background:#c8102e;color:#fff;font-weight:700;font-size:11px;padding:3px 12px;margin:4px 0}
+
+/* ── CONSEQUENCES ── */
+.consequence-list{list-style:none;padding:0;margin:8px 0 0}
+.consequence-list li{padding:4px 0 4px 20px;position:relative;font-size:11.5px;color:#333}
+.consequence-list li::before{content:"▸";position:absolute;left:0;color:#c8102e;font-weight:700}
+
+/* ── SIGNATURE ── */
+.sig-section{margin-top:32px;padding-top:24px;border-top:1.5px solid #1a1a1a}
+.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:20px}
+.sig-block{}
+.sig-label{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:#888;font-weight:600;margin-bottom:4px}
+.sig-name{font-size:13px;font-weight:600;color:#111;margin-bottom:2px}
+.sig-title{font-size:11px;color:#555;margin-bottom:16px}
+.sig-line{border-bottom:1.5px solid #333;margin-top:32px;margin-bottom:4px}
+.sig-line-label{font-size:9px;color:#999;text-transform:uppercase;letter-spacing:1px}
+
+/* ── ACCEPTANCE BOX ── */
+.acceptance-box{margin-top:24px;background:#f8f8f8;border:1px solid #ccc;padding:16px 20px}
+.acceptance-text{font-size:11px;color:#444;line-height:1.7;margin-bottom:12px}
+.acceptance-text strong{color:#111}
+
+/* ── FOOTER ── */
+.doc-footer{background:#f0f0f0;border-top:1px solid #ccc;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;font-size:9.5px;color:#888}
+
+/* ══ PRINT ══ */
+@media print{
+  @page{margin:0.4in;size:letter portrait}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  html,body{background:#fff!important;font-size:11px!important}
+  .print-bar{display:none!important}
+  .page{max-width:100%;box-shadow:none;margin:0}
+  .doc-header{padding:20px 28px 18px}
+  .co-name{font-size:18px}
+  .doc-title-band{padding:10px 28px}
+  .meta-col{padding:14px 28px}
+  .doc-body{padding:20px 28px}
+  .cost-table{font-size:10.5px}
+  .cost-table td,.cost-table th{padding:7px 10px}
+  .terms-box{padding:12px 16px}
+  .sig-grid{gap:28px;margin-top:14px}
+}
+
+/* ══ MOBILE ══ */
+@media(max-width:640px){
+  html,body{font-size:13px}
+  .print-bar{padding:10px 16px;flex-wrap:wrap;gap:8px}
+  .btn-print{flex:1;justify-content:center;padding:10px 14px}
+  .page{margin:0;box-shadow:none}
+  .doc-header{padding:24px 20px;flex-direction:column;gap:12px}
+  .co-contact{text-align:left}
+  .doc-title-band{padding:12px 20px;flex-direction:column;gap:8px;align-items:flex-start}
+  .meta-table{grid-template-columns:1fr}
+  .meta-col{padding:14px 20px;border-right:none!important;border-bottom:1px solid #e0e0e0}
+  .doc-body{padding:20px}
+  .sig-grid{grid-template-columns:1fr;gap:24px}
+  .doc-footer{flex-direction:column;gap:4px;text-align:center;padding:12px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- PRINT BAR -->
+<div class="print-bar">
+  <span class="print-bar-label">All Pro Construction — Change Order Document</span>
+  <div style="display:flex;gap:10px">
+    <button class="btn-print" onclick="window.print()">🖨 Print / Save PDF</button>
+    <button class="btn-print primary" onclick="window.print()">⬇ Download PDF</button>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <div>
+      <div class="co-name">All Pro Construction</div>
+      <div class="co-tagline">Metro East Illinois &nbsp;·&nbsp; Licensed &amp; Insured</div>
+    </div>
+    <div class="co-contact">
+      (618) 581-0676<br/>
+      billsessions@allprometroeastconstruction.com<br/>
+      allprometroeastconstruction.com<br/>
+      Metro East, IL
+    </div>
+  </div>
+
+  <!-- TITLE BAND -->
+  <div class="doc-title-band">
+    <h1>Change Order — Flooring Selection Revision</h1>
+    <div class="doc-badge">Outside Scope of Work</div>
+  </div>
+
+  <!-- META -->
+  <div class="meta-table">
+    <div class="meta-col">
+      <div class="meta-label">Client</div>
+      <div class="meta-value">BJ &amp; Terry</div>
+      <div class="meta-value small" style="margin-top:2px">2720 Fieldstone Dr, Maryville, IL</div>
+    </div>
+    <div class="meta-col">
+      <div class="meta-label">Change Order No.</div>
+      <div class="meta-value">CO-2026-0327-01</div>
+    </div>
+    <div class="meta-col" style="margin-top:-1px">
+      <div class="meta-label">Contractor</div>
+      <div class="meta-value">Bill Session — All Pro Construction</div>
+    </div>
+    <div class="meta-col" style="margin-top:-1px">
+      <div class="meta-label">Date Issued</div>
+      <div class="meta-value">March 29, 2026</div>
+      <div class="meta-label" style="margin-top:8px">Reference Dates</div>
+      <div class="meta-value small">March 27–28, 2026</div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="doc-body">
+
+    <!-- SCOPE SUMMARY -->
+    <div class="section-title">1. Summary of Scope Change</div>
+    <div class="scope-box">
+      On <strong>March 27, 2026</strong>, after flooring installation had already commenced and approximately half of the originally selected material had been installed, the client requested a change in flooring material. This mid-installation change required work stoppage, removal of work in progress, and rendered previously purchased materials unusable.<br/><br/>
+      On <strong>March 28, 2026</strong>, the replacement flooring selection process required multiple load, unload, and return cycles to the supplier — resulting in a full additional day of lost labor production.<br/><br/>
+      <strong>These events fall entirely outside the original agreed scope of work</strong> and constitute a client-directed change that resulted in documentable labor time loss and material cost impact to All Pro Construction.
+    </div>
+
+    <!-- COST BREAKDOWN -->
+    <div class="section-title">2. Itemized Cost Breakdown</div>
+    <table class="cost-table">
+      <thead>
+        <tr>
+          <th style="width:55%">Description</th>
+          <th>Date</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>A. Partial Day Impact — Installation Stoppage</strong><br/><span style="font-size:11px;color:#555">Client requested flooring change after partial installation was complete. Labor halted, work-in-progress removed.</span></td>
+          <td style="white-space:nowrap">Mar 27, 2026</td>
+          <td></td>
+        </tr>
+        <tr class="subrow">
+          <td>Labor time lost due to mid-installation material change</td>
+          <td>3-27-26</td>
+          <td>$750.00</td>
+        </tr>
+        <tr class="subrow">
+          <td>Materials purchased — rendered unusable due to change</td>
+          <td>3-27-26</td>
+          <td>$200.00</td>
+        </tr>
+        <tr class="subtotal">
+          <td colspan="2">Subtotal — March 27, 2026</td>
+          <td>$950.00</td>
+        </tr>
+
+        <tr>
+          <td><strong>B. Full Day Impact — Multiple Selection Cycles</strong><br/><span style="font-size:11px;color:#555">Flooring was selected, loaded, unloaded, and returned to store three separate times. Full day of production lost.</span></td>
+          <td style="white-space:nowrap">Mar 28, 2026</td>
+          <td></td>
+        </tr>
+        <tr class="subrow">
+          <td>Labor time lost — multiple load/unload/return cycles, no productive installation work completed</td>
+          <td>3-28-26</td>
+          <td>$1,500.00</td>
+        </tr>
+        <tr class="subtotal">
+          <td colspan="2">Subtotal — March 28, 2026</td>
+          <td>$1,500.00</td>
+        </tr>
+
+        <tr style="border-top:2px solid #ccc">
+          <td colspan="2" style="padding-top:12px"><strong>Additional Labor — 1.5 Days Outside Original Scope</strong></td>
+          <td style="padding-top:12px">$2,250.00</td>
+        </tr>
+        <tr>
+          <td colspan="2"><strong>Materials — Purchased &amp; Unusable</strong></td>
+          <td>$200.00</td>
+        </tr>
+
+        <tr class="total-row">
+          <td colspan="2">TOTAL ADDITIONAL AMOUNT DUE</td>
+          <td>$2,450.00</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- PAYMENT TERMS -->
+    <div class="section-title">3. Payment Terms</div>
+    <div class="terms-box">
+      <div class="terms-title">⚠ Payment Required</div>
+      <div class="terms-body">
+        Full payment of <strong>$2,450.00</strong> is due no later than:<br/>
+        <div class="deadline-pill">End of Business — Monday, March 31, 2026</div><br/>
+        If payment is not received by this deadline, the following will take effect:
+        <ul class="consequence-list">
+          <li>All work will be <strong>suspended immediately</strong></li>
+          <li>Crew will <strong>not return on Tuesday, April 1, 2026</strong></li>
+          <li>Project timeline will be adjusted to reflect delay caused by non-payment</li>
+          <li>Additional costs resulting from schedule disruption may apply</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ACCEPTANCE / SIGNATURE -->
+    <div class="section-title">4. Acceptance &amp; Authorization</div>
+    <div class="acceptance-box">
+      <div class="acceptance-text">
+        By signing below, the client acknowledges that the work described in this change order falls <strong>outside the original agreed scope of work</strong>, that the itemized charges above are accurate and reasonable, and that the <strong>total amount of $2,450.00 is authorized and due</strong> per the payment terms stated herein.
+      </div>
+    </div>
+
+    <div class="sig-section">
+      <div class="sig-grid">
+        <div class="sig-block">
+          <div class="sig-label">Contractor</div>
+          <div class="sig-name">Bill Session</div>
+          <div class="sig-title">All Pro Construction &nbsp;·&nbsp; Metro East, IL</div>
+          <div class="sig-line"></div>
+          <div class="sig-line-label">Signature &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date</div>
+        </div>
+        <div class="sig-block">
+          <div class="sig-label">Client Acceptance</div>
+          <div class="sig-name">BJ &amp; Terry</div>
+          <div class="sig-title">2720 Fieldstone Dr, Maryville, IL</div>
+          <div class="sig-line"></div>
+          <div class="sig-line-label">Signature &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /doc-body -->
+
+  <!-- FOOTER -->
+  <div class="doc-footer">
+    <span>All Pro Construction &nbsp;·&nbsp; (618) 581-0676 &nbsp;·&nbsp; allprometroeastconstruction.com</span>
+    <span>Change Order No. CO-2026-0327-01 &nbsp;·&nbsp; Issued March 29, 2026</span>
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>
