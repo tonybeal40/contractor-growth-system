@@ -10,13 +10,18 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{font-family:'Inter',sans-serif;background:#f0f0f0;color:#111;font-size:13px;line-height:1.7}
 
-/* ── PRINT BUTTON BAR ── */
-.print-bar{background:#1a1a1a;padding:10px 32px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:100}
-.print-bar-label{color:#999;font-size:10px;letter-spacing:1px;text-transform:uppercase}
-.btn-print{background:#fff;color:#1a1a1a;border:none;padding:9px 22px;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.5px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:background 0.15s}
-.btn-print:hover{background:#e0e0e0}
-.btn-print.primary{background:#c8102e;color:#fff}
-.btn-print.primary:hover{background:#a00e26}
+/* ── ACTION BAR ── */
+.print-bar{background:#1a1a1a;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:10px;position:sticky;top:0;z-index:100;flex-wrap:wrap}
+.print-bar-label{color:#999;font-size:10px;letter-spacing:1px;text-transform:uppercase;flex:1;min-width:120px}
+.bar-btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn-action{border:none;padding:9px 18px;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.4px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background 0.15s;white-space:nowrap;text-decoration:none}
+.btn-action.white{background:#fff;color:#1a1a1a}
+.btn-action.white:hover{background:#e8e8e8}
+.btn-action.red{background:#c8102e;color:#fff}
+.btn-action.red:hover{background:#a00e26}
+.btn-action.green{background:#16a34a;color:#fff}
+.btn-action.green:hover{background:#15803d}
+.copy-toast{display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:10px 22px;font-size:12px;font-weight:600;z-index:9999;border-radius:2px;pointer-events:none}
 
 /* ── PAGE ── */
 .page{max-width:780px;margin:28px auto;background:#fff;box-shadow:0 2px 24px rgba(0,0,0,0.12);padding:0}
@@ -99,8 +104,7 @@ html,body{font-family:'Inter',sans-serif;background:#f0f0f0;color:#111;font-size
   @page{margin:0.4in;size:letter portrait}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   html,body{background:#fff!important;font-size:11px!important}
-  .print-bar{display:none!important}
-  .page{max-width:100%;box-shadow:none;margin:0}
+  .print-bar{display:none!important}  .page{max-width:100%;box-shadow:none;margin:0}
   .doc-header{padding:20px 28px 18px}
   .co-name{font-size:18px}
   .doc-title-band{padding:10px 28px}
@@ -114,31 +118,63 @@ html,body{font-family:'Inter',sans-serif;background:#f0f0f0;color:#111;font-size
 
 /* ══ MOBILE ══ */
 @media(max-width:640px){
-  html,body{font-size:13px}
-  .print-bar{padding:10px 16px;flex-wrap:wrap;gap:8px}
-  .btn-print{flex:1;justify-content:center;padding:10px 14px}
+  html,body{font-size:14px;overflow-x:hidden}
+  .print-bar{padding:10px 14px;gap:8px}
+  .print-bar-label{font-size:9px;width:100%;flex:none;margin-bottom:2px}
+  .bar-btns{width:100%;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+  .btn-action{font-size:11px;padding:10px 6px;justify-content:center}
   .page{margin:0;box-shadow:none}
-  .doc-header{padding:24px 20px;flex-direction:column;gap:12px}
-  .co-contact{text-align:left}
-  .doc-title-band{padding:12px 20px;flex-direction:column;gap:8px;align-items:flex-start}
+  .doc-header{padding:20px 16px;flex-direction:column;gap:10px}
+  .co-name{font-size:20px}
+  .co-contact{text-align:left;font-size:11px}
+  .doc-title-band{padding:12px 16px;flex-direction:column;gap:6px;align-items:flex-start}
+  .doc-title-band h1{font-size:13px}
+  .doc-badge{font-size:9px}
   .meta-table{grid-template-columns:1fr}
-  .meta-col{padding:14px 20px;border-right:none!important;border-bottom:1px solid #e0e0e0}
-  .doc-body{padding:20px}
+  .meta-col{padding:12px 16px;border-right:none!important;border-bottom:1px solid #e0e0e0}
+  .meta-value{font-size:14px}
+  .doc-body{padding:16px}
+  .section-title{font-size:9px;margin-bottom:10px}
+  .scope-box{font-size:13px;padding:12px 14px}
+  .cost-table{font-size:11.5px}
+  .cost-table th{font-size:9px;padding:8px 10px}
+  .cost-table td{padding:8px 10px}
+  .cost-table .subrow td:first-child{padding-left:14px}
+  .terms-box{padding:14px 16px}
+  .terms-body{font-size:13px}
+  .consequence-list li{font-size:12px}
+  .acceptance-box{padding:12px 14px}
+  .acceptance-text{font-size:12px}
   .sig-grid{grid-template-columns:1fr;gap:24px}
-  .doc-footer{flex-direction:column;gap:4px;text-align:center;padding:12px 20px}
+  .sig-name{font-size:14px}
+  .doc-footer{flex-direction:column;gap:4px;text-align:center;padding:12px 16px;font-size:9px}
 }
 </style>
 </head>
 <body>
 
-<!-- PRINT BAR -->
+<!-- ACTION BAR -->
 <div class="print-bar">
-  <span class="print-bar-label">All Pro Construction — Change Order Document</span>
-  <div style="display:flex;gap:10px">
-    <button class="btn-print" onclick="window.print()">🖨 Print / Save PDF</button>
-    <button class="btn-print primary" onclick="window.print()">⬇ Download PDF</button>
+  <span class="print-bar-label">All Pro Construction — Change Order CO-2026-0327-01</span>
+  <div class="bar-btns">
+    <a class="btn-action green"
+       href="mailto:?subject=Change Order CO-2026-0327-01 — All Pro Construction&body=Please review the attached change order for the flooring revision at 2720 Fieldstone Dr, Maryville IL.%0A%0ATotal Due: $2,450.00 — Payment due by end of business Monday, March 31, 2026.%0A%0AView the full change order here:%0Ahttps://allprometroeastconstruction.com/change-order-bj-floor.html%0A%0AAll Pro Construction%0A(618) 581-0676">
+      ✉ Email
+    </a>
+    <button class="btn-action white" onclick="copyLink()">🔗 Copy Link</button>
+    <button class="btn-action red" onclick="window.print()">🖨 Print / PDF</button>
   </div>
 </div>
+<div class="copy-toast" id="copyToast">✓ Link copied!</div>
+<script>
+function copyLink(){
+  navigator.clipboard.writeText('https://allprometroeastconstruction.com/change-order-bj-floor.html').then(function(){
+    var t=document.getElementById('copyToast');
+    t.style.display='block';
+    setTimeout(function(){t.style.display='none'},2200);
+  });
+}
+</script>
 
 <div class="page">
 
