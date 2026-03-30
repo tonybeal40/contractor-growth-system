@@ -44,6 +44,10 @@
       border:1px solid #3b5a8f;background:#122648;color:#dce8ff;border-radius:7px;font-size:.7rem;padding:4px 6px;cursor:pointer
     }
     .stats{font-size:.9rem;line-height:1.5}
+    table{width:100%;border-collapse:collapse}
+    th,td{border-bottom:1px solid #2a3f66;padding:8px 6px;font-size:.83rem;text-align:left;vertical-align:top}
+    th{color:#c9d8fb;text-transform:uppercase;font-size:.73rem;letter-spacing:.03em}
+    .tableWrap{max-height:260px;overflow:auto;border:1px solid #2a3f66;border-radius:10px}
     .gate{position:fixed;inset:0;background:rgba(4,7,12,.9);display:grid;place-items:center;z-index:9}
     .gate .panel{width:min(420px,92vw);background:#101a2f;border:1px solid #314a76;border-radius:14px;padding:14px}
     .hide{display:none !important}
@@ -124,6 +128,90 @@
       </div>
     </section>
 
+    <section class="grid2" style="margin-top:10px;">
+      <div class="card">
+        <h2>Simple Invoices</h2>
+        <div class="grid3">
+          <div class="field">
+            <label>Customer</label>
+            <select id="invoiceCustomer"></select>
+          </div>
+          <div class="field">
+            <label>Invoice #</label>
+            <input id="invoiceNumber" placeholder="INV-1001" />
+          </div>
+          <div class="field">
+            <label>Due Date</label>
+            <input id="invoiceDueDate" type="date" />
+          </div>
+        </div>
+        <div class="grid3" style="margin-top:8px;">
+          <div class="field">
+            <label>Amount ($)</label>
+            <input id="invoiceAmount" type="number" min="0" step="0.01" />
+          </div>
+          <div class="field">
+            <label>Status</label>
+            <select id="invoiceStatus">
+              <option>Draft</option>
+              <option>Sent</option>
+              <option>Paid</option>
+              <option>Past Due</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Service</label>
+            <input id="invoiceService" placeholder="Deck / Bathroom / Fence..." />
+          </div>
+        </div>
+        <div class="field" style="margin-top:8px;">
+          <label>Invoice Notes</label>
+          <textarea id="invoiceNotes" placeholder="Scope summary, payment terms, etc."></textarea>
+        </div>
+        <div class="rowBtns" style="margin-top:8px;">
+          <button class="btn" id="addInvoice" type="button">Save Invoice</button>
+          <button class="btn ghost" id="exportInvoices" type="button">Export Invoices CSV</button>
+        </div>
+        <div class="tableWrap" style="margin-top:10px;">
+          <table>
+            <thead><tr><th>Invoice</th><th>Customer</th><th>Amount</th><th>Due</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="invoiceBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Email Campaigns (Current Customers)</h2>
+        <div class="field">
+          <label>Audience</label>
+          <select id="campaignAudience">
+            <option value="won">Won Customers (default)</option>
+            <option value="hasEmail">Any Contact With Email</option>
+            <option value="estimate">Estimate Sent</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Subject</label>
+          <input id="campaignSubject" placeholder="Seasonal maintenance reminder" />
+        </div>
+        <div class="field">
+          <label>Message</label>
+          <textarea id="campaignBody" placeholder="Hi {{name}}, just checking in..."></textarea>
+        </div>
+        <div class="rowBtns">
+          <button class="btn" id="previewRecipients" type="button">Preview Recipients</button>
+          <button class="btn ghost" id="sendCampaignMailto" type="button">Open Email Draft</button>
+        </div>
+        <p class="muted" id="campaignStatus" style="margin-top:8px;">Tip: this opens your mail app with BCC list so you can send safely.</p>
+        <div class="tableWrap" style="margin-top:10px;">
+          <table>
+            <thead><tr><th>Name</th><th>Email</th><th>Status</th><th>City</th></tr></thead>
+            <tbody id="campaignRecipientsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <section class="card" style="margin-top:10px;">
       <h2>Pipeline</h2>
       <div class="stats" id="stats"></div>
@@ -135,6 +223,7 @@
     const PASSCODE = "AllProOnly-2026";
     const LEADS_KEY = "allpro_private_crm_leads_v2";
     const SETTINGS_KEY = "allpro_private_crm_storybrand_v2";
+    const INVOICES_KEY = "allpro_private_crm_invoices_v1";
     const STAGES = ["New","Contacted","Qualified","Estimate Sent","Won","Lost"];
 
     const gate = document.getElementById("gate");
@@ -145,6 +234,8 @@
     function saveLeads(leads){ localStorage.setItem(LEADS_KEY, JSON.stringify(leads)); }
     function loadSettings(){ return safeParse(localStorage.getItem(SETTINGS_KEY), {}); }
     function saveSettings(s){ localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)); }
+    function loadInvoices(){ return safeParse(localStorage.getItem(INVOICES_KEY), []); }
+    function saveInvoices(invoices){ localStorage.setItem(INVOICES_KEY, JSON.stringify(invoices)); }
 
     function esc(v){ return String(v || "").replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m])); }
 
@@ -174,6 +265,8 @@
       pipe.querySelectorAll("button").forEach(b => b.addEventListener("click", () => leadAction(b.dataset.id, b.dataset.act)));
       const counts = STAGES.map(s => `${s}: ${leads.filter(l => l.status === s).length}`).join(" | ");
       document.getElementById("stats").textContent = `${counts} | Total: ${leads.length}`;
+      renderCustomerSelect();
+      renderInvoicesTable();
     }
 
     function leadAction(id, act){
@@ -216,6 +309,124 @@
       const leads = loadLeads(); leads.unshift(lead); saveLeads(leads);
       ["name","company","role","email","phone","city","range","source","segment","locationTarget","notes"].forEach(id => document.getElementById(id).value = "");
       render();
+    }
+
+    function customerLabel(l){
+      const name = l.name || l.company || "Customer";
+      const company = l.company && l.company !== l.name ? ` (${l.company})` : "";
+      return `${name}${company}`;
+    }
+
+    function renderCustomerSelect() {
+      const leads = loadLeads();
+      const sel = document.getElementById("invoiceCustomer");
+      if (!sel) return;
+      const opts = leads.map(l => `<option value="${esc(l.id)}">${esc(customerLabel(l))}</option>`).join("");
+      sel.innerHTML = opts || '<option value="">No contacts yet</option>';
+    }
+
+    function renderInvoicesTable() {
+      const invoices = loadInvoices();
+      const leads = loadLeads();
+      const byId = Object.fromEntries(leads.map(l => [l.id, l]));
+      const body = document.getElementById("invoiceBody");
+      if (!body) return;
+      body.innerHTML = invoices.map(inv => {
+        const c = byId[inv.customerId] || {};
+        const cname = c.name || c.company || "Unknown";
+        return `<tr>
+          <td>${esc(inv.number)}</td>
+          <td>${esc(cname)}</td>
+          <td>$${Number(inv.amount || 0).toLocaleString()}</td>
+          <td>${esc(inv.dueDate || "")}</td>
+          <td>${esc(inv.status || "")}</td>
+          <td>
+            <button data-id="${esc(inv.id)}" data-act="invoiceEmail">Email</button>
+            <button data-id="${esc(inv.id)}" data-act="markPaid">Paid</button>
+            <button data-id="${esc(inv.id)}" data-act="delInvoice">Delete</button>
+          </td>
+        </tr>`;
+      }).join("");
+      body.querySelectorAll("button").forEach(b => b.addEventListener("click", () => invoiceAction(b.dataset.id, b.dataset.act)));
+    }
+
+    function addInvoice() {
+      const customerId = document.getElementById("invoiceCustomer").value;
+      const inv = {
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
+        customerId,
+        number: document.getElementById("invoiceNumber").value.trim() || `INV-${Date.now().toString().slice(-6)}`,
+        dueDate: document.getElementById("invoiceDueDate").value,
+        amount: Number(document.getElementById("invoiceAmount").value || 0),
+        status: document.getElementById("invoiceStatus").value,
+        service: document.getElementById("invoiceService").value.trim(),
+        notes: document.getElementById("invoiceNotes").value.trim(),
+        createdAt: new Date().toISOString()
+      };
+      if (!customerId) { alert("Select a customer first."); return; }
+      if (!inv.amount || inv.amount <= 0) { alert("Add invoice amount."); return; }
+      const invoices = loadInvoices();
+      invoices.unshift(inv);
+      saveInvoices(invoices);
+      ["invoiceNumber","invoiceDueDate","invoiceAmount","invoiceService","invoiceNotes"].forEach(id => document.getElementById(id).value = "");
+      renderInvoicesTable();
+    }
+
+    function invoiceAction(id, act){
+      const invoices = loadInvoices();
+      const leads = loadLeads();
+      const i = invoices.findIndex(x => x.id === id);
+      if (i < 0) return;
+      if (act === "delInvoice"){ invoices.splice(i,1); saveInvoices(invoices); renderInvoicesTable(); return; }
+      if (act === "markPaid"){ invoices[i].status = "Paid"; saveInvoices(invoices); renderInvoicesTable(); return; }
+      if (act === "invoiceEmail"){
+        const inv = invoices[i];
+        const c = leads.find(x => x.id === inv.customerId) || {};
+        if (!c.email) { alert("No email on customer contact."); return; }
+        const sub = encodeURIComponent(`Invoice ${inv.number} - All-Pro Construction`);
+        const body = encodeURIComponent(`Hi ${c.name || ""},\n\nAttached/Included is invoice ${inv.number} for ${inv.service || "your project"}.\nAmount: $${Number(inv.amount || 0).toLocaleString()}\nDue Date: ${inv.dueDate || "N/A"}\n\nNotes: ${inv.notes || "Thank you for your business."}\n\n- All-Pro Construction`);
+        window.location.href = `mailto:${encodeURIComponent(c.email)}?subject=${sub}&body=${body}`;
+      }
+    }
+
+    function exportInvoicesCsv(){
+      const invoices = loadInvoices();
+      const cols = ["id","customerId","number","amount","dueDate","status","service","notes","createdAt"];
+      const rows = [cols.join(",")].concat(invoices.map(x => cols.map(c => `"${String(x[c] || "").replace(/"/g,'""')}"`).join(",")));
+      const blob = new Blob([rows.join("\n")], {type:"text/csv;charset=utf-8;"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = "allpro-invoices.csv"; document.body.appendChild(a); a.click(); a.remove();
+    }
+
+    function getCampaignRecipients(mode){
+      const leads = loadLeads();
+      return leads.filter(l => {
+        if (!l.email) return false;
+        if (mode === "won") return l.status === "Won";
+        if (mode === "estimate") return l.status === "Estimate Sent";
+        return true;
+      });
+    }
+
+    function previewCampaignRecipients(){
+      const mode = document.getElementById("campaignAudience").value;
+      const recipients = getCampaignRecipients(mode);
+      const body = document.getElementById("campaignRecipientsBody");
+      body.innerHTML = recipients.map(r => `<tr><td>${esc(r.name || "")}</td><td>${esc(r.email || "")}</td><td>${esc(r.status || "")}</td><td>${esc(r.city || "")}</td></tr>`).join("");
+      document.getElementById("campaignStatus").textContent = `${recipients.length} recipients ready.`;
+    }
+
+    function sendCampaignMailto(){
+      const mode = document.getElementById("campaignAudience").value;
+      const recipients = getCampaignRecipients(mode);
+      if (!recipients.length) { alert("No recipients in this audience."); return; }
+      const subject = document.getElementById("campaignSubject").value.trim() || "All-Pro Customer Update";
+      const message = document.getElementById("campaignBody").value.trim() || "Hi there,\n\nQuick update from All-Pro Construction.";
+      const bcc = recipients.map(r => r.email).filter(Boolean).join(",");
+      const sub = encodeURIComponent(subject);
+      const body = encodeURIComponent(message + "\n\n- All-Pro Construction");
+      window.location.href = `mailto:?bcc=${encodeURIComponent(bcc)}&subject=${sub}&body=${body}`;
+      document.getElementById("campaignStatus").textContent = `Opened draft for ${recipients.length} recipients.`;
     }
 
     function saveStorybrand(){
@@ -271,6 +482,10 @@
     document.getElementById("saveSettings").addEventListener("click", saveStorybrand);
     document.getElementById("exportCsv").addEventListener("click", exportCsv);
     document.getElementById("exportSettings").addEventListener("click", exportSettings);
+    document.getElementById("addInvoice").addEventListener("click", addInvoice);
+    document.getElementById("exportInvoices").addEventListener("click", exportInvoicesCsv);
+    document.getElementById("previewRecipients").addEventListener("click", previewCampaignRecipients);
+    document.getElementById("sendCampaignMailto").addEventListener("click", sendCampaignMailto);
     document.getElementById("clearAll").addEventListener("click", () => {
       if (!confirm("Clear all leads?")) return;
       saveLeads([]); render();
