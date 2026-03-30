@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>All-Pro Private CRM</title>
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #111a2b;
+      --line: #23324d;
+      --text: #eaf0ff;
+      --muted: #a7b4d1;
+      --accent: #2f7df6;
+      --accent-2: #1849a9;
+      --ok: #1f9d57;
+      --warn: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(circle at top left, #13203a 0%, var(--bg) 48%);
+      color: var(--text);
+    }
+    .wrap { width: min(1200px, 94vw); margin: 0 auto; padding: 20px 0 40px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+    h1, h2, h3 { margin: 0 0 10px; }
+    h1 { font-size: 1.6rem; }
+    h2 { font-size: 1.1rem; }
+    .muted { color: var(--muted); }
+    .grid2 { display: grid; grid-template-columns: 1.2fr .8fr; gap: 12px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { color: var(--muted); font-size: .85rem; font-weight: 600; }
+    input, select, textarea {
+      width: 100%;
+      background: #0d1525;
+      color: var(--text);
+      border: 1px solid #2a3b58;
+      border-radius: 10px;
+      padding: 10px;
+      font: inherit;
+    }
+    textarea { min-height: 74px; resize: vertical; }
+    .btn {
+      border: 1px solid #33558f;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+      color: #fff;
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .btn.ghost {
+      background: #0f1a2f;
+      border-color: #2f466e;
+    }
+    .btn.warn {
+      background: #3a2510;
+      border-color: #7c511d;
+      color: #ffd9a7;
+    }
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .pipeline {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+    }
+    .col {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #0f182b;
+      min-height: 240px;
+      padding: 8px;
+    }
+    .col h3 { font-size: .85rem; color: #c8d7ff; margin-bottom: 8px; }
+    .lead {
+      background: #101f39;
+      border: 1px solid #2b4470;
+      border-radius: 10px;
+      padding: 8px;
+      margin-bottom: 8px;
+    }
+    .lead .name { font-weight: 700; font-size: .92rem; }
+    .lead .meta { font-size: .78rem; color: var(--muted); margin-top: 4px; }
+    .lead .row { margin-top: 7px; display: flex; gap: 6px; flex-wrap: wrap; }
+    .lead .row button {
+      border: 1px solid #375386;
+      background: #122445;
+      color: #d9e6ff;
+      border-radius: 8px;
+      font-size: .72rem;
+      padding: 4px 7px;
+      cursor: pointer;
+    }
+    .gate {
+      position: fixed; inset: 0;
+      background: rgba(4, 7, 13, .9);
+      display: grid; place-items: center; z-index: 10;
+    }
+    .gate .panel {
+      width: min(420px, 92vw);
+      background: #0f182c;
+      border: 1px solid #2d426a;
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .hide { display: none !important; }
+    @media (max-width: 980px) {
+      .grid2 { grid-template-columns: 1fr; }
+      .pipeline { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="gate" id="gate">
+    <div class="panel">
+      <h2>All-Pro Private CRM</h2>
+      <p class="muted">Private page. Enter passcode to unlock.</p>
+      <div class="field">
+        <label for="passcode">Passcode</label>
+        <input id="passcode" type="password" />
+      </div>
+      <div class="actions" style="margin-top:10px;">
+        <button class="btn" id="unlockBtn" type="button">Unlock</button>
+      </div>
+      <p class="muted" id="gateMsg" style="margin-top:10px;"></p>
+    </div>
+  </div>
+
+  <main class="wrap hide" id="app">
+    <div class="card">
+      <h1>All-Pro CRM (Private)</h1>
+      <p class="muted">Isolated lead board for All-Pro only. Natoli data is filtered out and not stored in this board.</p>
+      <div class="actions">
+        <button class="btn ghost" id="exportCsv" type="button">Export CSV</button>
+        <button class="btn warn" id="clearAll" type="button">Clear All Leads</button>
+      </div>
+    </div>
+
+    <div class="grid2" style="margin-top:12px;">
+      <section class="card">
+        <h2>Add Lead</h2>
+        <div class="grid3">
+          <div class="field"><label>Name</label><input id="name" /></div>
+          <div class="field"><label>Company</label><input id="company" value="All-Pro Lead" /></div>
+          <div class="field"><label>Phone</label><input id="phone" /></div>
+        </div>
+        <div class="grid3" style="margin-top:8px;">
+          <div class="field"><label>Email</label><input id="email" type="email" /></div>
+          <div class="field"><label>City</label><input id="city" /></div>
+          <div class="field"><label>Service</label>
+            <select id="service">
+              <option>Deck</option>
+              <option>Patio/Concrete</option>
+              <option>Fence</option>
+              <option>Bathroom</option>
+              <option>Kitchen</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid3" style="margin-top:8px;">
+          <div class="field"><label>Estimate Range</label><input id="range" placeholder="$8,000 - $15,000" /></div>
+          <div class="field"><label>Source</label><input id="source" placeholder="Estimator / Call / Text / Referral" /></div>
+          <div class="field"><label>Status</label>
+            <select id="status">
+              <option>New</option>
+              <option>Contacted</option>
+              <option>Qualified</option>
+              <option>Estimate Sent</option>
+              <option>Won</option>
+              <option>Lost</option>
+            </select>
+          </div>
+        </div>
+        <div class="field" style="margin-top:8px;">
+          <label>Notes</label>
+          <textarea id="notes" placeholder="Project notes, timeline, follow-up details..."></textarea>
+        </div>
+        <div class="actions" style="margin-top:10px;">
+          <button class="btn" id="addLead" type="button">Add Lead</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Snapshot</h2>
+        <p class="muted">Quick status counts.</p>
+        <div id="stats"></div>
+      </section>
+    </div>
+
+    <section class="pipeline" id="pipeline"></section>
+  </main>
+
+  <script>
+    const PASSCODE = "AllProOnly-2026";
+    const KEY = "allpro_private_crm_v1";
+    const STAGES = ["New", "Contacted", "Qualified", "Estimate Sent", "Won", "Lost"];
+    const gate = document.getElementById("gate");
+    const app = document.getElementById("app");
+
+    function loadLeads() {
+      try {
+        const data = JSON.parse(localStorage.getItem(KEY) || "[]");
+        return data.filter(x => {
+          const txt = `${x.name || ""} ${x.company || ""}`.toLowerCase();
+          return !txt.includes("natoli");
+        });
+      } catch {
+        return [];
+      }
+    }
+
+    function saveLeads(leads) {
+      localStorage.setItem(KEY, JSON.stringify(leads));
+    }
+
+    function render() {
+      const leads = loadLeads();
+      const pipeline = document.getElementById("pipeline");
+      pipeline.innerHTML = STAGES.map(stage => {
+        const cards = leads.filter(l => l.status === stage).map(l => `
+          <article class="lead">
+            <div class="name">${escapeHtml(l.name || "No name")}</div>
+            <div class="meta">${escapeHtml(l.service || "-")} · ${escapeHtml(l.city || "-")}</div>
+            <div class="meta">${escapeHtml(l.phone || "")} ${l.email ? "· " + escapeHtml(l.email) : ""}</div>
+            <div class="meta">${escapeHtml(l.range || "")}</div>
+            <div class="meta">${escapeHtml(l.notes || "")}</div>
+            <div class="row">
+              <button data-id="${l.id}" data-action="next">Next</button>
+              <button data-id="${l.id}" data-action="prev">Back</button>
+              <button data-id="${l.id}" data-action="del">Delete</button>
+            </div>
+          </article>
+        `).join("");
+        return `<section class="col"><h3>${stage}</h3>${cards || '<p class="muted">No leads</p>'}</section>`;
+      }).join("");
+
+      pipeline.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.dataset.id;
+          const action = btn.dataset.action;
+          const leadsNow = loadLeads();
+          const i = leadsNow.findIndex(x => x.id === id);
+          if (i < 0) return;
+          if (action === "del") {
+            leadsNow.splice(i, 1);
+          } else {
+            const idx = STAGES.indexOf(leadsNow[i].status || "New");
+            if (action === "next" && idx < STAGES.length - 1) leadsNow[i].status = STAGES[idx + 1];
+            if (action === "prev" && idx > 0) leadsNow[i].status = STAGES[idx - 1];
+          }
+          saveLeads(leadsNow);
+          render();
+        });
+      });
+
+      const counts = STAGES.map(s => `${s}: ${leads.filter(l => l.status === s).length}`).join("<br>");
+      document.getElementById("stats").innerHTML = `<p>${counts}</p><p class="muted">Total: ${leads.length}</p>`;
+    }
+
+    function escapeHtml(v) {
+      return String(v).replace(/[&<>"']/g, m => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+      }[m]));
+    }
+
+    document.getElementById("unlockBtn").addEventListener("click", () => {
+      const val = document.getElementById("passcode").value;
+      if (val !== PASSCODE) {
+        document.getElementById("gateMsg").textContent = "Wrong passcode.";
+        return;
+      }
+      gate.classList.add("hide");
+      app.classList.remove("hide");
+      render();
+    });
+
+    document.getElementById("addLead").addEventListener("click", () => {
+      const lead = {
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
+        name: document.getElementById("name").value.trim(),
+        company: document.getElementById("company").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        city: document.getElementById("city").value.trim(),
+        service: document.getElementById("service").value,
+        range: document.getElementById("range").value.trim(),
+        source: document.getElementById("source").value.trim(),
+        notes: document.getElementById("notes").value.trim(),
+        status: document.getElementById("status").value
+      };
+      if (!lead.name) return alert("Name is required.");
+      if ((lead.name + " " + lead.company).toLowerCase().includes("natoli")) return alert("Natoli lead blocked from this CRM.");
+      const leads = loadLeads();
+      leads.unshift(lead);
+      saveLeads(leads);
+      ["name","phone","email","city","range","source","notes"].forEach(id => document.getElementById(id).value = "");
+      render();
+    });
+
+    document.getElementById("exportCsv").addEventListener("click", () => {
+      const leads = loadLeads();
+      const headers = ["name","company","phone","email","city","service","range","source","status","notes"];
+      const rows = [headers.join(",")].concat(
+        leads.map(l => headers.map(h => `"${String(l[h] || "").replace(/"/g,'""')}"`).join(","))
+      );
+      const blob = new Blob([rows.join("\n")], { type: "text/csv;charset=utf-8;" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "allpro-crm-export.csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    });
+
+    document.getElementById("clearAll").addEventListener("click", () => {
+      if (!confirm("Clear all leads in this private CRM?")) return;
+      saveLeads([]);
+      render();
+    });
+  </script>
+</body>
+</html>
