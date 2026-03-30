@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-35DEM1MGDT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-35DEM1MGDT');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://allprometroeastconstruction.com/estimator.html">
+<title>Project Estimator | All-Pro Construction & Landscape</title>
+<meta name="description" content="Fast project estimator for decks, patios, concrete, fences, bathrooms, and kitchens. Share rough project details and get an instant estimated range.">
+<meta name="keywords" content="project estimator contractor, deck estimate, patio estimate, bathroom remodel estimate, kitchen remodel estimate, fence estimate">
+<meta property="og:title" content="Fast Project Estimator | All-Pro Construction & Landscape">
+<meta property="og:description" content="Get a quick estimate range for your project in minutes. Simple inputs, instant range, and direct contact with Bill Sessions.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://allprometroeastconstruction.com/estimator.html">
+<meta property="og:locale" content="en_US">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  :root{
+    --est-bg:#f6f7fb;
+    --est-card:#ffffff;
+    --est-text:#121826;
+    --est-muted:#5b6477;
+    --est-line:#dbe0ea;
+    --est-accent:#0d3b66;
+    --est-accent-2:#0a2744;
+    --est-good:#0f9d58;
+  }
+  body{background:var(--est-bg);color:var(--est-text)}
+  .est-wrap{max-width:1100px;margin:0 auto;padding:2.2rem 1.1rem 4rem}
+  .est-hero{background:linear-gradient(140deg,#0d3b66,#102a43);color:#fff;border-radius:18px;padding:2.3rem 1.4rem;margin-top:1.2rem}
+  .est-hero h1{font-size:clamp(2rem,5vw,3rem);line-height:1.05;margin:0 0 .5rem}
+  .est-hero p{margin:.3rem 0 0;color:#d4e2ff;max-width:700px}
+  .est-hero .btn-primary{margin-top:1.1rem}
+  .est-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-top:1rem}
+  .est-card{
+    background:var(--est-card);border:1px solid var(--est-line);border-radius:14px;padding:1rem;
+    cursor:pointer;transition:.2s transform,.2s box-shadow,.2s border-color;min-height:88px
+  }
+  .est-card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(9,30,66,.12)}
+  .est-card.active{border-color:var(--est-accent);box-shadow:0 0 0 2px rgba(13,59,102,.15)}
+  .est-card h3{margin:0;font-size:1.08rem}
+  .est-card p{margin:.35rem 0 0;color:var(--est-muted);font-size:.92rem}
+  .panel{background:var(--est-card);border:1px solid var(--est-line);border-radius:16px;padding:1rem;margin-top:1rem}
+  .panel h2{margin:.2rem 0 .8rem;font-size:1.35rem}
+  .panel h3{margin:.2rem 0 .8rem;font-size:1.05rem}
+  .helper{color:var(--est-muted);font-size:.92rem;margin-top:.3rem}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+  .row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem}
+  .field{display:flex;flex-direction:column;gap:.35rem}
+  .field label{font-size:.87rem;font-weight:700;color:#2f3b52}
+  .field input,.field select,.field textarea{
+    border:1px solid #cfd6e4;background:#fff;border-radius:10px;padding:.7rem .75rem;font:inherit;color:#1d2433
+  }
+  .toggles{display:flex;gap:1rem;flex-wrap:wrap;margin-top:.25rem}
+  .checkline{display:flex;align-items:center;gap:.45rem;font-size:.95rem}
+  .estimate-box{
+    border:1px solid #cde7d5;background:linear-gradient(180deg,#f3fff7,#ebfff2);
+    border-radius:14px;padding:1rem;margin-top:1rem
+  }
+  .estimate-box .value{font-size:clamp(1.35rem,3.2vw,2rem);font-weight:900;color:#0b6d3b;margin:.2rem 0}
+  .starts{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:.8rem}
+  .start-pill{background:#fff;border:1px solid var(--est-line);border-radius:12px;padding:.7rem .75rem;font-size:.92rem}
+  .start-pill strong{display:block;color:#1f2a3f}
+  .cta-submit{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-top:1rem}
+  .btn-dark{
+    border:none;background:linear-gradient(180deg,var(--est-accent),var(--est-accent-2));
+    color:#fff;padding:.8rem 1rem;border-radius:10px;font-weight:800;cursor:pointer
+  }
+  .fine{color:var(--est-muted);font-size:.87rem}
+  .hidden{display:none}
+  @media (max-width:960px){
+    .est-grid{grid-template-columns:repeat(2,1fr)}
+    .starts{grid-template-columns:1fr}
+  }
+  @media (max-width:700px){
+    .row,.row-3,.est-grid{grid-template-columns:1fr}
+    .est-wrap{padding:1rem .8rem 3rem}
+  }
+</style>
+</head>
+<body>
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <a href="index.html" style="color:inherit;"><span>All-Pro</span> Construction
+      <small>&amp; Landscape</small></a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#reviews">Reviews</a></li>
+      <li><a href="index.html#areas">Areas</a></li>
+      <li><a href="estimator.html" class="nav-cta">Estimator</a></li>
+    </ul>
+    <div class="nav-phone">📞 <strong><a href="tel:6185810676" style="color:inherit;">618-581-0676</a></strong></div>
+  </div>
+</nav>
+
+<main class="est-wrap">
+  <section class="est-hero">
+    <h1>Get a Fast Project Estimate</h1>
+    <p>Answer a few quick questions. Rough numbers are fine. We use this to give Bill everything he needs for a better first conversation.</p>
+    <a href="#project-selector" class="btn-primary">Start Estimate ↓</a>
+  </section>
+
+  <form name="smart-estimate" method="POST" action="https://formsubmit.co/tonybeal40@gmail.com" enctype="multipart/form-data">
+    <input type="hidden" name="_subject" value="New Smart Estimate Request - All-Pro">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" id="project_type_hidden" name="project_type" value="deck">
+    <input type="hidden" id="estimated_range_hidden" name="estimated_range" value="">
+
+    <section class="panel" id="project-selector">
+      <h2>What are you building?</h2>
+      <div class="est-grid" id="projectCards">
+        <button type="button" class="est-card active" data-project="deck"><h3>Deck</h3><p>New build or replacement</p></button>
+        <button type="button" class="est-card" data-project="patio"><h3>Patio</h3><p>Concrete or paver projects</p></button>
+        <button type="button" class="est-card" data-project="concrete"><h3>Concrete</h3><p>Driveways, slabs, walkways</p></button>
+        <button type="button" class="est-card" data-project="fence"><h3>Fence</h3><p>Wood, vinyl, or aluminum</p></button>
+        <button type="button" class="est-card" data-project="bathroom"><h3>Bathroom</h3><p>Refresh or full remodel</p></button>
+        <button type="button" class="est-card" data-project="kitchen"><h3>Kitchen</h3><p>Upgrade or full renovation</p></button>
+      </div>
+      <p class="helper">Typical projects start around: Decks $8K+, Bathrooms $12K+, Kitchens $20K+</p>
+    </section>
+
+    <section class="panel">
+      <h2 id="dynamicTitle">Deck Details</h2>
+
+      <div class="project-form" data-project="deck">
+        <div class="row">
+          <div class="field"><label for="deck_length">Length (ft)</label><input id="deck_length" name="deck_length" type="number" min="1" value="12"></div>
+          <div class="field"><label for="deck_width">Width (ft)</label><input id="deck_width" name="deck_width" type="number" min="1" value="16"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="deck_height">Height off ground (ft)</label><input id="deck_height" name="deck_height" type="number" min="0" value="3"></div>
+          <div class="field"><label for="deck_material">Material</label>
+            <select id="deck_material" name="deck_material">
+              <option value="pt">Pressure Treated</option>
+              <option value="composite">Composite</option>
+            </select>
+          </div>
+        </div>
+        <div class="toggles">
+          <label class="checkline"><input type="checkbox" id="deck_railings" name="deck_railings"> Railings</label>
+          <label class="checkline"><input type="checkbox" id="deck_stairs" name="deck_stairs"> Stairs</label>
+        </div>
+        <p class="helper">Example: Most decks are around 12x16 ft.</p>
+      </div>
+
+      <div class="project-form hidden" data-project="patio">
+        <div class="row">
+          <div class="field"><label for="patio_length">Length (ft)</label><input id="patio_length" name="patio_length" type="number" min="1" value="20"></div>
+          <div class="field"><label for="patio_width">Width (ft)</label><input id="patio_width" name="patio_width" type="number" min="1" value="14"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="patio_thickness">Thickness</label>
+            <select id="patio_thickness" name="patio_thickness">
+              <option value="4">4"</option>
+              <option value="6">6"</option>
+              <option value="8">8"</option>
+            </select>
+          </div>
+          <div class="field"><label for="patio_finish">Finish Type</label>
+            <select id="patio_finish" name="patio_finish">
+              <option value="standard">Standard</option>
+              <option value="stamped">Stamped</option>
+              <option value="aggregate">Exposed Aggregate</option>
+            </select>
+          </div>
+        </div>
+        <div class="toggles">
+          <label class="checkline"><input type="checkbox" id="patio_remove" name="patio_remove"> Remove existing concrete</label>
+        </div>
+      </div>
+
+      <div class="project-form hidden" data-project="concrete">
+        <div class="row">
+          <div class="field"><label for="conc_length">Length (ft)</label><input id="conc_length" name="concrete_length" type="number" min="1" value="20"></div>
+          <div class="field"><label for="conc_width">Width (ft)</label><input id="conc_width" name="concrete_width" type="number" min="1" value="12"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="conc_thickness">Thickness</label>
+            <select id="conc_thickness" name="concrete_thickness">
+              <option value="4">4"</option>
+              <option value="6">6"</option>
+              <option value="8">8"</option>
+            </select>
+          </div>
+          <div class="field"><label for="conc_finish">Finish Type</label>
+            <select id="conc_finish" name="concrete_finish">
+              <option value="standard">Standard</option>
+              <option value="stamped">Stamped</option>
+              <option value="aggregate">Exposed Aggregate</option>
+            </select>
+          </div>
+        </div>
+        <div class="toggles">
+          <label class="checkline"><input type="checkbox" id="conc_remove" name="concrete_remove"> Remove existing concrete</label>
+        </div>
+      </div>
+
+      <div class="project-form hidden" data-project="fence">
+        <div class="row">
+          <div class="field"><label for="fence_length">Total Length (ft)</label><input id="fence_length" name="fence_length" type="number" min="1" value="120"></div>
+          <div class="field"><label for="fence_height">Height</label>
+            <select id="fence_height" name="fence_height">
+              <option value="4">4 ft</option>
+              <option value="6" selected>6 ft</option>
+              <option value="8">8 ft</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="fence_material">Material</label>
+            <select id="fence_material" name="fence_material">
+              <option value="wood">Wood</option>
+              <option value="vinyl">Vinyl</option>
+              <option value="aluminum">Aluminum</option>
+            </select>
+          </div>
+          <div class="field"><label for="fence_gates">Number of gates</label><input id="fence_gates" name="fence_gates" type="number" min="0" value="1"></div>
+        </div>
+      </div>
+
+      <div class="project-form hidden" data-project="bathroom">
+        <div class="row">
+          <div class="field"><label for="bath_size">Size (sq ft rough)</label><input id="bath_size" name="bathroom_size" type="number" min="20" value="60"></div>
+          <div class="field"><label for="bath_type">Type</label>
+            <select id="bath_type" name="bathroom_type">
+              <option value="half">Half Bath</option>
+              <option value="full" selected>Full Bath</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="bath_scope">Scope</label>
+            <select id="bath_scope" name="bathroom_scope">
+              <option value="refresh">Refresh</option>
+              <option value="full" selected>Full Remodel</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Features</label>
+            <div class="toggles">
+              <label class="checkline"><input type="checkbox" id="bath_shower" name="bathroom_feature_shower"> Shower</label>
+              <label class="checkline"><input type="checkbox" id="bath_tub" name="bathroom_feature_tub"> Tub</label>
+              <label class="checkline"><input type="checkbox" id="bath_vanity" name="bathroom_feature_double_vanity"> Double Vanity</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-form hidden" data-project="kitchen">
+        <div class="row">
+          <div class="field"><label for="kitchen_size">Size</label>
+            <select id="kitchen_size" name="kitchen_size">
+              <option value="small">Small</option>
+              <option value="medium" selected>Medium</option>
+              <option value="large">Large</option>
+            </select>
+          </div>
+          <div class="field"><label for="kitchen_cabinets">Cabinets</label>
+            <select id="kitchen_cabinets" name="kitchen_cabinets">
+              <option value="replace" selected>Replace</option>
+              <option value="reface">Reface</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="kitchen_countertops">Countertops</label>
+            <select id="kitchen_countertops" name="kitchen_countertops">
+              <option value="yes" selected>Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="field"><label for="kitchen_appliances">Appliances</label>
+            <select id="kitchen_appliances" name="kitchen_appliances">
+              <option value="yes">Yes</option>
+              <option value="no" selected>No</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="estimate-box">
+      <h3>Estimated Range</h3>
+      <div class="value" id="estimateValue">$8,000 - $15,000</div>
+      <p class="fine">Final pricing is confirmed after site visit, access check, and material selections.</p>
+      <div class="starts">
+        <div class="start-pill"><strong>Decks</strong>Typical starts around $8K+</div>
+        <div class="start-pill"><strong>Bathrooms</strong>Typical starts around $12K+</div>
+        <div class="start-pill"><strong>Kitchens</strong>Typical starts around $20K+</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Upload a Photo (Optional)</h2>
+      <p class="helper">Helps us give a faster quote.</p>
+      <div class="field">
+        <label for="project_photos">Project Photos</label>
+        <input id="project_photos" name="project_photos" type="file" accept="image/*" multiple>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Contact Info</h2>
+      <div class="row">
+        <div class="field"><label for="name">Name</label><input id="name" name="name" required></div>
+        <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" required></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required></div>
+        <div class="field"><label for="address">Project Address</label><input id="address" name="project_address"></div>
+      </div>
+      <div class="field">
+        <label>Preferred Contact Method</label>
+        <div class="toggles">
+          <label class="checkline"><input type="radio" name="preferred_contact" value="call" checked> Call</label>
+          <label class="checkline"><input type="radio" name="preferred_contact" value="text"> Text</label>
+          <label class="checkline"><input type="radio" name="preferred_contact" value="email"> Email</label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="notes">Anything else we should know?</label>
+        <textarea id="notes" name="project_notes" rows="4" placeholder="Rough timeline, special requests, HOA rules, access notes..."></textarea>
+      </div>
+      <div class="cta-submit">
+        <button class="btn-dark" type="submit">Get My Estimate</button>
+        <span class="fine">No pressure. Just a fast quote.</span>
+      </div>
+    </section>
+  </form>
+</main>
+
+<script>
+const cards = document.querySelectorAll('.est-card');
+const forms = document.querySelectorAll('.project-form');
+const dynamicTitle = document.getElementById('dynamicTitle');
+const projectTypeHidden = document.getElementById('project_type_hidden');
+const estimateValue = document.getElementById('estimateValue');
+const estimateRangeHidden = document.getElementById('estimated_range_hidden');
+
+const titleMap = {
+  deck: 'Deck Details',
+  patio: 'Concrete / Patio Details',
+  concrete: 'Concrete / Patio Details',
+  fence: 'Fence Details',
+  bathroom: 'Bathroom Remodel',
+  kitchen: 'Kitchen Remodel'
+};
+
+let activeProject = 'deck';
+
+function money(n) {
+  return '$' + Math.round(n).toLocaleString();
+}
+
+function calcEstimate() {
+  let low = 0;
+  let high = 0;
+
+  if (activeProject === 'deck') {
+    const length = Number(document.getElementById('deck_length').value || 0);
+    const width = Number(document.getElementById('deck_width').value || 0);
+    const height = Number(document.getElementById('deck_height').value || 0);
+    const material = document.getElementById('deck_material').value;
+    const railings = document.getElementById('deck_railings').checked;
+    const stairs = document.getElementById('deck_stairs').checked;
+    const area = Math.max(1, length * width);
+    const rate = material === 'composite' ? 72 : 48;
+    let base = area * rate + (height * 500);
+    if (railings) base += 1800;
+    if (stairs) base += 1500;
+    low = base * 0.85;
+    high = base * 1.18;
+  }
+
+  if (activeProject === 'patio' || activeProject === 'concrete') {
+    const prefix = activeProject === 'patio' ? 'patio' : 'conc';
+    const length = Number(document.getElementById(prefix + '_length').value || 0);
+    const width = Number(document.getElementById(prefix + '_width').value || 0);
+    const thickness = document.getElementById(prefix + '_thickness').value;
+    const finish = document.getElementById(prefix + '_finish').value;
+    const remove = document.getElementById(prefix + '_remove').checked;
+    const area = Math.max(1, length * width);
+    const thicknessMult = thickness === '8' ? 1.6 : thickness === '6' ? 1.3 : 1;
+    const finishRate = finish === 'aggregate' ? 22 : finish === 'stamped' ? 18 : 12;
+    let base = area * finishRate * thicknessMult;
+    if (remove) base += 2000;
+    low = base * 0.86;
+    high = base * 1.16;
+  }
+
+  if (activeProject === 'fence') {
+    const len = Number(document.getElementById('fence_length').value || 0);
+    const h = Number(document.getElementById('fence_height').value || 6);
+    const mat = document.getElementById('fence_material').value;
+    const gates = Number(document.getElementById('fence_gates').value || 0);
+    const rate = mat === 'aluminum' ? 75 : mat === 'vinyl' ? 60 : 45;
+    let base = Math.max(1, len) * rate + gates * 350;
+    if (h === 8) base *= 1.2;
+    if (h === 4) base *= 0.85;
+    low = base * 0.88;
+    high = base * 1.14;
+  }
+
+  if (activeProject === 'bathroom') {
+    const size = Number(document.getElementById('bath_size').value || 60);
+    const type = document.getElementById('bath_type').value;
+    const scope = document.getElementById('bath_scope').value;
+    const shower = document.getElementById('bath_shower').checked;
+    const tub = document.getElementById('bath_tub').checked;
+    const vanity = document.getElementById('bath_vanity').checked;
+    let base = type === 'full' ? 12000 : 8000;
+    if (scope === 'full') base *= 1.7;
+    if (size > 80) base *= 1.2;
+    if (shower) base += 4500;
+    if (tub) base += 3000;
+    if (vanity) base += 1800;
+    low = base * 0.87;
+    high = base * 1.15;
+  }
+
+  if (activeProject === 'kitchen') {
+    const size = document.getElementById('kitchen_size').value;
+    const cabinets = document.getElementById('kitchen_cabinets').value;
+    const counters = document.getElementById('kitchen_countertops').value;
+    const appliances = document.getElementById('kitchen_appliances').value;
+    let base = size === 'large' ? 45000 : size === 'medium' ? 30000 : 18000;
+    base += cabinets === 'replace' ? 12000 : 6000;
+    if (counters === 'yes') base += 5000;
+    if (appliances === 'yes') base += 4000;
+    low = base * 0.88;
+    high = base * 1.14;
+  }
+
+  const text = `${money(low)} - ${money(high)}`;
+  estimateValue.textContent = text;
+  estimateRangeHidden.value = text;
+}
+
+function setActiveProject(project) {
+  activeProject = project;
+  projectTypeHidden.value = project;
+  dynamicTitle.textContent = titleMap[project] || 'Project Details';
+
+  cards.forEach(card => card.classList.toggle('active', card.dataset.project === project));
+  forms.forEach(form => form.classList.toggle('hidden', form.dataset.project !== project));
+
+  calcEstimate();
+}
+
+cards.forEach(card => {
+  card.addEventListener('click', () => setActiveProject(card.dataset.project));
+});
+
+document.querySelectorAll('input, select, textarea').forEach(el => {
+  el.addEventListener('input', calcEstimate);
+  el.addEventListener('change', calcEstimate);
+});
+
+calcEstimate();
+</script>
+</body>
+</html>
