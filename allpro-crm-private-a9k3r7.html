@@ -3,118 +3,278 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>All-Pro Private CRM Portal</title>
+  <title>All-Pro Private CRM</title>
   <meta name="robots" content="noindex, nofollow, noarchive" />
   <style>
     :root{
-      --bg:#0b1220;
-      --card:#121a2d;
-      --line:#2c3e63;
-      --text:#e9f0ff;
-      --muted:#a5b5d6;
-      --accent:#2f7df6;
-      --accent2:#1a4ca8;
+      --bg:#0a1222; --card:#121c31; --line:#2a3f66; --text:#eaf1ff; --muted:#a6b7d8;
+      --accent:#2e7df6; --accent2:#1a4da7; --ok:#20b15a; --warn:#c27a00;
     }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;height:100%}
-    body{font-family:"Segoe UI",Arial,sans-serif;background:radial-gradient(circle at top left,#182744 0%,var(--bg) 55%);color:var(--text)}
-    .gate{
-      position:fixed;inset:0;display:grid;place-items:center;background:rgba(4,7,12,.88);z-index:10
+    body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:radial-gradient(circle at top left,#152845 0%,var(--bg) 55%);color:var(--text)}
+    .wrap{width:min(1220px,94vw);margin:0 auto;padding:16px 0 30px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
+    h1,h2,h3{margin:0 0 8px}
+    h1{font-size:1.5rem}
+    h2{font-size:1.1rem}
+    .muted{color:var(--muted)}
+    .grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:10px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .field{display:flex;flex-direction:column;gap:5px}
+    .field label{font-size:.84rem;color:var(--muted);font-weight:600}
+    input,select,textarea{
+      width:100%;background:#0c1527;color:var(--text);border:1px solid #35517f;border-radius:10px;padding:9px;font:inherit
     }
-    .panel{
-      width:min(460px,92vw);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px
-    }
-    h1{margin:0 0 8px;font-size:1.2rem}
-    p{margin:0 0 10px;color:var(--muted)}
-    label{display:block;font-size:.86rem;color:var(--muted);margin-bottom:6px}
-    input{
-      width:100%;background:#0d1526;color:var(--text);border:1px solid #334a75;border-radius:10px;padding:10px;font:inherit
-    }
+    textarea{min-height:72px;resize:vertical}
     .btn{
-      margin-top:10px;border:1px solid #3b63a3;background:linear-gradient(180deg,var(--accent),var(--accent2));color:#fff;
-      padding:9px 12px;border-radius:10px;cursor:pointer;font-weight:700
+      border:1px solid #3b63a3;background:linear-gradient(180deg,var(--accent),var(--accent2));color:#fff;
+      border-radius:10px;padding:8px 11px;font-weight:700;cursor:pointer
     }
-    .hint{margin-top:10px;font-size:.85rem;color:#fda4af}
-    .frame-wrap{height:100%;display:none}
-    .frame-wrap.show{display:block}
-    iframe{width:100%;height:100%;border:0;background:#0b1220}
-    .bar{
-      position:fixed;left:0;right:0;top:0;height:34px;background:#0b1220;border-bottom:1px solid #24385f;display:none;
-      align-items:center;justify-content:space-between;padding:0 10px;z-index:11;color:#cdd9f6;font-size:.82rem
+    .btn.ghost{background:#10203b;border-color:#365180}
+    .btn.warn{background:#3a2a11;border-color:#7f5b22;color:#ffd9a0}
+    .rowBtns{display:flex;gap:8px;flex-wrap:wrap}
+    .pipeline{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:10px}
+    .col{background:#0f1a2f;border:1px solid var(--line);border-radius:12px;padding:8px;min-height:230px}
+    .col h3{font-size:.82rem;color:#d0ddff;margin-bottom:6px}
+    .lead{background:#10203b;border:1px solid #2f4a78;border-radius:10px;padding:8px;margin-bottom:7px}
+    .lead .name{font-weight:700;font-size:.9rem}
+    .lead .meta{font-size:.76rem;color:var(--muted);margin-top:3px}
+    .lead .actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+    .lead .actions button{
+      border:1px solid #3b5a8f;background:#122648;color:#dce8ff;border-radius:7px;font-size:.7rem;padding:4px 6px;cursor:pointer
     }
-    .bar.show{display:flex}
-    .bar a{color:#9fc0ff;text-decoration:none}
+    .stats{font-size:.9rem;line-height:1.5}
+    .gate{position:fixed;inset:0;background:rgba(4,7,12,.9);display:grid;place-items:center;z-index:9}
+    .gate .panel{width:min(420px,92vw);background:#101a2f;border:1px solid #314a76;border-radius:14px;padding:14px}
+    .hide{display:none !important}
+    @media (max-width:1000px){.grid2{grid-template-columns:1fr}.pipeline{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:650px){.grid3,.pipeline{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
   <div class="gate" id="gate">
     <div class="panel">
-      <h1>All-Pro Private CRM</h1>
-      <p>Hidden portal for your internal CRM workflow.</p>
-      <label for="passcode">Passcode</label>
-      <input id="passcode" type="password" />
-      <button class="btn" id="unlockBtn" type="button">Unlock CRM</button>
-      <div class="hint" id="msg"></div>
+      <h2>All-Pro Private CRM</h2>
+      <p class="muted">Hidden local CRM. Enter passcode.</p>
+      <div class="field"><label for="passcode">Passcode</label><input id="passcode" type="password" /></div>
+      <button class="btn" id="unlockBtn" type="button">Unlock</button>
+      <p class="muted" id="gateMsg" style="margin-top:8px;"></p>
     </div>
   </div>
 
-  <div class="bar" id="topbar">
-    <span>All-Pro Private CRM Session</span>
-    <a href="#" id="lockNow">Lock</a>
-  </div>
-  <div class="frame-wrap" id="frameWrap">
-    <iframe
-      id="crmFrame"
-      src="about:blank"
-      title="All-Pro CRM"
-      referrerpolicy="no-referrer"
-      sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads">
-    </iframe>
-  </div>
+  <main class="wrap hide" id="app">
+    <section class="card">
+      <h1>All-Pro CRM (Private)</h1>
+      <p class="muted">Local-first CRM for All-Pro only.</p>
+      <div class="rowBtns">
+        <button class="btn ghost" id="exportCsv" type="button">Export Leads CSV</button>
+        <button class="btn ghost" id="exportSettings" type="button">Export StoryBrand + Targets</button>
+        <button class="btn warn" id="clearAll" type="button">Clear All Leads</button>
+      </div>
+    </section>
+
+    <section class="grid2" style="margin-top:10px;">
+      <div class="card">
+        <h2>New Lead</h2>
+        <div class="grid3">
+          <div class="field"><label>Name</label><input id="name" /></div>
+          <div class="field"><label>Company</label><input id="company" /></div>
+          <div class="field"><label>Role</label><input id="role" /></div>
+        </div>
+        <div class="grid3" style="margin-top:8px;">
+          <div class="field"><label>Email</label><input id="email" type="email" /></div>
+          <div class="field"><label>Phone</label><input id="phone" /></div>
+          <div class="field"><label>City</label><input id="city" /></div>
+        </div>
+        <div class="grid3" style="margin-top:8px;">
+          <div class="field"><label>Service</label>
+            <select id="service">
+              <option>Deck</option><option>Patio/Concrete</option><option>Fence</option>
+              <option>Bathroom</option><option>Kitchen</option><option>Other</option>
+            </select>
+          </div>
+          <div class="field"><label>Est. Range</label><input id="range" placeholder="$8,000 - $15,000" /></div>
+          <div class="field"><label>Source</label><input id="source" placeholder="Estimator / Referral / Call" /></div>
+        </div>
+        <div class="grid3" style="margin-top:8px;">
+          <div class="field"><label>Target Segment</label><input id="segment" placeholder="Homeowner / Builder / Property Manager" /></div>
+          <div class="field"><label>Location Target</label><input id="locationTarget" placeholder="Belleville / Collinsville / O'Fallon" /></div>
+          <div class="field"><label>Status</label>
+            <select id="status"><option>New</option><option>Contacted</option><option>Qualified</option><option>Estimate Sent</option><option>Won</option><option>Lost</option></select>
+          </div>
+        </div>
+        <div class="field" style="margin-top:8px;">
+          <label>Notes</label>
+          <textarea id="notes" placeholder="Scope, timeline, pain points, objections, next step..."></textarea>
+        </div>
+        <div class="rowBtns" style="margin-top:8px;">
+          <button class="btn" id="addLead" type="button">Add Lead</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>StoryBrand + Target Settings</h2>
+        <div class="field"><label>Brand Positioning</label><input id="sbPositioning" placeholder="Trusted local contractor that shows up and finishes right." /></div>
+        <div class="field"><label>Primary Customer</label><input id="sbCustomer" placeholder="Homeowners in Metro East IL needing high-trust project delivery." /></div>
+        <div class="field"><label>Core Problem</label><input id="sbProblem" placeholder="Unreliable contractors, vague pricing, missed timelines." /></div>
+        <div class="field"><label>Promise / Outcome</label><input id="sbOutcome" placeholder="Clear estimate, clean communication, quality build, no runaround." /></div>
+        <div class="field"><label>Primary Targets (one per line)</label><textarea id="targetList" placeholder="Deck replacement homeowners&#10;Bathroom remodel homeowners&#10;Fence + concrete project households"></textarea></div>
+        <div class="field"><label>Priority Locations (one per line)</label><textarea id="locationList" placeholder="Belleville, IL&#10;O'Fallon, IL&#10;Collinsville, IL"></textarea></div>
+        <div class="rowBtns"><button class="btn ghost" id="saveSettings" type="button">Save Settings Locally</button></div>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:10px;">
+      <h2>Pipeline</h2>
+      <div class="stats" id="stats"></div>
+      <div class="pipeline" id="pipeline"></div>
+    </section>
+  </main>
 
   <script>
     const PASSCODE = "AllProOnly-2026";
-    const CRM_URL = "https://tonybeal.net/meetmeg-growth-partner/tonyos-crm.html";
-    const gate = document.getElementById("gate");
-    const msg = document.getElementById("msg");
-    const frameWrap = document.getElementById("frameWrap");
-    const frame = document.getElementById("crmFrame");
-    const topbar = document.getElementById("topbar");
+    const LEADS_KEY = "allpro_private_crm_leads_v2";
+    const SETTINGS_KEY = "allpro_private_crm_storybrand_v2";
+    const STAGES = ["New","Contacted","Qualified","Estimate Sent","Won","Lost"];
 
-    function unlock() {
-      const v = document.getElementById("passcode").value;
-      if (v !== PASSCODE) {
-        msg.textContent = "Incorrect passcode.";
+    const gate = document.getElementById("gate");
+    const app = document.getElementById("app");
+
+    function safeParse(v, fallback){ try { return JSON.parse(v); } catch { return fallback; } }
+    function loadLeads(){ return safeParse(localStorage.getItem(LEADS_KEY), []); }
+    function saveLeads(leads){ localStorage.setItem(LEADS_KEY, JSON.stringify(leads)); }
+    function loadSettings(){ return safeParse(localStorage.getItem(SETTINGS_KEY), {}); }
+    function saveSettings(s){ localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)); }
+
+    function esc(v){ return String(v || "").replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m])); }
+
+    function render() {
+      const leads = loadLeads();
+      const pipe = document.getElementById("pipeline");
+      pipe.innerHTML = STAGES.map(stage => {
+        const cards = leads.filter(l => l.status === stage).map(l => `
+          <article class="lead">
+            <div class="name">${esc(l.name || "No name")}</div>
+            <div class="meta">${esc(l.company)} ${l.role ? "· " + esc(l.role) : ""}</div>
+            <div class="meta">${esc(l.service)} · ${esc(l.city)} · ${esc(l.range)}</div>
+            <div class="meta">${esc(l.email)} ${l.phone ? "· " + esc(l.phone) : ""}</div>
+            <div class="meta">${esc(l.segment)} ${l.locationTarget ? "· " + esc(l.locationTarget) : ""}</div>
+            <div class="meta">${esc(l.notes)}</div>
+            <div class="actions">
+              <button data-id="${l.id}" data-act="next">Next</button>
+              <button data-id="${l.id}" data-act="prev">Back</button>
+              <button data-id="${l.id}" data-act="email">Email</button>
+              <button data-id="${l.id}" data-act="del">Delete</button>
+            </div>
+          </article>
+        `).join("");
+        return `<section class="col"><h3>${stage}</h3>${cards || '<p class="muted">No leads</p>'}</section>`;
+      }).join("");
+
+      pipe.querySelectorAll("button").forEach(b => b.addEventListener("click", () => leadAction(b.dataset.id, b.dataset.act)));
+      const counts = STAGES.map(s => `${s}: ${leads.filter(l => l.status === s).length}`).join(" | ");
+      document.getElementById("stats").textContent = `${counts} | Total: ${leads.length}`;
+    }
+
+    function leadAction(id, act){
+      const leads = loadLeads();
+      const i = leads.findIndex(x => x.id === id);
+      if (i < 0) return;
+      if (act === "del"){ leads.splice(i,1); saveLeads(leads); render(); return; }
+      if (act === "email"){
+        const l = leads[i];
+        const sub = encodeURIComponent(`All-Pro Project Follow Up - ${l.name || l.company || "Lead"}`);
+        const body = encodeURIComponent(`Hi ${l.name || ""},\n\nThanks for connecting with All-Pro.\nService: ${l.service || ""}\nCity: ${l.city || ""}\nEstimate Range: ${l.range || ""}\n\nNext step: reply with your preferred day/time for a quick scope call.\n\n- All-Pro Construction`);
+        window.location.href = `mailto:${encodeURIComponent(l.email || "")}?subject=${sub}&body=${body}`;
         return;
       }
-      gate.style.display = "none";
-      frameWrap.classList.add("show");
-      topbar.classList.add("show");
-      frame.src = CRM_URL;
-      sessionStorage.setItem("allpro_private_crm_unlocked", "1");
+      const idx = STAGES.indexOf(leads[i].status || "New");
+      if (act === "next" && idx < STAGES.length - 1) leads[i].status = STAGES[idx + 1];
+      if (act === "prev" && idx > 0) leads[i].status = STAGES[idx - 1];
+      saveLeads(leads); render();
     }
 
-    document.getElementById("unlockBtn").addEventListener("click", unlock);
-    document.getElementById("passcode").addEventListener("keydown", (e) => {
-      if (e.key === "Enter") unlock();
-    });
-
-    document.getElementById("lockNow").addEventListener("click", (e) => {
-      e.preventDefault();
-      frame.src = "about:blank";
-      frameWrap.classList.remove("show");
-      topbar.classList.remove("show");
-      gate.style.display = "grid";
-      document.getElementById("passcode").value = "";
-      sessionStorage.removeItem("allpro_private_crm_unlocked");
-    });
-
-    if (sessionStorage.getItem("allpro_private_crm_unlocked") === "1") {
-      gate.style.display = "none";
-      frameWrap.classList.add("show");
-      topbar.classList.add("show");
-      frame.src = CRM_URL;
+    function addLead(){
+      const lead = {
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
+        name: document.getElementById("name").value.trim(),
+        company: document.getElementById("company").value.trim(),
+        role: document.getElementById("role").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        city: document.getElementById("city").value.trim(),
+        service: document.getElementById("service").value,
+        range: document.getElementById("range").value.trim(),
+        source: document.getElementById("source").value.trim(),
+        segment: document.getElementById("segment").value.trim(),
+        locationTarget: document.getElementById("locationTarget").value.trim(),
+        status: document.getElementById("status").value,
+        notes: document.getElementById("notes").value.trim(),
+        createdAt: new Date().toISOString()
+      };
+      if (!lead.name && !lead.company) { alert("Add at least name or company."); return; }
+      const leads = loadLeads(); leads.unshift(lead); saveLeads(leads);
+      ["name","company","role","email","phone","city","range","source","segment","locationTarget","notes"].forEach(id => document.getElementById(id).value = "");
+      render();
     }
+
+    function saveStorybrand(){
+      const s = {
+        positioning: document.getElementById("sbPositioning").value.trim(),
+        customer: document.getElementById("sbCustomer").value.trim(),
+        problem: document.getElementById("sbProblem").value.trim(),
+        outcome: document.getElementById("sbOutcome").value.trim(),
+        targets: document.getElementById("targetList").value.trim(),
+        locations: document.getElementById("locationList").value.trim(),
+        updatedAt: new Date().toISOString()
+      };
+      saveSettings(s);
+      alert("StoryBrand + targets saved locally.");
+    }
+
+    function loadStorybrandIntoUI(){
+      const s = loadSettings();
+      document.getElementById("sbPositioning").value = s.positioning || "";
+      document.getElementById("sbCustomer").value = s.customer || "";
+      document.getElementById("sbProblem").value = s.problem || "";
+      document.getElementById("sbOutcome").value = s.outcome || "";
+      document.getElementById("targetList").value = s.targets || "";
+      document.getElementById("locationList").value = s.locations || "";
+    }
+
+    function exportCsv(){
+      const leads = loadLeads();
+      const cols = ["name","company","role","email","phone","city","service","range","source","segment","locationTarget","status","notes","createdAt"];
+      const rows = [cols.join(",")].concat(leads.map(l => cols.map(c => `"${String(l[c] || "").replace(/"/g,'""')}"`).join(",")));
+      const blob = new Blob([rows.join("\n")], {type:"text/csv;charset=utf-8;"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = "allpro-leads.csv"; document.body.appendChild(a); a.click(); a.remove();
+    }
+
+    function exportSettings(){
+      const s = loadSettings();
+      const blob = new Blob([JSON.stringify(s, null, 2)], {type:"application/json"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = "allpro-storybrand-targets.json"; document.body.appendChild(a); a.click(); a.remove();
+    }
+
+    document.getElementById("unlockBtn").addEventListener("click", () => {
+      if (document.getElementById("passcode").value !== PASSCODE) {
+        document.getElementById("gateMsg").textContent = "Wrong passcode.";
+        return;
+      }
+      gate.classList.add("hide"); app.classList.remove("hide");
+      loadStorybrandIntoUI(); render();
+    });
+    document.getElementById("passcode").addEventListener("keydown", e => { if (e.key === "Enter") document.getElementById("unlockBtn").click(); });
+    document.getElementById("addLead").addEventListener("click", addLead);
+    document.getElementById("saveSettings").addEventListener("click", saveStorybrand);
+    document.getElementById("exportCsv").addEventListener("click", exportCsv);
+    document.getElementById("exportSettings").addEventListener("click", exportSettings);
+    document.getElementById("clearAll").addEventListener("click", () => {
+      if (!confirm("Clear all leads?")) return;
+      saveLeads([]); render();
+    });
   </script>
 </body>
 </html>
