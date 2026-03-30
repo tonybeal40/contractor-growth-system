@@ -61,6 +61,12 @@
       <h2>All-Pro Private CRM</h2>
       <p class="muted">Hidden local CRM. Enter passcode.</p>
       <div class="field"><label for="passcode">Passcode</label><input id="passcode" type="password" /></div>
+      <div class="field" style="margin-top:6px;">
+        <label style="display:flex;align-items:center;gap:8px;font-weight:500;">
+          <input id="rememberDevice" type="checkbox" style="width:auto;transform:translateY(1px);" />
+          Remember on this computer
+        </label>
+      </div>
       <button class="btn" id="unlockBtn" type="button">Unlock</button>
       <p class="muted" id="gateMsg" style="margin-top:8px;"></p>
     </div>
@@ -73,6 +79,7 @@
       <div class="rowBtns">
         <button class="btn ghost" id="exportCsv" type="button">Export Leads CSV</button>
         <button class="btn ghost" id="exportSettings" type="button">Export StoryBrand + Targets</button>
+        <button class="btn ghost" id="forgetDevice" type="button">Forget This Device</button>
         <button class="btn warn" id="clearAll" type="button">Clear All Leads</button>
       </div>
     </section>
@@ -213,6 +220,39 @@
     </section>
 
     <section class="card" style="margin-top:10px;">
+      <h2>Bill Work Log / Job Notes</h2>
+      <p class="muted">Paste notes exactly how Bill writes them. Save by job and date for billing support.</p>
+      <div class="grid3">
+        <div class="field">
+          <label>Job Name</label>
+          <input id="worklogJob" placeholder="BJ Back Porch" />
+        </div>
+        <div class="field">
+          <label>Work Date</label>
+          <input id="worklogDate" type="date" />
+        </div>
+        <div class="field">
+          <label>Amount / Delta ($ optional)</label>
+          <input id="worklogAmount" type="number" step="0.01" placeholder="1500" />
+        </div>
+      </div>
+      <div class="field" style="margin-top:8px;">
+        <label>Work Note (free-form)</label>
+        <textarea id="worklogText" style="min-height:140px" placeholder="Paste full note block here..."></textarea>
+      </div>
+      <div class="rowBtns" style="margin-top:8px;">
+        <button class="btn" id="addWorklog" type="button">Save Work Log Entry</button>
+        <button class="btn ghost" id="exportWorklog" type="button">Export Work Log CSV</button>
+      </div>
+      <div class="tableWrap" style="margin-top:10px;">
+        <table>
+          <thead><tr><th>Date</th><th>Job</th><th>Amount</th><th>Note</th><th>Action</th></tr></thead>
+          <tbody id="worklogBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:10px;">
       <h2>Pipeline</h2>
       <div class="stats" id="stats"></div>
       <div class="pipeline" id="pipeline"></div>
@@ -224,6 +264,8 @@
     const LEADS_KEY = "allpro_private_crm_leads_v2";
     const SETTINGS_KEY = "allpro_private_crm_storybrand_v2";
     const INVOICES_KEY = "allpro_private_crm_invoices_v1";
+    const WORKLOG_KEY = "allpro_private_crm_worklog_v1";
+    const REMEMBER_KEY = "allpro_private_crm_remember_v1";
     const STAGES = ["New","Contacted","Qualified","Estimate Sent","Won","Lost"];
 
     const gate = document.getElementById("gate");
@@ -236,6 +278,8 @@
     function saveSettings(s){ localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)); }
     function loadInvoices(){ return safeParse(localStorage.getItem(INVOICES_KEY), []); }
     function saveInvoices(invoices){ localStorage.setItem(INVOICES_KEY, JSON.stringify(invoices)); }
+    function loadWorklog(){ return safeParse(localStorage.getItem(WORKLOG_KEY), []); }
+    function saveWorklog(rows){ localStorage.setItem(WORKLOG_KEY, JSON.stringify(rows)); }
 
     function esc(v){ return String(v || "").replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m])); }
 
@@ -267,6 +311,7 @@
       document.getElementById("stats").textContent = `${counts} | Total: ${leads.length}`;
       renderCustomerSelect();
       renderInvoicesTable();
+      renderWorklogTable();
     }
 
     function leadAction(id, act){
@@ -429,6 +474,56 @@
       document.getElementById("campaignStatus").textContent = `Opened draft for ${recipients.length} recipients.`;
     }
 
+    function addWorklogEntry(){
+      const row = {
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
+        job: document.getElementById("worklogJob").value.trim() || "General",
+        date: document.getElementById("worklogDate").value || new Date().toISOString().slice(0,10),
+        amount: Number(document.getElementById("worklogAmount").value || 0),
+        note: document.getElementById("worklogText").value.trim(),
+        createdAt: new Date().toISOString()
+      };
+      if (!row.note) { alert("Add a work note first."); return; }
+      const rows = loadWorklog();
+      rows.unshift(row);
+      saveWorklog(rows);
+      document.getElementById("worklogAmount").value = "";
+      document.getElementById("worklogText").value = "";
+      renderWorklogTable();
+    }
+
+    function renderWorklogTable(){
+      const rows = loadWorklog();
+      const body = document.getElementById("worklogBody");
+      if (!body) return;
+      body.innerHTML = rows.map(r => `<tr>
+        <td>${esc(r.date || "")}</td>
+        <td>${esc(r.job || "")}</td>
+        <td>${r.amount ? "$" + Number(r.amount).toLocaleString() : ""}</td>
+        <td style="max-width:420px;white-space:pre-wrap;">${esc(r.note || "")}</td>
+        <td><button data-id="${esc(r.id)}" data-act="delWorklog">Delete</button></td>
+      </tr>`).join("");
+      body.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+        const id = b.dataset.id;
+        const next = loadWorklog().filter(x => x.id !== id);
+        saveWorklog(next);
+        renderWorklogTable();
+      }));
+    }
+
+    function exportWorklogCsv(){
+      const rows = loadWorklog();
+      const cols = ["date","job","amount","note","createdAt"];
+      const lines = [cols.join(",")].concat(rows.map(r => cols.map(c => `"${String(r[c] || "").replace(/"/g,'""')}"`).join(",")));
+      const blob = new Blob([lines.join("\n")], {type:"text/csv;charset=utf-8;"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "allpro-worklog.csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
     function saveStorybrand(){
       const s = {
         positioning: document.getElementById("sbPositioning").value.trim(),
@@ -469,14 +564,6 @@
       a.href = URL.createObjectURL(blob); a.download = "allpro-storybrand-targets.json"; document.body.appendChild(a); a.click(); a.remove();
     }
 
-    document.getElementById("unlockBtn").addEventListener("click", () => {
-      if (document.getElementById("passcode").value !== PASSCODE) {
-        document.getElementById("gateMsg").textContent = "Wrong passcode.";
-        return;
-      }
-      gate.classList.add("hide"); app.classList.remove("hide");
-      loadStorybrandIntoUI(); render();
-    });
     document.getElementById("passcode").addEventListener("keydown", e => { if (e.key === "Enter") document.getElementById("unlockBtn").click(); });
     document.getElementById("addLead").addEventListener("click", addLead);
     document.getElementById("saveSettings").addEventListener("click", saveStorybrand);
@@ -486,9 +573,34 @@
     document.getElementById("exportInvoices").addEventListener("click", exportInvoicesCsv);
     document.getElementById("previewRecipients").addEventListener("click", previewCampaignRecipients);
     document.getElementById("sendCampaignMailto").addEventListener("click", sendCampaignMailto);
+    document.getElementById("addWorklog").addEventListener("click", addWorklogEntry);
+    document.getElementById("exportWorklog").addEventListener("click", exportWorklogCsv);
+    document.getElementById("forgetDevice").addEventListener("click", () => {
+      localStorage.removeItem(REMEMBER_KEY);
+      alert("Remembered login removed for this browser.");
+    });
     document.getElementById("clearAll").addEventListener("click", () => {
       if (!confirm("Clear all leads?")) return;
       saveLeads([]); render();
+    });
+
+    if (localStorage.getItem(REMEMBER_KEY) === "1") {
+      gate.classList.add("hide");
+      app.classList.remove("hide");
+      loadStorybrandIntoUI();
+      render();
+    }
+
+    document.getElementById("unlockBtn").addEventListener("click", () => {
+      if (document.getElementById("passcode").value !== PASSCODE) {
+        document.getElementById("gateMsg").textContent = "Wrong passcode.";
+        return;
+      }
+      if (document.getElementById("rememberDevice").checked) localStorage.setItem(REMEMBER_KEY, "1");
+      gate.classList.add("hide");
+      app.classList.remove("hide");
+      loadStorybrandIntoUI();
+      render();
     });
   </script>
 </body>
