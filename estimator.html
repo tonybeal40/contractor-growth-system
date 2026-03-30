@@ -1,477 +1,703 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-35DEM1MGDT"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-35DEM1MGDT');
-</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="canonical" href="https://allprometroeastconstruction.com/estimator.html">
-<title>Project Estimator | All-Pro Construction & Landscape</title>
-<meta name="description" content="Fast project estimator for decks, patios, concrete, fences, bathrooms, and kitchens. Share rough project details and get an instant estimated range.">
-<meta name="keywords" content="project estimator contractor, deck estimate, patio estimate, bathroom remodel estimate, kitchen remodel estimate, fence estimate">
-<meta property="og:title" content="Fast Project Estimator | All-Pro Construction & Landscape">
-<meta property="og:description" content="Get a quick estimate range for your project in minutes. Simple inputs, instant range, and direct contact with Bill Sessions.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://allprometroeastconstruction.com/estimator.html">
-<meta property="og:locale" content="en_US">
-<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-<style>
-  :root{
-    --est-bg:#f6f7fb;
-    --est-card:#ffffff;
-    --est-text:#121826;
-    --est-muted:#5b6477;
-    --est-line:#dbe0ea;
-    --est-accent:#0d3b66;
-    --est-accent-2:#0a2744;
-    --est-good:#0f9d58;
-  }
-  body{background:var(--est-bg);color:var(--est-text)}
-  .est-wrap{max-width:1100px;margin:0 auto;padding:2.2rem 1.1rem 4rem}
-  .est-hero{background:linear-gradient(140deg,#0d3b66,#102a43);color:#fff;border-radius:18px;padding:2.3rem 1.4rem;margin-top:1.2rem}
-  .est-hero h1{font-size:clamp(2rem,5vw,3rem);line-height:1.05;margin:0 0 .5rem}
-  .est-hero p{margin:.3rem 0 0;color:#d4e2ff;max-width:700px}
-  .est-hero .btn-primary{margin-top:1.1rem}
-  .est-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-top:1rem}
-  .est-card{
-    background:var(--est-card);border:1px solid var(--est-line);border-radius:14px;padding:1rem;
-    cursor:pointer;transition:.2s transform,.2s box-shadow,.2s border-color;min-height:88px
-  }
-  .est-card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(9,30,66,.12)}
-  .est-card.active{border-color:var(--est-accent);box-shadow:0 0 0 2px rgba(13,59,102,.15)}
-  .est-card h3{margin:0;font-size:1.08rem}
-  .est-card p{margin:.35rem 0 0;color:var(--est-muted);font-size:.92rem}
-  .panel{background:var(--est-card);border:1px solid var(--est-line);border-radius:16px;padding:1rem;margin-top:1rem}
-  .panel h2{margin:.2rem 0 .8rem;font-size:1.35rem}
-  .panel h3{margin:.2rem 0 .8rem;font-size:1.05rem}
-  .helper{color:var(--est-muted);font-size:.92rem;margin-top:.3rem}
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
-  .row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem}
-  .field{display:flex;flex-direction:column;gap:.35rem}
-  .field label{font-size:.87rem;font-weight:700;color:#2f3b52}
-  .field input,.field select,.field textarea{
-    border:1px solid #cfd6e4;background:#fff;border-radius:10px;padding:.7rem .75rem;font:inherit;color:#1d2433
-  }
-  .toggles{display:flex;gap:1rem;flex-wrap:wrap;margin-top:.25rem}
-  .checkline{display:flex;align-items:center;gap:.45rem;font-size:.95rem}
-  .estimate-box{
-    border:1px solid #cde7d5;background:linear-gradient(180deg,#f3fff7,#ebfff2);
-    border-radius:14px;padding:1rem;margin-top:1rem
-  }
-  .estimate-box .value{font-size:clamp(1.35rem,3.2vw,2rem);font-weight:900;color:#0b6d3b;margin:.2rem 0}
-  .starts{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:.8rem}
-  .start-pill{background:#fff;border:1px solid var(--est-line);border-radius:12px;padding:.7rem .75rem;font-size:.92rem}
-  .start-pill strong{display:block;color:#1f2a3f}
-  .cta-submit{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-top:1rem}
-  .btn-dark{
-    border:none;background:linear-gradient(180deg,var(--est-accent),var(--est-accent-2));
-    color:#fff;padding:.8rem 1rem;border-radius:10px;font-weight:800;cursor:pointer
-  }
-  .fine{color:var(--est-muted);font-size:.87rem}
-  .hidden{display:none}
-  @media (max-width:960px){
-    .est-grid{grid-template-columns:repeat(2,1fr)}
-    .starts{grid-template-columns:1fr}
-  }
-  @media (max-width:700px){
-    .row,.row-3,.est-grid{grid-template-columns:1fr}
-    .est-wrap{padding:1rem .8rem 3rem}
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Project Estimator</title>
+  <link rel="canonical" href="https://allprometroeastconstruction.com/estimator.html" />
+  <meta name="description" content="Fast contractor project estimator for decks, patios, concrete, fences, bathrooms, and kitchens. Get an instant estimate range and submit your project details." />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta property="og:title" content="Free Project Estimator | All-Pro Construction" />
+  <meta property="og:description" content="Dynamic estimator with live pricing ranges for deck, patio/concrete, fence, bathroom, and kitchen projects." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://allprometroeastconstruction.com/estimator.html" />
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --text: #172033;
+      --muted: #667085;
+      --line: #dbe2ea;
+      --accent: #13294b;
+      --accent-2: #0f1728;
+      --success: #e9f7ef;
+      --success-border: #b7e1c2;
+      --shadow: 0 18px 50px rgba(15, 23, 40, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #f8fafc 0%, #eef3f8 100%);
+      color: var(--text);
+    }
+
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 56px 0 24px;
+    }
+
+    .hero-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 36px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--accent);
+      background: #edf3ff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.05;
+      margin: 0 0 12px;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 760px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.4fr .9fr;
+      gap: 24px;
+      padding-bottom: 56px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0 0 18px;
+    }
+
+    .subtext {
+      color: var(--muted);
+      font-size: .95rem;
+      margin-top: -8px;
+      margin-bottom: 18px;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .project-btn {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      border-radius: 16px;
+      padding: 16px 14px;
+      text-align: left;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
+    .project-btn:hover,
+    .project-btn.active {
+      border-color: var(--accent);
+      background: #f3f7fd;
+      transform: translateY(-1px);
+    }
+
+    .grid-2, .grid-3 {
+      display: grid;
+      gap: 14px;
+    }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    label {
+      font-size: .92rem;
+      font-weight: 600;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px 14px;
+      font-size: 1rem;
+      background: #fff;
+      color: var(--text);
+    }
+
+    textarea { min-height: 100px; resize: vertical; }
+
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .check-item {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .check-item input {
+      width: 18px;
+      height: 18px;
+      padding: 0;
+      margin: 0;
+    }
+
+    .estimate-box {
+      background: linear-gradient(180deg, #eff6ff 0%, #f8fbff 100%);
+      border: 1px solid #cfe0fb;
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .estimate-label {
+      font-size: .9rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .estimate-value {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      line-height: 1;
+      font-weight: 800;
+      margin: 0 0 10px;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: .92rem;
+      line-height: 1.5;
+    }
+
+    .range-list {
+      margin: 16px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .range-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border-top: 1px solid #d8e4f7;
+      padding-top: 10px;
+      font-size: .95rem;
+    }
+
+    .submit-btn {
+      width: 100%;
+      border: 0;
+      background: var(--accent-2);
+      color: #fff;
+      font-weight: 700;
+      border-radius: 14px;
+      padding: 16px 18px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
+    .submit-btn:hover { transform: translateY(-1px); }
+
+    .helper {
+      font-size: .86rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .hidden { display: none; }
+
+    .success {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border: 1px solid var(--success-border);
+      background: var(--success);
+      border-radius: 14px;
+      font-size: .95rem;
+    }
+
+    @media (max-width: 920px) {
+      .layout { grid-template-columns: 1fr; }
+      .project-grid, .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .wrap { width: min(100% - 20px, 1120px); }
+      .hero-card, .card { padding: 18px; }
+      .project-grid, .grid-2, .grid-3, .check-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-<nav class="nav" id="nav">
-  <div class="nav-inner">
-    <div class="nav-logo">
-      <a href="index.html" style="color:inherit;"><span>All-Pro</span> Construction
-      <small>&amp; Landscape</small></a>
-    </div>
-    <ul class="nav-links">
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="index.html#reviews">Reviews</a></li>
-      <li><a href="estimator.html">Estimator</a></li>
-      <li><a href="index.html#areas">Areas</a></li>
-      <li><a href="estimator.html" class="nav-cta">Estimator</a></li>
-    </ul>
-    <div class="nav-phone">📞 <strong><a href="tel:6185810676" style="color:inherit;">618-581-0676</a></strong></div>
-  </div>
-</nav>
-
-<main class="est-wrap">
-  <section class="est-hero">
-    <h1>Get a Fast Project Estimate</h1>
-    <p>Answer a few quick questions. Rough numbers are fine. We use this to give Bill everything he needs for a better first conversation.</p>
-    <a href="#project-selector" class="btn-primary">Start Estimate ↓</a>
-  </section>
-
-  <form name="smart-estimate" method="POST" action="https://formsubmit.co/tonybeal40@gmail.com" enctype="multipart/form-data">
-    <input type="hidden" name="_subject" value="New Smart Estimate Request - All-Pro">
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" id="project_type_hidden" name="project_type" value="deck">
-    <input type="hidden" id="estimated_range_hidden" name="estimated_range" value="">
-
-    <section class="panel" id="project-selector">
-      <h2>What are you building?</h2>
-      <div class="est-grid" id="projectCards">
-        <button type="button" class="est-card active" data-project="deck"><h3>Deck</h3><p>New build or replacement</p></button>
-        <button type="button" class="est-card" data-project="patio"><h3>Patio</h3><p>Concrete or paver projects</p></button>
-        <button type="button" class="est-card" data-project="concrete"><h3>Concrete</h3><p>Driveways, slabs, walkways</p></button>
-        <button type="button" class="est-card" data-project="fence"><h3>Fence</h3><p>Wood, vinyl, or aluminum</p></button>
-        <button type="button" class="est-card" data-project="bathroom"><h3>Bathroom</h3><p>Refresh or full remodel</p></button>
-        <button type="button" class="est-card" data-project="kitchen"><h3>Kitchen</h3><p>Upgrade or full renovation</p></button>
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="eyebrow">Free estimator</div>
+        <h1>Get a fast project estimate</h1>
+        <p>Pick your project, enter rough dimensions, and get an instant price range. Rough numbers are fine. Final pricing gets confirmed after a site visit.</p>
       </div>
-      <p class="helper">Typical projects start around: Decks $8K+, Bathrooms $12K+, Kitchens $20K+</p>
     </section>
 
-    <section class="panel">
-      <h2 id="dynamicTitle">Deck Details</h2>
-
-      <div class="project-form" data-project="deck">
-        <div class="row">
-          <div class="field"><label for="deck_length">Length (ft)</label><input id="deck_length" name="deck_length" type="number" min="1" value="12"></div>
-          <div class="field"><label for="deck_width">Width (ft)</label><input id="deck_width" name="deck_width" type="number" min="1" value="16"></div>
+    <section class="layout">
+      <div>
+        <div class="card">
+          <h2 class="section-title">What are you building?</h2>
+          <div class="project-grid" id="projectGrid">
+            <button class="project-btn active" data-project="deck">Deck</button>
+            <button class="project-btn" data-project="patio">Patio / Concrete</button>
+            <button class="project-btn" data-project="fence">Fence</button>
+            <button class="project-btn" data-project="bathroom">Bathroom</button>
+            <button class="project-btn" data-project="kitchen">Kitchen</button>
+          </div>
         </div>
-        <div class="row">
-          <div class="field"><label for="deck_height">Height off ground (ft)</label><input id="deck_height" name="deck_height" type="number" min="0" value="3"></div>
-          <div class="field"><label for="deck_material">Material</label>
-            <select id="deck_material" name="deck_material">
-              <option value="pt">Pressure Treated</option>
+
+        <form class="card" id="estimatorForm">
+          <div id="projectFields"></div>
+
+          <div class="card" style="padding:18px; margin: 18px 0 0; box-shadow:none;">
+            <h3 class="section-title" style="margin-bottom:10px;">Upload a photo</h3>
+            <div class="subtext">Optional, but helpful for faster ballpark pricing</div>
+            <input type="file" name="project_photo" accept="image/*" />
+          </div>
+
+          <div class="card" style="padding:18px; margin: 18px 0 0; box-shadow:none;">
+            <h3 class="section-title">Contact details</h3>
+            <div class="grid-2">
+              <div class="field">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" placeholder="Your name" required>
+              </div>
+              <div class="field">
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" type="tel" placeholder="Best number" required>
+              </div>
+            </div>
+            <div class="grid-2" style="margin-top:14px;">
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="you@example.com">
+              </div>
+              <div class="field">
+                <label for="contactMethod">Preferred contact method</label>
+                <select id="contactMethod" name="contact_method">
+                  <option value="Call">Call</option>
+                  <option value="Text">Text</option>
+                  <option value="Email">Email</option>
+                </select>
+              </div>
+            </div>
+            <div class="field" style="margin-top:14px;">
+              <label for="address">Project address</label>
+              <input id="address" name="address" type="text" placeholder="Street, city, state">
+            </div>
+            <div class="field" style="margin-top:14px;">
+              <label for="notes">Notes</label>
+              <textarea id="notes" name="notes" placeholder="Anything Bill should know before calling"></textarea>
+            </div>
+          </div>
+
+          <button class="submit-btn" type="submit">Send estimate request</button>
+          <div id="successMsg" class="success hidden">Lead captured. Hook this form to Formspree, Netlify Forms, Zapier, or your CRM endpoint and you’re in business.</div>
+        </form>
+      </div>
+
+      <aside>
+        <div class="card">
+          <div class="estimate-box">
+            <div class="estimate-label">Estimated range</div>
+            <div class="estimate-value" id="estimateValue">$8,400 - $14,560</div>
+            <div class="small" id="estimateDetails">Based on 12 x 16 deck pricing with standard assumptions</div>
+          </div>
+
+          <ul class="range-list">
+            <li><span>Decks</span><strong>$35-$65 / sq ft</strong></li>
+            <li><span>Patio / concrete</span><strong>$8-$28 / sq ft</strong></li>
+            <li><span>Fence</span><strong>$35-$95 / linear ft</strong></li>
+            <li><span>Bathroom</span><strong>$8,000-$35,000+</strong></li>
+            <li><span>Kitchen</span><strong>$15,000-$80,000+</strong></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 class="section-title">Pricing logic</h3>
+          <div class="small">
+            These formulas are meant for fast ballparks, not final bids. They’re structured to keep Bill from guessing and to filter weak leads before he burns time driving out.
+          </div>
+        </div>
+      </aside>
+    </section>
+  </div>
+
+  <script>
+    const fieldTemplates = {
+      deck: `
+        <h3 class="section-title">Deck details</h3>
+        <div class="subtext">Example: a standard deck is around 12 x 16 ft</div>
+        <div class="grid-2">
+          <div class="field"><label>Length (ft)</label><input type="number" min="1" step="1" name="length" value="12"></div>
+          <div class="field"><label>Width (ft)</label><input type="number" min="1" step="1" name="width" value="16"></div>
+        </div>
+        <div class="grid-2" style="margin-top:14px;">
+          <div class="field"><label>Height off ground (ft)</label><input type="number" min="0" step="0.5" name="height" value="3"></div>
+          <div class="field"><label>Material</label>
+            <select name="material">
+              <option value="pressure">Pressure treated</option>
               <option value="composite">Composite</option>
             </select>
           </div>
         </div>
-        <div class="toggles">
-          <label class="checkline"><input type="checkbox" id="deck_railings" name="deck_railings"> Railings</label>
-          <label class="checkline"><input type="checkbox" id="deck_stairs" name="deck_stairs"> Stairs</label>
-        </div>
-        <p class="helper">Example: Most decks are around 12x16 ft.</p>
-      </div>
-
-      <div class="project-form hidden" data-project="patio">
-        <div class="row">
-          <div class="field"><label for="patio_length">Length (ft)</label><input id="patio_length" name="patio_length" type="number" min="1" value="20"></div>
-          <div class="field"><label for="patio_width">Width (ft)</label><input id="patio_width" name="patio_width" type="number" min="1" value="14"></div>
-        </div>
-        <div class="row">
-          <div class="field"><label for="patio_thickness">Thickness</label>
-            <select id="patio_thickness" name="patio_thickness">
-              <option value="4">4"</option>
-              <option value="6">6"</option>
-              <option value="8">8"</option>
+        <div class="grid-2" style="margin-top:14px;">
+          <div class="field"><label>Railings</label>
+            <select name="railings">
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
             </select>
           </div>
-          <div class="field"><label for="patio_finish">Finish Type</label>
-            <select id="patio_finish" name="patio_finish">
+          <div class="field"><label>Stairs</label>
+            <select name="stairs">
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
+            </select>
+          </div>
+        </div>
+      `,
+      patio: `
+        <h3 class="section-title">Patio / concrete details</h3>
+        <div class="subtext">Great for slabs, patios, stamped concrete, and tear-out work</div>
+        <div class="grid-2">
+          <div class="field"><label>Length (ft)</label><input type="number" min="1" step="1" name="length" value="20"></div>
+          <div class="field"><label>Width (ft)</label><input type="number" min="1" step="1" name="width" value="20"></div>
+        </div>
+        <div class="grid-3" style="margin-top:14px;">
+          <div class="field"><label>Thickness</label>
+            <select name="thickness">
+              <option value="4">4 inch</option>
+              <option value="6">6 inch</option>
+              <option value="8">8 inch</option>
+            </select>
+          </div>
+          <div class="field"><label>Finish type</label>
+            <select name="finish">
               <option value="standard">Standard</option>
               <option value="stamped">Stamped</option>
-              <option value="aggregate">Exposed Aggregate</option>
+              <option value="exposed">Exposed aggregate</option>
+            </select>
+          </div>
+          <div class="field"><label>Remove existing concrete?</label>
+            <select name="demo">
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
             </select>
           </div>
         </div>
-        <div class="toggles">
-          <label class="checkline"><input type="checkbox" id="patio_remove" name="patio_remove"> Remove existing concrete</label>
-        </div>
-      </div>
-
-      <div class="project-form hidden" data-project="concrete">
-        <div class="row">
-          <div class="field"><label for="conc_length">Length (ft)</label><input id="conc_length" name="concrete_length" type="number" min="1" value="20"></div>
-          <div class="field"><label for="conc_width">Width (ft)</label><input id="conc_width" name="concrete_width" type="number" min="1" value="12"></div>
-        </div>
-        <div class="row">
-          <div class="field"><label for="conc_thickness">Thickness</label>
-            <select id="conc_thickness" name="concrete_thickness">
-              <option value="4">4"</option>
-              <option value="6">6"</option>
-              <option value="8">8"</option>
-            </select>
-          </div>
-          <div class="field"><label for="conc_finish">Finish Type</label>
-            <select id="conc_finish" name="concrete_finish">
-              <option value="standard">Standard</option>
-              <option value="stamped">Stamped</option>
-              <option value="aggregate">Exposed Aggregate</option>
-            </select>
-          </div>
-        </div>
-        <div class="toggles">
-          <label class="checkline"><input type="checkbox" id="conc_remove" name="concrete_remove"> Remove existing concrete</label>
-        </div>
-      </div>
-
-      <div class="project-form hidden" data-project="fence">
-        <div class="row">
-          <div class="field"><label for="fence_length">Total Length (ft)</label><input id="fence_length" name="fence_length" type="number" min="1" value="120"></div>
-          <div class="field"><label for="fence_height">Height</label>
-            <select id="fence_height" name="fence_height">
+      `,
+      fence: `
+        <h3 class="section-title">Fence details</h3>
+        <div class="subtext">Linear footage matters here. Rough is fine.</div>
+        <div class="grid-2">
+          <div class="field"><label>Total length (linear ft)</label><input type="number" min="1" step="1" name="linearFeet" value="120"></div>
+          <div class="field"><label>Height</label>
+            <select name="height">
               <option value="4">4 ft</option>
               <option value="6" selected>6 ft</option>
               <option value="8">8 ft</option>
             </select>
           </div>
         </div>
-        <div class="row">
-          <div class="field"><label for="fence_material">Material</label>
-            <select id="fence_material" name="fence_material">
+        <div class="grid-2" style="margin-top:14px;">
+          <div class="field"><label>Material</label>
+            <select name="material">
               <option value="wood">Wood</option>
               <option value="vinyl">Vinyl</option>
               <option value="aluminum">Aluminum</option>
             </select>
           </div>
-          <div class="field"><label for="fence_gates">Number of gates</label><input id="fence_gates" name="fence_gates" type="number" min="0" value="1"></div>
+          <div class="field"><label>Number of gates</label><input type="number" min="0" step="1" name="gates" value="1"></div>
         </div>
-      </div>
-
-      <div class="project-form hidden" data-project="bathroom">
-        <div class="row">
-          <div class="field"><label for="bath_size">Size (sq ft rough)</label><input id="bath_size" name="bathroom_size" type="number" min="20" value="60"></div>
-          <div class="field"><label for="bath_type">Type</label>
-            <select id="bath_type" name="bathroom_type">
-              <option value="half">Half Bath</option>
-              <option value="full" selected>Full Bath</option>
+      `,
+      bathroom: `
+        <h3 class="section-title">Bathroom remodel</h3>
+        <div class="subtext">This one uses a base remodel price plus feature upgrades</div>
+        <div class="grid-2">
+          <div class="field"><label>Size (sq ft)</label><input type="number" min="20" step="1" name="size" value="60"></div>
+          <div class="field"><label>Bath type</label>
+            <select name="bathType">
+              <option value="half">Half bath</option>
+              <option value="full" selected>Full bath</option>
             </select>
           </div>
         </div>
-        <div class="row">
-          <div class="field"><label for="bath_scope">Scope</label>
-            <select id="bath_scope" name="bathroom_scope">
-              <option value="refresh">Refresh</option>
-              <option value="full" selected>Full Remodel</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Features</label>
-            <div class="toggles">
-              <label class="checkline"><input type="checkbox" id="bath_shower" name="bathroom_feature_shower"> Shower</label>
-              <label class="checkline"><input type="checkbox" id="bath_tub" name="bathroom_feature_tub"> Tub</label>
-              <label class="checkline"><input type="checkbox" id="bath_vanity" name="bathroom_feature_double_vanity"> Double Vanity</label>
-            </div>
+        <div class="field" style="margin-top:14px;">
+          <label>Scope</label>
+          <select name="scope">
+            <option value="refresh">Refresh</option>
+            <option value="standard" selected>Standard remodel</option>
+            <option value="full">Full gut remodel</option>
+          </select>
+        </div>
+        <div style="margin-top:14px;">
+          <label style="display:block; margin-bottom:8px;">Features</label>
+          <div class="check-grid">
+            <label class="check-item"><input type="checkbox" name="features" value="shower"> Shower</label>
+            <label class="check-item"><input type="checkbox" name="features" value="tub"> Tub</label>
+            <label class="check-item"><input type="checkbox" name="features" value="doubleVanity"> Double vanity</label>
+            <label class="check-item"><input type="checkbox" name="features" value="tile"> Premium tile</label>
           </div>
         </div>
-      </div>
-
-      <div class="project-form hidden" data-project="kitchen">
-        <div class="row">
-          <div class="field"><label for="kitchen_size">Size</label>
-            <select id="kitchen_size" name="kitchen_size">
+      `,
+      kitchen: `
+        <h3 class="section-title">Kitchen remodel</h3>
+        <div class="subtext">Cabinets and countertops move this number fast</div>
+        <div class="grid-2">
+          <div class="field"><label>Size</label>
+            <select name="size">
               <option value="small">Small</option>
               <option value="medium" selected>Medium</option>
               <option value="large">Large</option>
             </select>
           </div>
-          <div class="field"><label for="kitchen_cabinets">Cabinets</label>
-            <select id="kitchen_cabinets" name="kitchen_cabinets">
-              <option value="replace" selected>Replace</option>
+          <div class="field"><label>Cabinets</label>
+            <select name="cabinets">
               <option value="reface">Reface</option>
+              <option value="replace" selected>Replace</option>
             </select>
           </div>
         </div>
-        <div class="row">
-          <div class="field"><label for="kitchen_countertops">Countertops</label>
-            <select id="kitchen_countertops" name="kitchen_countertops">
-              <option value="yes" selected>Yes</option>
+        <div class="grid-2" style="margin-top:14px;">
+          <div class="field"><label>Countertops</label>
+            <select name="countertops">
               <option value="no">No</option>
+              <option value="yes" selected>Yes</option>
             </select>
           </div>
-          <div class="field"><label for="kitchen_appliances">Appliances</label>
-            <select id="kitchen_appliances" name="kitchen_appliances">
+          <div class="field"><label>Appliances included</label>
+            <select name="appliances">
+              <option value="no">No</option>
               <option value="yes">Yes</option>
-              <option value="no" selected>No</option>
             </select>
           </div>
         </div>
-      </div>
-    </section>
+      `
+    };
 
-    <section class="estimate-box">
-      <h3>Estimated Range</h3>
-      <div class="value" id="estimateValue">$8,000 - $15,000</div>
-      <p class="fine">Final pricing is confirmed after site visit, access check, and material selections.</p>
-      <div class="starts">
-        <div class="start-pill"><strong>Decks</strong>Typical starts around $8K+</div>
-        <div class="start-pill"><strong>Bathrooms</strong>Typical starts around $12K+</div>
-        <div class="start-pill"><strong>Kitchens</strong>Typical starts around $20K+</div>
-      </div>
-    </section>
+    let currentProject = 'deck';
+    const projectGrid = document.getElementById('projectGrid');
+    const projectFields = document.getElementById('projectFields');
+    const estimateValue = document.getElementById('estimateValue');
+    const estimateDetails = document.getElementById('estimateDetails');
+    const form = document.getElementById('estimatorForm');
+    const successMsg = document.getElementById('successMsg');
 
-    <section class="panel">
-      <h2>Upload a Photo (Optional)</h2>
-      <p class="helper">Helps us give a faster quote.</p>
-      <div class="field">
-        <label for="project_photos">Project Photos</label>
-        <input id="project_photos" name="project_photos" type="file" accept="image/*" multiple>
-      </div>
-    </section>
+    function formatMoney(value) {
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(value);
+    }
 
-    <section class="panel">
-      <h2>Contact Info</h2>
-      <div class="row">
-        <div class="field"><label for="name">Name</label><input id="name" name="name" required></div>
-        <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" required></div>
-      </div>
-      <div class="row">
-        <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required></div>
-        <div class="field"><label for="address">Project Address</label><input id="address" name="project_address"></div>
-      </div>
-      <div class="field">
-        <label>Preferred Contact Method</label>
-        <div class="toggles">
-          <label class="checkline"><input type="radio" name="preferred_contact" value="call" checked> Call</label>
-          <label class="checkline"><input type="radio" name="preferred_contact" value="text"> Text</label>
-          <label class="checkline"><input type="radio" name="preferred_contact" value="email"> Email</label>
-        </div>
-      </div>
-      <div class="field">
-        <label for="notes">Anything else we should know?</label>
-        <textarea id="notes" name="project_notes" rows="4" placeholder="Rough timeline, special requests, HOA rules, access notes..."></textarea>
-      </div>
-      <div class="cta-submit">
-        <button class="btn-dark" type="submit">Get My Estimate</button>
-        <span class="fine">No pressure. Just a fast quote.</span>
-      </div>
-    </section>
-  </form>
-</main>
+    function getFormData() {
+      const fd = new FormData(form);
+      return Object.fromEntries(fd.entries());
+    }
 
-<script>
-const cards = document.querySelectorAll('.est-card');
-const forms = document.querySelectorAll('.project-form');
-const dynamicTitle = document.getElementById('dynamicTitle');
-const projectTypeHidden = document.getElementById('project_type_hidden');
-const estimateValue = document.getElementById('estimateValue');
-const estimateRangeHidden = document.getElementById('estimated_range_hidden');
+    function getFeatures() {
+      return Array.from(document.querySelectorAll('input[name="features"]:checked')).map(el => el.value);
+    }
 
-const titleMap = {
-  deck: 'Deck Details',
-  patio: 'Concrete / Patio Details',
-  concrete: 'Concrete / Patio Details',
-  fence: 'Fence Details',
-  bathroom: 'Bathroom Remodel',
-  kitchen: 'Kitchen Remodel'
-};
+    function renderFields(project) {
+      projectFields.innerHTML = fieldTemplates[project];
+      bindInputs();
+      calculateEstimate();
+    }
 
-let activeProject = 'deck';
+    function calculateEstimate() {
+      const data = getFormData();
+      const features = getFeatures();
+      let low = 0;
+      let high = 0;
+      let detail = '';
 
-function money(n) {
-  return '$' + Math.round(n).toLocaleString();
-}
+      if (currentProject === 'deck') {
+        const length = Number(data.length || 0);
+        const width = Number(data.width || 0);
+        const area = Math.max(1, length * width);
+        const baseLow = data.material === 'composite' ? 45 : 35;
+        const baseHigh = data.material === 'composite' ? 75 : 55;
+        low = area * baseLow;
+        high = area * baseHigh;
 
-function calcEstimate() {
-  let low = 0;
-  let high = 0;
+        const height = Number(data.height || 0);
+        if (height > 3) { low += area * 4; high += area * 8; }
+        if (height > 6) { low += area * 3; high += area * 5; }
+        if (data.railings === 'yes') { low += (length + width) * 12; high += (length + width) * 24; }
+        if (data.stairs === 'yes') { low += 1800; high += 4500; }
 
-  if (activeProject === 'deck') {
-    const length = Number(document.getElementById('deck_length').value || 0);
-    const width = Number(document.getElementById('deck_width').value || 0);
-    const height = Number(document.getElementById('deck_height').value || 0);
-    const material = document.getElementById('deck_material').value;
-    const railings = document.getElementById('deck_railings').checked;
-    const stairs = document.getElementById('deck_stairs').checked;
-    const area = Math.max(1, length * width);
-    const rate = material === 'composite' ? 72 : 48;
-    let base = area * rate + (height * 500);
-    if (railings) base += 1800;
-    if (stairs) base += 1500;
-    low = base * 0.85;
-    high = base * 1.18;
-  }
+        detail = `Formula: area (${area} sq ft) × ${formatMoney(baseLow).replace('.00','')} to ${formatMoney(baseHigh).replace('.00','')} per sq ft, with adders for height, railings, and stairs`;
+      }
 
-  if (activeProject === 'patio' || activeProject === 'concrete') {
-    const prefix = activeProject === 'patio' ? 'patio' : 'conc';
-    const length = Number(document.getElementById(prefix + '_length').value || 0);
-    const width = Number(document.getElementById(prefix + '_width').value || 0);
-    const thickness = document.getElementById(prefix + '_thickness').value;
-    const finish = document.getElementById(prefix + '_finish').value;
-    const remove = document.getElementById(prefix + '_remove').checked;
-    const area = Math.max(1, length * width);
-    const thicknessMult = thickness === '8' ? 1.6 : thickness === '6' ? 1.3 : 1;
-    const finishRate = finish === 'aggregate' ? 22 : finish === 'stamped' ? 18 : 12;
-    let base = area * finishRate * thicknessMult;
-    if (remove) base += 2000;
-    low = base * 0.86;
-    high = base * 1.16;
-  }
+      if (currentProject === 'patio') {
+        const length = Number(data.length || 0);
+        const width = Number(data.width || 0);
+        const area = Math.max(1, length * width);
+        let baseLow = 8;
+        let baseHigh = 14;
 
-  if (activeProject === 'fence') {
-    const len = Number(document.getElementById('fence_length').value || 0);
-    const h = Number(document.getElementById('fence_height').value || 6);
-    const mat = document.getElementById('fence_material').value;
-    const gates = Number(document.getElementById('fence_gates').value || 0);
-    const rate = mat === 'aluminum' ? 75 : mat === 'vinyl' ? 60 : 45;
-    let base = Math.max(1, len) * rate + gates * 350;
-    if (h === 8) base *= 1.2;
-    if (h === 4) base *= 0.85;
-    low = base * 0.88;
-    high = base * 1.14;
-  }
+        if (data.finish === 'stamped') { baseLow = 18; baseHigh = 28; }
+        if (data.finish === 'exposed') { baseLow = 16; baseHigh = 24; }
 
-  if (activeProject === 'bathroom') {
-    const size = Number(document.getElementById('bath_size').value || 60);
-    const type = document.getElementById('bath_type').value;
-    const scope = document.getElementById('bath_scope').value;
-    const shower = document.getElementById('bath_shower').checked;
-    const tub = document.getElementById('bath_tub').checked;
-    const vanity = document.getElementById('bath_vanity').checked;
-    let base = type === 'full' ? 12000 : 8000;
-    if (scope === 'full') base *= 1.7;
-    if (size > 80) base *= 1.2;
-    if (shower) base += 4500;
-    if (tub) base += 3000;
-    if (vanity) base += 1800;
-    low = base * 0.87;
-    high = base * 1.15;
-  }
+        low = area * baseLow;
+        high = area * baseHigh;
 
-  if (activeProject === 'kitchen') {
-    const size = document.getElementById('kitchen_size').value;
-    const cabinets = document.getElementById('kitchen_cabinets').value;
-    const counters = document.getElementById('kitchen_countertops').value;
-    const appliances = document.getElementById('kitchen_appliances').value;
-    let base = size === 'large' ? 45000 : size === 'medium' ? 30000 : 18000;
-    base += cabinets === 'replace' ? 12000 : 6000;
-    if (counters === 'yes') base += 5000;
-    if (appliances === 'yes') base += 4000;
-    low = base * 0.88;
-    high = base * 1.14;
-  }
+        if (data.thickness === '6') { low += area * 2; high += area * 4; }
+        if (data.thickness === '8') { low += area * 5; high += area * 8; }
+        if (data.demo === 'yes') { low += area * 3; high += area * 6; }
 
-  const text = `${money(low)} - ${money(high)}`;
-  estimateValue.textContent = text;
-  estimateRangeHidden.value = text;
-}
+        detail = `Formula: area (${area} sq ft) × finish rate plus thickness and demo adders`;
+      }
 
-function setActiveProject(project) {
-  activeProject = project;
-  projectTypeHidden.value = project;
-  dynamicTitle.textContent = titleMap[project] || 'Project Details';
+      if (currentProject === 'fence') {
+        const linearFeet = Number(data.linearFeet || 0);
+        let baseLow = 35;
+        let baseHigh = 55;
 
-  cards.forEach(card => card.classList.toggle('active', card.dataset.project === project));
-  forms.forEach(form => form.classList.toggle('hidden', form.dataset.project !== project));
+        if (data.material === 'vinyl') { baseLow = 45; baseHigh = 70; }
+        if (data.material === 'aluminum') { baseLow = 55; baseHigh = 95; }
 
-  calcEstimate();
-}
+        low = linearFeet * baseLow;
+        high = linearFeet * baseHigh;
 
-cards.forEach(card => {
-  card.addEventListener('click', () => setActiveProject(card.dataset.project));
-});
+        if (data.height === '8') { low += linearFeet * 10; high += linearFeet * 18; }
+        if (data.height === '4') { low -= linearFeet * 5; high -= linearFeet * 8; }
 
-document.querySelectorAll('input, select, textarea').forEach(el => {
-  el.addEventListener('input', calcEstimate);
-  el.addEventListener('change', calcEstimate);
-});
+        const gates = Number(data.gates || 0);
+        low += gates * 300;
+        high += gates * 1200;
 
-calcEstimate();
-</script>
+        detail = `Formula: ${linearFeet} linear ft × material rate, adjusted for height and ${gates} gate(s)`;
+      }
+
+      if (currentProject === 'bathroom') {
+        const size = Number(data.size || 0);
+        const typeLow = data.bathType === 'half' ? 5000 : 8000;
+        const typeHigh = data.bathType === 'half' ? 14000 : 22000;
+        const scopeLow = data.scope === 'refresh' ? 0 : data.scope === 'standard' ? 2500 : 7000;
+        const scopeHigh = data.scope === 'refresh' ? 2500 : data.scope === 'standard' ? 8000 : 15000;
+
+        low = typeLow + scopeLow + (size * 20);
+        high = typeHigh + scopeHigh + (size * 60);
+
+        const featureAdders = {
+          shower: [2500, 7000],
+          tub: [1800, 6000],
+          doubleVanity: [1200, 4500],
+          tile: [2000, 8000]
+        };
+
+        features.forEach(f => {
+          low += featureAdders[f][0];
+          high += featureAdders[f][1];
+        });
+
+        detail = `Formula: base bathroom remodel price + scope + size + feature upgrades (${features.length || 0} selected)`;
+      }
+
+      if (currentProject === 'kitchen') {
+        const baseMap = {
+          small: [15000, 30000],
+          medium: [22000, 50000],
+          large: [35000, 80000]
+        };
+
+        [low, high] = baseMap[data.size || 'medium'];
+
+        if (data.cabinets === 'reface') {
+          low -= 6000;
+          high -= 15000;
+        }
+        if (data.countertops === 'yes') {
+          low += 2500;
+          high += 9000;
+        }
+        if (data.appliances === 'yes') {
+          low += 3500;
+          high += 15000;
+        }
+
+        detail = `Formula: kitchen size base price adjusted for cabinet approach, countertops, and appliances`;
+      }
+
+      estimateValue.textContent = `${formatMoney(Math.max(low, 0))} - ${formatMoney(Math.max(high, 0))}`;
+      estimateDetails.textContent = detail;
+    }
+
+    function bindInputs() {
+      projectFields.querySelectorAll('input, select, textarea').forEach(el => {
+        el.addEventListener('input', calculateEstimate);
+        el.addEventListener('change', calculateEstimate);
+      });
+    }
+
+    projectGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('.project-btn');
+      if (!btn) return;
+      document.querySelectorAll('.project-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentProject = btn.dataset.project;
+      renderFields(currentProject);
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      calculateEstimate();
+      successMsg.classList.remove('hidden');
+      successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    renderFields(currentProject);
+  </script>
 </body>
 </html>
-
