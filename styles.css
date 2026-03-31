@@ -155,8 +155,28 @@ button { font-family: inherit; cursor: pointer; border: none; }
   height: 100%; max-width: 1160px; margin: 0 auto; padding: 0 2rem;
 }
 .nav-logo {
+  position: relative;
+  padding-left: 0;
+  min-height: 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   font-size: 1.15rem; font-weight: 900; letter-spacing: -.02em;
   line-height: 1.1;
+  gap: 2px;
+}
+.nav-logo-img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  margin-bottom: 2px;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,.45));
+}
+.nav-logo a {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  color: inherit;
 }
 .nav-logo span { color: var(--red); }
 .nav-logo small {
@@ -767,7 +787,9 @@ button { font-family: inherit; cursor: pointer; border: none; }
 /* ── SERVICE PAGES ───────────────────────────────────────── */
 .page-hero {
   padding: calc(var(--nav-h) + 5rem) 0 4rem;
-  background: var(--black);
+  background:
+    linear-gradient(120deg, rgba(8,8,8,.86) 0%, rgba(8,8,8,.70) 52%, rgba(8,8,8,.82) 100%),
+    url("images/branding/site-hero-1920x900.jpg") center 28% / cover no-repeat;
   position: relative; overflow: hidden;
   border-bottom: 1px solid var(--dark4);
 }
@@ -779,6 +801,18 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .page-hero-inner {
   position: relative; z-index: 1;
   max-width: 760px; margin: 0 auto; padding: 0 2rem;
+}
+.page-hero-inner::before {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: -10px;
+  width: clamp(160px, 20vw, 260px);
+  aspect-ratio: 1 / 1;
+  background: url("/images/branding/logo-web.png") center / contain no-repeat;
+  opacity: .12;
+  filter: grayscale(.1) drop-shadow(0 6px 14px rgba(0,0,0,.25));
+  pointer-events: none;
 }
 .page-hero-inner h1 {
   font-size: clamp(2.4rem, 5vw, 3.8rem);
@@ -970,9 +1004,16 @@ button { font-family: inherit; cursor: pointer; border: none; }
 /* Hero Background Image */
 .hero-with-bg {
   position: relative;
+  background-image: url("/images/branding/site-hero-1920x900.jpg");
   background-size: cover !important;
   background-position: center 30% !important;
   background-attachment: fixed !important;
+}
+
+.hero-brand-mark {
+  width: clamp(160px, 23vw, 260px);
+  margin: 0 0 1rem;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.45));
 }
 .hero-with-bg::before {
   content: '';
@@ -1010,6 +1051,21 @@ button { font-family: inherit; cursor: pointer; border: none; }
 }
 .hero-cta {
   animation: heroFadeUp 1s ease-out 0.6s both;
+}
+
+@media (max-width: 768px) {
+  .nav-logo {
+    min-height: 40px;
+    font-size: 1rem;
+  }
+  .nav-logo-img {
+    width: 34px;
+    height: 34px;
+  }
+  .hero-brand-mark {
+    width: clamp(130px, 45vw, 200px);
+    margin-bottom: .75rem;
+  }
 }
 
 /* Trust Badges Row */

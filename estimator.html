@@ -3,15 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free Project Estimator</title>
+  <title>Free Project Estimator | All-Pro Metro East Construction</title>
   <link rel="canonical" href="https://allprometroeastconstruction.com/estimator.html" />
   <meta name="description" content="Fast contractor project estimator for decks, patios, concrete, fences, bathrooms, and kitchens. Get an instant estimate range and submit your project details." />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-  <meta property="og:title" content="Free Project Estimator | All-Pro Construction" />
-  <meta property="og:description" content="Dynamic estimator with live pricing ranges for deck, patio/concrete, fence, bathroom, and kitchen projects." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://allprometroeastconstruction.com/estimator.html" />
-  <style>
+          <style>
     :root {
       --bg: #f6f8fb;
       --card: #ffffff;
@@ -274,6 +270,15 @@
       .project-grid, .grid-2, .grid-3, .check-grid { grid-template-columns: 1fr; }
     }
   </style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free Project Estimator | All-Pro Metro East Construction">
+<meta property="og:description" content="Fast contractor project estimator for decks, patios, concrete, fences, bathrooms, and kitchens. Get an instant estimate range and submit your project details.">
+<meta property="og:image" content="https://allprometroeastconstruction.com/images/branding/logo-square.png">
+<meta property="og:url" content="https://allprometroeastconstruction.com/estimator.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Project Estimator | All-Pro Metro East Construction">
+<meta name="twitter:description" content="Fast contractor project estimator for decks, patios, concrete, fences, bathrooms, and kitchens. Get an instant estimate range and submit your project details.">
+<meta name="twitter:image" content="https://allprometroeastconstruction.com/images/branding/logo-square.png">
 </head>
 <body>
   <div class="wrap">
@@ -344,7 +349,7 @@
           </div>
 
           <button class="submit-btn" type="submit">Send estimate request</button>
-          <div id="successMsg" class="success hidden">Lead captured. Hook this form to Formspree, Netlify Forms, Zapier, or your CRM endpoint and you’re in business.</div>
+          <div id="successMsg" class="success hidden">Lead captured. Hook this form to Formspree, Netlify Forms, Zapier, or your CRM endpoint and you're in business.</div>
         </form>
       </div>
 
@@ -368,7 +373,7 @@
         <div class="card">
           <h3 class="section-title">Pricing logic</h3>
           <div class="small">
-            These formulas are meant for fast ballparks, not final bids. They’re structured to keep Bill from guessing and to filter weak leads before he burns time driving out.
+            These formulas are meant for fast ballparks, not final bids. They're structured to keep Bill from guessing and to filter weak leads before he burns time driving out.
           </div>
         </div>
       </aside>
@@ -576,7 +581,7 @@
         if (data.railings === 'yes') { low += (length + width) * 12; high += (length + width) * 24; }
         if (data.stairs === 'yes') { low += 1800; high += 4500; }
 
-        detail = `Formula: area (${area} sq ft) × ${formatMoney(baseLow).replace('.00','')} to ${formatMoney(baseHigh).replace('.00','')} per sq ft, with adders for height, railings, and stairs`;
+        detail = `Formula: area (${area} sq ft) Ã— ${formatMoney(baseLow).replace('.00','')} to ${formatMoney(baseHigh).replace('.00','')} per sq ft, with adders for height, railings, and stairs`;
       }
 
       if (currentProject === 'patio') {
@@ -596,7 +601,7 @@
         if (data.thickness === '8') { low += area * 5; high += area * 8; }
         if (data.demo === 'yes') { low += area * 3; high += area * 6; }
 
-        detail = `Formula: area (${area} sq ft) × finish rate plus thickness and demo adders`;
+        detail = `Formula: area (${area} sq ft) Ã— finish rate plus thickness and demo adders`;
       }
 
       if (currentProject === 'fence') {
@@ -617,7 +622,7 @@
         low += gates * 300;
         high += gates * 1200;
 
-        detail = `Formula: ${linearFeet} linear ft × material rate, adjusted for height and ${gates} gate(s)`;
+        detail = `Formula: ${linearFeet} linear ft Ã— material rate, adjusted for height and ${gates} gate(s)`;
       }
 
       if (currentProject === 'bathroom') {
@@ -701,3 +706,5 @@
   </script>
 </body>
 </html>
+
+
