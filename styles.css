@@ -166,18 +166,29 @@ button { font-family: inherit; cursor: pointer; border: none; }
   gap: .7rem;
 }
 .nav-logo-img {
-  width: 44px;
-  height: 44px;
+  width: 60px;
+  height: 60px;
   flex-shrink: 0;
   object-fit: contain;
   margin: 0;
   filter: drop-shadow(0 2px 6px rgba(0,0,0,.38));
 }
-.nav-logo a {
+.nav-logo-link {
   display: inline-flex;
+  align-items: center;
+  gap: .7rem;
+  color: inherit;
+}
+.nav-logo .nav-logo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .7rem;
+  color: inherit;
+}
+.nav-logo-text {
+  display: flex;
   flex-direction: column;
   gap: 1px;
-  color: inherit;
 }
 .nav-logo span { color: var(--red); }
 .nav-logo small {
@@ -1062,8 +1073,8 @@ button { font-family: inherit; cursor: pointer; border: none; }
     gap: .5rem;
   }
   .nav-logo-img {
-    width: 32px;
-    height: 32px;
+    width: 42px;
+    height: 42px;
   }
 }
 
