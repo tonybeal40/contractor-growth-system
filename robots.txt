@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /allpro-crm-private-a9k3r7.html
+Disallow: /allpro-email-outreach-private-r4h8.html
+Disallow: /unsubscribe-allpro-r4h8.html
 Sitemap: https://allprometroeastconstruction.com/sitemap.xml

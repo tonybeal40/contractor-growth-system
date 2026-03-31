@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Unsubscribe | All-Pro Metro East Construction</title>
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <style>
+    :root {
+      --bg: #f3f6fb;
+      --card: #ffffff;
+      --line: #d3deef;
+      --text: #1d2a42;
+      --muted: #596b88;
+      --accent: #d61a3c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #f9fbff 0%, var(--bg) 100%);
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+    }
+    .wrap {
+      width: min(720px, calc(100% - 26px));
+      margin: 40px auto;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 16px 34px rgba(18, 34, 58, 0.08);
+    }
+    h1 { margin: 0 0 10px; font-size: 1.6rem; }
+    p { color: var(--muted); margin: 0 0 12px; }
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    input {
+      width: 100%;
+      padding: 12px 12px;
+      border: 1px solid #c6d5ef;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+    .btn {
+      margin-top: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #fff;
+      background: var(--accent);
+      padding: 11px 16px;
+      font-weight: 700;
+    }
+    .hint {
+      margin-top: 10px;
+      font-size: .85rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <h1>Unsubscribe from All-Pro emails</h1>
+      <p>Enter your email and click unsubscribe. We will remove you from marketing emails.</p>
+      <label for="email">Email address</label>
+      <input id="email" type="email" placeholder="you@example.com" />
+      <a id="unsubscribeLink" class="btn" href="mailto:tbeal@tonybeal.net?subject=Unsubscribe%20request%20-%20All-Pro&body=Please%20remove%20this%20email%20from%20marketing%20emails:%20">Unsubscribe</a>
+      <p class="hint">If the button opens your mail app, send that message and we will process your request quickly.</p>
+    </section>
+  </main>
+
+  <script>
+    const email = document.getElementById("email");
+    const link = document.getElementById("unsubscribeLink");
+
+    function updateLink() {
+      const value = encodeURIComponent(email.value.trim());
+      link.href = "mailto:tbeal@tonybeal.net?subject=Unsubscribe%20request%20-%20All-Pro&body=Please%20remove%20this%20email%20from%20marketing%20emails:%20" + value;
+    }
+
+    email.addEventListener("input", updateLink);
+    updateLink();
+  </script>
+</body>
+</html>
