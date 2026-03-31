@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bill Tax Docs Access</title>
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <style>
+    body{font-family:Segoe UI,Arial,sans-serif;background:#0f172a;color:#e2e8f0;margin:0;padding:26px}
+    .card{max-width:860px;margin:0 auto;background:#111c34;border:1px solid #334155;border-radius:12px;padding:18px}
+    h1{margin:0 0 10px;font-size:1.4rem}
+    p{color:#cbd5e1}
+    .btn{display:inline-block;background:#dc2626;color:#fff;text-decoration:none;padding:10px 14px;border-radius:8px;margin:6px 8px 0 0;font-weight:700}
+    ul{line-height:1.6}
+    .hide{display:none}
+    input{padding:10px;border-radius:8px;border:1px solid #64748b;background:#0b1220;color:#fff;width:260px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>All-Pro Tax Package (Private Access)</h1>
+    <p>Enter access code to view downloads.</p>
+    <div id="gate">
+      <input id="code" type="password" placeholder="Access code" />
+      <a class="btn" href="#" id="unlock">Unlock</a>
+      <p id="msg"></p>
+    </div>
+    <div id="content" class="hide">
+      <p>Download and print as needed:</p>
+      <a class="btn" href="./ALLPRO_Financial_Summary_2023.pdf" target="_blank" rel="noopener">Open 2023 PDF</a>
+      <a class="btn" href="./ALLPRO_Financial_Summary_2025.pdf" target="_blank" rel="noopener">Open 2025 PDF</a>
+      <a class="btn" href="./AllPro_Tax_Master_2023_2025.xlsx">Download Excel</a>
+      <a class="btn" href="./ALLPRO_CPA_Package_2023_2025.zip">Download Full ZIP</a>
+      <h2>What we did</h2>
+      <ul>
+        <li>Separated 2023 and 2025 data into structured accounting sheets.</li>
+        <li>Built Revenue / COGS / Expense / Non-Deductible grouping logic.</li>
+        <li>Generated monthly summaries and contractor labor breakdown.</li>
+        <li>Prepared two CPA-style PDF summaries for attorney/CPA review.</li>
+      </ul>
+      <p><strong>Important:</strong> final CPA/attorney review is still required before filing.</p>
+    </div>
+  </div>
+  <script>
+    const PASS = "BillTax2026!";
+    const unlock = document.getElementById("unlock");
+    unlock.addEventListener("click", (e)=>{
+      e.preventDefault();
+      const val = document.getElementById("code").value;
+      const ok = (val === PASS);
+      document.getElementById("content").classList.toggle("hide", !ok);
+      document.getElementById("msg").textContent = ok ? "Access granted." : "Wrong code.";
+    });
+  </script>
+</body>
+</html>

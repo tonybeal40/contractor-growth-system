@@ -3,4 +3,5 @@ Allow: /
 Disallow: /allpro-crm-private-a9k3r7.html
 Disallow: /allpro-email-outreach-private-r4h8.html
 Disallow: /unsubscribe-allpro-r4h8.html
+Disallow: /bill-docs-k7m2v9/
 Sitemap: https://allprometroeastconstruction.com/sitemap.xml
