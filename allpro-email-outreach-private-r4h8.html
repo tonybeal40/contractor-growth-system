@@ -91,6 +91,31 @@
       font: 14px/1.4 Consolas, "Courier New", monospace;
     }
     .small { font-size: .87rem; }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    label {
+      color: var(--muted);
+      font-size: .87rem;
+      font-weight: 700;
+      letter-spacing: .01em;
+    }
+    input, .msgbox {
+      width: 100%;
+      border: 1px solid #35517f;
+      border-radius: 10px;
+      background: #0a162b;
+      color: var(--text);
+      padding: 10px 11px;
+      font: 14px/1.4 "Segoe UI", Arial, sans-serif;
+    }
+    .msgbox {
+      min-height: 120px;
+      resize: vertical;
+    }
     .warning {
       border-left: 4px solid #ffb347;
       padding: 10px 12px;
@@ -146,6 +171,36 @@
           <li>Keep complaint rate under 0.3%</li>
         </ul>
       </article>
+    </section>
+
+    <section class="card">
+      <h2>One-Click Draft Buttons (Gmail + Outlook)</h2>
+      <p class="muted small">Type the recipient + message, then click a button to open a prefilled draft. This works great for both All-Pro and TonyBeal outreach.</p>
+      <div class="field">
+        <label for="draftTo">To email</label>
+        <input id="draftTo" type="email" placeholder="name@example.com" />
+      </div>
+      <div class="field">
+        <label for="draftSubject">Subject</label>
+        <input id="draftSubject" type="text" value="Quick estimate for your next project in Metro East" />
+      </div>
+      <div class="field">
+        <label for="draftBody">Message body</label>
+        <textarea id="draftBody" class="msgbox">Hi [First Name],
+
+I wanted to reach out because we are booking home projects in Metro East right now (decks, fences, patios/concrete, bathrooms, kitchens).
+
+If you want a fast estimate with clear scope and timeline, reply here and we can price it this week.
+
+Start here: https://allprometroeastconstruction.com/estimator.html
+- All-Pro Metro East Construction
+618-581-0676</textarea>
+      </div>
+      <div class="row">
+        <a id="openGmail" class="btn" href="#" target="_blank" rel="noopener">Open in Gmail</a>
+        <a id="openOutlook" class="btn ghost" href="#" target="_blank" rel="noopener">Open in Outlook</a>
+        <a id="openMailto" class="btn ghost" href="#">Open Default Mail App</a>
+      </div>
     </section>
 
     <section class="card">
@@ -215,5 +270,26 @@ All-Pro Metro East Construction, [Your Mailing Address], Metro East, IL.
 Unsubscribe: https://allprometroeastconstruction.com/unsubscribe-allpro-r4h8.html</textarea>
     </section>
   </main>
+  <script>
+    const toEl = document.getElementById("draftTo");
+    const subjectEl = document.getElementById("draftSubject");
+    const bodyEl = document.getElementById("draftBody");
+    const gmailBtn = document.getElementById("openGmail");
+    const outlookBtn = document.getElementById("openOutlook");
+    const mailtoBtn = document.getElementById("openMailto");
+
+    function updateDraftLinks() {
+      const to = encodeURIComponent((toEl.value || "").trim());
+      const subject = encodeURIComponent(subjectEl.value || "");
+      const body = encodeURIComponent(bodyEl.value || "");
+
+      gmailBtn.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=${subject}&body=${body}`;
+      outlookBtn.href = `https://outlook.office.com/mail/deeplink/compose?to=${to}&subject=${subject}&body=${body}`;
+      mailtoBtn.href = `mailto:${toEl.value || ""}?subject=${subject}&body=${body}`;
+    }
+
+    [toEl, subjectEl, bodyEl].forEach(el => el.addEventListener("input", updateDraftLinks));
+    updateDraftLinks();
+  </script>
 </body>
 </html>

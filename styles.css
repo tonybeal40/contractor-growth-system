@@ -1016,9 +1016,9 @@ button { font-family: inherit; cursor: pointer; border: none; }
 /* Hero Background Image */
 .hero-with-bg {
   position: relative;
-  background-image: url("https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=2200&q=80");
+  background-image: url("/images/deck-build-metro-east-il.png");
   background-size: cover !important;
-  background-position: center 42% !important;
+  background-position: center center !important;
   background-attachment: scroll !important;
 }
 
