@@ -156,26 +156,27 @@ button { font-family: inherit; cursor: pointer; border: none; }
 }
 .nav-logo {
   position: relative;
-  padding-left: 0;
-  min-height: 56px;
+  min-height: 0;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
   font-size: 1.15rem; font-weight: 900; letter-spacing: -.02em;
-  line-height: 1.1;
-  gap: 2px;
+  line-height: 1.05;
+  gap: .7rem;
 }
 .nav-logo-img {
-  width: 58px;
-  height: 58px;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
   object-fit: contain;
-  margin-bottom: 2px;
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,.45));
+  margin: 0;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.38));
 }
 .nav-logo a {
   display: inline-flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
   color: inherit;
 }
 .nav-logo span { color: var(--red); }
@@ -255,7 +256,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
   transform: translateY(-50%);
   font-size: clamp(280px, 30vw, 420px);
   font-weight: 900; line-height: 1;
-  color: rgba(200,16,46,.07);
+  color: rgba(200,16,46,.035);
   letter-spacing: -.06em;
   pointer-events: none; user-select: none;
   white-space: nowrap;
@@ -788,8 +789,8 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .page-hero {
   padding: calc(var(--nav-h) + 5rem) 0 4rem;
   background:
-    linear-gradient(120deg, rgba(8,8,8,.86) 0%, rgba(8,8,8,.70) 52%, rgba(8,8,8,.82) 100%),
-    url("images/branding/site-hero-1920x900.jpg") center 28% / cover no-repeat;
+    radial-gradient(circle at 20% 30%, rgba(200,16,46,.18) 0%, rgba(200,16,46,0) 35%),
+    linear-gradient(135deg, #0a1224 0%, #0b1934 46%, #0a1224 100%);
   position: relative; overflow: hidden;
   border-bottom: 1px solid var(--dark4);
 }
@@ -803,7 +804,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
   max-width: 760px; margin: 0 auto; padding: 0 2rem;
 }
 .page-hero-inner::before {
-  content: "";
+  content: none;
   position: absolute;
   right: -40px;
   top: -10px;
@@ -1004,16 +1005,14 @@ button { font-family: inherit; cursor: pointer; border: none; }
 /* Hero Background Image */
 .hero-with-bg {
   position: relative;
-  background-image: url("/images/branding/site-hero-1920x900.jpg");
+  background-image: url("https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=2200&q=80");
   background-size: cover !important;
-  background-position: center 30% !important;
-  background-attachment: fixed !important;
+  background-position: center 42% !important;
+  background-attachment: scroll !important;
 }
 
 .hero-brand-mark {
-  width: clamp(160px, 23vw, 260px);
-  margin: 0 0 1rem;
-  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.45));
+  display: none;
 }
 .hero-with-bg::before {
   content: '';
@@ -1055,16 +1054,13 @@ button { font-family: inherit; cursor: pointer; border: none; }
 
 @media (max-width: 768px) {
   .nav-logo {
-    min-height: 40px;
+    min-height: 0;
     font-size: 1rem;
+    gap: .5rem;
   }
   .nav-logo-img {
-    width: 34px;
-    height: 34px;
-  }
-  .hero-brand-mark {
-    width: clamp(130px, 45vw, 200px);
-    margin-bottom: .75rem;
+    width: 32px;
+    height: 32px;
   }
 }
 
