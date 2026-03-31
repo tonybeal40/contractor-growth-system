@@ -146,13 +146,13 @@ button { font-family: inherit; cursor: pointer; border: none; }
   transition: background .3s, backdrop-filter .3s, box-shadow .3s;
 }
 .nav.scrolled {
-  background: rgba(8,8,8,.92);
+  background: rgba(8, 16, 30, .96);
   backdrop-filter: blur(18px);
   box-shadow: 0 1px 0 rgba(255,255,255,.06), var(--shadow-sm);
 }
 .nav-inner {
   display: flex; align-items: center; justify-content: space-between;
-  height: 100%; max-width: 1160px; margin: 0 auto; padding: 0 2rem;
+  height: 100%; max-width: 1220px; margin: 0 auto; padding: 0 1.6rem;
 }
 .nav-logo {
   position: relative;
@@ -186,7 +186,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
   margin-top: 1px;
 }
 .nav-links {
-  display: flex; align-items: center; gap: 2.5rem; list-style: none;
+  display: flex; align-items: center; gap: 1.9rem; list-style: none;
 }
 .nav-links a {
   font-size: .85rem; font-weight: 600; color: var(--gray2);
@@ -289,7 +289,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
 }
 
 .hero-heading {
-  font-size: clamp(3rem, 6.5vw, 5.5rem);
+  font-size: clamp(2.6rem, 6vw, 4.7rem);
   font-weight: 900; line-height: 1.0; letter-spacing: -.03em;
   margin-bottom: 1.5rem;
 }
@@ -301,8 +301,8 @@ button { font-family: inherit; cursor: pointer; border: none; }
 }
 
 .hero-sub {
-  font-size: 1.1rem; color: var(--gray2); line-height: 1.7;
-  max-width: 520px; margin-bottom: 2.5rem;
+  font-size: 1.05rem; color: #d5dbe5; line-height: 1.75;
+  max-width: 620px; margin-bottom: 2.2rem;
 }
 
 .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
@@ -1018,13 +1018,16 @@ button { font-family: inherit; cursor: pointer; border: none; }
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(10,10,20,0.82) 0%, rgba(20,40,80,0.65) 60%, rgba(10,10,20,0.75) 100%);
+  background: linear-gradient(115deg, rgba(8,14,28,.9) 0%, rgba(10,28,58,.72) 52%, rgba(8,14,28,.86) 100%);
   z-index: 0;
 }
 .hero-with-bg .hero-inner,
 .hero-with-bg .hero-bg {
   position: relative;
   z-index: 1;
+}
+.hero-with-bg .hero-bg {
+  display: none;
 }
 
 /* Hero Heading Animation */
