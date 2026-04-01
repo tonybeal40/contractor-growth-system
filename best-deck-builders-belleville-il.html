@@ -53,10 +53,12 @@
     </div>
     <div class="section-head">
       <h2>Get Matched With a Contractor</h2>
-      <form class="content-block">
-        <input type="text" placeholder="Name" />
-        <input type="text" placeholder="Phone" />
-        <input type="text" placeholder="Project Type" />
+      <form class="content-block" action="https://formspree.io/f/your-form-id" method="post">
+        <input type="hidden" name="_subject" value="Best deck builders lead" />
+        <input type="text" name="name" placeholder="Name" required />
+        <input type="tel" name="phone" placeholder="Phone" required />
+        <input type="email" name="email" placeholder="Email" />
+        <input type="text" name="project" placeholder="Project Type" />
         <button type="submit" class="btn btn-primary sidebar-btn">Get Quotes</button>
       </form>
     </div>
