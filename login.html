@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" type="image/png" href="/images/branding/logo-square.png">
+  <link rel="shortcut icon" href="/images/branding/logo-square.png">
+  <link rel="apple-touch-icon" href="/images/branding/logo-square.png">
+  <title>Login | All-Pro Construction</title>
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <style>
+    :root {
+      --bg:     #0a1222;
+      --card:   #121c31;
+      --line:   #2a3f66;
+      --text:   #eaf1ff;
+      --muted:  #a6b7d8;
+      --accent: #2e7df6;
+      --accent2:#1a4da7;
+      --err:    #e04040;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(circle at top left, #152845 0%, var(--bg) 55%);
+      color: var(--text);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+    }
+    .card {
+      width: min(420px, 100%);
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 32px 28px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .logo img {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+    }
+    .logo-text h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .logo-text span {
+      font-size: .8rem;
+      color: var(--muted);
+    }
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .sub {
+      color: var(--muted);
+      font-size: .88rem;
+      margin-bottom: 24px;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    label {
+      font-size: .84rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      background: #0c1527;
+      color: var(--text);
+      border: 1px solid #35517f;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font: inherit;
+      font-size: .95rem;
+      outline: none;
+      transition: border-color .2s;
+    }
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: var(--accent);
+    }
+    .remember-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .remember-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .remember-row label {
+      font-size: .88rem;
+      color: var(--muted);
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .btn {
+      width: 100%;
+      border: 1px solid #3b63a3;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      color: #fff;
+      border-radius: 10px;
+      padding: 11px;
+      font: inherit;
+      font-size: .97rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+    .btn:hover { opacity: .9; }
+    .btn:active { opacity: .8; }
+    .error {
+      margin-top: 14px;
+      color: var(--err);
+      font-size: .88rem;
+      min-height: 20px;
+    }
+    .footer-note {
+      margin-top: 20px;
+      text-align: center;
+      font-size: .78rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">
+      <img src="/images/branding/logo-square.png" alt="All-Pro logo" />
+      <div class="logo-text">
+        <h1>All-Pro Construction</h1>
+        <span>Private Admin Area</span>
+      </div>
+    </div>
+
+    <h2>Sign In</h2>
+    <p class="sub">Enter your credentials to access the admin tools.</p>
+
+    <form id="loginForm" autocomplete="on" novalidate>
+      <div class="field">
+        <label for="username">Username</label>
+        <input id="username" type="text" name="username" autocomplete="username" placeholder="Username" required />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password" autocomplete="current-password" placeholder="Password" required />
+      </div>
+      <div class="remember-row">
+        <input id="rememberMe" type="checkbox" />
+        <label for="rememberMe">Remember me on this device</label>
+      </div>
+      <button class="btn" type="submit">Sign In</button>
+      <p class="error" id="errorMsg" aria-live="polite"></p>
+    </form>
+
+    <p class="footer-note">All-Pro Metro East Construction &mdash; Admin access only.</p>
+  </div>
+
+  <script>
+    (function () {
+      var SESSION_KEY = "allpro_session_v1";
+      var REMEMBER_KEY = "allpro_session_remember_v1";
+
+      // Credentials (client-side only — this site has no backend)
+      var VALID_USERNAME = "allpro";
+      var VALID_PASSWORD = "AllProOnly-2026";
+
+      // If already logged in, redirect immediately
+      var next = new URLSearchParams(window.location.search).get("next") || "allpro-crm-private-a9k3r7.html";
+      if (sessionStorage.getItem(SESSION_KEY) === "1" || localStorage.getItem(REMEMBER_KEY) === "1") {
+        window.location.replace(decodeURIComponent(next));
+        return;
+      }
+
+      document.getElementById("loginForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var user = document.getElementById("username").value.trim();
+        var pass = document.getElementById("password").value;
+        var remember = document.getElementById("rememberMe").checked;
+        var errEl = document.getElementById("errorMsg");
+
+        if (user !== VALID_USERNAME || pass !== VALID_PASSWORD) {
+          errEl.textContent = "Incorrect username or password. Please try again.";
+          document.getElementById("password").value = "";
+          document.getElementById("password").focus();
+          return;
+        }
+
+        errEl.textContent = "";
+        sessionStorage.setItem(SESSION_KEY, "1");
+        if (remember) {
+          localStorage.setItem(REMEMBER_KEY, "1");
+        }
+        window.location.replace(decodeURIComponent(next));
+      });
+    })();
+  </script>
+</body>
+</html>

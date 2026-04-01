@@ -7,6 +7,21 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <script>
+    (function () {
+      var SESSION_KEY = "allpro_session_v1";
+      var REMEMBER_KEY = "allpro_session_remember_v1";
+      if (sessionStorage.getItem(SESSION_KEY) !== "1" && localStorage.getItem(REMEMBER_KEY) !== "1") {
+        var next = encodeURIComponent(window.location.pathname + window.location.search);
+        window.location.replace("login.html?next=" + next);
+      }
+      window.signOut = function () {
+        sessionStorage.removeItem(SESSION_KEY);
+        localStorage.removeItem(REMEMBER_KEY);
+        window.location.replace("login.html");
+      };
+    })();
+  </script>
   <header>
     <div class="header-inner">
       <div class="brand">
@@ -55,7 +70,9 @@ Bill Sessions
   </main>
   <footer>
     <div class="footer-inner">
-      <p>Private marketing dashboard—keep this page bookmarked for quick access.</p>
+      <p>Private marketing dashboard—keep this page bookmarked for quick access. &nbsp;
+        <button onclick="signOut()" style="background:none;border:none;color:inherit;cursor:pointer;text-decoration:underline;font:inherit;padding:0;">Sign out</button>
+      </p>
     </div>
   </footer>
 </body>

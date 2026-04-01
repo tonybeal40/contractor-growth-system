@@ -132,6 +132,21 @@
   </style>
 </head>
 <body>
+  <script>
+    (function () {
+      var SESSION_KEY = "allpro_session_v1";
+      var REMEMBER_KEY = "allpro_session_remember_v1";
+      if (sessionStorage.getItem(SESSION_KEY) !== "1" && localStorage.getItem(REMEMBER_KEY) !== "1") {
+        var next = encodeURIComponent(window.location.pathname + window.location.search);
+        window.location.replace("login.html?next=" + next);
+      }
+      window.signOut = function () {
+        sessionStorage.removeItem(SESSION_KEY);
+        localStorage.removeItem(REMEMBER_KEY);
+        window.location.replace("login.html");
+      };
+    })();
+  </script>
   <main class="wrap">
     <section class="card">
       <div class="pill">Private / Noindex</div>
@@ -140,7 +155,8 @@
       <div class="row">
         <a class="btn ghost" href="index.html">Back to Home</a>
         <a class="btn ghost" href="allpro-crm-private-a9k3r7.html">Open Private CRM</a>
-        <a class="btn" href="unsubscribe-allpro-r4h8.html">Open Unsubscribe Page</a>
+        <a class="btn ghost" href="unsubscribe-allpro-r4h8.html">Open Unsubscribe Page</a>
+        <button class="btn ghost" type="button" onclick="signOut()">Sign Out</button>
       </div>
       <div class="warning small">
         I can help maximize deliverability, but nobody can promise "100% inbox" placement. The legal/safe way is consent-based sending plus clean authentication and fast unsubscribe handling.
