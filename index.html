@@ -187,7 +187,7 @@
       <div class="hero-actions">
         <a href="#contact" class="btn btn-red">Get a Free Estimate →</a>
         <a href="estimator.html" class="btn btn-outline">Smart Estimator</a>
-        <a href="tel:6185810676" class="btn btn-outline">📞 618-581-0676</a>
+        <a href="tel:6185810676" class="btn btn-outline call-now">📞 618-581-0676</a>
       </div>
       <div class="hero-proof">
         <div class="hero-proof-item">
@@ -241,6 +241,11 @@
     </div>
   </div>
 </section>
+
+  <section class="estimate-banner">
+    <strong>24-hour estimate response</strong>
+    <p>Submit your project on any page and we’ll reply within 24 hours with availability and next steps.</p>
+  </section>
 
 <section class="photo-section bath-feature-section">
   <div class="container">
@@ -750,6 +755,11 @@
   </div>
 </footer>
 
+<div class="sticky-call">
+  <a href="tel:6185810676" class="call-now">Call 618-581-0676</a>
+  <a href="#contact">Get Estimate</a>
+</div>
+
 <script>
 // Nav scroll effect
 const nav = document.getElementById('nav');
@@ -779,10 +789,31 @@ const countObserver = new IntersectionObserver((entries) => {
       el.textContent = Math.round(start) + (el.dataset.suffix || '');
       if (start >= target) clearInterval(timer);
     }, 30);
-    countObserver.unobserve(el);
+  countObserver.unobserve(el);
   });
 }, { threshold: 0.5 });
 countEls.forEach(el => countObserver.observe(el));
+
+  document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', () => {
+      if (window.gtag) {
+        gtag('event', 'form_submit', {
+          event_category: 'Lead',
+          event_label: form.dataset.form || 'Lead Form'
+        });
+      }
+    });
+  });
+  document.querySelectorAll('.call-now, .sticky-call a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.gtag) {
+        gtag('event', 'call_click', {
+          event_category: 'Call',
+          event_label: 'Call Now'
+        });
+      }
+    });
+  });
 </script>
 </body>
 </html>

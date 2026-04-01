@@ -953,6 +953,42 @@ button { font-family: inherit; cursor: pointer; border: none; }
 }
 .footer-bottom p { font-size: .8rem; color: var(--gray4); }
 
+.sticky-call {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--red);
+  color: #fff;
+  padding: .9rem 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .8rem;
+  z-index: 1200;
+  box-shadow: 0 -14px 30px rgba(0,0,0,.35);
+  font-weight: 700;
+}
+.sticky-call a {
+  color: #fff;
+  font-weight: 800;
+}
+.estimate-banner {
+  background: linear-gradient(135deg, rgba(200,16,46,.9), rgba(230,152,107,.95));
+  color: #111;
+  padding: 1.2rem 1.3rem;
+  border-radius: var(--radius-lg);
+  margin: 2.5rem auto;
+  width: min(100% - 2rem, 1040px);
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,.25);
+}
+.estimate-banner strong {
+  display: block;
+  font-size: 1.4rem;
+  margin-bottom: .25rem;
+}
+
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .hero-inner { grid-template-columns: 1fr; max-width: 640px; }
