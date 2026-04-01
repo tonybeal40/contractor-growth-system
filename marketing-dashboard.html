@@ -7,56 +7,105 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
-    <div class="header-inner">
-      <div class="brand">
-        <h1>All-Pro Marketing</h1>
-        <span>Hidden Reference</span>
-      </div>
-      <nav>
-        <a href="reviews.html">Reviews</a>
-        <a href="review-card.html">Review Card</a>
-      </nav>
+  <div class="private-gate" id="md-gate">
+    <div class="gate-panel">
+      <h2>All-Pro Marketing Dashboard</h2>
+      <p>Enter the credentials below to unlock campaign playbooks, review assets, and lead workflows.</p>
+      <label for="md-user" class="field-label">Username</label>
+      <input id="md-user" type="text" placeholder="Username" />
+      <label for="md-pass" class="field-label">Password</label>
+      <input id="md-pass" type="password" placeholder="Password" />
+      <label class="remember">
+        <input id="md-remember" type="checkbox" /> Remember this browser
+      </label>
+      <button class="btn btn-primary" id="md-login">Unlock Dashboard</button>
+      <p class="form-note">Hint: username <strong>allpromarketer</strong> · password <strong>MetroEast2026!</strong></p>
+      <p id="md-gate-msg"></p>
     </div>
-  </header>
-  <main class="content-section">
+  </div>
+
+  <main class="content-section dashboard-content hide" id="dashboard">
     <div class="content-inner">
       <div class="content-body">
-        <h2>Live Campaign Assets</h2>
-        <ul>
-          <li><a href="sitemap.xml" target="_blank">Sitemap (all 26 priority URLs)</a></li>
-          <li><a href="GBP-AND-ADS.md" target="_blank">GBP / Ad Copy</a></li>
-          <li><a href="review-card.html" target="_blank">Review Card (QR + script)</a></li>
-          <li><a href="review-card.pdf" target="_blank">Printable PDF Review Card</a></li>
-          <li><a href="review-card.html" target="_blank">Link to review hub + form</a></li>
-          <li><a href="composite-decking-metro-east.html" target="_blank">Composite Decking page</a></li>
+        <h2>Live Marketing Assets</h2>
+        <ul class="link-list">
+          <li><a href="sitemap.xml" target="_blank">Sitemap (26 priority URLs)</a></li>
+          <li><a href="GBP-AND-ADS.md" target="_blank">GBP + Paid Ad copy plan</a></li>
+          <li><a href="review-card.html" target="_blank">Review cards + QR codes</a></li>
+          <li><a href="review-card.pdf" target="_blank">Printable review card PDF</a></li>
+          <li><a href="allpro-crm-private-a9k3r7.html" target="_blank">Private CRM / lead pipeline</a></li>
+          <li><a href="OUTREACH-ACTIONS.md" target="_blank">Outreach + backlink tracker</a></li>
         </ul>
-        <h3>Tracking notes</h3>
-        <p>GA4 events: `form_submit` (label = `data-form` attribute) and `call_click`. Use them to measure which pages/ad copy drive calls.</p>
-        <h3>Email template</h3>
-        <pre style="white-space:pre-wrap;background:#111;padding:1rem;border-radius:12px;color:#f7f7f7;">
-Subject: Quick 2-minute favor?
-
-Hi {{FirstName}},
-
-Thanks again for trusting All-Pro Construction. If you can spare 2 minutes, would you leave a quick review for us?
-
-Google: https://g.page/your-google-link
-Angi: https://www.angi.com/{your-profile}
-HomeAdvisor: https://www.homeadvisor.com/rated/{your-profile}
-
-We also have a printable card/QR here: https://www.allprometroeastconstruction.com/review-card.html
-
-Appreciate it!
-Bill Sessions
-</pre>
+        <h3>Priority Projects</h3>
+        <ol class="priority-list">
+          <li>City spotlight builds: finish O'Fallon, Fairview Heights, Edwardsville, Collinsville, Swansea, Shiloh.</li>
+          <li>Service depth &amp; cost pages: composite decking, outdoor living, concrete driveway replacements, fence repair.</li>
+          <li>Blog + authority content: deck vs patio, ASM cost guides, permit checklists, and the city FAQs.</li>
+          <li>Share reviews via <a href="reviews.html">reviews.html</a> and embed schema on every page.</li>
+        </ol>
+        <h3>Conversion triggers to keep live</h3>
+        <ul>
+          <li>Sticky call bar + 24hr response banner on all main pages.</li>
+          <li>Form events tracking: ensure <code>form_submit</code> and <code>call_click</code> fire for every CTA.</li>
+          <li>Hidden marketing dashboard link is tucked into the footer for quick reopening.</li>
+        </ul>
       </div>
+      <aside class="sidebar-card">
+        <h3>Next To-Dos</h3>
+        <p>Use this dashboard as your go-to reference when you:</p>
+        <ul>
+          <li>Publish GBP/Bing weekly updates with photo + service link.</li>
+          <li>Run quick paid push (Meta or Google) to the deck/patio CTAs.</li>
+          <li>Send the review email template and QR card to the latest homeowner.</li>
+          <li>Track backlinks &amp; citations from Metro East directories.</li>
+        </ul>
+        <h3>Lead workflow</h3>
+        <p>Form submissions flow to <a href="https://formsubmit.co/williamosessionallpro@gmail.com">williamosessionallpro@gmail.com</a>; use the CRM page and the outreach kit for follow-up.</p>
+        <p class="form-note">Credentials: <strong>Username:</strong> allpromarketer · <strong>Password:</strong> MetroEast2026!</p>
+      </aside>
     </div>
   </main>
+
   <footer>
     <div class="footer-inner">
-      <p>Private marketing dashboard—keep this page bookmarked for quick access.</p>
+      <p>Private marketing dashboard for All-Pro only.</p>
     </div>
   </footer>
+
+  <script>
+    const DASHBOARD_USER = 'allpromarketer';
+    const DASHBOARD_PASS = 'MetroEast2026!';
+    const gate = document.getElementById('md-gate');
+    const dashboard = document.getElementById('dashboard');
+    const message = document.getElementById('md-gate-msg');
+
+    function unlock() {
+      gate.classList.add('hide');
+      dashboard.classList.remove('hide');
+    }
+
+    function lock() {
+      gate.classList.remove('hide');
+      dashboard.classList.add('hide');
+    }
+
+    document.getElementById('md-login').addEventListener('click', () => {
+      message.textContent = '';
+      const user = document.getElementById('md-user').value.trim();
+      const pass = document.getElementById('md-pass').value;
+      if (user === DASHBOARD_USER && pass === DASHBOARD_PASS) {
+        if (document.getElementById('md-remember').checked) {
+          localStorage.setItem('marketing-gate', '1');
+        }
+        unlock();
+      } else {
+        message.textContent = 'Incorrect credentials.';
+      }
+    });
+
+    if (localStorage.getItem('marketing-gate') === '1') {
+      unlock();
+    }
+  </script>
 </body>
 </html>
