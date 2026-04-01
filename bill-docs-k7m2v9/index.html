@@ -35,6 +35,9 @@
       <a class="btn" href="./ALLPRO_Financial_Summary_2025.pdf" target="_blank" rel="noopener">Open 2025 PDF (Only 2025)</a>
       <a class="btn" href="./AllPro_Tax_2025.xlsx">Download 2025 Excel (Only 2025)</a>
       <a class="btn" href="./ALLPRO_CPA_Package_2025.zip">Download 2025 ZIP</a>
+      <a class="btn" style="background:#003b25" href="./ALLPRO_HRBlock_Guide_2025.pdf" target="_blank" rel="noopener">H&amp;R Block Guide 2025 (Recommended)</a>
+      <br><br>
+      <a class="btn" style="background:#2563eb" href="#" id="emailBtn">Email All Docs to Bill</a>
       <h2>What we did</h2>
       <ul>
         <li>Kept 2023 and 2025 fully separate (no mixed-year files in this handoff).</li>
@@ -55,6 +58,32 @@
       const ok = (val === PASS);
       document.getElementById("content").classList.toggle("hide", !ok);
       document.getElementById("msg").textContent = ok ? "Access granted." : "Wrong code.";
+    });
+    document.getElementById("emailBtn").addEventListener("click", (e)=>{
+      e.preventDefault();
+      const base = window.location.href.replace(/index\.html$/,"").replace(/\/$/,"")+"/";
+      const subj = encodeURIComponent("Your All-Pro Tax Docs are Ready (2023 & 2025)");
+      const body = encodeURIComponent(
+        "Hey Bill,\n\n"+
+        "Your tax documents are ready. Here is the link to access everything:\n\n"+
+        window.location.href+"\n\n"+
+        "Password: BillTax2026!\n\n"+
+        "WHAT'S THERE:\n"+
+        "- 2023 Financial Summary (PDF + Excel + ZIP)\n"+
+        "- 2023 H&R Block Step-by-Step Guide (RECOMMENDED - has all deductions)\n"+
+        "- 2023 TurboTax Guide (backup option)\n"+
+        "- 2025 Financial Summary (PDF + Excel + ZIP)\n"+
+        "- 2025 H&R Block Step-by-Step Guide (RECOMMENDED)\n\n"+
+        "WHAT TO DO:\n"+
+        "1. Go to hrblock.com or walk into an H&R Block office\n"+
+        "2. Open the H&R Block Guide PDF on your phone/laptop\n"+
+        "3. Follow it screen by screen - every number is filled in for you\n"+
+        "4. 2023 = loss year (maximized). 2025 = profitable year (deductions maximized).\n\n"+
+        "The guides include deductions that were previously missed (home office, phone, equipment rental, SEP-IRA, etc). Could save you thousands.\n\n"+
+        "Let me know if you have any questions.\n\n"+
+        "- Tony"
+      );
+      window.location.href = "mailto:?subject="+subj+"&body="+body;
     });
   </script>
 </body>
