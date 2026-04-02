@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
@@ -16,7 +17,8 @@
 <meta name="keywords" content="contractor Belleville IL, deck builder Belleville, fencing Belleville IL, landscaping Belleville, concrete Belleville IL, remodeling Belleville, All-Pro Construction Belleville">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800;900&display=swap" rel="stylesheet"></noscript>
 <link rel="icon" type="image/png" href="/images/branding/logo-square.png">
 <link rel="shortcut icon" href="/images/branding/logo-square.png">
 <link rel="apple-touch-icon" href="/images/branding/logo-square.png">
@@ -143,7 +145,10 @@
   <div class="nav-inner">
     <div class="nav-logo">
       <a href="index.html" class="nav-logo-link" aria-label="Go to All-Pro home page">
-        <img src="/images/branding/logo-web.png" alt="All-Pro Metro East Construction logo" class="nav-logo-img" loading="eager">
+        <picture>
+          <source srcset="/images/branding/logo-nav.webp" type="image/webp">
+          <img src="/images/branding/logo-web-sm.png" alt="All-Pro Metro East Construction logo" class="nav-logo-img" width="60" height="60" loading="eager" fetchpriority="high">
+        </picture>
         <div class="nav-logo-text">
           <div><span>All-Pro</span> Construction</div>
           <small>&amp; Landscape</small>
@@ -162,7 +167,8 @@
       📞 <strong><a href="tel:6185810676" style="color:inherit;">618-581-0676</a></strong>
     </div>
   </div>
-</nav><!-- HERO -->
+</nav>
+<main id="main-content"><!-- HERO -->
 <section class="hero hero-with-bg">
   <div class="hero-bg">
     <div class="hero-bg-gradient"></div>
@@ -173,7 +179,10 @@
   </div>
   <div class="hero-inner">
     <div class="hero-content">
-      <img src="/images/branding/logo-web.png" alt="All-Pro Metro East Construction logo" class="hero-brand-mark" loading="eager">
+      <picture>
+        <source srcset="/images/branding/logo-nav.webp" type="image/webp">
+        <img src="/images/branding/logo-web-sm.png" alt="All-Pro Metro East Construction logo" class="hero-brand-mark" width="80" height="80" loading="lazy">
+      </picture>
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
         Metro East Illinois · 60-Mile Radius · Hiring Now
@@ -215,11 +224,11 @@
     </div>
     <div class="trust-badges-row">
       <a href="https://www.homeadvisor.com/rated.all-proconstructionlandscape.158798635.html" target="_blank" rel="noopener" class="trust-badge-link" aria-label="See our HomeAdvisor reviews">
-        <img src="https://www.homeadvisor.com/images/static-pages/pro-badges/ha-screened-approved.png" alt="HomeAdvisor Screened &amp; Approved" class="trust-badge-img" onerror="this.style.display='none'">
+        <span class="trust-badge-img trust-badge-icon" aria-hidden="true">✅</span>
         <span class="trust-badge-text">HomeAdvisor<br><strong>Screened &amp; Approved</strong></span>
       </a>
       <a href="https://www.angi.com/companylist/us/il/new-athens/all-pro-construction-and-landscape-reviews-6233409.htm" target="_blank" rel="noopener" class="trust-badge-link" aria-label="See our Angi reviews">
-        <img src="https://www.angi.com/favicon.ico" alt="Angi" class="trust-badge-img trust-badge-icon" onerror="this.style.display='none'">
+        <img src="https://www.angi.com/favicon.ico" alt="Angi" class="trust-badge-img trust-badge-icon" width="16" height="16" onerror="this.style.display='none'">
         <span class="trust-badge-text">Angi<br><strong>Read Our Reviews</strong></span>
       </a>
     </div>
@@ -430,28 +439,28 @@
           <li class="why-item">
             <div class="why-item-icon">📋</div>
             <div class="why-item-text">
-              <h4>Written Estimates &mdash; No Surprises</h4>
+              <h3>Written Estimates &mdash; No Surprises</h3>
               <p>You get a clear, detailed written estimate before anything starts. No vague quotes or hidden costs.</p>
             </div>
           </li>
           <li class="why-item">
             <div class="why-item-icon">👷</div>
             <div class="why-item-text">
-              <h4>Owner on Every Job</h4>
+              <h3>Owner on Every Job</h3>
               <p>Bill Sessions isn't just the salesperson &mdash; he's the owner and he's on the job. No middlemen.</p>
             </div>
           </li>
           <li class="why-item">
             <div class="why-item-icon">🛡️</div>
             <div class="why-item-text">
-              <h4>Licensed &amp; Fully Insured</h4>
+              <h3>Licensed &amp; Fully Insured</h3>
               <p>Every job is fully covered. You're protected from the first day to the last.</p>
             </div>
           </li>
           <li class="why-item">
             <div class="why-item-icon">✅</div>
             <div class="why-item-text">
-              <h4>We Stand Behind Our Work</h4>
+              <h3>We Stand Behind Our Work</h3>
               <p>Final walkthrough on every job. If it's not right, we fix it &mdash; no excuses, no extra charge.</p>
             </div>
           </li>
@@ -692,6 +701,7 @@
   </div>
 </section>
 
+</main>
 <!-- FOOTER -->
 <footer class="footer">
   <div class="container">
@@ -699,7 +709,10 @@
       <div class="footer-brand">
         <div class="nav-logo">
           <a href="index.html" class="nav-logo-link" aria-label="Go to All-Pro home page">
-            <img src="/images/branding/logo-web.png" alt="All-Pro Metro East Construction logo" class="nav-logo-img" loading="eager">
+            <picture>
+              <source srcset="/images/branding/logo-nav.webp" type="image/webp">
+              <img src="/images/branding/logo-web-sm.png" alt="All-Pro Metro East Construction logo" class="nav-logo-img" width="60" height="60" loading="lazy">
+            </picture>
             <div class="nav-logo-text">
               <div><span>All-Pro</span> Construction</div>
               <small>&amp; Landscape</small>

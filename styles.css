@@ -921,14 +921,14 @@ button { font-family: inherit; cursor: pointer; border: none; }
   gap: 3rem; margin-bottom: 4rem;
 }
 .footer-brand p {
-  font-size: .88rem; color: var(--gray3); margin-top: 1rem;
+  font-size: .88rem; color: var(--gray2); margin-top: 1rem;
   max-width: 280px; line-height: 1.7;
 }
 .footer-badge {
   display: inline-flex; align-items: center; gap: .5rem;
   margin-top: 1.2rem; padding: .4rem .9rem;
   background: var(--dark3); border: 1px solid var(--dark4);
-  border-radius: 100px; font-size: .72rem; color: var(--gray3);
+  border-radius: 100px; font-size: .72rem; color: var(--gray2);
 }
 .footer-badge .stars { font-size: .75rem; margin: 0; }
 
@@ -939,11 +939,11 @@ button { font-family: inherit; cursor: pointer; border: none; }
 }
 .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .7rem; }
 .footer-col ul li a {
-  font-size: .88rem; color: var(--gray3);
+  font-size: .88rem; color: var(--gray2);
   transition: color .2s;
 }
 .footer-col ul li a:hover { color: var(--red); }
-.footer-col ul li span { font-size: .88rem; color: var(--gray3); }
+.footer-col ul li span { font-size: .88rem; color: var(--gray2); }
 
 .footer-bottom {
   border-top: 1px solid var(--dark4);
@@ -951,7 +951,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
   display: flex; justify-content: space-between; align-items: center;
   flex-wrap: wrap; gap: 1rem;
 }
-.footer-bottom p { font-size: .8rem; color: var(--gray4); }
+.footer-bottom p { font-size: .8rem; color: var(--gray2); }
 
 .sticky-call {
   position: fixed;
