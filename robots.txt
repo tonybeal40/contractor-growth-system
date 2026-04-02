@@ -1,5 +1,3 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://www.allprometroeastconstruction.com/sitemap.xml
-
+Sitemap: https://allprometroeastconstruction.com/sitemap.xml
