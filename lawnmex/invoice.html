@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Pay Invoice & Maintenance Plans | Lawn-Mex Inc.</title>
+<meta name="description" content="Pay your Lawn-Mex invoice online or sign up for a monthly lawn care maintenance plan. Recurring billing, auto-pay, professional invoicing."/>
+<link rel="stylesheet" href="lawnmex.css"/>
+<style>
+.tab-nav{display:flex;gap:0;border-bottom:2px solid var(--gray);margin-bottom:32px}
+.tab-btn{padding:12px 24px;font-size:.95rem;font-weight:700;color:var(--text-muted);border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .16s}
+.tab-btn.active{color:var(--green-dark);border-bottom-color:var(--green)}
+.tab-panel{display:none}.tab-panel.active{display:block}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="leaf">🌿</span> Lawn-Mex <span>Inc.</span></a>
+    <div class="nav-links">
+      <a href="index.html#services" class="nav-link">Services</a>
+      <a href="index.html#about" class="nav-link">About</a>
+      <a href="index.html#reviews" class="nav-link">Reviews</a>
+      <a href="market-report.html" class="nav-link">Market Report</a>
+      <a href="invoice.html" class="nav-link active">Pay Invoice</a>
+      <a href="quote.html" class="nav-cta">Free Quote →</a>
+    </div>
+    <div class="nav-phone">📞 <a href="tel:6182136228" style="color:inherit">(618) 213-6228</a></div>
+  </div>
+</nav>
+
+<section class="hero" style="padding:56px 24px 64px">
+  <div class="container">
+    <h1 style="color:var(--white)">Billing & <span>Payments</span></h1>
+    <p style="color:rgba(255,255,255,.8);font-size:1rem;max-width:480px;margin-top:8px">Pay your invoice online, set up a maintenance plan, or start monthly auto-pay — all in one place.</p>
+  </div>
+</section>
+
+<section class="section bg-off-white">
+  <div class="container">
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="showTab('pay')">💳 Pay an Invoice</button>
+      <button class="tab-btn" onclick="showTab('plans')">🔄 Maintenance Plans</button>
+      <button class="tab-btn" onclick="showTab('history')">📋 Invoice Example</button>
+    </div>
+
+    <!-- PAY INVOICE -->
+    <div class="tab-panel active" id="tab-pay">
+      <div class="two-col-content">
+        <div>
+          <h2 style="margin-bottom:8px">Pay Your Invoice</h2>
+          <p>Enter your invoice number and the amount due. Questions? Call us at (618) 213-6228.</p>
+          <div class="form-card mt-24">
+            <div class="form-group">
+              <label class="form-label">Your Name</label>
+              <input class="form-control" type="text" placeholder="John Smith"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Invoice Number <span style="color:var(--red)">*</span></label>
+              <input class="form-control" type="text" placeholder="e.g. 2026-0147"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Amount to Pay <span style="color:var(--red)">*</span></label>
+              <div style="position:relative">
+                <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-weight:700;color:var(--text-dark)">$</span>
+                <input class="form-control" type="number" placeholder="0.00" style="padding-left:28px" id="payAmt" oninput="updateTotal()"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Payment Method</label>
+              <div class="radio-group" id="pmtGroup">
+                <span class="radio-chip sel">💳 Credit / Debit Card</span>
+                <span class="radio-chip">🏦 Bank Transfer (ACH)</span>
+                <span class="radio-chip">📱 Venmo / Zelle</span>
+              </div>
+            </div>
+            <div style="background:var(--green-pale);border:1px solid var(--green-bright);border-radius:8px;padding:14px 16px;margin:18px 0;display:flex;justify-content:space-between;align-items:center">
+              <span style="font-weight:700;color:var(--text-dark)">Total Payment:</span>
+              <span style="font-size:1.4rem;font-weight:900;color:var(--green-dark)" id="totalDisplay">$0.00</span>
+            </div>
+            <button class="form-submit">Proceed to Secure Payment →</button>
+            <div class="form-note mt-8">🔒 Payments processed securely. Lawn-Mex will never store your card number.</div>
+          </div>
+        </div>
+        <div>
+          <div class="card mb-16">
+            <div class="card-icon">❓</div>
+            <h3>Don't have your invoice number?</h3>
+            <p>Call us and we'll look it up in 30 seconds.</p>
+            <a href="tel:6182136228" class="btn btn-primary mt-16 btn-sm">(618) 213-6228</a>
+          </div>
+          <div class="card mb-16">
+            <div class="card-icon">🔄</div>
+            <h3>Want auto-pay?</h3>
+            <p>Sign up for a maintenance plan and we'll auto-invoice you each month — no more tracking due dates.</p>
+            <button class="btn btn-outline mt-16 btn-sm" onclick="showTab('plans')">See Maintenance Plans →</button>
+          </div>
+          <div class="card">
+            <div class="card-icon">📞</div>
+            <h3>Questions about your bill?</h3>
+            <p>Jeff or Erika handles billing personally. No third party, no runaround.</p>
+            <p class="mt-8" style="font-size:.82rem">Mon–Fri 8am–4pm · (618) 213-6228</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAINTENANCE PLANS -->
+    <div class="tab-panel" id="tab-plans">
+      <h2 style="margin-bottom:8px">Monthly Maintenance Plans</h2>
+      <p style="max-width:580px">Consistent service. One monthly invoice. Priority scheduling. Pick the plan that fits your property — or call us and we'll recommend the right one.</p>
+      <div class="grid-3 mt-32">
+        <div class="plan-card">
+          <div class="plan-name">Basic Upkeep</div>
+          <div class="plan-desc">For smaller yards that just need to stay clean and maintained.</div>
+          <ul class="plan-features">
+            <li>Bi-weekly mowing & edging</li>
+            <li>Clipping cleanup & blowing</li>
+            <li>1 seasonal cleanup visit per year</li>
+            <li>Priority scheduling</li>
+            <li>Monthly auto-invoice</li>
+          </ul>
+          <a href="quote.html" class="btn btn-outline btn-block">Get This Plan →</a>
+        </div>
+        <div class="plan-card featured">
+          <div class="plan-badge">Most Popular</div>
+          <div class="plan-name">Full Maintenance</div>
+          <div class="plan-desc">The go-to plan for homeowners who want it handled all season.</div>
+          <ul class="plan-features">
+            <li>Weekly mowing & edging</li>
+            <li>2 seasonal cleanup visits per year</li>
+            <li>Shrub trimming (2x/yr)</li>
+            <li>Pre-emergent weed control application</li>
+            <li>Priority same-week scheduling</li>
+            <li>Monthly auto-invoice, auto-pay option</li>
+          </ul>
+          <a href="quote.html" class="btn btn-primary btn-block">Get This Plan →</a>
+        </div>
+        <div class="plan-card">
+          <div class="plan-name">Premium Property</div>
+          <div class="plan-desc">For larger lots, commercial properties, or complete hands-off care.</div>
+          <ul class="plan-features">
+            <li>Everything in Full Maintenance</li>
+            <li>Annual mulch install included</li>
+            <li>Quarterly tree & shrub shaping</li>
+            <li>Dedicated crew — same team every visit</li>
+            <li>Monthly service report</li>
+            <li>Landscape consultation (1x/yr)</li>
+          </ul>
+          <a href="quote.html" class="btn btn-outline btn-block">Get This Plan →</a>
+        </div>
+      </div>
+      <div class="highlight-box mt-32">
+        <h3 style="margin-bottom:8px">How Plans Work</h3>
+        <div class="grid-3 gap-md mt-16">
+          <div><strong style="color:var(--green-dark)">1. Choose your plan</strong><p style="font-size:.88rem">Call us or fill out the quote form — we'll confirm the right fit for your property size.</p></div>
+          <div><strong style="color:var(--green-dark)">2. We schedule your starts</strong><p style="font-size:.88rem">We put you on the recurring schedule. No more calling every two weeks — we just show up.</p></div>
+          <div><strong style="color:var(--green-dark)">3. Monthly invoice</strong><p style="font-size:.88rem">You receive one clean invoice per month. Set up auto-pay and you never think about it again.</p></div>
+        </div>
+        <a href="quote.html" class="btn btn-primary mt-24">Start a Plan →</a>
+      </div>
+    </div>
+
+    <!-- INVOICE EXAMPLE -->
+    <div class="tab-panel" id="tab-history">
+      <h2 style="margin-bottom:8px">Professional Invoice Example</h2>
+      <p>This is what a Lawn-Mex invoice looks like — itemized, branded, and easy to pay.</p>
+      <div class="mt-32" style="max-width:680px">
+        <div class="invoice-wrap">
+          <div class="invoice-head">
+            <div>
+              <div class="invoice-logo">🌿 Lawn-Mex <span>Inc.</span><small>Belleville, IL · (618) 213-6228 · lawnmexinc.com</small></div>
+            </div>
+            <div class="invoice-num-block">
+              <div class="invoice-num-label">Invoice</div>
+              <div class="invoice-num">#2026-0147</div>
+              <div class="invoice-date">Date: April 8, 2026 · Due: April 15, 2026</div>
+            </div>
+          </div>
+          <div class="invoice-body">
+            <div class="invoice-parties">
+              <div>
+                <div class="party-label">Billed To</div>
+                <div class="party-name">John & Sarah Williams</div>
+                <div class="party-detail">412 Maple Ridge Dr.<br/>Belleville, IL 62220<br/>(618) 555-0123</div>
+              </div>
+              <div>
+                <div class="party-label">Service Details</div>
+                <div class="party-name">Spring Cleanup Package</div>
+                <div class="party-detail">Property: ½ acre residential<br/>Service date: April 8, 2026<br/>Next service: April 22, 2026</div>
+              </div>
+            </div>
+            <table class="invoice-table">
+              <thead>
+                <tr><th>Service</th><th>Qty</th><th>Rate</th><th>Total</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Spring Yard Cleanup & Debris Removal</td><td>1</td><td>$175.00</td><td>$175.00</td></tr>
+                <tr><td>Pre-emergent Weed Control Treatment</td><td>1</td><td>$95.00</td><td>$95.00</td></tr>
+                <tr><td>Mulch Install — Landscaping Beds (4 yds)</td><td>4 yd</td><td>$42.00</td><td>$168.00</td></tr>
+                <tr><td>Bed Edging & Cleanup</td><td>1</td><td>$65.00</td><td>$65.00</td></tr>
+              </tbody>
+            </table>
+            <div class="invoice-totals">
+              <div class="invoice-total-row"><span style="color:var(--text-muted)">Subtotal</span><span class="val">$503.00</span></div>
+              <div class="invoice-total-row"><span style="color:var(--text-muted)">Tax</span><span class="val">$0.00</span></div>
+              <div class="invoice-total-final"><span>Total Due</span><span>$503.00</span></div>
+            </div>
+            <div class="invoice-sub-promo">
+              <div class="icon">🔄</div>
+              <div class="invoice-sub-promo-text">
+                <strong>Save with a Monthly Maintenance Plan</strong>
+                <span>Lock in recurring service and save. Auto-pay available. Ask Jeff about plan options.</span>
+              </div>
+            </div>
+          </div>
+          <div class="invoice-footer">
+            <div class="invoice-footer-note">Thank you for choosing Lawn-Mex Inc. — Family-owned since 1999.</div>
+            <button class="invoice-pay-btn">Pay $503.00 Now →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-banner">
+  <div class="container">
+    <h2>Need a New Quote?</h2>
+    <p>We're always accepting new customers. Free estimates, same-day response.</p>
+    <div class="btns">
+      <a href="quote.html" class="btn btn-white btn-lg">Request a Free Quote →</a>
+      <a href="tel:6182136228" class="btn btn-outline-white btn-lg">📞 (618) 213-6228</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div><div class="footer-logo">🌿 Lawn-Mex <span>Inc.</span></div><div class="footer-desc mt-8">Family-owned lawn care and landscaping across Metro East Illinois. 25+ years experience.</div></div>
+    <div><h4>Quick Links</h4><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="quote.html">Get a Quote</a></li><li><a href="invoice.html">Pay Invoice</a></li><li><a href="market-report.html">Market Report</a></li></ul></div>
+    <div><h4>Cities</h4><ul class="footer-links"><li><a href="belleville-il.html">Belleville</a></li><li><a href="ofallon-il.html">O'Fallon</a></li><li><a href="edwardsville-il.html">Edwardsville</a></li><li><a href="fairview-heights-il.html">Fairview Heights</a></li></ul></div>
+    <div><h4>Contact</h4><ul class="footer-contact"><li><span class="icon">📞</span><a href="tel:6182136228" style="color:rgba(255,255,255,.65)">(618) 213-6228</a></li><li><span class="icon">📍</span>Belleville, IL 62220</li><li><span class="icon">🕐</span>Mon–Fri 8am–4pm</li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 Lawn-Mex Inc. All rights reserved.</p></div>
+</footer>
+
+<script>
+function showTab(id){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+function updateTotal(){
+  const v = parseFloat(document.getElementById('payAmt').value)||0;
+  document.getElementById('totalDisplay').textContent = '$'+v.toFixed(2);
+}
+document.querySelectorAll('#pmtGroup .radio-chip').forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('#pmtGroup .radio-chip').forEach(c=>c.classList.remove('sel'));
+    chip.classList.add('sel');
+  });
+});
+</script>
+</body>
+</html>
