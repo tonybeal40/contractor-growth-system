@@ -89,7 +89,7 @@
               <span style="font-weight:700;color:var(--text-dark)">Total Payment:</span>
               <span style="font-size:1.4rem;font-weight:900;color:var(--green-dark)" id="totalDisplay">$0.00</span>
             </div>
-            <button class="form-submit" onclick="alert('Secure payment processing via Stripe or Square connects here. Contact us to activate.')">Proceed to Secure Payment →</button>
+            <button class="form-submit" onclick="demoPayment()">Proceed to Secure Payment →</button>
             <div class="form-note mt-8">🔒 Payments processed securely. Lawn-Mex will never store your card number.</div>
           </div>
         </div>
@@ -171,7 +171,7 @@
           </div>
           <div class="invoice-footer">
             <div class="invoice-footer-note">Thank you for choosing Lawn-Mex Inc. — Family-owned since 1999.</div>
-            <button class="invoice-pay-btn" onclick="alert('Secure payment processing via Stripe or Square connects here. Contact us to activate.')">Pay $503.00 Now →</button>
+            <button class="invoice-pay-btn" onclick="demoPayment()">Pay $503.00 Now →</button>
           </div>
         </div>
       </div>
@@ -217,6 +217,97 @@ document.querySelectorAll('#pmtGroup .radio-chip').forEach(chip=>{
     chip.classList.add('sel');
   });
 });
+</script>
+
+<!-- ═══════ PAYMENT DEMO MODAL ═══════ -->
+<div id="payDemoModal" style="display:none;position:fixed;inset:0;z-index:99998;background:rgba(0,0,0,.85);align-items:center;justify-content:center;padding:20px">
+  <div id="payDemoCard" style="background:#fff;border-radius:18px;padding:36px 32px;max-width:400px;width:100%;text-align:center;box-shadow:0 20px 80px rgba(0,0,0,.5)">
+    <div id="payStep1">
+      <div style="font-size:2.5rem;margin-bottom:12px">💳</div>
+      <h3 style="font-size:1.2rem;color:#1a2e1a;margin-bottom:8px">Secure Payment</h3>
+      <p style="color:#666;font-size:.88rem;margin-bottom:24px">Powered by Stripe — bank-level encryption</p>
+      <div style="background:#f5f5f5;border-radius:10px;padding:16px;margin-bottom:16px;text-align:left">
+        <div style="font-size:.78rem;color:#999;margin-bottom:4px">Card Number</div>
+        <div style="font-size:1rem;color:#333;letter-spacing:2px">•••• •••• •••• 4242</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div style="background:#f5f5f5;border-radius:10px;padding:14px;text-align:left">
+          <div style="font-size:.78rem;color:#999;margin-bottom:4px">Expiry</div>
+          <div style="font-size:1rem;color:#333">12 / 27</div>
+        </div>
+        <div style="background:#f5f5f5;border-radius:10px;padding:14px;text-align:left">
+          <div style="font-size:.78rem;color:#999;margin-bottom:4px">CVV</div>
+          <div style="font-size:1rem;color:#333">•••</div>
+        </div>
+      </div>
+      <div style="background:#1b5e20;color:#fff;border:none;border-radius:10px;padding:14px;font-size:1rem;font-weight:800;cursor:pointer;width:100%;display:block;text-align:center" onclick="payDemoProcess()">
+        Pay $503.00 Securely →
+      </div>
+      <p style="margin-top:12px;font-size:.75rem;color:#999">🔒 Demo mode — no real charge. This is what your customers see.</p>
+      <button onclick="document.getElementById('payDemoModal').style.display='none'" style="margin-top:8px;background:transparent;border:none;color:#aaa;cursor:pointer;font-size:.82rem">Cancel</button>
+    </div>
+    <div id="payStep2" style="display:none">
+      <div style="font-size:2.8rem;margin-bottom:16px" id="paySpinner">⏳</div>
+      <h3 style="font-size:1.1rem;color:#1a2e1a;margin-bottom:8px" id="payStatusText">Processing payment...</h3>
+      <div style="background:#f0f0f0;border-radius:4px;height:6px;overflow:hidden;margin:20px 0">
+        <div id="payBar" style="height:100%;background:#2e7d32;width:0%;transition:width .4s ease;border-radius:4px"></div>
+      </div>
+      <p style="font-size:.82rem;color:#999" id="paySubtext">Contacting your bank...</p>
+    </div>
+    <div id="payStep3" style="display:none">
+      <div style="font-size:3rem;margin-bottom:16px">✅</div>
+      <h3 style="font-size:1.3rem;color:#1b5e20;margin-bottom:8px">Payment Received!</h3>
+      <p style="color:#555;font-size:.9rem;margin-bottom:20px">$503.00 paid successfully. Jeff has been notified and a receipt was sent to your email.</p>
+      <div style="background:#e8f5e9;border-radius:10px;padding:16px;font-size:.85rem;color:#2e7d32;margin-bottom:20px;text-align:left">
+        <div>✓ Receipt sent to customer</div>
+        <div>✓ Jeff notified via text</div>
+        <div>✓ Invoice marked paid in system</div>
+      </div>
+      <div style="background:#f9a825;color:#0b1a0f;border:none;border-radius:10px;padding:12px;font-size:.88rem;font-weight:800;cursor:pointer;display:block;margin-bottom:10px" onclick="document.getElementById('payDemoModal').style.display='none'">
+        Done — Close Demo
+      </div>
+      <p style="font-size:.75rem;color:#aaa">This is a demo. In production, real Stripe payments would process here.</p>
+    </div>
+  </div>
+</div>
+<script>
+function demoPayment() {
+  var m = document.getElementById('payDemoModal');
+  document.getElementById('payStep1').style.display = '';
+  document.getElementById('payStep2').style.display = 'none';
+  document.getElementById('payStep3').style.display = 'none';
+  m.style.display = 'flex';
+}
+function payDemoProcess() {
+  document.getElementById('payStep1').style.display = 'none';
+  document.getElementById('payStep2').style.display = '';
+  var bar = document.getElementById('payBar');
+  var spinner = document.getElementById('paySpinner');
+  var txt = document.getElementById('payStatusText');
+  var sub = document.getElementById('paySubtext');
+  var steps = [
+    {w:'30%', icon:'⏳', t:'Processing payment...', s:'Contacting your bank...'},
+    {w:'60%', icon:'🔐', t:'Verifying card...', s:'Encrypting transaction...'},
+    {w:'85%', icon:'📡', t:'Confirming with Stripe...', s:'Almost done...'},
+    {w:'100%', icon:'✅', t:'Payment approved!', s:'All done!'}
+  ];
+  var i = 0;
+  var interval = setInterval(function() {
+    if (i >= steps.length) {
+      clearInterval(interval);
+      setTimeout(function() {
+        document.getElementById('payStep2').style.display = 'none';
+        document.getElementById('payStep3').style.display = '';
+      }, 400);
+      return;
+    }
+    bar.style.width = steps[i].w;
+    spinner.textContent = steps[i].icon;
+    txt.textContent = steps[i].t;
+    sub.textContent = steps[i].s;
+    i++;
+  }, 700);
+}
 </script>
 
 <!-- ═══════ COPY PROTECTION + LEGAL BANNER ═══════ -->
