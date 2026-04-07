@@ -85,6 +85,18 @@ p{color:var(--text-muted);margin-top:10px}
 .note-box ul{list-style:none;padding:0}
 .note-box ul li{padding:6px 0;font-size:.88rem;color:var(--text-muted);border-bottom:1px solid var(--dark-border)}
 .note-box ul li:last-child{border-bottom:none}
+
+@media(max-width:640px){
+  .pricing-grid{grid-template-columns:1fr}
+  .addon-grid{grid-template-columns:1fr 1fr}
+  nav{padding:10px 16px}
+  .container{padding:0 16px}
+  .plan-card{padding:20px}
+}
+@media(max-width:400px){
+  .addon-grid{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>

@@ -19,10 +19,20 @@
       <a href="market-report.html" class="nav-link active">Market Report</a>
       <a href="invoice.html" class="nav-link">Pay Invoice</a>
       <a href="quote.html" class="nav-cta">Free Quote →</a>
-    </div>
+    </div>    <button class="nav-hamburger" id="navBurger" onclick="document.getElementById('navMobile').classList.toggle('open');this.classList.toggle('open')" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
     <div class="nav-phone">📞 <a href="tel:6182136228" style="color:inherit">(618) 213-6228</a></div>
   </div>
+  <div class="nav-mobile-menu" id="navMobile"></div>
 </nav>
+<script>
+(function(){
+  var m=document.getElementById('navMobile');
+  var d=document.querySelector('.nav-links');
+  if(m&&d){m.innerHTML=d.innerHTML;}
+})();
+</script>
 
 <!-- REPORT HERO -->
 <div class="report-hero">
@@ -288,3 +298,4 @@
 </footer>
 </body>
 </html>
+
