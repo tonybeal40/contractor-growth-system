@@ -1069,5 +1069,48 @@ document.querySelectorAll('.radio-pill').forEach(pill=>{
   });
 })();
 </script>
+
+<!-- ── INLINE DEMO VIEWER ── -->
+<style>
+#demo-viewer{position:fixed;inset:0;z-index:7000;display:none;flex-direction:column;background:#000}
+#demo-viewer.open{display:flex}
+#demo-bar{background:#0b1a0f;border-bottom:2px solid var(--green-bright);padding:10px 20px;display:flex;align-items:center;gap:16px;flex-shrink:0}
+#demo-back{background:var(--green-bright);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:.88rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .15s}
+#demo-back:hover{background:var(--green-light)}
+#demo-title{font-size:.9rem;font-weight:600;color:var(--text-muted);flex:1}
+#demo-frame{flex:1;border:none;width:100%;height:100%}
+</style>
+
+<div id="demo-viewer">
+  <div id="demo-bar">
+    <button id="demo-back" onclick="closeDemoViewer()">← Back to Overview</button>
+    <span id="demo-title">Lawn-Mex Demo</span>
+  </div>
+  <iframe id="demo-frame" src="" title="Demo Preview"></iframe>
+</div>
+
+<script>
+function openDemoViewer(url, label) {
+  document.getElementById('demo-frame').src = url;
+  document.getElementById('demo-title').textContent = label || 'Lawn-Mex Demo';
+  document.getElementById('demo-viewer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDemoViewer() {
+  document.getElementById('demo-viewer').classList.remove('open');
+  document.getElementById('demo-frame').src = '';
+  document.body.style.overflow = '';
+}
+// Intercept all lawnmex/* links — open in viewer instead of new tab
+document.querySelectorAll('a[href^="lawnmex/"]').forEach(function(a) {
+  const url = a.getAttribute('href');
+  const label = a.textContent.trim().replace(/[→🚀🏠📋💳🗺️📊📧]/g, '').trim();
+  a.removeAttribute('target');
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    openDemoViewer(url, label);
+  });
+});
+</script>
 </body>
 </html>
