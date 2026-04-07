@@ -1,0 +1,1282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>[[CLIENT_SHORT]] Growth System — Private Preview</title>
+<meta name="robots" content="noindex,nofollow,noarchive"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1a5c2a;
+  --green-mid:#226b34;
+  --green-light:#2e8b44;
+  --green-bright:#38a957;
+  --gold:#c9a227;
+  --gold-light:#e8bf45;
+  --dark:#0b1a0f;
+  --dark-card:#111e14;
+  --dark-border:#1e3323;
+  --text:#e8f0ea;
+  --text-muted:#8fad96;
+  --white:#ffffff;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--text);line-height:1.6;font-size:16px}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:100;background:rgba(11,26,15,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--dark-border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.nav-logo{font-weight:800;font-size:1.05rem;color:var(--green-bright);letter-spacing:.5px}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;flex-wrap:wrap;gap:8px}
+.nav-btn{display:inline-block;padding:7px 14px;border-radius:6px;font-size:.82rem;font-weight:600;text-decoration:none;border:1.5px solid transparent;cursor:pointer;transition:all .18s}
+.nav-btn.outline{border-color:var(--green-bright);color:var(--green-bright)}
+.nav-btn.outline:hover{background:var(--green-bright);color:#fff}
+.nav-btn.gold{background:var(--gold);color:#0b1a0f}
+.nav-hamburger-out{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none}
+.nav-hamburger-out span{display:block;width:24px;height:2px;background:var(--green-bright);border-radius:2px}
+.nav-mobile-out{display:none;flex-direction:column;gap:6px;padding:10px 24px 14px;background:rgba(11,26,15,.98);border-top:1px solid var(--dark-border)}
+.nav-mobile-out.open{display:flex}
+.nav-mobile-out .nav-btn{text-align:center;font-size:.9rem;padding:10px 16px}
+@media(max-width:820px){nav{flex-wrap:nowrap}.nav-links{display:none!important}.nav-hamburger-out{display:flex}}
+.nav-btn.gold:hover{background:var(--gold-light)}
+
+/* ── SECTIONS ── */
+section{padding:72px 24px;max-width:1100px;margin:0 auto}
+.full-bleed{max-width:100%;padding:72px 24px}
+.full-bleed > .inner{max-width:1100px;margin:0 auto}
+.section-label{font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:900;line-height:1.15}
+h2{font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:800;line-height:1.2}
+h3{font-size:1.2rem;font-weight:700}
+p{color:var(--text-muted);margin-top:10px}
+.highlight{color:var(--green-bright)}
+.gold-text{color:var(--gold)}
+
+/* ── HERO ── */
+#hero{background:linear-gradient(135deg,#071209 0%,#0e2415 50%,#071c0c 100%);padding:100px 24px 80px;text-align:center;position:relative;overflow:hidden}
+#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(56,169,87,.12) 0%,transparent 70%);pointer-events:none}
+#hero .inner{max-width:900px;margin:0 auto;position:relative}
+#hero .badge{display:inline-block;background:rgba(56,169,87,.15);border:1px solid rgba(56,169,87,.4);color:var(--green-bright);font-size:.78rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:6px 16px;border-radius:20px;margin-bottom:22px}
+#hero h1{margin-bottom:16px}
+#hero p{font-size:1.15rem;max-width:640px;margin:0 auto 32px}
+.hero-btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.btn-primary{display:inline-block;background:var(--green-bright);color:#fff;padding:14px 28px;border-radius:8px;font-weight:700;text-decoration:none;font-size:1rem;transition:background .18s}
+.btn-primary:hover{background:var(--green-light)}
+.btn-secondary{display:inline-block;background:transparent;color:var(--text);padding:14px 28px;border-radius:8px;font-weight:600;text-decoration:none;font-size:1rem;border:1.5px solid var(--dark-border);transition:all .18s}
+.btn-secondary:hover{border-color:var(--green-bright);color:var(--green-bright)}
+.stats-row{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:52px}
+.stat-box{background:rgba(255,255,255,.04);border:1px solid var(--dark-border);border-radius:12px;padding:20px 28px;text-align:center;min-width:130px}
+.stat-num{font-size:2rem;font-weight:900;color:var(--green-bright)}
+.stat-label{font-size:.78rem;color:var(--text-muted);margin-top:2px;font-weight:500}
+
+/* ── CARDS ── */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:32px}
+.card{background:var(--dark-card);border:1px solid var(--dark-border);border-radius:14px;padding:28px}
+.card-icon{font-size:2rem;margin-bottom:12px}
+.card h3{margin-bottom:6px}
+
+/* ── COMPETITION TABLE ── */
+.comp-table{width:100%;border-collapse:collapse;margin-top:28px;font-size:.9rem}
+.comp-table th{background:var(--green);color:#fff;padding:12px 16px;text-align:left;font-weight:700}
+.comp-table td{padding:11px 16px;border-bottom:1px solid var(--dark-border)}
+.comp-table tr:hover td{background:rgba(56,169,87,.06)}
+.win{color:#4ade80;font-weight:600}
+.lose{color:#f87171;font-weight:600}
+.tie{color:var(--gold);font-weight:600}
+
+/* ── GROWTH PLAN ── */
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:32px}
+.phase{background:var(--dark-card);border:1px solid var(--dark-border);border-radius:14px;padding:28px;position:relative;overflow:hidden}
+.phase::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.phase.p1::before{background:var(--green-bright)}
+.phase.p2::before{background:var(--gold)}
+.phase.p3::before{background:#60a5fa}
+.phase-num{font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+.phase h3{margin-bottom:12px}
+.phase ul{list-style:none;padding:0}
+.phase ul li{padding:5px 0;font-size:.9rem;color:var(--text-muted);border-bottom:1px solid var(--dark-border)}
+.phase ul li:last-child{border:none}
+.phase ul li::before{content:'→ ';color:var(--green-bright);font-weight:700}
+
+/* ── PAGE IFRAME PREVIEWS ── */
+.page-preview-wrap{width:100%;max-width:960px;margin:32px auto 0;border-radius:14px;overflow:hidden;border:2px solid rgba(255,255,255,.18);box-shadow:0 24px 64px rgba(0,0,0,.5);background:#fff;position:relative}
+.page-preview-bar{background:#111e14;padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.08)}
+.page-preview-bar .dot{width:11px;height:11px;border-radius:50%}
+.page-preview-bar .dot.r{background:#ff5f57}
+.page-preview-bar .dot.y{background:#febc2e}
+.page-preview-bar .dot.g{background:#28c840}
+.page-preview-url{background:#0b1a0f;border-radius:6px;padding:4px 14px;font-size:.78rem;color:rgba(255,255,255,.5);margin-left:8px;flex:1}
+.page-preview-frame-box{height:560px;overflow:hidden;position:relative}
+.page-preview-frame-box iframe{width:1366px;height:900px;transform:scale(0.64);transform-origin:top left;border:none;pointer-events:none;display:block}
+.page-preview-footer{background:#0d2b0f;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.page-preview-footer span{font-size:.8rem;color:rgba(255,255,255,.5)}
+
+/* ── HOMEPAGE MOCK ── */
+.mock-browser{background:#1a2e1f;border:1px solid var(--dark-border);border-radius:14px;overflow:hidden;margin-top:32px}
+.mock-bar{background:#111e14;padding:10px 16px;display:flex;align-items:center;gap:8px}
+.mock-dot{width:11px;height:11px;border-radius:50%}
+.mock-dot.r{background:#ff5f57}
+.mock-dot.y{background:#febc2e}
+.mock-dot.g{background:#28c840}
+.mock-url{background:#0b1a0f;border-radius:6px;padding:4px 14px;font-size:.78rem;color:var(--text-muted);margin-left:8px;flex:1}
+.mock-hero{background:linear-gradient(135deg,#0e2415,#1a5c2a);padding:52px 32px;text-align:center}
+.mock-hero h2{font-size:clamp(1.4rem,3vw,2rem);color:#fff;margin-bottom:10px}
+.mock-hero p{color:#a7d9b4;font-size:1rem;max-width:500px;margin:0 auto 22px}
+.mock-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.mock-btn-g{background:#38a957;color:#fff;padding:11px 22px;border-radius:7px;font-weight:700;font-size:.9rem;text-decoration:none}
+.mock-btn-o{background:transparent;color:#c9a227;border:2px solid #c9a227;padding:11px 22px;border-radius:7px;font-weight:700;font-size:.9rem;text-decoration:none}
+.mock-services{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;padding:28px 32px;background:#111e14}
+.mock-service{background:#0b1a0f;border:1px solid #1e3323;border-radius:10px;padding:16px;text-align:center}
+.mock-service .icon{font-size:1.8rem;margin-bottom:6px}
+.mock-service p{font-size:.82rem;color:#8fad96;margin:0}
+.mock-trust{display:flex;flex-wrap:wrap;gap:12px;padding:20px 32px 28px;background:#0b1a0f;justify-content:center}
+.trust-pill{background:#111e14;border:1px solid #1e3323;border-radius:20px;padding:8px 18px;font-size:.82rem;color:#a7d9b4;font-weight:600}
+.mock-reviews{padding:28px 32px;background:#111e14}
+.mock-reviews h3{color:#fff;margin-bottom:14px;font-size:1rem}
+.review-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.review-card{background:#0b1a0f;border:1px solid #1e3323;border-radius:10px;padding:16px}
+.review-stars{color:var(--gold);font-size:.9rem;margin-bottom:6px}
+.review-text{font-size:.82rem;color:#8fad96;font-style:italic}
+.review-name{font-size:.78rem;color:var(--green-bright);margin-top:6px;font-weight:600}
+.mock-cta{background:linear-gradient(90deg,#1a5c2a,#226b34);padding:32px;text-align:center}
+.mock-cta h3{color:#fff;font-size:1.3rem;margin-bottom:8px}
+.mock-cta p{color:#a7d9b4;margin-bottom:18px}
+
+/* ── EMAIL CAMPAIGNS ── */
+.email-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.etab{padding:9px 18px;border-radius:7px;border:1.5px solid var(--dark-border);background:transparent;color:var(--text-muted);font-size:.88rem;font-weight:600;cursor:pointer;transition:all .18s}
+.etab.active{background:var(--green-bright);border-color:var(--green-bright);color:#fff}
+.email-panel{display:none}
+.email-panel.active{display:block}
+.email-mock{background:#1a2e1f;border:1px solid var(--dark-border);border-radius:14px;overflow:hidden;max-width:620px}
+.email-header{background:#111e14;padding:16px 20px;border-bottom:1px solid var(--dark-border)}
+.email-field{display:flex;gap:10px;margin-bottom:6px;font-size:.85rem}
+.email-field .label{color:var(--text-muted);width:60px;flex-shrink:0;font-weight:600}
+.email-field .val{color:var(--text)}
+.email-body{padding:24px}
+.email-subject{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--dark-border)}
+.email-content{font-size:.92rem;color:var(--text-muted);line-height:1.9}
+.email-content p{color:var(--text-muted);margin:0 0 10px}
+.email-content strong{color:var(--text)}
+.email-cta-btn{display:inline-block;background:var(--green-bright);color:#fff;padding:12px 24px;border-radius:7px;font-weight:700;text-decoration:none;margin-top:14px;font-size:.9rem}
+.email-footer{background:#0b1a0f;padding:12px 20px;font-size:.75rem;color:var(--text-muted);border-top:1px solid var(--dark-border)}
+
+/* ── QUOTE SYSTEM ── */
+.quote-steps{display:flex;gap:0;margin-bottom:32px;flex-wrap:wrap}
+.qstep{flex:1;min-width:120px;text-align:center;padding:14px 8px;position:relative}
+.qstep:not(:last-child)::after{content:'→';position:absolute;right:-8px;top:50%;transform:translateY(-50%);color:var(--dark-border);font-size:1.2rem}
+.qstep-num{width:36px;height:36px;border-radius:50%;background:var(--green);color:#fff;font-weight:700;font-size:.9rem;display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
+.qstep-label{font-size:.78rem;color:var(--text-muted);font-weight:500}
+.quote-mock{background:var(--dark-card);border:1px solid var(--dark-border);border-radius:14px;padding:32px;max-width:560px}
+.quote-mock h3{color:#fff;margin-bottom:6px}
+.quote-mock .subtitle{font-size:.88rem;color:var(--text-muted);margin-bottom:24px}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:6px}
+.form-control{width:100%;background:#0b1a0f;border:1.5px solid var(--dark-border);border-radius:8px;padding:11px 14px;color:var(--text);font-size:.9rem;outline:none;transition:border-color .18s}
+.form-control:focus{border-color:var(--green-bright)}
+.radio-group{display:flex;flex-wrap:wrap;gap:8px}
+.radio-pill{background:#0b1a0f;border:1.5px solid var(--dark-border);border-radius:20px;padding:7px 16px;font-size:.82rem;color:var(--text-muted);cursor:pointer;transition:all .18s}
+.radio-pill:hover,.radio-pill.sel{background:rgba(56,169,87,.15);border-color:var(--green-bright);color:var(--green-bright)}
+.form-submit{width:100%;background:var(--green-bright);color:#fff;border:none;border-radius:8px;padding:14px;font-size:1rem;font-weight:700;cursor:pointer;transition:background .18s;margin-top:8px}
+.form-submit:hover{background:var(--green-light)}
+.quote-features{margin-top:24px;display:flex;flex-wrap:wrap;gap:10px}
+.qf{font-size:.8rem;color:var(--text-muted);display:flex;align-items:center;gap:5px}
+.qf::before{content:'✓';color:var(--green-bright);font-weight:700}
+
+/* ── INVOICE ── */
+.invoice-mock{background:#fff;color:#111;border-radius:14px;overflow:hidden;max-width:620px;box-shadow:0 24px 64px rgba(0,0,0,.4)}
+.inv-header{background:var(--green);padding:24px 28px;display:flex;justify-content:space-between;align-items:flex-start}
+.inv-logo{color:#fff;font-weight:900;font-size:1.2rem}
+.inv-logo span{color:var(--gold-light)}
+.inv-label{color:rgba(255,255,255,.7);font-size:.72rem;text-transform:uppercase;letter-spacing:1px}
+.inv-num{color:#fff;font-size:1.4rem;font-weight:800}
+.inv-body{padding:24px 28px}
+.inv-parties{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.inv-party-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#666;margin-bottom:4px}
+.inv-party-name{font-weight:700;font-size:.95rem}
+.inv-party-detail{font-size:.82rem;color:#555;margin-top:2px}
+.inv-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-bottom:18px}
+.inv-table th{background:#f5f5f5;padding:9px 12px;text-align:left;font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;color:#555;border-bottom:2px solid #e0e0e0}
+.inv-table td{padding:10px 12px;border-bottom:1px solid #f0f0f0}
+.inv-table td:last-child,.inv-table th:last-child{text-align:right}
+.inv-totals{display:flex;flex-direction:column;align-items:flex-end;gap:6px;font-size:.88rem}
+.inv-total-row{display:flex;gap:48px}
+.inv-total-row .amt{font-weight:600}
+.inv-total-final{font-size:1.1rem;font-weight:800;color:var(--green);border-top:2px solid #111;padding-top:8px;margin-top:4px}
+.inv-sub-banner{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:14px 16px;margin:18px 0;display:flex;align-items:center;gap:12px}
+.inv-sub-icon{font-size:1.4rem}
+.inv-sub-text{font-size:.85rem;font-weight:600;color:#166534}
+.inv-sub-detail{font-size:.78rem;color:#15803d;margin-top:2px}
+.inv-footer-bar{background:var(--green);padding:14px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.inv-pay-btn{background:var(--gold);color:#0b1a0f;border:none;padding:10px 22px;border-radius:6px;font-weight:800;font-size:.88rem;cursor:pointer}
+.inv-footer-text{color:rgba(255,255,255,.8);font-size:.78rem}
+
+/* ── SUBSCRIPTION ── */
+.sub-plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:32px}
+.sub-plan{background:var(--dark-card);border:1px solid var(--dark-border);border-radius:14px;padding:28px;position:relative}
+.sub-plan.featured{border-color:var(--gold);background:#0f1e12}
+.sub-plan.featured::before{content:'MOST POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:#0b1a0f;font-size:.65rem;font-weight:800;letter-spacing:1.5px;padding:4px 14px;border-radius:20px}
+.sub-plan h3{margin-bottom:4px}
+.sub-desc{font-size:.83rem;color:var(--text-muted);margin-bottom:16px}
+.sub-features{list-style:none;padding:0;margin:0}
+.sub-features li{padding:6px 0;font-size:.86rem;color:var(--text-muted);border-bottom:1px solid var(--dark-border);display:flex;align-items:center;gap:6px}
+.sub-features li:last-child{border:none}
+.sub-features li::before{content:'✓';color:var(--green-bright);font-weight:700;font-size:.85rem;flex-shrink:0}
+.sub-cta{display:block;text-align:center;background:var(--green-bright);color:#fff;padding:11px;border-radius:8px;font-weight:700;text-decoration:none;margin-top:18px;font-size:.9rem;transition:background .18s}
+.sub-cta:hover{background:var(--green-light)}
+.sub-plan.featured .sub-cta{background:var(--gold);color:#0b1a0f}
+.sub-plan.featured .sub-cta:hover{background:var(--gold-light)}
+
+/* ── CITY PAGES ── */
+.city-example{background:var(--dark-card);border:1px solid var(--dark-border);border-radius:14px;overflow:hidden;margin-top:20px}
+.city-header{background:linear-gradient(90deg,var(--green),var(--green-mid));padding:28px 28px 20px}
+.city-header h3{color:#fff;font-size:1.2rem;margin-bottom:4px}
+.city-header p{color:rgba(255,255,255,.75);font-size:.88rem;margin:0}
+.city-breadcrumb{font-size:.73rem;color:rgba(255,255,255,.5);margin-bottom:8px;letter-spacing:.5px}
+.city-body{padding:24px 28px}
+.city-meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.city-tag{background:rgba(56,169,87,.12);border:1px solid rgba(56,169,87,.25);color:var(--green-bright);font-size:.75rem;padding:4px 12px;border-radius:12px;font-weight:600}
+.city-content{font-size:.9rem;color:var(--text-muted);line-height:1.8;margin-bottom:18px}
+.city-services{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:18px}
+.city-service{background:#0b1a0f;border:1px solid var(--dark-border);border-radius:8px;padding:12px 14px;font-size:.82rem;color:var(--text-muted)}
+.city-service strong{display:block;color:var(--text);margin-bottom:2px}
+.city-review-pull{background:#0b1a0f;border-left:3px solid var(--green-bright);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px}
+.city-review-pull p{font-size:.88rem;font-style:italic;color:var(--text);margin:0}
+.city-review-pull .author{font-size:.78rem;color:var(--green-bright);font-weight:600;margin-top:6px}
+.city-seo-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.seo-tag{background:#0b1a0f;border:1px solid var(--dark-border);border-radius:4px;padding:3px 10px;font-size:.72rem;color:var(--text-muted);font-family:monospace}
+
+/* ── STRATEGY TABLE ── */
+.strat-table{width:100%;border-collapse:collapse;margin-top:24px;font-size:.88rem}
+.strat-table th{background:rgba(56,169,87,.15);color:var(--green-bright);padding:12px 16px;text-align:left;font-weight:700;border-bottom:1px solid var(--dark-border)}
+.strat-table td{padding:11px 16px;border-bottom:1px solid var(--dark-border);color:var(--text-muted)}
+.strat-table tr:hover td{background:rgba(56,169,87,.04)}
+
+/* ── FOOTER ── */
+footer{background:#060e08;border-top:1px solid var(--dark-border);padding:32px 24px;text-align:center}
+footer p{font-size:.82rem;color:var(--text-muted);margin:0}
+footer .strong{color:var(--text);font-weight:600}
+
+/* ── UTILITY ── */
+.divider{height:1px;background:var(--dark-border);margin:0 24px}
+.mt-8{margin-top:8px}
+.mt-16{margin-top:16px}
+.mt-24{margin-top:24px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+@media(max-width:680px){.two-col{grid-template-columns:1fr}.inv-parties{grid-template-columns:1fr}.qstep:not(:last-child)::after{display:none}}
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tag{background:rgba(56,169,87,.1);border:1px solid rgba(56,169,87,.2);color:var(--green-bright);font-size:.75rem;padding:4px 12px;border-radius:12px;font-weight:600}
+
+@media(max-width:640px){
+  #tour-card{max-width:90vw;left:5vw!important;right:5vw!important;transform:none!important;top:auto!important;bottom:80px!important;position:fixed!important}
+  #demo-viewer iframe{height:100vh}
+  .section-grid,.two-col,.inv-parties{grid-template-columns:1fr!important}
+  .email-card-grid{grid-template-columns:1fr!important}
+  .city-links-grid{grid-template-columns:repeat(2,1fr)!important}
+  .hero-kpi{grid-template-columns:repeat(2,1fr)!important}
+  #tour-launcher{font-size:.8rem;padding:10px 16px;bottom:16px;right:16px}
+  .demo-back-bar{font-size:.82rem;padding:10px 16px}
+}
+@media(max-width:400px){
+  .city-links-grid{grid-template-columns:1fr!important}
+  .hero-kpi{grid-template-columns:1fr!important}
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">[[CLIENT_SHORT]] <span>Growth System</span></div>
+  <button class="nav-hamburger-out" id="outBurger" onclick="document.getElementById('outMobile').classList.toggle('open')" aria-label="Open menu"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="[[DEMO_SLUG]]/index.html" target="_blank" class="nav-btn outline">🏠 Homepage</a>
+    <a href="#email-campaigns" class="nav-btn outline">📧 Email Campaigns</a>
+    <a href="[[DEMO_SLUG]]/quote.html" target="_blank" class="nav-btn outline">📋 Quote System</a>
+    <a href="[[DEMO_SLUG]]/invoice.html" target="_blank" class="nav-btn outline">💳 Invoice System</a>
+    <a href="[[DEMO_SLUG]]/belleville-il.html" target="_blank" class="nav-btn outline">🗺️ City Pages</a>
+    <a href="[[DEMO_SLUG]]/market-report.html" target="_blank" class="nav-btn gold">📊 Market Report</a>
+    
+  </div>
+</nav>
+<div class="nav-mobile-out" id="outMobile"></div>
+<script>(function(){var m=document.getElementById('outMobile');var d=document.querySelector('.nav-links');if(m&&d){m.innerHTML=d.innerHTML;}})();</script>
+
+<!-- LIVE SYSTEM LAUNCH PANEL -->
+<div style="background:#0d2b0f;border-bottom:2px solid #2e7d32;padding:18px 24px;">
+  <div style="max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:12px;">
+    <span style="color:#7dba80;font-size:.78rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;">🚀 Launch Live Pages:</span>
+    <a href="[[DEMO_SLUG]]/index.html" target="_blank" style="background:#2e7d32;color:#fff;padding:7px 16px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;">Homepage</a>
+    <a href="[[DEMO_SLUG]]/quote.html" target="_blank" style="background:#2e7d32;color:#fff;padding:7px 16px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;">Quote System</a>
+    <a href="[[DEMO_SLUG]]/email-outreach.html" target="_blank" style="background:#2e7d32;color:#fff;padding:7px 16px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;">📧 Email Campaign Kit</a>
+    <a href="[[DEMO_SLUG]]/invoice.html" target="_blank" style="background:#2e7d32;color:#fff;padding:7px 16px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;">Invoice System</a>
+    <a href="[[DEMO_SLUG]]/market-report.html" target="_blank" style="background:#2e7d32;color:#fff;padding:7px 16px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;">Market Report</a>
+    <a href="[[DEMO_SLUG]]/belleville-il.html" target="_blank" style="background:#1b5e20;color:#f9a825;padding:7px 16px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;border:1px solid #f9a825;">Belleville SEO Page</a>
+    <a href="[[DEMO_SLUG]]/ofallon-il.html" target="_blank" style="background:#1b5e20;color:#f9a825;padding:7px 16px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;border:1px solid #f9a825;">O'Fallon SEO Page</a>
+    <a href="[[DEMO_SLUG]]/edwardsville-il.html" target="_blank" style="background:#1b5e20;color:#f9a825;padding:7px 16px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;border:1px solid #f9a825;">Edwardsville SEO Page</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div id="hero" class="full-bleed">
+  <div class="inner">
+    <div class="badge">🌿 Private Strategy Preview — [[CLIENT_NAME]]</div>
+    <h1>Turn [[CLIENT_SHORT]] Into a<br/><span class="highlight">Consistent Revenue Machine</span></h1>
+    <p>This preview shows exactly what a stronger digital system looks like — better homepage, better quote flow, better invoicing, automated email campaigns, and local SEO that actually ranks. Built specifically for [[CLIENT_SHORT]].</p>
+    <div class="hero-btns">
+      <a href="[[DEMO_SLUG]]/index.html" target="_blank" class="btn-primary">🚀 Launch Live Homepage →</a>
+      <a href="#growth-plan" class="btn-secondary">View Growth Plan</a>
+    </div>
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-num">25+</div><div class="stat-label">Years in Business</div></div>
+      <div class="stat-box"><div class="stat-num">★ 4.9</div><div class="stat-label">Google Reviews</div></div>
+      <div class="stat-box"><div class="stat-num">2x</div><div class="stat-label">Email Campaigns / Mo.</div></div>
+      <div class="stat-box"><div class="stat-num">10+</div><div class="stat-label">SEO City Pages</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- REAL WORK PHOTOS -->
+<div class="full-bleed real-photos-section" style="background:#0d1a10;padding:72px 24px">
+  <div class="inner">
+    <div class="section-label">Real Work · Real Photos</div>
+    <h2>[[CLIENT_OWNER]]'s Team in Action — <span class="highlight">Pulled From [[CLIENT_CURRENT_SITE]]</span></h2>
+    <p>These are actual photos from [[CLIENT_SHORT]]'s own website. The quality of the work is already there. We just need to make the digital experience match it.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:32px;">
+      <img src="[[DEMO_SLUG]]/images/0390e8_f2611046f2124404a465aa262cbb839d~mv2.jpeg" alt="[[CLIENT_SHORT]] work photo" style="width:100%;border-radius:10px;object-fit:cover;height:220px;border:1px solid #1e3323;">
+      <img src="[[DEMO_SLUG]]/images/0390e8_febe1ca632da4b91ba8b19993d6eec04~mv2.jpeg" alt="[[CLIENT_SHORT]] landscaping" style="width:100%;border-radius:10px;object-fit:cover;height:220px;border:1px solid #1e3323;">
+      <img src="[[DEMO_SLUG]]/images/0390e8_9e79a3c6ef3b438b899a361eb12112a2~mv2.jpeg" alt="[[CLIENT_SHORT]] lawn care" style="width:100%;border-radius:10px;object-fit:cover;height:220px;border:1px solid #1e3323;">
+      <img src="[[DEMO_SLUG]]/images/0390e8_34d65c80039d41a4bb6a4f6917e172af~mv2.jpeg" alt="[[CLIENT_SHORT]] property maintenance" style="width:100%;border-radius:10px;object-fit:cover;height:220px;border:1px solid #1e3323;">
+      <img src="[[DEMO_SLUG]]/images/0390e8_937553800ab1433da72e711d6dc2e824~mv2.jpeg" alt="[[CLIENT_SHORT]] outdoor work" style="width:100%;border-radius:10px;object-fit:cover;height:220px;border:1px solid #1e3323;">
+      <img src="[[DEMO_SLUG]]/images/0390e8_d64ec7e6a1ff47e5ada7d502c8cf51c1~mv2.jpeg" alt="[[CLIENT_SHORT]] landscaping design" style="width:100%;border-radius:10px;object-fit:cover;height:220px;border:1px solid #1e3323;">
+    </div>
+    <p style="margin-top:20px;text-align:center;font-size:.85rem;color:var(--text-muted)">📸 All photos sourced from <a href="[[CLIENT_CURRENT_SITE]]" target="_blank" style="color:var(--green-bright)">[[CLIENT_CURRENT_SITE]]</a> — [[CLIENT_SHORT]]'s existing Wix site</p>
+  </div>
+</div>
+
+<!-- BEFORE / AFTER -->
+<div class="full-bleed" style="background:#040c06;padding:72px 24px;border-top:1px solid #1e3323">
+  <div class="inner">
+    <div class="section-label">Before &amp; After</div>
+    <h2>Same Business. <span class="highlight">Completely Different</span> Online Presence.</h2>
+    <p style="max-width:600px;margin:0 auto 48px">Here's where [[CLIENT_SHORT]] stands today on Wix — and exactly what they get with our system. Same crew, same quality of work. The difference is what customers see before they ever call.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;margin:0 auto">
+      <!-- BEFORE -->
+      <div style="background:#0f0f0f;border:1.5px solid #c62828;border-radius:14px;overflow:hidden">
+        <div style="background:#c62828;padding:10px 18px;display:flex;align-items:center;gap:10px">
+          <span style="font-size:1rem">⚠️</span>
+          <span style="font-weight:800;font-size:.85rem;color:#fff;letter-spacing:.5px">CURRENT — [[CLIENT_CURRENT_SITE]] (Wix)</span>
+        </div>
+        <div style="padding:22px">
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:12px">
+            <li style="display:flex;gap:10px;align-items:flex-start"><span style="color:#c62828;font-size:1.1rem;flex-shrink:0">✗</span><span style="font-size:.88rem;color:#ccc">Generic Wix template — not built to convert visitors into calls</span></li>
+            <li style="display:flex;gap:10px;align-items:flex-start"><span style="color:#c62828;font-size:1.1rem;flex-shrink:0">✗</span><span style="font-size:.88rem;color:#ccc">No quote form — customers have to call or email and wait</span></li>
+            <li style="display:flex;gap:10px;align-items:flex-start"><span style="color:#c62828;font-size:1.1rem;flex-shrink:0">✗</span><span style="font-size:.88rem;color:#ccc">No online payments — [[CLIENT_OWNER]] chases checks and invoices by hand</span></li>
+            <li style="display:flex;gap:10px;align-items:flex-start"><span style="color:#c62828;font-size:1.1rem;flex-shrink:0">✗</span><span style="font-size:.88rem;color:#ccc">Zero city SEO pages — invisible to Google for 10+ Metro East cities</span></li>
+            <li style="display:flex;gap:10px;align-items:flex-start"><span style="color:#c62828;font-size:1.1rem;flex-shrink:0">✗</span><span style="font-size:.88rem;color:#ccc">No email system — past customers are never contacted again</span></li>
+            <li style="display:flex;gap:10px;align-items:flex-start"><span style="color:#c62828;font-size:1.1rem;flex-shrink:0">✗</span><span style="font-size:.88rem;color:#ccc">No subscription/maintenance plan portal — recurring revenue left on the table</span></li>
+          </ul>
+          <div style="margin-top:20px;padding:14px;background:rgba(198,40,40,.12);border-radius:8px;font-size:.82rem;color:#e57373;text-align:center">
+            Estimated missed revenue per year: <strong style="color:#fff">[[MISSED_REVENUE]]</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- AFTER -->
+      <div style="background:#071209;border:1.5px solid var(--green-bright);border-radius:14px;overflow:hidden">
+        <div style="background:var(--green-bright);padding:10px 18px;display:flex;align-items:center;gap:10px">
+          <span style="font-size:1rem">✅</span>
+          <span style="font-weight:800;font-size:.85rem;color:#0b1a0f;letter-spacing:.5px">AFTER — [[CLIENT_SHORT]] Growth System</span>
+        </div>
+        <div style="padding:22px">
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:12px">
+            <li style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--green-bright);font-size:1.1rem;flex-shrink:0">✓</span><span style="font-size:.88rem;color:#ccc">Custom site built to convert — hero, reviews, services, quote CTA above the fold</span></li>
+            <li style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--green-bright);font-size:1.1rem;flex-shrink:0">✓</span><span style="font-size:.88rem;color:#ccc">Smart 5-step quote form — captures job type, ZIP, details automatically</span></li>
+            <li style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--green-bright);font-size:1.1rem;flex-shrink:0">✓</span><span style="font-size:.88rem;color:#ccc">Online invoicing — customers pay on their phone, [[CLIENT_OWNER]] gets notified instantly</span></li>
+            <li style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--green-bright);font-size:1.1rem;flex-shrink:0">✓</span><span style="font-size:.88rem;color:#ccc">10 city SEO pages — Belleville, O'Fallon, Edwardsville + 7 more ranked on Google</span></li>
+            <li style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--green-bright);font-size:1.1rem;flex-shrink:0">✓</span><span style="font-size:.88rem;color:#ccc">2 email campaigns/month — spring kickoff, reactivation, upsell, referral asks</span></li>
+            <li style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--green-bright);font-size:1.1rem;flex-shrink:0">✓</span><span style="font-size:.88rem;color:#ccc">3-tier maintenance plans — automatic recurring billing, no chasing checks</span></li>
+          </ul>
+          <div style="margin-top:20px;padding:14px;background:rgba(76,175,80,.1);border-radius:8px;font-size:.82rem;color:var(--green-bright);text-align:center">
+            Projected added revenue year 1: <strong style="color:#fff">[[PROJECTED_REVENUE]]</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:32px;text-align:center;font-size:.85rem;color:var(--text-muted)">
+      👇 Scroll down to see every piece of the system — all of it is live and working right now.
+    </div>
+  </div>
+</div>
+
+<!-- LIVE DEMO: HOMEPAGE + CITY PAGE -->
+<div class="full-bleed" style="background:#060e08;padding:72px 24px">
+  <div class="inner">
+    <div class="section-label">Live Demo — What We Build For [[CLIENT_SHORT]]</div>
+    <h2>This Replaces <span class="highlight">[[CLIENT_CURRENT_SITE]]</span></h2>
+    <p>The pages below are live and ready. This is exactly what [[CLIENT_OWNER]]'s customers would see — same brand, dramatically better execution.</p>
+
+    <div style="margin-top:48px">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:12px">
+        <div>
+          <div class="section-label" style="margin-bottom:4px">Page 1 of 2</div>
+          <h3 style="font-size:1.4rem">New Homepage</h3>
+          <p style="margin-top:4px;font-size:.88rem">Clean hero, trust signals, real reviews, service cards, city links, quote CTA.</p>
+        </div>
+        <a href="[[DEMO_SLUG]]/index.html" target="_blank" class="btn-primary" style="white-space:nowrap">🚀 Open Full Homepage →</a>
+      </div>
+      <div class="page-preview-wrap" style="margin-top:0">
+        <div class="page-preview-bar">
+          <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+          <div class="page-preview-url">🔒 [[DEMO_DOMAIN]]/[[DEMO_SLUG]]/index.html</div>
+        </div>
+        <div class="page-preview-frame-box">
+          <iframe src="[[DEMO_SLUG]]/index.html" title="[[CLIENT_SHORT]] Homepage Preview" loading="lazy"></iframe>
+        </div>
+        <div class="page-preview-footer">
+          <span>Live page — replace [[CLIENT_CURRENT_SITE]] with this</span>
+          <a href="[[DEMO_SLUG]]/index.html" target="_blank" class="btn-primary" style="padding:8px 18px;font-size:.82rem;">Open Full Page →</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:64px">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:12px">
+        <div>
+          <div class="section-label" style="margin-bottom:4px">Page 2 of 2</div>
+          <h3 style="font-size:1.4rem">SEO City Page — [[CLIENT_CITY]], [[CLIENT_STATE]]</h3>
+          <p style="margin-top:4px;font-size:.88rem">One of 10 city pages — each targeting a Metro East city on Google with real keywords, reviews, and schema markup.</p>
+        </div>
+        <a href="[[DEMO_SLUG]]/belleville-il.html" target="_blank" class="btn-primary" style="white-space:nowrap">🚀 Open Full City Page →</a>
+      </div>
+      <div class="page-preview-wrap" style="margin-top:0">
+        <div class="page-preview-bar">
+          <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+          <div class="page-preview-url">🔒 [[DEMO_DOMAIN]]/[[DEMO_SLUG]]/belleville-il.html</div>
+        </div>
+        <div class="page-preview-frame-box">
+          <iframe src="[[DEMO_SLUG]]/belleville-il.html" title="[[CLIENT_SHORT]] Belleville City Page Preview" loading="lazy"></iframe>
+        </div>
+        <div class="page-preview-footer">
+          <span>SEO-optimized — schema markup, Google reviews, service grid, quote sidebar</span>
+          <a href="[[DEMO_SLUG]]/belleville-il.html" target="_blank" class="btn-primary" style="padding:8px 18px;font-size:.82rem;">Open Full Page →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="full-bleed" style="background:#080f0a;padding:72px 24px">
+  <div class="inner">
+    <div class="section-label">Competitive Intelligence</div>
+    <h2>Where [[CLIENT_SHORT]] Stands vs. The Competition</h2>
+    <p>Here's an honest look at the Metro East market and where [[CLIENT_SHORT]] wins, loses, and can dominate.</p>
+    <div style="overflow-x:auto">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Factor</th>
+            <th>[[CLIENT_SHORT]] Today</th>
+            <th>Top Competitors</th>
+            <th>With Growth System</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Google Search Ranking</td>
+            <td class="lose">Weak — no city pages</td>
+            <td>Varies — some rank well</td>
+            <td class="win">10+ ranked city pages</td>
+          </tr>
+          <tr>
+            <td>Google Reviews</td>
+            <td class="win">Excellent — real 5-star reviews</td>
+            <td>Most have fewer, lower quality</td>
+            <td class="win">Embedded + amplified on every page</td>
+          </tr>
+          <tr>
+            <td>Homepage Quality</td>
+            <td class="tie">Working Wix site — not built to convert</td>
+            <td>Most are similar or worse</td>
+            <td class="win">Clean, fast, built to convert</td>
+          </tr>
+          <tr>
+            <td>Quote System</td>
+            <td class="lose">Basic contact form</td>
+            <td>Most have the same</td>
+            <td class="win">Multi-step, qualifying, instant confirm</td>
+          </tr>
+          <tr>
+            <td>Invoice / Payment</td>
+            <td class="lose">Just an amount box</td>
+            <td>Most have no online payment</td>
+            <td class="win">Branded invoice + recurring subscriptions</td>
+          </tr>
+          <tr>
+            <td>Email Follow-Up</td>
+            <td class="lose">None</td>
+            <td>Maybe 1–2 do this</td>
+            <td class="win">2x/month automated campaigns</td>
+          </tr>
+          <tr>
+            <td>Service Descriptions</td>
+            <td class="lose">"Use this area to describe one of your services."</td>
+            <td>Some have real copy</td>
+            <td class="win">Full descriptions, SEO-optimized</td>
+          </tr>
+          <tr>
+            <td>Family / Trust Story</td>
+            <td class="win">[[CLIENT_YEARS]] years, real family business</td>
+            <td>Most are corporate or vague</td>
+            <td class="win">Featured prominently everywhere</td>
+          </tr>
+          <tr>
+            <td>Mobile Experience</td>
+            <td class="tie">OK but slow</td>
+            <td>Most are mediocre</td>
+            <td class="win">Mobile-first, fast-loading</td>
+          </tr>
+          <tr>
+            <td>Recurring Revenue</td>
+            <td class="tie">Recurring clients — managed by phone, no online portal</td>
+            <td>Most are one-time too</td>
+            <td class="win">Monthly maintenance subscriptions</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-grid mt-24">
+      <div class="card">
+        <div class="card-icon">🔎</div>
+        <h3>The Biggest Gap</h3>
+        <p>[[CLIENT_SHORT]] has the strongest trust signals in the market — real reviews, [[CLIENT_YEARS]] years, family-owned. That trust deserves a digital presence that matches it and actively brings in new customers.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💡</div>
+        <h3>The Biggest Opportunity</h3>
+        <p>No competitor in Metro East is running a complete system: SEO city pages + email follow-up + formalized online subscription billing. [[CLIENT_SHORT]] already has the recurring clients — now let's build the system around them.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📍</div>
+        <h3>Local SEO is Uncontested</h3>
+        <p>Searching "lawn care Belleville IL" or "landscaping O'Fallon IL" returns weak results. With properly built city pages and [[CLIENT_SHORT]]'s reviews embedded, this is very winnable.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GROWTH PLAN -->
+<div id="growth-plan" class="full-bleed" style="background:#060e08;padding:72px 24px">
+  <div class="inner">
+    <div class="section-label">Proven Growth Framework</div>
+    <h2>The [[CLIENT_SHORT]] <span class="highlight">90-Day Growth Plan</span></h2>
+    <p>A structured, phased approach used by top strategy firms — applied to a real local business. Three phases, clear outcomes, measurable results.</p>
+    <div class="phases">
+      <div class="phase p1">
+        <div class="phase-num">Phase 1 — Foundation</div>
+        <h3>Fix the Digital Core</h3>
+        <ul>
+          <li>Rebuild homepage with clear positioning + CTA</li>
+          <li>Write real service descriptions (not placeholder text)</li>
+          <li>Fix mobile speed and load time</li>
+          <li>Set up multi-step quote form with auto-response</li>
+          <li>Replace invoice page with branded system</li>
+          <li>Set up Google Business Profile optimization</li>
+          <li>Embed real reviews into the homepage</li>
+        </ul>
+        <div class="tag-row"><span class="tag">Weeks 1–3</span><span class="tag">Highest ROI</span></div>
+      </div>
+      <div class="phase p2">
+        <div class="phase-num">Phase 2 — Expansion</div>
+        <h3>Capture the Market</h3>
+        <ul>
+          <li>Build 10+ SEO city pages targeting Metro East</li>
+          <li>Launch 2x/month email campaign system</li>
+          <li>Create seasonal campaign calendar</li>
+          <li>Activate customer reactivation sequences</li>
+          <li>Add neighborhood-specific landing pages</li>
+          <li>Integrate GBP reviews into city pages</li>
+          <li>Set up lead pipeline tracking</li>
+        </ul>
+        <div class="tag-row"><span class="tag">Weeks 4–7</span><span class="tag">Traffic + Leads</span></div>
+      </div>
+      <div class="phase p3">
+        <div class="phase-num">Phase 3 — Revenue Engine</div>
+        <h3>Lock In Recurring Revenue</h3>
+        <ul>
+          <li>Launch monthly lawn maintenance subscriptions</li>
+          <li>Build annual plan + seasonal package bundles</li>
+          <li>Automated invoice + payment reminders</li>
+          <li>Referral reward system for existing customers</li>
+          <li>Upsell sequences to past quote requesters</li>
+          <li>Track booked jobs vs. leads closed by source</li>
+          <li>Monthly reporting dashboard</li>
+        </ul>
+        <div class="tag-row"><span class="tag">Weeks 8–12</span><span class="tag">Predictable Income</span></div>
+      </div>
+    </div>
+    <div style="margin-top:40px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:14px;padding:28px">
+      <h3 style="margin-bottom:16px">Strategic Thesis</h3>
+      <p style="font-size:.95rem;line-height:1.9;color:var(--text-muted)">
+        [[CLIENT_SHORT]] has the two hardest things to build: <strong style="color:var(--text)">trust ([[CLIENT_YEARS]] years + real reviews)</strong> and <strong style="color:var(--text)">operational excellence (repeat customers, word-of-mouth)</strong>. What's missing is the digital infrastructure to systematically capture, convert, and retain customers at scale. This is not about "a better website." It's about building a <strong style="color:var(--green-bright)">revenue system</strong> that runs alongside the field work — capturing leads while [[CLIENT_OWNER]]'s team is on a job, following up while they're mowing, and collecting recurring payments while they sleep.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- EMAIL CAMPAIGNS -->
+<div id="email-campaigns" class="full-bleed" style="background:#060e08;padding:72px 24px">
+  <div class="inner">
+    <div class="section-label">Email Outreach System</div>
+    <h2>2 Campaigns Per Month — <span class="highlight">Built to Book Jobs</span></h2>
+    <p>These are real, usable email campaigns tailored to [[CLIENT_SHORT]]'s services and customer base. Click each tab to preview.</p>
+    <div class="email-tabs mt-24">
+      <button class="etab active" onclick="showEmail('spring')">🌱 Spring Activation</button>
+      <button class="etab" onclick="showEmail('reactivation')">🔁 Reactivation</button>
+      <button class="etab" onclick="showEmail('upsell')">⬆ Landscape Upsell</button>
+      <button class="etab" onclick="showEmail('subscription')">📅 Subscription Offer</button>
+      <button class="etab" onclick="showEmail('referral')">🤝 Referral Ask</button>
+    </div>
+
+    <div id="email-spring" class="email-panel active">
+      <div class="email-mock">
+        <div class="email-header">
+          <div class="email-field"><span class="label">From:</span><span class="val">[[CLIENT_NAME]] &lt;[[CLIENT_EMAIL]]&gt;</span></div>
+          <div class="email-field"><span class="label">To:</span><span class="val">[Customer Name]</span></div>
+          <div class="email-field"><span class="label">Subject:</span><span class="val" style="font-weight:700;color:#fff">Your yard is about to wake up — are you ready?</span></div>
+        </div>
+        <div class="email-body">
+          <div class="email-subject">Your yard is about to wake up — are you ready?</div>
+          <div class="email-content">
+            <p>Hey [First Name],</p>
+            <p>Winter is over.</p>
+            <p>And most yards in Belleville and Metro East are already two weeks behind.</p>
+            <p>This is the window that separates the yards that look sharp all summer from the ones that play catch-up until August.</p>
+            <p><strong>We're scheduling for:</strong></p>
+            <p>→ Spring cleanup &amp; debris removal<br/>→ Pre-emergent weed control<br/>→ Mulch refresh &amp; bed edging<br/>→ First mow of the season<br/>→ Tree and shrub shaping</p>
+            <p>Spots fill fast. We're a family crew — we can only take on so many per week.</p>
+            <p>If you want to be on the list, now is the time.</p>
+            <a href="#quote-system" class="email-cta-btn">Get My Spring Quote →</a>
+            <p style="margin-top:16px;font-size:.82rem">— [[CLIENT_OWNER]] &amp; the [[CLIENT_SHORT]] Team<br/>[[CLIENT_PHONE]] | [[CLIENT_CITY]], [[CLIENT_STATE]]</p>
+          </div>
+        </div>
+        <div class="email-footer">[[CLIENT_NAME]] · [[CLIENT_CITY]], [[CLIENT_STATE]] · [[CLIENT_PHONE]] · <a href="#" style="color:var(--text-muted)">Unsubscribe</a></div>
+      </div>
+    </div>
+
+    <div id="email-reactivation" class="email-panel">
+      <div class="email-mock">
+        <div class="email-header">
+          <div class="email-field"><span class="label">From:</span><span class="val">[[CLIENT_NAME]] &lt;[[CLIENT_EMAIL]]&gt;</span></div>
+          <div class="email-field"><span class="label">To:</span><span class="val">[Past Customer]</span></div>
+          <div class="email-field"><span class="label">Subject:</span><span class="val" style="font-weight:700;color:#fff">Hey — haven't seen you in a while</span></div>
+        </div>
+        <div class="email-body">
+          <div class="email-subject">Hey — haven't seen you in a while</div>
+          <div class="email-content">
+            <p>Hey [First Name],</p>
+            <p>Quick question — are you still handling the yard yourself this year?</p>
+            <p>Most people start the season with good intentions.</p>
+            <p>Then July hits.</p>
+            <p>We just wrapped up your spring cleanup for you last year and I wanted to reach out before our spring schedule fills in.</p>
+            <p><strong>We're opening recurring spots for:</strong></p>
+            <p>→ Weekly or bi-weekly mowing<br/>→ Ongoing maintenance plans<br/>→ Seasonal cleanup packages<br/>→ Priority scheduling for return customers</p>
+            <p>Past customers get priority booking. Just say the word and I'll get you on the calendar.</p>
+            <a href="#quote-system" class="email-cta-btn">Book My Spot →</a>
+            <p style="margin-top:16px;font-size:.82rem">— [[CLIENT_OWNER]] at [[CLIENT_SHORT]]<br/>[[CLIENT_PHONE]]</p>
+          </div>
+        </div>
+        <div class="email-footer">[[CLIENT_NAME]] · [[CLIENT_CITY]], [[CLIENT_STATE]] · [[CLIENT_PHONE]] · <a href="#" style="color:var(--text-muted)">Unsubscribe</a></div>
+      </div>
+    </div>
+
+    <div id="email-upsell" class="email-panel">
+      <div class="email-mock">
+        <div class="email-header">
+          <div class="email-field"><span class="label">From:</span><span class="val">[[CLIENT_NAME]] &lt;[[CLIENT_EMAIL]]&gt;</span></div>
+          <div class="email-field"><span class="label">To:</span><span class="val">[Customer Name]</span></div>
+          <div class="email-field"><span class="label">Subject:</span><span class="val" style="font-weight:700;color:#fff">Thinking about upgrading your yard this year?</span></div>
+        </div>
+        <div class="email-body">
+          <div class="email-subject">Thinking about upgrading your yard this year?</div>
+          <div class="email-content">
+            <p>Hey [First Name],</p>
+            <p>Some yards just look "fine."</p>
+            <p>Clean enough. Mowed. But not finished.</p>
+            <p>There's a version of your property that makes neighbors slow down when they drive by. We build that version.</p>
+            <p><strong>What we're doing this spring for homeowners ready to level up:</strong></p>
+            <p>→ Full landscape bed redesign &amp; rebuild<br/>→ Fresh mulch with clean edge definition<br/>→ Tree shaping and canopy cleanup<br/>→ New plant installs and color pops<br/>→ Drainage solutions and grading</p>
+            <p>These projects go fast on our schedule. If you've been thinking about it, this is the season to actually do it.</p>
+            <a href="#quote-system" class="email-cta-btn">See My Options →</a>
+            <p style="margin-top:16px;font-size:.82rem">— [[CLIENT_OWNER]] &amp; Erika, [[CLIENT_NAME]]<br/>[[CLIENT_PHONE]]</p>
+          </div>
+        </div>
+        <div class="email-footer">[[CLIENT_NAME]] · [[CLIENT_CITY]], [[CLIENT_STATE]] · [[CLIENT_PHONE]] · <a href="#" style="color:var(--text-muted)">Unsubscribe</a></div>
+      </div>
+    </div>
+
+    <div id="email-subscription" class="email-panel">
+      <div class="email-mock">
+        <div class="email-header">
+          <div class="email-field"><span class="label">From:</span><span class="val">[[CLIENT_NAME]] &lt;[[CLIENT_EMAIL]]&gt;</span></div>
+          <div class="email-field"><span class="label">To:</span><span class="val">[Customer Name]</span></div>
+          <div class="email-field"><span class="label">Subject:</span><span class="val" style="font-weight:700;color:#fff">Never think about your yard again — new plan option</span></div>
+        </div>
+        <div class="email-body">
+          <div class="email-subject">Never think about your yard again — new plan option</div>
+          <div class="email-content">
+            <p>Hey [First Name],</p>
+            <p>We just launched monthly lawn care plans.</p>
+            <p>One flat payment. We handle the rest all season.</p>
+            <p><strong>What's included:</strong></p>
+            <p>→ Bi-weekly or weekly mowing + edging<br/>→ Seasonal cleanup visits<br/>→ Priority scheduling (you're always first)<br/>→ No scheduling calls — we just show up<br/>→ One invoice per month, auto-pay option</p>
+            <p>This is for homeowners who want their yard to look right without having to think about it every two weeks.</p>
+            <p>Spots are limited. We're a family crew, not a franchise.</p>
+            <a href="#invoice-system" class="email-cta-btn">See the Plan →</a>
+            <p style="margin-top:16px;font-size:.82rem">— [[CLIENT_OWNER]] at [[CLIENT_SHORT]]<br/>[[CLIENT_PHONE]]</p>
+          </div>
+        </div>
+        <div class="email-footer">[[CLIENT_NAME]] · [[CLIENT_CITY]], [[CLIENT_STATE]] · [[CLIENT_PHONE]] · <a href="#" style="color:var(--text-muted)">Unsubscribe</a></div>
+      </div>
+    </div>
+
+    <div id="email-referral" class="email-panel">
+      <div class="email-mock">
+        <div class="email-header">
+          <div class="email-field"><span class="label">From:</span><span class="val">[[CLIENT_NAME]] &lt;[[CLIENT_EMAIL]]&gt;</span></div>
+          <div class="email-field"><span class="label">To:</span><span class="val">[Happy Customer]</span></div>
+          <div class="email-field"><span class="label">Subject:</span><span class="val" style="font-weight:700;color:#fff">Know anyone else who needs their yard handled?</span></div>
+        </div>
+        <div class="email-body">
+          <div class="email-subject">Know anyone else who needs their yard handled?</div>
+          <div class="email-content">
+            <p>Hey [First Name],</p>
+            <p>We really appreciate your business — and your trust over the years.</p>
+            <p>We grow almost entirely through word of mouth. Always have.</p>
+            <p>If you know a neighbor, friend, or family member who could use reliable lawn care, landscaping, or tree service — we'd love the introduction.</p>
+            <p><strong>For every referral that books a job, you get:</strong></p>
+            <p>→ $25 off your next service<br/>→ Or a free yard cleanup visit (for 3+ referrals)</p>
+            <p>Just tell them to mention your name when they call or fill out the quote form.</p>
+            <p>Simple as that.</p>
+            <a href="#quote-system" class="email-cta-btn">Share My Quote Link →</a>
+            <p style="margin-top:16px;font-size:.82rem">Thank you — [[CLIENT_OWNER]] &amp; the whole [[CLIENT_SHORT]] family<br/>[[CLIENT_PHONE]]</p>
+          </div>
+        </div>
+        <div class="email-footer">[[CLIENT_NAME]] · [[CLIENT_CITY]], [[CLIENT_STATE]] · [[CLIENT_PHONE]] · <a href="#" style="color:var(--text-muted)">Unsubscribe</a></div>
+      </div>
+    <!-- REAL EXAMPLE CALLOUT -->
+    <div style="margin-top:48px;background:#0a1f0e;border:1px solid var(--green-bright);border-radius:14px;padding:32px;display:flex;align-items:center;gap:32px;flex-wrap:wrap">
+      <div style="font-size:3rem;flex-shrink:0">&#128236;</div>
+      <div style="flex:1;min-width:240px">
+        <div style="font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Live Example</div>
+        <h3 style="color:#fff;margin-bottom:8px">See a Real Campaign We Already Sent</h3>
+        <p style="margin:0;color:var(--text-muted);font-size:.9rem">This is an actual email outreach campaign we built and deployed for All Pro Metro East Construction &#8212; same system, same approach. Click to see exactly what it looks like.</p>
+      </div>
+      <a href="https://tonybeal.net/allpro-email-outreach.html" target="_blank" rel="noopener" style="background:var(--gold);color:#0b1a0f;padding:13px 26px;border-radius:8px;font-weight:800;font-size:.92rem;text-decoration:none;white-space:nowrap;flex-shrink:0">View Live Email Example &#8599;</a>
+    </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- QUOTE SYSTEM -->
+<div id="quote-system" class="full-bleed" style="background:#080f0a;padding:72px 24px">
+  <div class="inner">
+    <div class="section-label">Better Quote System</div>
+    <h2>From "Contact Us" to <span class="highlight">Booked Job</span></h2>
+    <p>Replace the basic contact form with a multi-step flow that qualifies leads, sets expectations, and triggers automatic follow-up. This is what the quote page looks like.</p>
+    <div style="text-align:center;margin:20px 0 0;">
+      <a href="[[DEMO_SLUG]]/quote.html" target="_blank" class="btn-primary" style="font-size:1rem;padding:13px 30px;">🚀 Open Live Quote System →</a>
+    </div>
+    <div class="page-preview-wrap">
+      <div class="page-preview-bar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <div class="page-preview-url">🔒 [[DEMO_DOMAIN]]/[[DEMO_SLUG]]/quote.html</div>
+      </div>
+      <div class="page-preview-frame-box">
+        <iframe src="[[DEMO_SLUG]]/quote.html" title="[[CLIENT_SHORT]] Quote System Preview" loading="lazy"></iframe>
+      </div>
+      <div class="page-preview-footer">
+        <span>5-step wizard — qualifies leads, captures contact, auto-confirms</span>
+        <a href="[[DEMO_SLUG]]/quote.html" target="_blank" class="btn-primary" style="padding:8px 18px;font-size:.82rem;">Open Full Page →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INVOICE + SUBSCRIPTIONS -->
+<div id="invoice-system" class="full-bleed" style="background:#060e08;padding:72px 24px">
+  <div class="inner">
+    <div class="section-label">Invoice + Subscription System</div>
+    <h2>Replace the Payment Box with a <span class="highlight">Real Invoice System</span></h2>
+    <p>The current pay-invoice page is just a blank amount field. Here's what a professional invoice looks like — plus monthly subscription plans that create predictable income.</p>
+    <div style="text-align:center;margin:20px 0 0;">
+      <a href="[[DEMO_SLUG]]/invoice.html" target="_blank" class="btn-primary" style="font-size:1rem;padding:13px 30px;">🚀 Open Live Invoice Page →</a>
+    </div>
+    <div class="page-preview-wrap">
+      <div class="page-preview-bar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <div class="page-preview-url">🔒 [[DEMO_DOMAIN]]/[[DEMO_SLUG]]/invoice.html</div>
+      </div>
+      <div class="page-preview-frame-box">
+        <iframe src="[[DEMO_SLUG]]/invoice.html" title="[[CLIENT_SHORT]] Invoice Preview" loading="lazy"></iframe>
+      </div>
+      <div class="page-preview-footer">
+        <span>Pay invoice online · View invoice example — branded, professional</span>
+        <a href="[[DEMO_SLUG]]/invoice.html" target="_blank" class="btn-primary" style="padding:8px 18px;font-size:.82rem;">Open Full Page →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEO CITY PAGES -->
+<div id="city-pages" class="full-bleed" style="background:#080f0a;padding:72px 24px">
+  <div class="inner">
+    <div class="section-label">SEO City Pages</div>
+    <h2>Pages That <span class="highlight">Rank on Google</span> for Every City</h2>
+    <p>Each city page targets real search terms like "lawn care Belleville IL" and "landscaping O'Fallon IL" — and uses [[CLIENT_SHORT]]'s own real reviews as SEO content. Here's what one looks like.</p>
+    <div style="text-align:center;margin:20px 0 12px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
+      <a href="[[DEMO_SLUG]]/belleville-il.html" target="_blank" class="btn-primary" style="font-size:.9rem;padding:10px 22px;">Belleville →</a>
+      <a href="[[DEMO_SLUG]]/ofallon-il.html" target="_blank" class="btn-primary" style="font-size:.9rem;padding:10px 22px;">O'Fallon →</a>
+      <a href="[[DEMO_SLUG]]/edwardsville-il.html" target="_blank" class="btn-primary" style="font-size:.9rem;padding:10px 22px;">Edwardsville →</a>
+      <a href="[[DEMO_SLUG]]/fairview-heights-il.html" target="_blank" class="btn-primary" style="font-size:.9rem;padding:10px 22px;">Fairview Heights →</a>
+      <a href="[[DEMO_SLUG]]/collinsville-il.html" target="_blank" class="btn-primary" style="font-size:.9rem;padding:10px 22px;">Collinsville →</a>
+      <a href="[[DEMO_SLUG]]/highland-il.html" target="_blank" class="btn-primary" style="font-size:.9rem;padding:10px 22px;">Highland →</a>
+      <a href="[[DEMO_SLUG]]/columbia-il.html" target="_blank" class="btn-primary" style="font-size:.9rem;padding:10px 22px;">Columbia →</a>
+      <a href="[[DEMO_SLUG]]/shiloh-il.html" target="_blank" class="btn-primary" style="font-size:.9rem;padding:10px 22px;">Shiloh →</a>
+      <a href="[[DEMO_SLUG]]/swansea-il.html" target="_blank" class="btn-primary" style="font-size:.9rem;padding:10px 22px;">Swansea →</a>
+      <a href="[[DEMO_SLUG]]/waterloo-il.html" target="_blank" class="btn-primary" style="font-size:.9rem;padding:10px 22px;">Waterloo →</a>
+    </div>
+
+    <div class="card-grid mt-24">
+      <div class="card">
+        <div class="card-icon">📍</div>
+        <h3>Cities We Target</h3>
+        <p style="margin-top:8px;font-size:.85rem">Belleville · O'Fallon · Fairview Heights · Swansea · Edwardsville · Collinsville · Shiloh · Scott AFB area · Mascoutah · Freeburg · Waterloo · Columbia · Highland · Maryville · Troy</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔧</div>
+        <h3>What Each Page Has</h3>
+        <ul style="list-style:none;padding:0;margin-top:8px">
+          <li style="font-size:.85rem;padding:4px 0;color:var(--text-muted);border-bottom:1px solid var(--dark-border)">✓ City-specific headline + intro copy</li>
+          <li style="font-size:.85rem;padding:4px 0;color:var(--text-muted);border-bottom:1px solid var(--dark-border)">✓ Real review pulled from Google</li>
+          <li style="font-size:.85rem;padding:4px 0;color:var(--text-muted);border-bottom:1px solid var(--dark-border)">✓ Service breakdown for that city</li>
+          <li style="font-size:.85rem;padding:4px 0;color:var(--text-muted);border-bottom:1px solid var(--dark-border)">✓ Local keyword targeting (ZIP + city)</li>
+          <li style="font-size:.85rem;padding:4px 0;color:var(--text-muted)">✓ Quote CTA and phone number</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-icon">📈</div>
+        <h3>Why This Works</h3>
+        <p>Google rewards local relevance. A page that says "Lawn Care Belleville IL" with a real Belleville address, a Belleville review, and Belleville-specific service info will outrank a generic homepage almost every time.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:32px;overflow-x:auto">
+      <table class="strat-table">
+        <thead>
+          <tr>
+            <th>City Page</th>
+            <th>Primary Keyword</th>
+            <th>Secondary Keywords</th>
+            <th>Monthly Searches (Est.)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>[[CLIENT_CITY]], [[CLIENT_STATE]]</td><td>lawn care belleville il</td><td>landscaping belleville, mulching belleville</td><td>320–480/mo</td></tr>
+          <tr><td>O'Fallon, IL</td><td>lawn care ofallon il</td><td>tree service ofallon, lawn mowing ofallon</td><td>280–420/mo</td></tr>
+          <tr><td>Fairview Heights, IL</td><td>lawn care fairview heights il</td><td>landscaping fairview heights</td><td>160–260/mo</td></tr>
+          <tr><td>Edwardsville, IL</td><td>lawn care edwardsville il</td><td>lawn mowing edwardsville</td><td>200–310/mo</td></tr>
+          <tr><td>Swansea, IL</td><td>lawn care swansea il</td><td>landscaping swansea il</td><td>110–180/mo</td></tr>
+          <tr><td>Collinsville, IL</td><td>lawn care collinsville il</td><td>lawn service collinsville</td><td>140–220/mo</td></tr>
+          <tr><td>Shiloh, IL</td><td>lawn care shiloh il</td><td>yard maintenance shiloh</td><td>90–150/mo</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SUMMARY CTA -->
+<div class="full-bleed" style="background:linear-gradient(135deg,#0e2415,#1a5c2a,#0e2415);padding:80px 24px;text-align:center">
+  <div class="inner">
+    <div class="section-label">What This Changes</div>
+    <h2 style="max-width:700px;margin:0 auto 16px">[[CLIENT_SHORT]] Has the Business.<br/>This Gives It the <span class="highlight">Digital Engine</span>.</h2>
+    <p style="max-width:560px;margin:0 auto 40px;font-size:1rem">Every piece of this system is designed to work while [[CLIENT_OWNER]]'s crew is on the job — capturing leads, sending follow-ups, collecting payments, and ranking on Google without anyone lifting a finger.</p>
+    <div class="card-grid" style="max-width:900px;margin:0 auto 40px">
+      <div class="card" style="text-align:left">
+        <div class="card-icon">🌐</div>
+        <h3>Homepage Rebuild</h3>
+        <p>A homepage that actually converts — built around trust signals, real reviews, and a clear path to a quote.</p>
+      </div>
+      <div class="card" style="text-align:left">
+        <div class="card-icon">📧</div>
+        <h3>2x/Month Email Campaigns</h3>
+        <p>Seasonal outreach, reactivation, upsells, and referral asks — sent automatically to the customer list.</p>
+      </div>
+      <div class="card" style="text-align:left">
+        <div class="card-icon">📋</div>
+        <h3>Quote System</h3>
+        <p>Multi-step form that qualifies leads, confirms instantly, and pushes follow-ups so no job goes unbooked.</p>
+      </div>
+      <div class="card" style="text-align:left">
+        <div class="card-icon">🧾</div>
+        <h3>Professional Invoicing</h3>
+        <p>Branded invoices with itemized services, auto-pay, and monthly subscription plans for recurring revenue.</p>
+      </div>
+      <div class="card" style="text-align:left">
+        <div class="card-icon">📍</div>
+        <h3>10+ SEO City Pages</h3>
+        <p>One page per city in Metro East — each targeting real search terms, embedding real reviews, and ranking on Google.</p>
+      </div>
+      <div class="card" style="text-align:left">
+        <div class="card-icon">🔄</div>
+        <h3>Monthly Subscriptions</h3>
+        <p>Lawn care maintenance plans that turn unpredictable job income into a steady, predictable monthly revenue stream.</p>
+      </div>
+    </div>
+    <a href="tel:[[CLIENT_PHONE_RAW]]" class="btn-primary" style="font-size:1.05rem;padding:16px 36px">Talk to [[CLIENT_OWNER]] — [[CLIENT_PHONE]]</a>
+  </div>
+</div>
+
+<footer>
+  <p><span class="strong">[[CLIENT_NAME]]</span> · [[CLIENT_CITY]], [[CLIENT_STATE]] · [[CLIENT_PHONE]] · Family-Owned Since 1999</p>
+  <p style="margin-top:6px">Private growth system preview · Not indexed · Prepared exclusively for [[CLIENT_NAME]]</p>
+</footer>
+
+<script>
+function showEmail(id){
+  document.querySelectorAll('.email-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.etab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('email-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+// radio pill interaction
+document.querySelectorAll('.radio-pill').forEach(pill=>{
+  pill.addEventListener('click',function(){
+    const group=this.closest('.radio-group');
+    group.querySelectorAll('.radio-pill').forEach(p=>p.classList.remove('sel'));
+    this.classList.add('sel');
+  });
+});
+</script>
+
+<!-- ── GUIDED TOUR ── -->
+<style>
+/* Tour launcher button */
+#tour-launcher{
+  position:fixed;bottom:90px;right:24px;z-index:100001;
+  background:var(--gold);color:#0b1a0f;border:none;border-radius:50px;
+  padding:13px 22px;font-size:.92rem;font-weight:800;cursor:pointer;
+  box-shadow:0 4px 24px rgba(0,0,0,.45);
+  display:flex;align-items:center;gap:8px;
+  transition:transform .15s,box-shadow .15s;
+}
+#tour-launcher:hover{transform:scale(1.05);box-shadow:0 6px 32px rgba(0,0,0,.55)}
+
+/* Full-screen backdrop */
+#tour-modal{
+  display:none;position:fixed;inset:0;z-index:100010;
+  background:rgba(5,15,5,.88);
+  align-items:center;justify-content:center;
+  padding:20px;
+}
+#tour-modal.open{display:flex}
+
+/* Slide card */
+#tour-slide{
+  background:#0d1f0f;border:1.5px solid var(--green-bright);
+  border-radius:18px;padding:36px 40px;
+  max-width:480px;width:100%;
+  box-shadow:0 20px 80px rgba(0,0,0,.8);
+  position:relative;
+  animation:tourSlideIn .28s ease;
+}
+@keyframes tourSlideIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+#tour-icon{font-size:2.4rem;margin-bottom:14px;display:block}
+#tour-step-num{
+  font-size:.68rem;font-weight:700;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:10px;
+}
+#tour-slide h2{font-size:1.35rem;font-weight:900;color:#fff;margin-bottom:12px;line-height:1.3}
+#tour-slide p{font-size:.92rem;color:#a8c8a8;line-height:1.7;margin:0}
+
+/* Progress bar */
+#tour-progress-bar{
+  width:100%;height:4px;background:rgba(255,255,255,.1);
+  border-radius:4px;margin:22px 0 20px;overflow:hidden;
+}
+#tour-progress-fill{
+  height:100%;background:var(--green-bright);border-radius:4px;
+  transition:width .35s ease;
+}
+
+/* Navigation */
+#tour-nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#tour-dots-row{display:flex;gap:6px;align-items:center}
+.tdot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .2s}
+.tdot.on{background:var(--green-bright);transform:scale(1.25)}
+#tour-btn-prev{
+  background:transparent;border:1.5px solid rgba(255,255,255,.2);
+  color:rgba(255,255,255,.6);border-radius:10px;
+  padding:10px 18px;font-size:.85rem;font-weight:600;cursor:pointer;
+  transition:all .15s;
+}
+#tour-btn-prev:hover{border-color:rgba(255,255,255,.5);color:#fff}
+#tour-btn-next{
+  background:var(--green-bright);border:none;color:#fff;
+  border-radius:10px;padding:10px 22px;font-size:.9rem;font-weight:800;
+  cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+#tour-btn-next:hover{background:var(--green)}
+#tour-btn-next.final-btn{background:var(--gold);color:#0b1a0f}
+#tour-btn-next.final-btn:hover{background:var(--gold-dark)}
+
+/* Close X */
+#tour-close{
+  position:absolute;top:14px;right:16px;
+  background:transparent;border:none;color:rgba(255,255,255,.4);
+  font-size:1.1rem;cursor:pointer;padding:4px 8px;
+  border-radius:6px;transition:color .15s;
+}
+#tour-close:hover{color:#fff}
+
+/* CTA at the end */
+#tour-cta-row{display:none;margin-top:20px;gap:12px;flex-direction:column}
+#tour-cta-row.show{display:flex}
+#tour-cta-call{
+  display:block;text-align:center;
+  background:var(--gold);color:#0b1a0f;
+  border-radius:10px;padding:13px 24px;
+  font-weight:800;font-size:.95rem;text-decoration:none;
+  transition:background .15s;
+}
+#tour-cta-call:hover{background:var(--gold-dark)}
+#tour-cta-email{
+  display:block;text-align:center;
+  background:transparent;border:1.5px solid var(--green-bright);color:var(--green-bright);
+  border-radius:10px;padding:11px 24px;
+  font-weight:700;font-size:.88rem;text-decoration:none;
+  transition:all .15s;
+}
+#tour-cta-email:hover{background:var(--green-bright);color:#fff}
+
+@media(max-width:520px){
+  #tour-slide{padding:26px 22px}
+  #tour-slide h2{font-size:1.1rem}
+  #tour-btn-prev,#tour-btn-next{padding:9px 14px;font-size:.82rem}
+}
+</style>
+
+<button id="tour-launcher" onclick="startTour()">▶ Take the Tour</button>
+
+<div id="tour-modal">
+  <div id="tour-slide">
+    <button id="tour-close" onclick="endTour()">✕</button>
+    <span id="tour-icon"></span>
+    <div id="tour-step-num"></div>
+    <h2 id="tour-title"></h2>
+    <p id="tour-body"></p>
+    <div id="tour-progress-bar"><div id="tour-progress-fill"></div></div>
+    <div id="tour-nav">
+      <div id="tour-dots-row"></div>
+      <div style="display:flex;gap:8px">
+        <button id="tour-btn-prev" onclick="tourPrev()">← Back</button>
+        <button id="tour-btn-next" onclick="tourNext()">Next →</button>
+      </div>
+    </div>
+    <div id="tour-cta-row">
+      <a id="tour-cta-call" href="tel:[[CLIENT_PHONE_RAW]]">📞 Call [[CLIENT_OWNER]]'s Demo Line</a>
+      <a id="tour-cta-email" href="mailto:[[CLIENT_EMAIL]]">✉ Send [[CLIENT_OWNER]] This Overview</a>
+    </div>
+  </div>
+</div>
+
+<script>
+var _tc = 0;
+var _ts = [
+  {icon:'🌿', num:'Overview · 1 of 8', title:'The [[CLIENT_SHORT]] Growth System',
+   body:"This is a private preview built specifically for [[CLIENT_OWNER]]. It shows exactly what [[CLIENT_SHORT]]'s digital business could look like — leads, payments, SEO, and email campaigns. Click Next to walk through each piece."},
+  {icon:'📊', num:'Step 2 of 8 · The Opportunity', title:'Where [[CLIENT_SHORT]] Stands Today',
+   body:"[[CLIENT_OWNER]] has [[CLIENT_YEARS]] years of experience, loyal customers, and real Google reviews. What's missing is the digital infrastructure — a system that captures new leads, follows up automatically, and collects recurring payments while the crew is on the job."},
+  {icon:'📸', num:'Step 3 of 8 · Real Work', title:"[[CLIENT_OWNER]]'s Work Speaks for Itself",
+   body:"These are actual photos pulled from [[CLIENT_CURRENT_SITE]]. The quality of work is already there. We just build the online presence to match it — so new customers find [[CLIENT_SHORT]] first on Google, not a competitor."},
+  {icon:'✉️', num:'Step 4 of 8 · Email System', title:'2 Campaigns Per Month, Done for You',
+   body:"Spring kickoff, reactivation, upsell, subscription push, referral asks — all pre-written, branded, and ready to send. [[CLIENT_OWNER]] just approves and we hit send. This alone can recover $3–5K per season in dormant customers."},
+  {icon:'📋', num:'Step 5 of 8 · Quote System', title:'From Contact Form to Booked Job',
+   body:"Instead of phone tag, customers fill out a smart quote form that captures job type, address, and ZIP code. [[CLIENT_OWNER]] gets a qualified lead — not a voicemail. Automatic follow-up built in."},
+  {icon:'💳', num:'Step 6 of 8 · Invoicing', title:'Professional Invoices That Get Paid',
+   body:"Branded invoices with itemized services. Customers pay online, [[CLIENT_OWNER]] gets notified, and the paper trail is automatic. Monthly maintenance plans bill automatically — no chasing checks, no awkward calls."},
+  {icon:'📍', num:'Step 7 of 8 · Local SEO', title:'10 City Pages That Rank on Google',
+   body:"Each page targets a specific Metro East city — Belleville, O'Fallon, Edwardsville and 7 more. When someone searches 'lawn care near me', [[CLIENT_SHORT]] shows up. Free traffic, every month, forever."},
+  {icon:'🚀', num:'Step 8 of 8 · Next Step', title:"Ready to Make This [[CLIENT_SHORT]]'s Reality?",
+   body:"Everything you've seen is already built and live at [[DEMO_DOMAIN]]. This is exactly what the business looks like with the right digital infrastructure behind it. Let's talk about launching it.",
+   final:true}
+];
+
+function startTour() {
+  var banner = document.getElementById('cookieBanner');
+  if (banner) banner.style.display = 'none';
+  _tc = 0;
+  _tourRender();
+  document.getElementById('tour-modal').classList.add('open');
+  document.getElementById('tour-launcher').style.display = 'none';
+}
+
+function endTour() {
+  document.getElementById('tour-modal').classList.remove('open');
+  document.getElementById('tour-launcher').style.display = '';
+}
+
+function tourNext() {
+  if (_ts[_tc].final) { endTour(); return; }
+  if (_tc < _ts.length - 1) { _tc++; _tourRender(); }
+}
+
+function tourPrev() {
+  if (_tc > 0) { _tc--; _tourRender(); }
+}
+
+function _tourRender() {
+  var s = _ts[_tc];
+  document.getElementById('tour-icon').textContent = s.icon || '';
+  document.getElementById('tour-step-num').textContent = s.num || '';
+  document.getElementById('tour-title').textContent = s.title;
+  document.getElementById('tour-body').textContent = s.body;
+
+  // Progress bar
+  var pct = ((_tc + 1) / _ts.length * 100).toFixed(0);
+  document.getElementById('tour-progress-fill').style.width = pct + '%';
+
+  // Dots
+  var dr = document.getElementById('tour-dots-row');
+  dr.innerHTML = '';
+  _ts.forEach(function(_, i) {
+    var d = document.createElement('div');
+    d.className = 'tdot' + (i === _tc ? ' on' : '');
+    dr.appendChild(d);
+  });
+
+  // Prev button
+  document.getElementById('tour-btn-prev').style.visibility = _tc === 0 ? 'hidden' : 'visible';
+
+  // Next button
+  var nb = document.getElementById('tour-btn-next');
+  if (s.final) {
+    nb.textContent = 'Close Tour ✓';
+    nb.classList.add('final-btn');
+  } else {
+    nb.textContent = 'Next →';
+    nb.classList.remove('final-btn');
+  }
+
+  // CTA row on final step
+  var cta = document.getElementById('tour-cta-row');
+  if (s.final) cta.classList.add('show'); else cta.classList.remove('show');
+
+  // Re-trigger slide animation
+  var slide = document.getElementById('tour-slide');
+  slide.style.animation = 'none';
+  slide.offsetHeight; // reflow
+  slide.style.animation = '';
+}
+</script>
+
+<!-- ── INLINE DEMO VIEWER ── -->
+<style>
+#demo-viewer{position:fixed;inset:0;z-index:7000;display:none;flex-direction:column;background:#000}
+#demo-viewer.open{display:flex}
+#demo-bar{background:#0b1a0f;border-bottom:2px solid var(--green-bright);padding:10px 20px;display:flex;align-items:center;gap:16px;flex-shrink:0}
+#demo-back{background:var(--green-bright);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:.88rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .15s}
+#demo-back:hover{background:var(--green-light)}
+#demo-title{font-size:.9rem;font-weight:600;color:var(--text-muted);flex:1}
+#demo-frame{flex:1;border:none;width:100%;height:100%}
+</style>
+
+<div id="demo-viewer">
+  <div id="demo-bar">
+    <button id="demo-back" onclick="closeDemoViewer()">← Back to Overview</button>
+    <span id="demo-title">[[CLIENT_SHORT]] Demo</span>
+  </div>
+  <iframe id="demo-frame" src="" title="Demo Preview"></iframe>
+</div>
+
+<script>
+function openDemoViewer(url, label) {
+  document.getElementById('demo-frame').src = url;
+  document.getElementById('demo-title').textContent = label || '[[CLIENT_SHORT]] Demo';
+  document.getElementById('demo-viewer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDemoViewer() {
+  document.getElementById('demo-viewer').classList.remove('open');
+  document.getElementById('demo-frame').src = '';
+  document.body.style.overflow = '';
+}
+// Intercept all lawnmex/* links — open in viewer instead of new tab
+document.querySelectorAll('a[href^="[[DEMO_SLUG]]/"]').forEach(function(a) {
+  const url = a.getAttribute('href');
+  const label = a.textContent.trim().replace(/[→🚀🏠📋💳🗺️📊📧]/g, '').trim();
+  a.removeAttribute('target');
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    openDemoViewer(url, label);
+  });
+});
+</script>
+
+<!-- ═══════ COPY PROTECTION + LEGAL BANNER ═══════ -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#0b1a0f;color:#cde3cd;padding:14px 24px;font-family:sans-serif;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;gap:12px;border-top:2px solid #2e7d32">
+  <span style="flex:1;min-width:240px">&#128274; <strong style="color:#fff">Confidential Demo</strong> — This presentation is proprietary and created exclusively for the intended recipient. By viewing this page you agree not to copy, reproduce, or distribute any content. This site uses session cookies for demo functionality only.</span>
+  <button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('lm_cookie_ok','1')" style="background:#2e7d32;color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-weight:700;white-space:nowrap">Got It</button>
+</div>
+<script>
+(function(){
+  // Show cookie banner if not dismissed
+  if(!localStorage.getItem('lm_cookie_ok')){
+    var b=document.getElementById('cookieBanner');
+    if(b) b.style.display='flex';
+  }
+
+  // ── COPY PROTECTION ──
+  // Disable right-click
+  document.addEventListener('contextmenu',function(e){e.preventDefault();});
+
+  // Disable text selection via keyboard
+  document.addEventListener('keydown',function(e){
+    var k=e.key||e.keyCode;
+    // Block Ctrl+C, Ctrl+A, Ctrl+S, Ctrl+U, Ctrl+P, F12
+    if(e.ctrlKey&&['c','C','a','A','s','S','u','U','p','P'].indexOf(k)!==-1){e.preventDefault();}
+    if(k==='F12'||e.keyCode===123){e.preventDefault();}
+    if(e.ctrlKey&&e.shiftKey&&(k==='I'||k==='i'||k==='J'||k==='j'||k==='C'||k==='c')){e.preventDefault();}
+  });
+
+  // Disable drag
+  document.addEventListener('dragstart',function(e){e.preventDefault();});
+})();
+</script>
+<style>
+  /* Disable text selection */
+  body, body * {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+  }
+  /* Allow selection inside form inputs */
+  input, textarea, select {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    user-select: text !important;
+  }
+</style>
+<!-- ═══════════════════════════════════════════════ -->
+</body>
+</html>
+
+

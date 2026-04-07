@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>[[CLIENT_SHORT]] Email Campaign Kit</title>
+  <meta name="robots" content="noindex,nofollow,noarchive"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/>
+  <style>
+    :root{--bg:#0b1a0f;--panel:#111e14;--line:#1e3323;--text:#e8f0ea;--muted:#8fad96;--green:#1a5c2a;--green-bright:#38a957;--gold:#c9a227;--gold-light:#e8bf45;--ok:#4ade80;--warn:#f9a825}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+    .wrap{width:min(1060px,calc(100% - 28px));margin:0 auto;padding:24px 0 48px;display:grid;gap:16px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 24px}
+    h1{font-size:1.7rem;font-weight:800;margin-bottom:10px}
+    h2{font-size:1.15rem;font-weight:700;margin-bottom:10px}
+    h3{font-size:1rem;font-weight:700;margin-bottom:8px}
+    p{color:var(--muted);font-size:.9rem;margin-top:6px}
+    .muted{color:var(--muted)}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btn{display:inline-flex;align-items:center;border-radius:8px;padding:10px 16px;font-weight:700;font-size:.85rem;color:#fff;text-decoration:none;border:1.5px solid transparent;cursor:pointer;transition:all .15s}
+    .btn-green{background:var(--green-bright);border-color:var(--green-bright)}
+    .btn-green:hover{background:#2e8b44}
+    .btn-gold{background:var(--gold);color:#0b1a0f;border-color:var(--gold)}
+    .btn-gold:hover{background:var(--gold-light)}
+    .btn-ghost{background:#0f1e14;border-color:var(--line);color:var(--text)}
+    .btn-ghost:hover{border-color:var(--green-bright);color:var(--green-bright)}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+    .pill{display:inline-block;padding:3px 10px;border-radius:999px;border:1px solid rgba(56,169,87,.5);background:rgba(56,169,87,.12);color:#a3f4b8;font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+    .pill-gold{border-color:rgba(201,162,39,.5);background:rgba(201,162,39,.12);color:#f9d97a}
+    ul{margin:8px 0 0 18px;color:var(--muted);font-size:.88rem}
+    li{margin:6px 0}
+    textarea{width:100%;resize:vertical;border:1px solid var(--line);border-radius:10px;background:#070f09;color:var(--text);padding:12px;font:13px/1.45 Consolas,'Courier New',monospace;min-height:220px}
+    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+    label{color:var(--muted);font-size:.82rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+    input{width:100%;border:1px solid var(--line);border-radius:8px;background:#070f09;color:var(--text);padding:10px 12px;font:14px/1.4 'Inter',sans-serif}
+    input::placeholder{color:#3d5c44}
+    .warning{border-left:4px solid var(--warn);padding:10px 14px;border-radius:8px;background:rgba(249,168,37,.1);margin-top:12px;font-size:.85rem;color:rgba(249,168,37,.9)}
+    .etabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+    .etab{padding:8px 14px;border-radius:7px;border:1.5px solid var(--line);background:transparent;color:var(--muted);font-weight:600;font-size:.82rem;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif}
+    .etab.active{border-color:var(--green-bright);color:var(--green-bright);background:rgba(56,169,87,.08)}
+    .email-panel{display:none}
+    .email-panel.active{display:block}
+    .email-preview{background:#fff;border-radius:12px;overflow:hidden;border:2px solid var(--line);margin-top:12px;max-width:640px}
+    .email-header{background:#1a5c2a;padding:16px 22px;color:#fff}
+    .email-header .co-name{font-size:1.15rem;font-weight:800;letter-spacing:.2px}
+    .email-header .co-sub{font-size:.8rem;opacity:.8;margin-top:3px}
+    .email-body{padding:22px 22px 12px;font-family:Arial,sans-serif;color:#1a2a1c;font-size:14px;line-height:1.55}
+    .email-body p{margin:0 0 12px;color:#1a2a1c}
+    .email-body strong{color:#0e2415}
+    .email-cta{display:inline-block;background:#1a5c2a;color:#fff!important;text-decoration:none;padding:12px 20px;border-radius:8px;font-weight:700;font-size:14px;margin:8px 0 14px}
+    .email-footer-bar{padding:14px 22px;font-family:Arial,sans-serif;color:#6b856e;font-size:11px;line-height:1.5;border-top:1px solid #e4ede6}
+    .city-pill{display:inline-block;background:rgba(56,169,87,.1);border:1px solid rgba(56,169,87,.35);color:#a3f4b8;padding:4px 10px;border-radius:6px;font-size:.78rem;font-weight:600;margin:3px}
+    .checklist li::marker{content:'✓ ';color:var(--green-bright)}
+    .kw-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+    .kw{background:rgba(56,169,87,.1);border:1px solid rgba(56,169,87,.25);color:#a3f4b8;padding:4px 10px;border-radius:6px;font-size:.78rem;font-weight:600}
+    .seg-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:14px}
+    .seg-card{background:#0b1a0f;border:1px solid var(--line);border-radius:10px;padding:14px}
+    .seg-card h4{font-size:.85rem;color:var(--green-bright);margin-bottom:4px}
+    .seg-card p{font-size:.8rem}
+    @media(max-width:750px){.grid2,.grid3{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="card">
+    <div class="pill">Private · Noindex</div>
+    <h1>🌿 [[CLIENT_SHORT]] Email Campaign Kit</h1>
+    <p>Ready-to-send email campaigns for [[CLIENT_NAME]] — seasonal outreach, city-targeted blasts, reactivation, and subscription offers. 2 campaigns per month, built to book jobs.</p>
+    <div class="row">
+      <a class="btn btn-ghost" href="index.html">← Homepage</a>
+      <a class="btn btn-ghost" href="quote.html">Quote System</a>
+      <a class="btn btn-ghost" href="invoice.html">Invoice System</a>
+      <a class="btn btn-green" href="belleville-il.html">📍 City Pages</a>
+    </div>
+    <div class="warning">
+      Legal reminder: include a real mailing address and unsubscribe link in every send. Use opt-in lists only. Process opt-out requests within 10 business days (CAN-SPAM). Set SPF, DKIM, and DMARC on your sending domain.
+    </div>
+  </div>
+
+  <!-- CAMPAIGN BROWSER -->
+  <div class="card">
+    <h2>📧 Campaign Library — Click to Preview &amp; Copy</h2>
+    <p>5 ready-to-use campaigns. Tab between them, then copy the HTML template or use the one-click Gmail/Outlook button below.</p>
+    <div class="etabs" style="margin-top:16px">
+      <button class="etab active" onclick="showCampaign('spring')">🌱 Spring Activation</button>
+      <button class="etab" onclick="showCampaign('reactivation')">🔁 Reactivation</button>
+      <button class="etab" onclick="showCampaign('upsell')">⬆ Landscape Upsell</button>
+      <button class="etab" onclick="showCampaign('subscription')">📅 Subscription Offer</button>
+      <button class="etab" onclick="showCampaign('citypage')">📍 City-Targeted Blast</button>
+    </div>
+
+    <!-- SPRING -->
+    <div class="email-panel active" id="panel-spring">
+      <div class="grid2">
+        <div>
+          <h3>Spring Activation — Send in March/April</h3>
+          <p><strong style="color:var(--text)">Subject:</strong> Your yard is about to wake up — are you ready?</p>
+          <p style="margin-top:8px"><strong style="color:var(--text)">Who to send:</strong> Past customers (one-time + subscription) + quote requests from last spring.</p>
+          <p style="margin-top:8px"><strong style="color:var(--text)">Goal:</strong> Book spring cleanups, mulch installs, and pre-emergent weed control before spots fill up.</p>
+          <ul class="checklist" style="margin-top:14px">
+            <li>Spring cleanup & debris removal</li>
+            <li>Pre-emergent weed control</li>
+            <li>Mulch refresh & bed edging</li>
+            <li>First mow of the season</li>
+          </ul>
+        </div>
+        <div class="email-preview">
+          <div class="email-header">
+            <div class="co-name">🌿 [[CLIENT_NAME]]</div>
+            <div class="co-sub">Family-owned lawn care · [[CLIENT_CITY]], [[CLIENT_STATE]] · [[CLIENT_PHONE]]</div>
+          </div>
+          <div class="email-body">
+            <p>Hi [First Name],</p>
+            <p>Winter is over — and most yards in <strong>Belleville and Metro East</strong> are already behind.</p>
+            <p>If you wait another 2–3 weeks, you're paying more to fix it. Pre-emergent has a window. Cleanup takes longer when it sits. Spots on our schedule fill up fast every spring.</p>
+            <p>We're booking right now for:</p>
+            <p>→ Spring cleanups &amp; debris removal<br/>→ Pre-emergent weed prevention<br/>→ Mulch refresh &amp; clean edging<br/>→ First mow of the season</p>
+            <a href="https://[[DEMO_DOMAIN]]/[[DEMO_SLUG]]/quote.html" class="email-cta">Get Your Fast Quote →</a>
+            <p>Or call us directly: <strong>[[CLIENT_PHONE]]</strong></p>
+            <p>— [[CLIENT_OWNER]] &amp; Erika, [[CLIENT_NAME]]</p>
+          </div>
+          <div class="email-footer-bar">
+            This message is for lawn care services in Metro East, IL.<br/>
+            [[CLIENT_NAME]] · [[CLIENT_ADDRESS]] · [[CLIENT_EMAIL]]<br/>
+            <a href="tel:[[CLIENT_PHONE_RAW]]" style="color:#6b856e">[[CLIENT_PHONE]]</a> ·
+            <a href="#" style="color:#6b856e">Unsubscribe</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REACTIVATION -->
+    <div class="email-panel" id="panel-reactivation">
+      <div class="grid2">
+        <div>
+          <h3>Reactivation — Send to lapsed customers (6–18 months inactive)</h3>
+          <p><strong style="color:var(--text)">Subject:</strong> Haven't seen you in a while — still handling the yard yourself?</p>
+          <p style="margin-top:8px"><strong style="color:var(--text)">Who to send:</strong> Customers with completed jobs 6–18 months ago who haven't rebooked.</p>
+          <p style="margin-top:8px"><strong style="color:var(--text)">Goal:</strong> Re-engage lapsed customers before they call a competitor.</p>
+          <ul class="checklist" style="margin-top:14px">
+            <li>Soft, no-pressure tone</li>
+            <li>Acknowledge the time gap</li>
+            <li>Offer easy path back in</li>
+            <li>Recurring plan pitch</li>
+          </ul>
+        </div>
+        <div class="email-preview">
+          <div class="email-header">
+            <div class="co-name">🌿 [[CLIENT_NAME]]</div>
+            <div class="co-sub">Family-owned lawn care · [[CLIENT_CITY]], [[CLIENT_STATE]] · [[CLIENT_PHONE]]</div>
+          </div>
+          <div class="email-body">
+            <p>Hi [First Name],</p>
+            <p>Quick question — are you still handling the yard yourself?</p>
+            <p>Most people start the season strong. Then summer hits, schedules fill up, and the lawn starts sliding.</p>
+            <p>We're opening a few recurring spots right now. If you want back in:</p>
+            <p>→ Weekly or bi-weekly mowing &amp; edging<br/>→ Ongoing maintenance plan<br/>→ Priority scheduling — you're always first<br/>→ One invoice per month, auto-pay option</p>
+            <a href="https://[[DEMO_DOMAIN]]/[[DEMO_SLUG]]/quote.html" class="email-cta">Check Availability →</a>
+            <p>Or just call: <strong>[[CLIENT_PHONE]]</strong></p>
+            <p>— [[CLIENT_OWNER]] &amp; Erika, [[CLIENT_NAME]]</p>
+          </div>
+          <div class="email-footer-bar">
+            [[CLIENT_NAME]] · [[CLIENT_ADDRESS]] · [[CLIENT_EMAIL]] · [[CLIENT_PHONE]]<br/>
+            <a href="#" style="color:#6b856e">Unsubscribe</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UPSELL -->
+    <div class="email-panel" id="panel-upsell">
+      <div class="grid2">
+        <div>
+          <h3>Landscape Upsell — Send late spring/early summer</h3>
+          <p><strong style="color:var(--text)">Subject:</strong> Thinking about upgrading your yard this year?</p>
+          <p style="margin-top:8px"><strong style="color:var(--text)">Who to send:</strong> Mowing customers who have never booked landscaping or tree service.</p>
+          <p style="margin-top:8px"><strong style="color:var(--text)">Goal:</strong> Upsell existing lawn care customers into higher-value landscaping projects.</p>
+          <ul class="checklist" style="margin-top:14px">
+            <li>Landscaping bed redesign</li>
+            <li>Mulch &amp; clean edging</li>
+            <li>Tree shaping &amp; pruning</li>
+            <li>New plantings &amp; installs</li>
+          </ul>
+        </div>
+        <div class="email-preview">
+          <div class="email-header">
+            <div class="co-name">🌿 [[CLIENT_NAME]]</div>
+            <div class="co-sub">Family-owned lawn care · [[CLIENT_CITY]], [[CLIENT_STATE]] · [[CLIENT_PHONE]]</div>
+          </div>
+          <div class="email-body">
+            <p>Hi [First Name],</p>
+            <p>Most yards look "fine."</p>
+            <p>But there's a difference between fine and <strong>finished</strong>.</p>
+            <p>We help Metro East homeowners go from basic to sharp — the kind of yard that holds its value and turns heads on your street.</p>
+            <p>We're booking landscape projects now:</p>
+            <p>→ Full bed redesign &amp; rebuild<br/>→ Fresh mulch with clean edge definition<br/>→ Tree shaping and canopy cleanup<br/>→ New plantings and color pops<br/>→ Weed control treatments</p>
+            <p>Erika designs. [[CLIENT_OWNER]] and the team execute. You just enjoy the result.</p>
+            <a href="https://[[DEMO_DOMAIN]]/[[DEMO_SLUG]]/quote.html" class="email-cta">See What's Possible →</a>
+            <p>— [[CLIENT_OWNER]] &amp; Erika, [[CLIENT_NAME]]</p>
+          </div>
+          <div class="email-footer-bar">
+            [[CLIENT_NAME]] · [[CLIENT_ADDRESS]] · [[CLIENT_EMAIL]] · [[CLIENT_PHONE]]<br/>
+            <a href="#" style="color:#6b856e">Unsubscribe</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBSCRIPTION -->
+    <div class="email-panel" id="panel-subscription">
+      <div class="grid2">
+        <div>
+          <h3>Monthly Subscription Offer — Send anytime</h3>
+          <p><strong style="color:var(--text)">Subject:</strong> Never think about your yard again — new plan option</p>
+          <p style="margin-top:8px"><strong style="color:var(--text)">Who to send:</strong> One-time job customers + quote requesters who didn't book.</p>
+          <p style="margin-top:8px"><strong style="color:var(--text)">Goal:</strong> Convert one-time customers into recurring monthly plan subscribers.</p>
+          <ul class="checklist" style="margin-top:14px">
+            <li>Weekly or bi-weekly mowing</li>
+            <li>Seasonal cleanup included</li>
+            <li>Priority scheduling always</li>
+            <li>One invoice, auto-pay option</li>
+          </ul>
+        </div>
+        <div class="email-preview">
+          <div class="email-header">
+            <div class="co-name">🌿 [[CLIENT_NAME]]</div>
+            <div class="co-sub">Family-owned lawn care · [[CLIENT_CITY]], [[CLIENT_STATE]] · [[CLIENT_PHONE]]</div>
+          </div>
+          <div class="email-body">
+            <p>Hi [First Name],</p>
+            <p>We just launched monthly lawn care plans for Metro East homeowners who want it handled — no scheduling calls, no guessing, no hassle.</p>
+            <p>Here's what's included:</p>
+            <p>→ Weekly or bi-weekly mowing &amp; edging<br/>→ Seasonal cleanup visits (spring &amp; fall)<br/>→ Priority scheduling — you're always first<br/>→ No scheduling calls — we just show up<br/>→ One invoice per month, auto-pay option</p>
+            <p>We only have a few plan spots available right now.</p>
+            <a href="https://[[DEMO_DOMAIN]]/[[DEMO_SLUG]]/quote.html" class="email-cta">Claim Your Spot →</a>
+            <p>Or call: <strong>[[CLIENT_PHONE]]</strong></p>
+            <p>— [[CLIENT_OWNER]] &amp; Erika, [[CLIENT_NAME]]</p>
+          </div>
+          <div class="email-footer-bar">
+            [[CLIENT_NAME]] · [[CLIENT_ADDRESS]] · [[CLIENT_EMAIL]] · [[CLIENT_PHONE]]<br/>
+            <a href="#" style="color:#6b856e">Unsubscribe</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CITY-TARGETED -->
+    <div class="email-panel" id="panel-citypage">
+      <div class="grid2">
+        <div>
+          <h3>City-Targeted Blast — Send by city segment</h3>
+          <p><strong style="color:var(--text)">Subject:</strong> [[CLIENT_SHORT]] is booking in [City] right now — fast quote available</p>
+          <p style="margin-top:8px"><strong style="color:var(--text)">Who to send:</strong> Contacts sorted by city ZIP code. Send a Belleville version to Belleville contacts, O'Fallon to O'Fallon contacts, etc.</p>
+          <p style="margin-top:8px"><strong style="color:var(--text)">Why this works:</strong> "We serve O'Fallon" feels personal. A city-specific email + city-specific landing page = higher click-to-book rate than a generic blast.</p>
+          <div class="kw-row" style="margin-top:14px">
+            <span class="city-pill">Belleville</span>
+            <span class="city-pill">O'Fallon</span>
+            <span class="city-pill">Edwardsville</span>
+            <span class="city-pill">Fairview Heights</span>
+            <span class="city-pill">Swansea</span>
+            <span class="city-pill">Collinsville</span>
+            <span class="city-pill">Shiloh</span>
+            <span class="city-pill">Highland</span>
+            <span class="city-pill">Waterloo</span>
+            <span class="city-pill">Columbia</span>
+          </div>
+          <p style="margin-top:12px;font-size:.82rem">Each city has a dedicated landing page built for that city's keywords — the email links directly to it.</p>
+        </div>
+        <div class="email-preview">
+          <div class="email-header">
+            <div class="co-name">🌿 [[CLIENT_NAME]]</div>
+            <div class="co-sub">Serving O'Fallon, IL · [[CLIENT_PHONE]]</div>
+          </div>
+          <div class="email-body">
+            <p>Hi [First Name],</p>
+            <p>We're a <strong>Belleville-based family crew</strong> — and right now we're actively booking lawn care and landscaping jobs in <strong>O'Fallon</strong>.</p>
+            <p>[[CLIENT_YEARS]] years in the Metro East. Family-run. Real crews. No sub-contractors.</p>
+            <p>Services we're booking in O'Fallon right now:</p>
+            <p>→ Weekly &amp; bi-weekly mowing<br/>→ Landscaping &amp; bed maintenance<br/>→ Tree trimming &amp; pruning<br/>→ Mulch installs &amp; edging<br/>→ Weed control treatments</p>
+            <a href="https://[[DEMO_DOMAIN]]/[[DEMO_SLUG]]/ofallon-il.html" class="email-cta">See O'Fallon Services →</a>
+            <p>Or call: <strong>[[CLIENT_PHONE]]</strong></p>
+            <p>— [[CLIENT_OWNER]] &amp; Erika, [[CLIENT_NAME]]</p>
+          </div>
+          <div class="email-footer-bar">
+            [[CLIENT_NAME]] · [[CLIENT_ADDRESS]] · [[CLIENT_EMAIL]] · [[CLIENT_PHONE]]<br/>
+            <a href="#" style="color:#6b856e">Unsubscribe</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ONE-CLICK DRAFT BUILDER -->
+  <div class="card">
+    <h2>⚡ One-Click Draft Builder</h2>
+    <p>Fill in the recipient and customize the message, then open a pre-filled draft in Gmail or Outlook with one click.</p>
+    <div style="margin-top:18px">
+      <div class="field">
+        <label for="draftTo">To email</label>
+        <input id="draftTo" type="email" placeholder="customer@example.com"/>
+      </div>
+      <div class="field">
+        <label for="draftSubject">Subject line</label>
+        <input id="draftSubject" type="text" value="Your yard is about to wake up — are you ready?"/>
+      </div>
+      <div class="field">
+        <label for="draftBody">Message body</label>
+        <textarea id="draftBody">Hi [First Name],
+
+Winter is over — and most yards in Belleville and Metro East are already behind.
+
+If you wait 2–3 more weeks, you're paying more to fix it. Pre-emergent has a window. Spots on our schedule fill up fast every spring.
+
+We're booking now for:
+→ Spring cleanups & debris removal
+→ Pre-emergent weed prevention
+→ Mulch refresh & clean edging
+→ First mow of the season
+
+Get your fast quote: https://[[DEMO_DOMAIN]]/[[DEMO_SLUG]]/quote.html
+
+Or call us: [[CLIENT_PHONE]]
+
+— [[CLIENT_OWNER]] & Erika
+[[CLIENT_NAME]] · [[CLIENT_ADDRESS]] · [[CLIENT_EMAIL]]
+Unsubscribe: https://[[DEMO_DOMAIN]]/[[DEMO_SLUG]]/email-outreach.html#unsubscribe</textarea>
+      </div>
+      <div class="row">
+        <a id="openGmail" class="btn btn-green" href="#" target="_blank" rel="noopener">📧 Open in Gmail</a>
+        <a id="openOutlook" class="btn btn-ghost" href="#" target="_blank" rel="noopener">📧 Open in Outlook</a>
+        <a id="openMailto" class="btn btn-ghost" href="#">📧 Open Default Mail App</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HTML TEMPLATES -->
+  <div class="card">
+    <h2>📋 HTML Email Templates — Copy &amp; Paste into Your Email Tool</h2>
+    <p>Replace <code style="color:var(--gold)">[bracketed values]</code> before sending. Keep the footer with address and unsubscribe intact (required by CAN-SPAM).</p>
+
+    <div class="etabs" style="margin-top:16px">
+      <button class="etab active" onclick="showTemplate('t-spring')">Spring Activation</button>
+      <button class="etab" onclick="showTemplate('t-city')">City-Targeted</button>
+      <button class="etab" onclick="showTemplate('t-reactivation')">Reactivation</button>
+      <button class="etab" onclick="showTemplate('t-plain')">Plain Text (any)</button>
+    </div>
+
+    <div id="t-spring" class="email-panel active">
+      <textarea readonly><!doctype html>
+<html>
+<body style="margin:0;padding:0;background:#f2f7f3;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f2f7f3;padding:24px 0;">
+    <tr><td align="center">
+      <table role="presentation" width="620" cellspacing="0" cellpadding="0" style="max-width:620px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #d0e8d4;">
+        <tr>
+          <td style="background:#1a5c2a;padding:18px 24px;color:#ffffff;font-family:Arial,sans-serif;">
+            <div style="font-size:20px;font-weight:800;">🌿 [[CLIENT_NAME]]</div>
+            <div style="font-size:12px;opacity:.85;margin-top:4px;">Family-owned lawn care &amp; landscaping · [[CLIENT_CITY]], [[CLIENT_STATE]] · [[CLIENT_PHONE]]</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:24px 24px 8px;font-family:Arial,sans-serif;color:#1a2a1c;font-size:15px;line-height:1.6;">
+            <p style="margin:0 0 12px">Hi [First Name],</p>
+            <p style="margin:0 0 12px">Winter is over — and most yards in <strong>Belleville and Metro East</strong> are already behind.</p>
+            <p style="margin:0 0 12px">If you wait another 2–3 weeks, you're paying more to fix it. Pre-emergent has a window. Cleanup takes longer when it sits. Spots on our schedule fill up fast every spring.</p>
+            <p style="margin:0 0 8px">We're booking right now for:</p>
+            <p style="margin:0 0 12px">→ Spring cleanups &amp; debris removal<br/>→ Pre-emergent weed prevention<br/>→ Mulch refresh &amp; clean edging<br/>→ First mow of the season</p>
+            <p style="margin:0 0 20px"><a href="https://[[DEMO_DOMAIN]]/[[DEMO_SLUG]]/quote.html" style="display:inline-block;background:#1a5c2a;color:#ffffff;text-decoration:none;padding:13px 20px;border-radius:8px;font-weight:700;">Get Your Fast Quote →</a></p>
+            <p style="margin:0 0 12px">Or call us: <a href="tel:[[CLIENT_PHONE_RAW]]" style="color:#1a5c2a;font-weight:700;">[[CLIENT_PHONE]]</a></p>
+            <p style="margin:0 0 18px">— [[CLIENT_OWNER]] &amp; Erika, [[CLIENT_NAME]]</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:14px 24px 20px;font-family:Arial,sans-serif;color:#6b8f6e;font-size:11px;line-height:1.55;border-top:1px solid #ddeedd;">
+            This message is an advertisement for lawn care services in Metro East, IL.<br/>
+            [[CLIENT_NAME]] · [[CLIENT_ADDRESS]] · [[CLIENT_EMAIL]] · [[CLIENT_PHONE]]<br/>
+            Unsubscribe: <a href="[YOUR_UNSUBSCRIBE_URL]" style="color:#6b8f6e;">click here</a>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+
+<!-- ═══════ COPY PROTECTION + LEGAL BANNER ═══════ -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#0b1a0f;color:#cde3cd;padding:14px 24px;font-family:sans-serif;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;gap:12px;border-top:2px solid #2e7d32">
+  <span style="flex:1;min-width:240px">&#128274; <strong style="color:#fff">Confidential Demo</strong> — This presentation is proprietary and created exclusively for the intended recipient. By viewing this page you agree not to copy, reproduce, or distribute any content. This site uses session cookies for demo functionality only.</span>
+  <button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('lm_cookie_ok','1')" style="background:#2e7d32;color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-weight:700;white-space:nowrap">Got It</button>
+</div>
+<script>
+(function(){
+  // Show cookie banner if not dismissed
+  if(!localStorage.getItem('lm_cookie_ok')){
+    var b=document.getElementById('cookieBanner');
+    if(b) b.style.display='flex';
+  }
+
+  // ── COPY PROTECTION ──
+  // Disable right-click
+  document.addEventListener('contextmenu',function(e){e.preventDefault();});
+
+  // Disable text selection via keyboard
+  document.addEventListener('keydown',function(e){
+    var k=e.key||e.keyCode;
+    // Block Ctrl+C, Ctrl+A, Ctrl+S, Ctrl+U, Ctrl+P, F12
+    if(e.ctrlKey&&['c','C','a','A','s','S','u','U','p','P'].indexOf(k)!==-1){e.preventDefault();}
+    if(k==='F12'||e.keyCode===123){e.preventDefault();}
+    if(e.ctrlKey&&e.shiftKey&&(k==='I'||k==='i'||k==='J'||k==='j'||k==='C'||k==='c')){e.preventDefault();}
+  });
+
+  // Disable drag
+  document.addEventListener('dragstart',function(e){e.preventDefault();});
+})();
+</script>
+<style>
+  /* Disable text selection */
+  body, body * {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+  }
+  /* Allow selection inside form inputs */
+  input, textarea, select {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    user-select: text !important;
+  }
+</style>
+<!-- ═══════════════════════════════════════════════ -->
+</body>
+</html></textarea>
+    </div>
+
+    <div id="t-city" class="email-panel">
+      <textarea readonly><!doctype html>
+<html>
+<body style="margin:0;padding:0;background:#f2f7f3;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f2f7f3;padding:24px 0;">
+    <tr><td align="center">
+      <table role="presentation" width="620" cellspacing="0" cellpadding="0" style="max-width:620px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #d0e8d4;">
+        <tr>
+          <td style="background:#1a5c2a;padding:18px 24px;color:#ffffff;font-family:Arial,sans-serif;">
+            <div style="font-size:20px;font-weight:800;">🌿 [[CLIENT_NAME]]</div>
+            <div style="font-size:12px;opacity:.85;margin-top:4px;">Serving [CITY], IL · [[CLIENT_PHONE]]</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:24px 24px 8px;font-family:Arial,sans-serif;color:#1a2a1c;font-size:15px;line-height:1.6;">
+            <p style="margin:0 0 12px">Hi [First Name],</p>
+            <p style="margin:0 0 12px">We're a <strong>Belleville-based family crew</strong> — and right now we're actively booking lawn care and landscaping jobs in <strong>[CITY]</strong>.</p>
+            <p style="margin:0 0 12px">[[CLIENT_YEARS]] years in the Metro East. Family-run. Real crews. No sub-contractors.</p>
+            <p style="margin:0 0 8px">We're booking in [CITY] right now for:</p>
+            <p style="margin:0 0 12px">→ Weekly &amp; bi-weekly mowing<br/>→ Landscaping &amp; bed maintenance<br/>→ Tree trimming &amp; pruning<br/>→ Mulch installs &amp; edging<br/>→ Weed control treatments</p>
+            <p style="margin:0 0 20px"><a href="https://[[DEMO_DOMAIN]]/[[DEMO_SLUG]]/[CITY-SLUG]-il.html" style="display:inline-block;background:#1a5c2a;color:#ffffff;text-decoration:none;padding:13px 20px;border-radius:8px;font-weight:700;">See [CITY] Services →</a></p>
+            <p style="margin:0 0 12px">Or call: <a href="tel:[[CLIENT_PHONE_RAW]]" style="color:#1a5c2a;font-weight:700;">[[CLIENT_PHONE]]</a></p>
+            <p style="margin:0 0 18px">— [[CLIENT_OWNER]] &amp; Erika, [[CLIENT_NAME]]</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:14px 24px 20px;font-family:Arial,sans-serif;color:#6b8f6e;font-size:11px;line-height:1.55;border-top:1px solid #ddeedd;">
+            This message is an advertisement for lawn care services in Metro East, IL.<br/>
+            [[CLIENT_NAME]] · [[CLIENT_ADDRESS]] · [[CLIENT_EMAIL]] · [[CLIENT_PHONE]]<br/>
+            Unsubscribe: <a href="[YOUR_UNSUBSCRIBE_URL]" style="color:#6b8f6e;">click here</a>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html></textarea>
+    </div>
+
+    <div id="t-reactivation" class="email-panel">
+      <textarea readonly><!doctype html>
+<html>
+<body style="margin:0;padding:0;background:#f2f7f3;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f2f7f3;padding:24px 0;">
+    <tr><td align="center">
+      <table role="presentation" width="620" cellspacing="0" cellpadding="0" style="max-width:620px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #d0e8d4;">
+        <tr>
+          <td style="background:#1a5c2a;padding:18px 24px;color:#ffffff;font-family:Arial,sans-serif;">
+            <div style="font-size:20px;font-weight:800;">🌿 [[CLIENT_NAME]]</div>
+            <div style="font-size:12px;opacity:.85;margin-top:4px;">Family-owned lawn care · [[CLIENT_CITY]], [[CLIENT_STATE]] · [[CLIENT_PHONE]]</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:24px 24px 8px;font-family:Arial,sans-serif;color:#1a2a1c;font-size:15px;line-height:1.6;">
+            <p style="margin:0 0 12px">Hi [First Name],</p>
+            <p style="margin:0 0 12px">Quick question — are you still handling the yard yourself?</p>
+            <p style="margin:0 0 12px">Most people start the season strong. Then summer hits, schedules fill up, and the lawn starts sliding.</p>
+            <p style="margin:0 0 8px">We're opening a few recurring spots right now:</p>
+            <p style="margin:0 0 12px">→ Weekly or bi-weekly mowing &amp; edging<br/>→ Ongoing maintenance plan<br/>→ Priority scheduling — you're always first<br/>→ One invoice per month, auto-pay option</p>
+            <p style="margin:0 0 20px"><a href="https://[[DEMO_DOMAIN]]/[[DEMO_SLUG]]/quote.html" style="display:inline-block;background:#1a5c2a;color:#ffffff;text-decoration:none;padding:13px 20px;border-radius:8px;font-weight:700;">Check Availability →</a></p>
+            <p style="margin:0 0 12px">Or call: <a href="tel:[[CLIENT_PHONE_RAW]]" style="color:#1a5c2a;font-weight:700;">[[CLIENT_PHONE]]</a></p>
+            <p style="margin:0 0 18px">— [[CLIENT_OWNER]] &amp; Erika, [[CLIENT_NAME]]</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:14px 24px 20px;font-family:Arial,sans-serif;color:#6b8f6e;font-size:11px;line-height:1.55;border-top:1px solid #ddeedd;">
+            This message is an advertisement for lawn care services in Metro East, IL.<br/>
+            [[CLIENT_NAME]] · [[CLIENT_ADDRESS]] · [[CLIENT_EMAIL]] · [[CLIENT_PHONE]]<br/>
+            Unsubscribe: <a href="[YOUR_UNSUBSCRIBE_URL]" style="color:#6b8f6e;">click here</a>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html></textarea>
+    </div>
+
+    <div id="t-plain" class="email-panel">
+      <textarea readonly>Subject: Your yard is about to wake up — are you ready?
+
+Hi [First Name],
+
+Winter is over — and most yards in Belleville and Metro East are already behind.
+
+If you wait another 2–3 weeks, you're paying more to fix it. Pre-emergent has a window. Spots on our schedule fill up fast every spring.
+
+We're booking right now for:
+→ Spring cleanups & debris removal
+→ Pre-emergent weed prevention
+→ Mulch refresh & clean edging
+→ First mow of the season
+
+Get your fast quote: https://[[DEMO_DOMAIN]]/[[DEMO_SLUG]]/quote.html
+Or call us: [[CLIENT_PHONE]]
+
+— [[CLIENT_OWNER]] & Erika, [[CLIENT_NAME]]
+
+---
+This message is an advertisement for lawn care services in Metro East, IL.
+[[CLIENT_NAME]] · [[CLIENT_ADDRESS]] · [[CLIENT_EMAIL]] · [[CLIENT_PHONE]]
+Unsubscribe: [YOUR_UNSUBSCRIBE_URL]</textarea>
+    </div>
+  </div>
+
+  <!-- CITY PAGE + EMAIL CONNECTION -->
+  <div class="card">
+    <h2>📍 Why City-Targeted Emails + City Pages = More Booked Jobs</h2>
+    <p>The most effective email strategy isn't just "send a blast." It's sending a city-specific email that links to a city-specific landing page. Here's why this combination wins:</p>
+    <div class="grid3" style="margin-top:20px">
+      <div style="background:#0b1a0f;border:1px solid var(--line);border-radius:10px;padding:16px">
+        <div style="font-size:1.5rem;margin-bottom:8px">📧</div>
+        <h3>The Email</h3>
+        <p>Subject line says "O'Fallon." Body talks about O'Fallon. Link goes to the O'Fallon page. This feels personal — not like a mass blast.</p>
+      </div>
+      <div style="background:#0b1a0f;border:1px solid var(--line);border-radius:10px;padding:16px">
+        <div style="font-size:1.5rem;margin-bottom:8px">🌐</div>
+        <h3>The Landing Page</h3>
+        <p>The O'Fallon page talks about O'Fallon lawn care, uses a real O'Fallon-area review, and has a quote form built for O'Fallon customers.</p>
+      </div>
+      <div style="background:#0b1a0f;border:1px solid var(--line);border-radius:10px;padding:16px">
+        <div style="font-size:1.5rem;margin-bottom:8px">📈</div>
+        <h3>The Result</h3>
+        <p>Higher open rates (city in subject line). Higher click rates (city-specific content feels relevant). Higher quote completion (they land exactly where they expected).</p>
+      </div>
+    </div>
+    <div style="margin-top:20px">
+      <h3 style="margin-bottom:12px">Live City Pages — Link These in Your Emails</h3>
+      <div class="kw-row">
+        <a href="belleville-il.html" class="city-pill" style="text-decoration:none">Belleville →</a>
+        <a href="ofallon-il.html" class="city-pill" style="text-decoration:none">O'Fallon →</a>
+        <a href="edwardsville-il.html" class="city-pill" style="text-decoration:none">Edwardsville →</a>
+        <a href="fairview-heights-il.html" class="city-pill" style="text-decoration:none">Fairview Heights →</a>
+        <a href="swansea-il.html" class="city-pill" style="text-decoration:none">Swansea →</a>
+        <a href="collinsville-il.html" class="city-pill" style="text-decoration:none">Collinsville →</a>
+        <a href="shiloh-il.html" class="city-pill" style="text-decoration:none">Shiloh →</a>
+        <a href="waterloo-il.html" class="city-pill" style="text-decoration:none">Waterloo →</a>
+        <a href="columbia-il.html" class="city-pill" style="text-decoration:none">Columbia →</a>
+        <a href="highland-il.html" class="city-pill" style="text-decoration:none">Highland →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUDIENCE SEGMENTS -->
+  <div class="card">
+    <h2>👥 Who to Send To — List Segments</h2>
+    <p>Segment your list before sending. Same message to everyone = lower performance. City + status segmentation = more relevant, more booked.</p>
+    <div class="seg-row">
+      <div class="seg-card">
+        <h4>Active Subscribers</h4>
+        <p>Customers on monthly plan. Send upsells, seasonal add-ons, and referral asks.</p>
+      </div>
+      <div class="seg-card">
+        <h4>Past Customers (0–12 mo)</h4>
+        <p>Had a job completed. Send seasonal reminders, subscription offer, and review ask.</p>
+      </div>
+      <div class="seg-card">
+        <h4>Lapsed (12–24 mo)</h4>
+        <p>Send the reactivation campaign. Soft, no pressure. Just open the door.</p>
+      </div>
+      <div class="seg-card">
+        <h4>Quote Requested / Not Booked</h4>
+        <p>Hot leads who didn't convert. Follow up 3 days later, then 10 days later with seasonal urgency.</p>
+      </div>
+      <div class="seg-card">
+        <h4>By City / ZIP</h4>
+        <p>Belleville contacts → Belleville email → belleville-il.html. O'Fallon → O'Fallon page. Etc.</p>
+      </div>
+      <div class="seg-card">
+        <h4>Commercial / Property Managers</h4>
+        <p>Different tone. Lead with reliability, documentation, consistent billing, and volume.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAN-SPAM + CHECKLIST -->
+  <div class="grid2">
+    <div class="card">
+      <h2>✅ CAN-SPAM Compliance Checklist</h2>
+      <ul class="checklist">
+        <li>Use real From name and sending domain (no fake headers)</li>
+        <li>Subject line must not be deceptive</li>
+        <li>Include [[CLIENT_SHORT]] physical mailing address in every footer</li>
+        <li>Include a visible, working unsubscribe link in every marketing email</li>
+        <li>Process unsubscribes within 10 business days (same day is best)</li>
+        <li>Do not email purchased or scraped lists</li>
+        <li>Set SPF, DKIM, and DMARC on your sending domain</li>
+        <li>Keep complaint rate under 0.3%</li>
+        <li>Never incentivize or gate Google reviews</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>📅 2x/Month Send Calendar</h2>
+      <ul style="list-style:none;padding:0;margin:0">
+        <li style="padding:8px 0;border-bottom:1px solid var(--line);font-size:.88rem"><span style="color:var(--green-bright);font-weight:700">Send #1 (1st of month)</span> — Seasonal action + service offer (weather-driven)</li>
+        <li style="padding:8px 0;border-bottom:1px solid var(--line);font-size:.88rem"><span style="color:var(--gold);font-weight:700">Send #2 (15th of month)</span> — Proof + education + soft ask (tips, review, referral)</li>
+        <li style="padding:8px 0;border-bottom:1px solid var(--line);font-size:.88rem"><span style="color:var(--text);font-weight:700">After Quote:</span> Immediate confirmation → Day 3 follow-up → Day 10 seasonal push</li>
+        <li style="padding:8px 0;border-bottom:1px solid var(--line);font-size:.88rem"><span style="color:var(--text);font-weight:700">After Job:</span> 24-hour thank you + review link (never gated)</li>
+        <li style="padding:8px 0;font-size:.88rem"><span style="color:var(--text);font-weight:700">Subscription billing:</span> 3-day heads-up before each billing date</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showCampaign(id){
+  document.querySelectorAll('.email-panel').forEach(p=>{
+    if(!p.id.startsWith('t-')) p.classList.remove('active');
+  });
+  document.querySelectorAll('.etab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+function showTemplate(id){
+  document.querySelectorAll('[id^="t-"]').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  // highlight the right tab
+  event.target.closest('.card').querySelectorAll('.etab').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+}
+// One-click draft builder
+const toEl=document.getElementById('draftTo');
+const subjectEl=document.getElementById('draftSubject');
+const bodyEl=document.getElementById('draftBody');
+const gmailBtn=document.getElementById('openGmail');
+const outlookBtn=document.getElementById('openOutlook');
+const mailtoBtn=document.getElementById('openMailto');
+function updateDraftLinks(){
+  const to=encodeURIComponent((toEl.value||'').trim());
+  const subject=encodeURIComponent(subjectEl.value||'');
+  const body=encodeURIComponent(bodyEl.value||'');
+  gmailBtn.href=`https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=${subject}&body=${body}`;
+  outlookBtn.href=`https://outlook.office.com/mail/deeplink/compose?to=${to}&subject=${subject}&body=${body}`;
+  mailtoBtn.href=`mailto:${toEl.value||''}?subject=${subject}&body=${body}`;
+}
+[toEl,subjectEl,bodyEl].forEach(el=>el.addEventListener('input',updateDraftLinks));
+updateDraftLinks();
+</script>
+</body>
+</html>
+
+

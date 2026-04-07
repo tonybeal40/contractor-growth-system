@@ -1,0 +1,46 @@
+{
+  "name": "[[CLIENT BUSINESS NAME]]",
+  "name_short": "[[SHORT NAME]]",
+  "tagline": "[[TAGLINE — 8 words max]]",
+  "years_exp": "25+",
+  "founded": "1999",
+
+  "phone": "(000) 000-0000",
+  "phone_raw": "0000000000",
+  "email": "client@email.com",
+  "address": "City, State ZIP",
+  "city": "Home City",
+  "state": "IL",
+  "county": "County Name",
+  "zip": "00000",
+
+  "color_primary": "#2e7d32",
+  "color_primary_dark": "#1b5e20",
+  "color_primary_light": "#4caf50",
+  "color_accent": "#f9a825",
+  "color_bg": "#0b1a0f",
+
+  "current_site": "https://clientsite.com",
+  "demo_domain": "allprometroeastconstruction.com",
+  "demo_slug": "client-slug",
+
+  "services": [
+    "Service One",
+    "Service Two",
+    "Service Three",
+    "Service Four",
+    "Service Five",
+    "Service Six"
+  ],
+
+  "cities": [
+    { "name": "Home City", "county": "County", "zip": "00000", "clients": "500+" },
+    { "name": "City Two",  "county": "County", "zip": "00000", "clients": "200+" }
+  ],
+
+  "missed_revenue": "$15,000–$40,000",
+  "projected_revenue": "$18,000–$45,000",
+
+  "owner_name": "Owner Name",
+  "owner_title": "Owner & Operator"
+}

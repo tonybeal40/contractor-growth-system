@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Get a Free Quote | [[CLIENT_NAME]] — [[CLIENT_CITY]] Area</title>
+<meta name="description" content="Request a free lawn care, landscaping, or tree service quote from [[CLIENT_NAME]] serving [[CLIENT_CITY]] Area. Same-day response. No obligation."/>
+<link rel="stylesheet" href="lawnmex.css"/>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="leaf">🌿</span> [[CLIENT_SHORT]] <span>Inc.</span></a>
+    <div class="nav-links">
+      <a href="index.html#services" class="nav-link">Services</a>
+      <a href="index.html#about" class="nav-link">About</a>
+      <a href="index.html#reviews" class="nav-link">Reviews</a>
+      <a href="market-report.html" class="nav-link">Market Report</a>
+      <a href="invoice.html" class="nav-link">Pay Invoice</a>
+      <a href="quote.html" class="nav-cta active">Free Quote →</a>
+    </div>    <button class="nav-hamburger" id="navBurger" onclick="document.getElementById('navMobile').classList.toggle('open');this.classList.toggle('open')" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-phone">📞 <a href="tel:[[CLIENT_PHONE_RAW]]" style="color:inherit">[[CLIENT_PHONE]]</a></div>
+  </div>
+  <div class="nav-mobile-menu" id="navMobile"></div>
+</nav>
+<script>
+(function(){
+  var m=document.getElementById('navMobile');
+  var d=document.querySelector('.nav-links');
+  if(m&&d){m.innerHTML=d.innerHTML;}
+})();
+</script>
+
+<section class="hero" style="padding:56px 24px 64px">
+  <div class="container">
+    <div class="hero-badge">📋 Free — No Obligation</div>
+    <h1 style="color:var(--white)">Get Your <span>Free Quote</span></h1>
+    <p style="color:rgba(255,255,255,.8);font-size:1.05rem;max-width:520px;margin-top:8px">Takes under 2 minutes. We respond same business day. [[CLIENT_OWNER]] or Erika will follow up personally.</p>
+  </div>
+</section>
+
+<section class="section bg-off-white">
+  <div class="container">
+    <div class="two-col-content">
+
+      <!-- QUOTE FORM -->
+      <div>
+        <!-- STEP BAR -->
+        <div class="form-step-bar" id="stepBar">
+          <div class="form-step active" id="step-ind-1"><div class="form-step-circle">1</div><div class="form-step-label">Service</div></div>
+          <div class="form-step" id="step-ind-2"><div class="form-step-circle">2</div><div class="form-step-label">Property</div></div>
+          <div class="form-step" id="step-ind-3"><div class="form-step-circle">3</div><div class="form-step-label">Frequency</div></div>
+          <div class="form-step" id="step-ind-4"><div class="form-step-circle">4</div><div class="form-step-label">Contact</div></div>
+          <div class="form-step" id="step-ind-5"><div class="form-step-circle">✓</div><div class="form-step-label">Done</div></div>
+        </div>
+
+        <!-- STEP 1: SERVICE -->
+        <div class="form-card" id="step1">
+          <h3 style="margin-bottom:4px">What service do you need?</h3>
+          <p style="font-size:.88rem;margin-bottom:20px">Select all that apply — we'll put together one quote.</p>
+          <div class="form-group">
+            <div class="radio-group" id="serviceGroup">
+              <span class="radio-chip sel" data-multi>🌿 Lawn Care & Mowing</span>
+              <span class="radio-chip" data-multi>🌳 Landscaping Design</span>
+              <span class="radio-chip" data-multi>🌲 Tree Service</span>
+              <span class="radio-chip" data-multi>🍂 Mulching</span>
+              <span class="radio-chip" data-multi>🪴 Shrub Trimming</span>
+              <span class="radio-chip" data-multi>🍃 Spring/Fall Cleanup</span>
+              <span class="radio-chip" data-multi>🔄 Maintenance Plan</span>
+              <span class="radio-chip" data-multi>💧 Weed Control</span>
+            </div>
+          </div>
+          <button class="form-submit mt-8" onclick="goStep(2)">Next: Property Details →</button>
+        </div>
+
+        <!-- STEP 2: PROPERTY -->
+        <div class="form-card" id="step2" style="display:none">
+          <h3 style="margin-bottom:4px">Tell us about the property</h3>
+          <p style="font-size:.88rem;margin-bottom:20px">This helps us give you an accurate estimate.</p>
+          <div class="form-group">
+            <label class="form-label">Property size (approximate)</label>
+            <div class="radio-group" id="sizeGroup">
+              <span class="radio-chip">Under ¼ acre</span>
+              <span class="radio-chip sel">¼ – ½ acre</span>
+              <span class="radio-chip">½ – 1 acre</span>
+              <span class="radio-chip">1+ acre</span>
+              <span class="radio-chip">Not sure</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Property type</label>
+            <div class="radio-group" id="typeGroup">
+              <span class="radio-chip sel">🏠 Residential</span>
+              <span class="radio-chip">🏢 Commercial</span>
+              <span class="radio-chip">🏭 Industrial</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Your city</label>
+            <select class="form-control">
+              <option>[[CLIENT_CITY]], [[CLIENT_STATE]]</option>
+              <option>O'Fallon, IL</option>
+              <option>Edwardsville, IL</option>
+              <option>Fairview Heights, IL</option>
+              <option>Swansea, IL</option>
+              <option>Collinsville, IL</option>
+              <option>Shiloh, IL</option>
+              <option>Waterloo, IL</option>
+              <option>Columbia, IL</option>
+              <option>Highland, IL</option>
+              <option>Mascoutah, IL</option>
+              <option>Freeburg, IL</option>
+              <option>Maryville, IL</option>
+              <option>Troy, IL</option>
+              <option>Scott AFB area</option>
+              <option>Other Metro East</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-outline" onclick="goStep(1)" style="flex:1">← Back</button>
+            <button class="form-submit" onclick="goStep(3)" style="flex:2">Next: Service Frequency →</button>
+          </div>
+        </div>
+
+        <!-- STEP 3: FREQUENCY -->
+        <div class="form-card" id="step3" style="display:none">
+          <h3 style="margin-bottom:4px">How often do you need service?</h3>
+          <p style="font-size:.88rem;margin-bottom:20px">Choose what fits your needs — we have one-time and recurring options.</p>
+          <div class="form-group">
+            <div class="radio-group" id="freqGroup">
+              <span class="radio-chip">One-time job</span>
+              <span class="radio-chip sel">Weekly</span>
+              <span class="radio-chip">Bi-weekly</span>
+              <span class="radio-chip">Monthly</span>
+              <span class="radio-chip">Seasonal (spring/fall)</span>
+              <span class="radio-chip">Not sure yet</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Best time to schedule?</label>
+            <div class="radio-group" id="timeGroup">
+              <span class="radio-chip sel">As soon as possible</span>
+              <span class="radio-chip">This week</span>
+              <span class="radio-chip">Next 2 weeks</span>
+              <span class="radio-chip">This month</span>
+              <span class="radio-chip">Just getting quotes</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Anything specific we should know? <span style="font-weight:400;color:var(--text-muted)">(optional)</span></label>
+            <textarea class="form-control" placeholder="E.g. back yard access, gate code, specific concerns, existing damage..."></textarea>
+          </div>
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-outline" onclick="goStep(2)" style="flex:1">← Back</button>
+            <button class="form-submit" onclick="goStep(4)" style="flex:2">Next: Your Contact Info →</button>
+          </div>
+        </div>
+
+        <!-- STEP 4: CONTACT -->
+        <div class="form-card" id="step4" style="display:none">
+          <h3 style="margin-bottom:4px">How do we reach you?</h3>
+          <p style="font-size:.88rem;margin-bottom:20px">[[CLIENT_OWNER]] or Erika will follow up same day with your quote.</p>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First name</label>
+              <input class="form-control" type="text" placeholder="John"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last name</label>
+              <input class="form-control" type="text" placeholder="Smith"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone number <span style="color:var(--red)">*</span></label>
+            <input class="form-control" type="tel" placeholder="(618) 555-0000"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email address <span style="font-weight:400;color:var(--text-muted)">(optional — for quote copy)</span></label>
+            <input class="form-control" type="email" placeholder="john@email.com"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Street address <span style="font-weight:400;color:var(--text-muted)">(optional — helps us estimate)</span></label>
+            <input class="form-control" type="text" placeholder="123 Main St, Belleville IL"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">How did you hear about us?</label>
+            <select class="form-control">
+              <option>Google Search</option>
+              <option>Google Maps / Google Business</option>
+              <option>Referral from friend or neighbor</option>
+              <option>I'm already a customer</option>
+              <option>Yard sign or truck</option>
+              <option>Facebook / Social Media</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-outline" onclick="goStep(3)" style="flex:1">← Back</button>
+            <button class="form-submit" onclick="goStep(5)" style="flex:2">Send My Quote Request →</button>
+          </div>
+          <div class="form-note">No spam. No sharing your info. We'll only contact you about your quote.</div>
+        </div>
+
+        <!-- STEP 5: CONFIRMATION -->
+        <div class="form-card" id="step5" style="display:none;text-align:center">
+          <div style="font-size:3.5rem;margin-bottom:16px">✅</div>
+          <h3 style="color:var(--green-dark);margin-bottom:8px">Quote Request Received!</h3>
+          <p>Thanks — [[CLIENT_OWNER]] or Erika will reach out within 1 business day with your free estimate. If you need something sooner, call us directly.</p>
+          <a href="tel:[[CLIENT_PHONE_RAW]]" class="btn btn-primary btn-lg mt-24" style="display:inline-flex">📞 [[CLIENT_PHONE]]</a>
+          <div class="mt-16">
+            <a href="index.html" style="font-size:.88rem;color:var(--text-muted)">← Back to homepage</a>
+          </div>
+          <div class="highlight-box mt-24" style="text-align:left">
+            <h4 style="margin-bottom:8px">What happens next</h4>
+            <ul class="check-list">
+              <li>You'll receive a confirmation text/email shortly</li>
+              <li>[[CLIENT_OWNER]] or Erika reviews your request same day</li>
+              <li>We follow up with a detailed quote within 1 business day</li>
+              <li>If we need to see the property, we'll schedule a quick visit</li>
+              <li>You approve, we schedule — done</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div>
+        <div class="card mb-24">
+          <div class="card-icon">📞</div>
+          <h3>Prefer to Call?</h3>
+          <p>[[CLIENT_OWNER]] and Erika answer the phone. No call center, no hold music.</p>
+          <a href="tel:[[CLIENT_PHONE_RAW]]" class="btn btn-primary mt-16 btn-block">[[CLIENT_PHONE]]</a>
+          <p class="mt-8" style="font-size:.78rem">Mon–Fri 8am–4pm</p>
+        </div>
+        <div class="card mb-24">
+          <div class="card-icon">⚡</div>
+          <h3>Same-Day Response</h3>
+          <p>We respond to every quote request the same business day — no automated runaround.</p>
+        </div>
+        <div class="card mb-24">
+          <div class="card-icon">💰</div>
+          <h3>Free Estimates — Always</h3>
+          <p>We never charge for quotes. If we need to come look at the property, that's on us too.</p>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">"[[CLIENT_OWNER]] is an expert at what he does. He listened to my needs and understood my vision. His team did everything perfectly, even the cleanup. PERFECTION!"</div>
+          <div class="review-name">Cocco Butta <span class="review-source">Google</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">🌿 [[CLIENT_SHORT]] <span>Inc.</span></div>
+      <div class="footer-desc mt-8">Family-owned lawn care and landscaping across [[CLIENT_CITY]] Area. [[CLIENT_YEARS]] years experience.</div>
+    </div>
+    <div><h4>Quick Links</h4><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="quote.html">Get a Quote</a></li><li><a href="invoice.html">Pay Invoice</a></li><li><a href="market-report.html">Market Report</a></li></ul></div>
+    <div><h4>Cities</h4><ul class="footer-links"><li><a href="belleville-il.html">Belleville</a></li><li><a href="ofallon-il.html">O'Fallon</a></li><li><a href="edwardsville-il.html">Edwardsville</a></li><li><a href="fairview-heights-il.html">Fairview Heights</a></li></ul></div>
+    <div><h4>Contact</h4><ul class="footer-contact"><li><span class="icon">📞</span><a href="tel:[[CLIENT_PHONE_RAW]]" style="color:rgba(255,255,255,.65)">[[CLIENT_PHONE]]</a></li><li><span class="icon">📍</span>[[CLIENT_ADDRESS]]</li><li><span class="icon">🕐</span>Mon–Fri 8am–4pm</li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 [[CLIENT_NAME]] All rights reserved.</p></div>
+</footer>
+
+<script>
+let currentStep = 1;
+function goStep(n) {
+  document.getElementById('step'+currentStep).style.display='none';
+  document.getElementById('step-ind-'+currentStep).classList.remove('active');
+  if(currentStep < n) document.getElementById('step-ind-'+currentStep).classList.add('done');
+  currentStep = n;
+  document.getElementById('step'+n).style.display='block';
+  if(document.getElementById('step-ind-'+n)) {
+    document.getElementById('step-ind-'+n).classList.remove('done');
+    document.getElementById('step-ind-'+n).classList.add('active');
+  }
+  document.getElementById('stepBar').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+// Multi-select chips
+document.querySelectorAll('[data-multi]').forEach(chip=>{
+  chip.addEventListener('click',()=>chip.classList.toggle('sel'));
+});
+// Single-select chip groups
+['sizeGroup','typeGroup','freqGroup','timeGroup'].forEach(gid=>{
+  const g = document.getElementById(gid);
+  if(!g) return;
+  g.querySelectorAll('.radio-chip').forEach(chip=>{
+    chip.addEventListener('click',()=>{
+      g.querySelectorAll('.radio-chip').forEach(c=>c.classList.remove('sel'));
+      chip.classList.add('sel');
+    });
+  });
+});
+</script>
+
+<!-- ═══════ COPY PROTECTION + LEGAL BANNER ═══════ -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#0b1a0f;color:#cde3cd;padding:14px 24px;font-family:sans-serif;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;gap:12px;border-top:2px solid #2e7d32">
+  <span style="flex:1;min-width:240px">&#128274; <strong style="color:#fff">Confidential Demo</strong> — This presentation is proprietary and created exclusively for the intended recipient. By viewing this page you agree not to copy, reproduce, or distribute any content. This site uses session cookies for demo functionality only.</span>
+  <button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('lm_cookie_ok','1')" style="background:#2e7d32;color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-weight:700;white-space:nowrap">Got It</button>
+</div>
+<script>
+(function(){
+  // Show cookie banner if not dismissed
+  if(!localStorage.getItem('lm_cookie_ok')){
+    var b=document.getElementById('cookieBanner');
+    if(b) b.style.display='flex';
+  }
+
+  // ── COPY PROTECTION ──
+  // Disable right-click
+  document.addEventListener('contextmenu',function(e){e.preventDefault();});
+
+  // Disable text selection via keyboard
+  document.addEventListener('keydown',function(e){
+    var k=e.key||e.keyCode;
+    // Block Ctrl+C, Ctrl+A, Ctrl+S, Ctrl+U, Ctrl+P, F12
+    if(e.ctrlKey&&['c','C','a','A','s','S','u','U','p','P'].indexOf(k)!==-1){e.preventDefault();}
+    if(k==='F12'||e.keyCode===123){e.preventDefault();}
+    if(e.ctrlKey&&e.shiftKey&&(k==='I'||k==='i'||k==='J'||k==='j'||k==='C'||k==='c')){e.preventDefault();}
+  });
+
+  // Disable drag
+  document.addEventListener('dragstart',function(e){e.preventDefault();});
+})();
+</script>
+<style>
+  /* Disable text selection */
+  body, body * {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+  }
+  /* Allow selection inside form inputs */
+  input, textarea, select {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    user-select: text !important;
+  }
+</style>
+<!-- ═══════════════════════════════════════════════ -->
+</body>
+</html>
+
