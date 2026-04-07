@@ -299,6 +299,53 @@ document.querySelectorAll('[data-multi]').forEach(chip=>{
   });
 });
 </script>
+
+<!-- ═══════ COPY PROTECTION + LEGAL BANNER ═══════ -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#0b1a0f;color:#cde3cd;padding:14px 24px;font-family:sans-serif;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;gap:12px;border-top:2px solid #2e7d32">
+  <span style="flex:1;min-width:240px">&#128274; <strong style="color:#fff">Confidential Demo</strong> — This presentation is proprietary and created exclusively for the intended recipient. By viewing this page you agree not to copy, reproduce, or distribute any content. This site uses session cookies for demo functionality only.</span>
+  <button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('lm_cookie_ok','1')" style="background:#2e7d32;color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-weight:700;white-space:nowrap">Got It</button>
+</div>
+<script>
+(function(){
+  // Show cookie banner if not dismissed
+  if(!localStorage.getItem('lm_cookie_ok')){
+    var b=document.getElementById('cookieBanner');
+    if(b) b.style.display='flex';
+  }
+
+  // ── COPY PROTECTION ──
+  // Disable right-click
+  document.addEventListener('contextmenu',function(e){e.preventDefault();});
+
+  // Disable text selection via keyboard
+  document.addEventListener('keydown',function(e){
+    var k=e.key||e.keyCode;
+    // Block Ctrl+C, Ctrl+A, Ctrl+S, Ctrl+U, Ctrl+P, F12
+    if(e.ctrlKey&&['c','C','a','A','s','S','u','U','p','P'].indexOf(k)!==-1){e.preventDefault();}
+    if(k==='F12'||e.keyCode===123){e.preventDefault();}
+    if(e.ctrlKey&&e.shiftKey&&(k==='I'||k==='i'||k==='J'||k==='j'||k==='C'||k==='c')){e.preventDefault();}
+  });
+
+  // Disable drag
+  document.addEventListener('dragstart',function(e){e.preventDefault();});
+})();
+</script>
+<style>
+  /* Disable text selection */
+  body, body * {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+  }
+  /* Allow selection inside form inputs */
+  input, textarea, select {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    user-select: text !important;
+  }
+</style>
+<!-- ═══════════════════════════════════════════════ -->
 </body>
 </html>
 
