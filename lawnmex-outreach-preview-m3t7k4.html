@@ -910,157 +910,224 @@ document.querySelectorAll('.radio-pill').forEach(pill=>{
 
 <!-- ── GUIDED TOUR ── -->
 <style>
-#tour-launcher{position:fixed;bottom:90px;right:28px;z-index:100001;background:var(--gold);color:#0b1a0f;border:none;border-radius:50px;padding:14px 22px;font-size:.95rem;font-weight:800;cursor:pointer;box-shadow:0 4px 24px rgba(0,0,0,.5);display:flex;align-items:center;gap:8px;transition:transform .15s,background .15s}
-#tour-launcher:hover{background:var(--gold-light);transform:scale(1.04)}
-#tour-overlay{display:none;position:fixed;inset:0;z-index:100002;pointer-events:none}
-#tour-overlay.active{display:block}
-#tour-spotlight{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:100003;pointer-events:auto;transition:opacity .3s}
-#tour-card{position:fixed;z-index:100004;background:#111e14;border:1px solid var(--green-bright);border-radius:14px;padding:24px 28px;max-width:340px;box-shadow:0 8px 40px rgba(0,0,0,.7);pointer-events:auto;transition:all .3s}
-#tour-card .tour-step-label{font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
-#tour-card h3{font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:8px}
-#tour-card p{font-size:.88rem;color:var(--text-muted);line-height:1.6;margin:0}
-#tour-card .tour-nav{display:flex;align-items:center;justify-content:space-between;margin-top:20px;gap:10px}
-#tour-card .tour-progress{font-size:.78rem;color:var(--text-muted)}
-#tour-card .tour-dots{display:flex;gap:5px}
-#tour-card .tour-dot{width:7px;height:7px;border-radius:50%;background:var(--dark-border);transition:background .2s}
-#tour-card .tour-dot.active{background:var(--green-bright)}
-#tour-prev{background:transparent;border:1.5px solid var(--dark-border);color:var(--text-muted);border-radius:8px;padding:8px 16px;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s}
-#tour-prev:hover{border-color:var(--text-muted);color:#fff}
-#tour-next{background:var(--green-bright);border:none;color:#fff;border-radius:8px;padding:8px 20px;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .15s}
-#tour-next:hover{background:var(--green-light)}
-#tour-skip{position:fixed;top:20px;right:20px;z-index:100005;background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);border-radius:8px;padding:8px 16px;font-size:.82rem;cursor:pointer;pointer-events:auto}
-#tour-skip:hover{color:#fff;border-color:rgba(255,255,255,.5)}
+/* Tour launcher button */
+#tour-launcher{
+  position:fixed;bottom:90px;right:24px;z-index:100001;
+  background:var(--gold);color:#0b1a0f;border:none;border-radius:50px;
+  padding:13px 22px;font-size:.92rem;font-weight:800;cursor:pointer;
+  box-shadow:0 4px 24px rgba(0,0,0,.45);
+  display:flex;align-items:center;gap:8px;
+  transition:transform .15s,box-shadow .15s;
+}
+#tour-launcher:hover{transform:scale(1.05);box-shadow:0 6px 32px rgba(0,0,0,.55)}
+
+/* Full-screen backdrop */
+#tour-modal{
+  display:none;position:fixed;inset:0;z-index:100010;
+  background:rgba(5,15,5,.88);
+  align-items:center;justify-content:center;
+  padding:20px;
+}
+#tour-modal.open{display:flex}
+
+/* Slide card */
+#tour-slide{
+  background:#0d1f0f;border:1.5px solid var(--green-bright);
+  border-radius:18px;padding:36px 40px;
+  max-width:480px;width:100%;
+  box-shadow:0 20px 80px rgba(0,0,0,.8);
+  position:relative;
+  animation:tourSlideIn .28s ease;
+}
+@keyframes tourSlideIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+#tour-icon{font-size:2.4rem;margin-bottom:14px;display:block}
+#tour-step-num{
+  font-size:.68rem;font-weight:700;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:10px;
+}
+#tour-slide h2{font-size:1.35rem;font-weight:900;color:#fff;margin-bottom:12px;line-height:1.3}
+#tour-slide p{font-size:.92rem;color:#a8c8a8;line-height:1.7;margin:0}
+
+/* Progress bar */
+#tour-progress-bar{
+  width:100%;height:4px;background:rgba(255,255,255,.1);
+  border-radius:4px;margin:22px 0 20px;overflow:hidden;
+}
+#tour-progress-fill{
+  height:100%;background:var(--green-bright);border-radius:4px;
+  transition:width .35s ease;
+}
+
+/* Navigation */
+#tour-nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#tour-dots-row{display:flex;gap:6px;align-items:center}
+.tdot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .2s}
+.tdot.on{background:var(--green-bright);transform:scale(1.25)}
+#tour-btn-prev{
+  background:transparent;border:1.5px solid rgba(255,255,255,.2);
+  color:rgba(255,255,255,.6);border-radius:10px;
+  padding:10px 18px;font-size:.85rem;font-weight:600;cursor:pointer;
+  transition:all .15s;
+}
+#tour-btn-prev:hover{border-color:rgba(255,255,255,.5);color:#fff}
+#tour-btn-next{
+  background:var(--green-bright);border:none;color:#fff;
+  border-radius:10px;padding:10px 22px;font-size:.9rem;font-weight:800;
+  cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+#tour-btn-next:hover{background:var(--green)}
+#tour-btn-next.final-btn{background:var(--gold);color:#0b1a0f}
+#tour-btn-next.final-btn:hover{background:var(--gold-dark)}
+
+/* Close X */
+#tour-close{
+  position:absolute;top:14px;right:16px;
+  background:transparent;border:none;color:rgba(255,255,255,.4);
+  font-size:1.1rem;cursor:pointer;padding:4px 8px;
+  border-radius:6px;transition:color .15s;
+}
+#tour-close:hover{color:#fff}
+
+/* CTA at the end */
+#tour-cta-row{display:none;margin-top:20px;gap:12px;flex-direction:column}
+#tour-cta-row.show{display:flex}
+#tour-cta-call{
+  display:block;text-align:center;
+  background:var(--gold);color:#0b1a0f;
+  border-radius:10px;padding:13px 24px;
+  font-weight:800;font-size:.95rem;text-decoration:none;
+  transition:background .15s;
+}
+#tour-cta-call:hover{background:var(--gold-dark)}
+#tour-cta-email{
+  display:block;text-align:center;
+  background:transparent;border:1.5px solid var(--green-bright);color:var(--green-bright);
+  border-radius:10px;padding:11px 24px;
+  font-weight:700;font-size:.88rem;text-decoration:none;
+  transition:all .15s;
+}
+#tour-cta-email:hover{background:var(--green-bright);color:#fff}
+
+@media(max-width:520px){
+  #tour-slide{padding:26px 22px}
+  #tour-slide h2{font-size:1.1rem}
+  #tour-btn-prev,#tour-btn-next{padding:9px 14px;font-size:.82rem}
+}
 </style>
 
 <button id="tour-launcher" onclick="startTour()">▶ Take the Tour</button>
 
-<div id="tour-overlay">
-  <div id="tour-spotlight"></div>
-  <div id="tour-card">
-    <div class="tour-step-label" id="tour-label"></div>
-    <h3 id="tour-title"></h3>
+<div id="tour-modal">
+  <div id="tour-slide">
+    <button id="tour-close" onclick="endTour()">✕</button>
+    <span id="tour-icon"></span>
+    <div id="tour-step-num"></div>
+    <h2 id="tour-title"></h2>
     <p id="tour-body"></p>
-    <div class="tour-nav">
-      <div class="tour-dots" id="tour-dots"></div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <button id="tour-prev">← Back</button>
-        <button id="tour-next">Next →</button>
+    <div id="tour-progress-bar"><div id="tour-progress-fill"></div></div>
+    <div id="tour-nav">
+      <div id="tour-dots-row"></div>
+      <div style="display:flex;gap:8px">
+        <button id="tour-btn-prev" onclick="tourPrev()">← Back</button>
+        <button id="tour-btn-next" onclick="tourNext()">Next →</button>
       </div>
     </div>
+    <div id="tour-cta-row">
+      <a id="tour-cta-call" href="tel:6182136228">📞 Call Jeff's Demo Line</a>
+      <a id="tour-cta-email" href="mailto:lawn-mexinc@live.com">✉ Send Jeff This Overview</a>
+    </div>
   </div>
-  <button id="tour-skip">✕ Exit Tour</button>
 </div>
 
 <script>
-var _tourCurrent = 0;
-var _tourSteps = [
-  {id:'hero',label:'Step 1 of 8 · Overview',title:'The Lawn-Mex Growth System',body:"This is a private preview built specifically for Jeff. It shows exactly what Lawn-Mex's digital business could look like — revenue tools, SEO pages, email campaigns, and more. Click Next to walk through each piece.",position:'center'},
-  {id:'growth-plan',label:'Step 2 of 8 · The Opportunity',title:'Where Lawn-Mex Stands Today',body:"Jeff has 25 years of experience and real Google reviews. What's missing is the digital infrastructure — a system that captures leads, follows up automatically, and collects recurring payments while the crew is on a job.",position:'bottom'},
-  {id:null,scrollTo:'.real-photos-section',label:'Step 3 of 8 · Real Work',title:"Jeff's Work Speaks for Itself",body:"These are actual photos from lawnmexinc.com. The quality is already there. We just need the online presence to match it — so customers find Lawn-Mex on Google instead of a competitor.",position:'bottom'},
-  {id:'email-campaigns',label:'Step 4 of 8 · Email System',title:'2 Campaigns Per Month, Done for You',body:"Spring kickoff, reactivation, upsell, subscription push, referral asks — all pre-written, branded, and ready to send. Jeff just approves and we hit send. This alone can bring back $3-5K in recovered revenue per season.",position:'bottom'},
-  {id:'quote-system',label:'Step 5 of 8 · Quote System',title:'From Contact Form to Booked Job',body:"Instead of phone tag, customers fill out a smart quote form that captures job details and triggers automatic follow-up. Jeff gets a qualified lead with a ZIP code — not a voicemail.",position:'bottom'},
-  {id:'invoice-system',label:'Step 6 of 8 · Invoicing',title:'Professional Invoices That Get Paid',body:"Branded invoices with itemized services. Customers pay online, Jeff gets notified, and the paper trail is automatic. Monthly subscriptions bill automatically — no chasing checks.",position:'bottom'},
-  {id:'city-pages',label:'Step 7 of 8 · Local SEO',title:'10 City Pages That Rank on Google',body:"Each page targets a specific Metro East city — Belleville, O'Fallon, Edwardsville and 7 more. When someone searches lawn care near me, Lawn-Mex shows up. Free traffic, every month, forever.",position:'bottom'},
-  {id:null,label:'Step 8 of 8 · Next Step',title:"Ready to Make This Lawn-Mex's Reality?",body:"Everything you've seen is already built and live. This is what the business looks like with the right digital infrastructure. Let's talk about getting this launched.",position:'center',final:true}
+var _tc = 0;
+var _ts = [
+  {icon:'🌿', num:'Overview · 1 of 8', title:'The Lawn-Mex Growth System',
+   body:"This is a private preview built specifically for Jeff. It shows exactly what Lawn-Mex's digital business could look like — leads, payments, SEO, and email campaigns. Click Next to walk through each piece."},
+  {icon:'📊', num:'Step 2 of 8 · The Opportunity', title:'Where Lawn-Mex Stands Today',
+   body:"Jeff has 25 years of experience, loyal customers, and real Google reviews. What's missing is the digital infrastructure — a system that captures new leads, follows up automatically, and collects recurring payments while the crew is on the job."},
+  {icon:'📸', num:'Step 3 of 8 · Real Work', title:"Jeff's Work Speaks for Itself",
+   body:"These are actual photos pulled from lawnmexinc.com. The quality of work is already there. We just build the online presence to match it — so new customers find Lawn-Mex first on Google, not a competitor."},
+  {icon:'✉️', num:'Step 4 of 8 · Email System', title:'2 Campaigns Per Month, Done for You',
+   body:"Spring kickoff, reactivation, upsell, subscription push, referral asks — all pre-written, branded, and ready to send. Jeff just approves and we hit send. This alone can recover $3–5K per season in dormant customers."},
+  {icon:'📋', num:'Step 5 of 8 · Quote System', title:'From Contact Form to Booked Job',
+   body:"Instead of phone tag, customers fill out a smart quote form that captures job type, address, and ZIP code. Jeff gets a qualified lead — not a voicemail. Automatic follow-up built in."},
+  {icon:'💳', num:'Step 6 of 8 · Invoicing', title:'Professional Invoices That Get Paid',
+   body:"Branded invoices with itemized services. Customers pay online, Jeff gets notified, and the paper trail is automatic. Monthly maintenance plans bill automatically — no chasing checks, no awkward calls."},
+  {icon:'📍', num:'Step 7 of 8 · Local SEO', title:'10 City Pages That Rank on Google',
+   body:"Each page targets a specific Metro East city — Belleville, O'Fallon, Edwardsville and 7 more. When someone searches 'lawn care near me', Lawn-Mex shows up. Free traffic, every month, forever."},
+  {icon:'🚀', num:'Step 8 of 8 · Next Step', title:"Ready to Make This Lawn-Mex's Reality?",
+   body:"Everything you've seen is already built and live at allprometroeastconstruction.com. This is exactly what the business looks like with the right digital infrastructure behind it. Let's talk about launching it.",
+   final:true}
 ];
 
 function startTour() {
-  var overlay = document.getElementById('tour-overlay');
-  var launcher = document.getElementById('tour-launcher');
-  if (!overlay || !launcher) { alert('Tour not ready yet — try again in a moment.'); return; }
-  // Hide cookie banner during tour so it doesn't block tour cards
   var banner = document.getElementById('cookieBanner');
   if (banner) banner.style.display = 'none';
-  overlay.classList.add('active');
-  launcher.style.display = 'none';
-  document.body.style.overflow = 'hidden';
-  _tourCurrent = 0;
-  _tourShowStep(0);
+  _tc = 0;
+  _tourRender();
+  document.getElementById('tour-modal').classList.add('open');
+  document.getElementById('tour-launcher').style.display = 'none';
 }
 
 function endTour() {
-  var overlay = document.getElementById('tour-overlay');
-  var launcher = document.getElementById('tour-launcher');
-  if (overlay) overlay.classList.remove('active');
-  if (launcher) launcher.style.display = '';
-  document.body.style.overflow = '';
+  document.getElementById('tour-modal').classList.remove('open');
+  document.getElementById('tour-launcher').style.display = '';
 }
 
-function _tourBuildDots() {
-  var dotsEl = document.getElementById('tour-dots');
-  if (!dotsEl) return;
-  dotsEl.innerHTML = '';
-  _tourSteps.forEach(function(_, i) {
+function tourNext() {
+  if (_ts[_tc].final) { endTour(); return; }
+  if (_tc < _ts.length - 1) { _tc++; _tourRender(); }
+}
+
+function tourPrev() {
+  if (_tc > 0) { _tc--; _tourRender(); }
+}
+
+function _tourRender() {
+  var s = _ts[_tc];
+  document.getElementById('tour-icon').textContent = s.icon || '';
+  document.getElementById('tour-step-num').textContent = s.num || '';
+  document.getElementById('tour-title').textContent = s.title;
+  document.getElementById('tour-body').textContent = s.body;
+
+  // Progress bar
+  var pct = ((_tc + 1) / _ts.length * 100).toFixed(0);
+  document.getElementById('tour-progress-fill').style.width = pct + '%';
+
+  // Dots
+  var dr = document.getElementById('tour-dots-row');
+  dr.innerHTML = '';
+  _ts.forEach(function(_, i) {
     var d = document.createElement('div');
-    d.className = 'tour-dot' + (i === _tourCurrent ? ' active' : '');
-    dotsEl.appendChild(d);
+    d.className = 'tdot' + (i === _tc ? ' on' : '');
+    dr.appendChild(d);
   });
-}
 
-function _tourPosition(targetEl, position) {
-  var card = document.getElementById('tour-card');
-  if (!card) return;
-  card.style.top = ''; card.style.bottom = ''; card.style.left = ''; card.style.right = ''; card.style.transform = '';
-  if (position === 'center' || !targetEl) {
-    card.style.top = '50%'; card.style.left = '50%'; card.style.transform = 'translate(-50%,-50%)';
-    return;
-  }
-  var rect = targetEl.getBoundingClientRect();
-  var ch = card.offsetHeight || 220;
-  var cw = card.offsetWidth || 340;
-  var margin = 20;
-  if (rect.bottom + ch + margin < window.innerHeight) {
-    card.style.top = (rect.bottom + margin) + 'px';
-  } else if (rect.top - ch - margin > 0) {
-    card.style.top = (rect.top - ch - margin) + 'px';
+  // Prev button
+  document.getElementById('tour-btn-prev').style.visibility = _tc === 0 ? 'hidden' : 'visible';
+
+  // Next button
+  var nb = document.getElementById('tour-btn-next');
+  if (s.final) {
+    nb.textContent = 'Close Tour ✓';
+    nb.classList.add('final-btn');
   } else {
-    card.style.top = '50%'; card.style.left = '50%'; card.style.transform = 'translate(-50%,-50%)'; return;
+    nb.textContent = 'Next →';
+    nb.classList.remove('final-btn');
   }
-  var idealLeft = rect.left + (rect.width / 2) - (cw / 2);
-  card.style.left = Math.max(margin, Math.min(window.innerWidth - cw - margin, idealLeft)) + 'px';
-}
 
-function _tourShowStep(idx) {
-  _tourCurrent = idx;
-  var step = _tourSteps[idx];
-  var lbl = document.getElementById('tour-label');
-  var ttl = document.getElementById('tour-title');
-  var bdy = document.getElementById('tour-body');
-  var prev = document.getElementById('tour-prev');
-  var next = document.getElementById('tour-next');
-  if (lbl) lbl.textContent = step.label;
-  if (ttl) ttl.textContent = step.title;
-  if (bdy) bdy.textContent = step.body;
-  if (prev) prev.style.display = idx === 0 ? 'none' : '';
-  if (next) next.textContent = step.final ? 'Done!' : 'Next →';
-  _tourBuildDots();
-  var targetEl = null;
-  if (step.id) { targetEl = document.getElementById(step.id); }
-  else if (step.scrollTo) { targetEl = document.querySelector(step.scrollTo); }
-  if (targetEl) {
-    targetEl.scrollIntoView({behavior:'smooth', block:'start'});
-    setTimeout(function() { _tourPosition(targetEl, step.position); }, 450);
-  } else {
-    _tourPosition(null, 'center');
-  }
-}
+  // CTA row on final step
+  var cta = document.getElementById('tour-cta-row');
+  if (s.final) cta.classList.add('show'); else cta.classList.remove('show');
 
-document.addEventListener('DOMContentLoaded', function() {
-  var prev = document.getElementById('tour-prev');
-  var next = document.getElementById('tour-next');
-  var skip = document.getElementById('tour-skip');
-  var spotlight = document.getElementById('tour-spotlight');
-  if (prev) prev.addEventListener('click', function() { if (_tourCurrent > 0) _tourShowStep(_tourCurrent - 1); });
-  if (next) next.addEventListener('click', function() {
-    if (_tourSteps[_tourCurrent].final) { endTour(); return; }
-    if (_tourCurrent < _tourSteps.length - 1) _tourShowStep(_tourCurrent + 1);
-  });
-  if (skip) skip.addEventListener('click', endTour);
-  if (spotlight) spotlight.addEventListener('click', function() {
-    if (_tourSteps[_tourCurrent].final) { endTour(); return; }
-    if (_tourCurrent < _tourSteps.length - 1) _tourShowStep(_tourCurrent + 1);
-  });
-});
+  // Re-trigger slide animation
+  var slide = document.getElementById('tour-slide');
+  slide.style.animation = 'none';
+  slide.offsetHeight; // reflow
+  slide.style.animation = '';
+}
 </script>
 
 <!-- ── INLINE DEMO VIEWER ── -->
