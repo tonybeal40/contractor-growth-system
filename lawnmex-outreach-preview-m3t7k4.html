@@ -23,8 +23,14 @@
   --text-muted:#8fad96;
   --white:#ffffff;
 }
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:68px}
 body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--text);line-height:1.6;font-size:16px}
+
+/* ── LAUNCH BAR ── */
+.launch-bar{background:#0d2b0f;border-bottom:2px solid #2e7d32;padding:12px 24px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.launch-bar-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:10px;white-space:nowrap;min-width:max-content}
+.launch-bar-label{color:#7dba80;font-size:.74rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;flex-shrink:0}
+.launch-bar a{display:inline-block;padding:7px 14px;border-radius:6px;font-size:.8rem;font-weight:700;text-decoration:none;flex-shrink:0}
 
 /* ── NAV ── */
 nav{position:sticky;top:0;z-index:100;background:rgba(11,26,15,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--dark-border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
@@ -271,7 +277,7 @@ footer .strong{color:var(--text);font-weight:600}
 .tag{background:rgba(56,169,87,.1);border:1px solid rgba(56,169,87,.2);color:var(--green-bright);font-size:.75rem;padding:4px 12px;border-radius:12px;font-weight:600}
 
 @media(max-width:640px){
-  #tour-card{max-width:90vw;left:5vw!important;right:5vw!important;transform:none!important;top:auto!important;bottom:80px!important;position:fixed!important}
+  #tour-card{max-width:92vw;left:4vw!important;right:4vw!important;transform:none!important;top:auto!important;bottom:16px!important;position:fixed!important}
   #demo-viewer iframe{height:100vh}
   .section-grid,.two-col,.inv-parties{grid-template-columns:1fr!important}
   .email-card-grid{grid-template-columns:1fr!important}
@@ -279,6 +285,11 @@ footer .strong{color:var(--text);font-weight:600}
   .hero-kpi{grid-template-columns:repeat(2,1fr)!important}
   #tour-launcher{font-size:.8rem;padding:10px 16px;bottom:16px;right:16px}
   .demo-back-bar{font-size:.82rem;padding:10px 16px}
+  /* Before-After grid: stack on mobile */
+  .ba-grid{grid-template-columns:1fr!important}
+  /* Template section grids */
+  .storybrand-grid{grid-template-columns:1fr!important}
+  .template-included-grid{grid-template-columns:1fr!important}
 }
 @media(max-width:400px){
   .city-links-grid{grid-template-columns:1fr!important}
@@ -307,17 +318,17 @@ footer .strong{color:var(--text);font-weight:600}
 <script>(function(){var m=document.getElementById('outMobile');var d=document.querySelector('.nav-links');if(m&&d){m.innerHTML=d.innerHTML;}})();</script>
 
 <!-- LIVE SYSTEM LAUNCH PANEL -->
-<div style="background:#0d2b0f;border-bottom:2px solid #2e7d32;padding:18px 24px;">
-  <div style="max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:12px;">
-    <span style="color:#7dba80;font-size:.78rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;">🚀 Launch Live Pages:</span>
-    <a href="lawnmex/index.html" target="_blank" style="background:#2e7d32;color:#fff;padding:7px 16px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;">Homepage</a>
-    <a href="lawnmex/quote.html" target="_blank" style="background:#2e7d32;color:#fff;padding:7px 16px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;">Quote System</a>
-    <a href="lawnmex/email-outreach.html" target="_blank" style="background:#2e7d32;color:#fff;padding:7px 16px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;">📧 Email Campaign Kit</a>
-    <a href="lawnmex/invoice.html" target="_blank" style="background:#2e7d32;color:#fff;padding:7px 16px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;">Invoice System</a>
-    <a href="lawnmex/market-report.html" target="_blank" style="background:#2e7d32;color:#fff;padding:7px 16px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;">Market Report</a>
-    <a href="lawnmex/belleville-il.html" target="_blank" style="background:#1b5e20;color:#f9a825;padding:7px 16px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;border:1px solid #f9a825;">Belleville SEO Page</a>
-    <a href="lawnmex/ofallon-il.html" target="_blank" style="background:#1b5e20;color:#f9a825;padding:7px 16px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;border:1px solid #f9a825;">O'Fallon SEO Page</a>
-    <a href="lawnmex/edwardsville-il.html" target="_blank" style="background:#1b5e20;color:#f9a825;padding:7px 16px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;border:1px solid #f9a825;">Edwardsville SEO Page</a>
+<div class="launch-bar">
+  <div class="launch-bar-inner">
+    <span class="launch-bar-label">&#128640; Launch Live Pages:</span>
+    <a href="lawnmex/index.html" target="_blank" style="background:#2e7d32;color:#fff">Homepage</a>
+    <a href="lawnmex/quote.html" target="_blank" style="background:#2e7d32;color:#fff">Quote System</a>
+    <a href="lawnmex/email-outreach.html" target="_blank" style="background:#2e7d32;color:#fff">Email Kit</a>
+    <a href="lawnmex/invoice.html" target="_blank" style="background:#2e7d32;color:#fff">Invoice</a>
+    <a href="lawnmex/market-report.html" target="_blank" style="background:#2e7d32;color:#fff">Market Report</a>
+    <a href="lawnmex/belleville-il.html" target="_blank" style="background:#1b5e20;color:#f9a825;border:1px solid #f9a825">Belleville</a>
+    <a href="lawnmex/ofallon-il.html" target="_blank" style="background:#1b5e20;color:#f9a825;border:1px solid #f9a825">O'Fallon</a>
+    <a href="lawnmex/edwardsville-il.html" target="_blank" style="background:#1b5e20;color:#f9a825;border:1px solid #f9a825">Edwardsville</a>
   </div>
 </div>
 
@@ -365,7 +376,7 @@ footer .strong{color:var(--text);font-weight:600}
     <h2>Same Business. <span class="highlight">Completely Different</span> Online Presence.</h2>
     <p style="max-width:600px;margin:0 auto 48px">Here's where Lawn-Mex stands today on Wix — and exactly what they get with our system. Same crew, same quality of work. The difference is what customers see before they ever call.</p>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;margin:0 auto">
+    <div class="ba-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;margin:0 auto">
       <!-- BEFORE -->
       <div style="background:#0f0f0f;border:1.5px solid #c62828;border-radius:14px;overflow:hidden">
         <div style="background:#c62828;padding:10px 18px;display:flex;align-items:center;gap:10px">
@@ -973,7 +984,7 @@ footer .strong{color:var(--text);font-weight:600}
       </div>
     </div>
 
-    <div style="background:#0a1f0e;border:1.5px solid #1e3323;border-radius:14px;padding:32px 36px;max-width:840px;margin:0 auto 44px;display:grid;grid-template-columns:1fr 1fr;gap:32px;text-align:left">
+    <div class="template-included-grid" style="background:#0a1f0e;border:1.5px solid #1e3323;border-radius:14px;padding:32px 36px;max-width:840px;margin:0 auto 44px;display:grid;grid-template-columns:1fr 1fr;gap:32px;text-align:left">
       <div>
         <div class="section-label" style="margin-bottom:14px">What’s in Every Template</div>
         <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px">
@@ -1000,7 +1011,7 @@ footer .strong{color:var(--text);font-weight:600}
 
     <div style="background:linear-gradient(135deg,rgba(201,162,39,.1),rgba(56,169,87,.1));border:1px solid rgba(201,162,39,.3);border-radius:12px;padding:24px 32px;max-width:700px;margin:0 auto 44px">
       <div style="font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px">The StoryBrand Framework — Every Demo Follows This</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;text-align:left">
+      <div class="storybrand-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;text-align:left">
         <div>
           <div style="font-size:.75rem;font-weight:800;color:var(--green-bright);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px">1 — Hook</div>
           <div style="font-size:.82rem;color:var(--text-muted);line-height:1.5">You have a great business. But customers can’t find you online — and it’s costing you.</div>
@@ -1235,7 +1246,7 @@ function _tourRender(){
     var el=document.getElementById(s.section);
     if(el){
       _tourClearLit();el.classList.add("tour-lit");
-      var top=el.getBoundingClientRect().top+window.scrollY-16;
+      var top=el.getBoundingClientRect().top+window.scrollY-80;
       window.scrollTo({top:top,behavior:"smooth"});
     }
   }
