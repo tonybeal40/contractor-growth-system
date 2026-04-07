@@ -95,6 +95,19 @@ p{color:var(--text-muted);margin-top:10px}
 .phase ul li:last-child{border:none}
 .phase ul li::before{content:'→ ';color:var(--green-bright);font-weight:700}
 
+/* ── PAGE IFRAME PREVIEWS ── */
+.page-preview-wrap{width:100%;max-width:960px;margin:32px auto 0;border-radius:14px;overflow:hidden;border:2px solid rgba(255,255,255,.18);box-shadow:0 24px 64px rgba(0,0,0,.5);background:#fff;position:relative}
+.page-preview-bar{background:#111e14;padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.08)}
+.page-preview-bar .dot{width:11px;height:11px;border-radius:50%}
+.page-preview-bar .dot.r{background:#ff5f57}
+.page-preview-bar .dot.y{background:#febc2e}
+.page-preview-bar .dot.g{background:#28c840}
+.page-preview-url{background:#0b1a0f;border-radius:6px;padding:4px 14px;font-size:.78rem;color:rgba(255,255,255,.5);margin-left:8px;flex:1}
+.page-preview-frame-box{height:560px;overflow:hidden;position:relative}
+.page-preview-frame-box iframe{width:1366px;height:900px;transform:scale(0.64);transform-origin:top left;border:none;pointer-events:none;display:block}
+.page-preview-footer{background:#0d2b0f;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.page-preview-footer span{font-size:.8rem;color:rgba(255,255,255,.5)}
+
 /* ── HOMEPAGE MOCK ── */
 .mock-browser{background:#1a2e1f;border:1px solid var(--dark-border);border-radius:14px;overflow:hidden;margin-top:32px}
 .mock-bar{background:#111e14;padding:10px 16px;display:flex;align-items:center;gap:8px}
@@ -465,64 +478,20 @@ footer .strong{color:var(--text);font-weight:600}
     <div class="section-label">Homepage Redesign</div>
     <h2>What Lawn-Mex's Homepage <span class="highlight">Should Look Like</span></h2>
     <p>Compare this to what's live at lawnmexinc.com — same company, dramatically better first impression.</p>
-    <div style="text-align:center;margin:20px 0 32px;">
+    <div style="text-align:center;margin:20px 0 0;">
       <a href="lawnmex/index.html" target="_blank" class="btn-primary" style="font-size:1rem;padding:13px 30px;">🚀 Open Live Homepage →</a>
     </div>
-    <div class="mock-browser">
-      <div class="mock-bar">
-        <div class="mock-dot r"></div>
-        <div class="mock-dot y"></div>
-        <div class="mock-dot g"></div>
-        <div class="mock-url">🔒 lawnmexinc.com</div>
+    <div class="page-preview-wrap">
+      <div class="page-preview-bar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <div class="page-preview-url">🔒 tonybeal.net/lawnmex/index.html</div>
       </div>
-      <div class="mock-hero">
-        <div style="display:inline-block;background:rgba(201,162,39,.15);border:1px solid rgba(201,162,39,.35);color:#c9a227;font-size:.73rem;font-weight:700;letter-spacing:1.5px;padding:5px 14px;border-radius:20px;margin-bottom:16px;text-transform:uppercase">25+ Years Serving Metro East Illinois</div>
-        <h2>Lawn Care That Shows Up,<br/>Does the Work, and Makes It Look Right</h2>
-        <p>Family-owned lawn care, landscaping, tree service, and outdoor maintenance for homeowners and businesses across Belleville, O'Fallon, Edwardsville, and the greater Metro East area.</p>
-        <div class="mock-btns">
-          <a href="#quote-system" class="mock-btn-g">Get a Free Quote →</a>
-          <a href="#invoice-system" class="mock-btn-o">Pay Invoice</a>
-        </div>
+      <div class="page-preview-frame-box">
+        <iframe src="lawnmex/index.html" title="Lawn-Mex Homepage Preview" loading="lazy"></iframe>
       </div>
-      <div class="mock-trust">
-        <span class="trust-pill">⭐ 4.9 Google Rating</span>
-        <span class="trust-pill">✅ Family-Owned Since 1999</span>
-        <span class="trust-pill">📍 Belleville, IL</span>
-        <span class="trust-pill">📞 (618) 213-6228</span>
-        <span class="trust-pill">⚡ Same-Week Quotes</span>
-      </div>
-      <div class="mock-services">
-        <div class="mock-service"><div class="icon">🌿</div><strong style="color:#e8f0ea;font-size:.88rem">Lawn Care</strong><p>Mowing, edging, cleanup</p></div>
-        <div class="mock-service"><div class="icon">🌳</div><strong style="color:#e8f0ea;font-size:.88rem">Landscaping</strong><p>Design, beds, installs</p></div>
-        <div class="mock-service"><div class="icon">🌲</div><strong style="color:#e8f0ea;font-size:.88rem">Tree Service</strong><p>Trimming, shaping, removal</p></div>
-        <div class="mock-service"><div class="icon">🍂</div><strong style="color:#e8f0ea;font-size:.88rem">Mulching</strong><p>Fresh mulch & bed refresh</p></div>
-        <div class="mock-service"><div class="icon">🪴</div><strong style="color:#e8f0ea;font-size:.88rem">Shrub Care</strong><p>Trimming & plant health</p></div>
-        <div class="mock-service"><div class="icon">🔄</div><strong style="color:#e8f0ea;font-size:.88rem">Maintenance Plans</strong><p>Weekly & monthly options</p></div>
-      </div>
-      <div class="mock-reviews">
-        <h3>What Lawn-Mex customers say</h3>
-        <div class="review-cards">
-          <div class="review-card">
-            <div class="review-stars">★★★★★</div>
-            <div class="review-text">"I hired Lawn-Mex for a re-fresh on my landscaping beds last fall. They did such an excellent job, I called them again this spring. Erika is super to work with and has great ideas!"</div>
-            <div class="review-name">— Donna Baker, Belleville IL</div>
-          </div>
-          <div class="review-card">
-            <div class="review-stars">★★★★★</div>
-            <div class="review-text">"Jeff is an expert at what he does. He listened to my needs and understood my vision. His team did everything perfectly, even the cleanup. PERFECTION!"</div>
-            <div class="review-name">— Cocco Butta., Metro East</div>
-          </div>
-          <div class="review-card">
-            <div class="review-stars">★★★★★</div>
-            <div class="review-text">"Great family owned business with great customer service. Highly recommend for anyone in the area."</div>
-            <div class="review-name">— Payton Hillman</div>
-          </div>
-        </div>
-      </div>
-      <div class="mock-cta">
-        <h3>Ready to get your yard looking right?</h3>
-        <p>Get a quote in under 60 seconds. No obligation. We respond same day.</p>
-        <a href="#quote-system" class="mock-btn-g">Request My Free Quote</a>
+      <div class="page-preview-footer">
+        <span>Live page — this is exactly what visitors see</span>
+        <a href="lawnmex/index.html" target="_blank" class="btn-primary" style="padding:8px 18px;font-size:.82rem;">Open Full Page →</a>
       </div>
     </div>
   </div>
@@ -678,94 +647,20 @@ footer .strong{color:var(--text);font-weight:600}
     <div class="section-label">Better Quote System</div>
     <h2>From "Contact Us" to <span class="highlight">Booked Job</span></h2>
     <p>Replace the basic contact form with a multi-step flow that qualifies leads, sets expectations, and triggers automatic follow-up. This is what the quote page looks like.</p>
-    <div style="text-align:center;margin:20px 0 32px;">
+    <div style="text-align:center;margin:20px 0 0;">
       <a href="lawnmex/quote.html" target="_blank" class="btn-primary" style="font-size:1rem;padding:13px 30px;">🚀 Open Live Quote System →</a>
     </div>
-    <div class="quote-steps mt-24">
-      <div class="qstep"><div class="qstep-num">1</div><div class="qstep-label">Service Type</div></div>
-      <div class="qstep"><div class="qstep-num">2</div><div class="qstep-num" style="width:auto;height:auto;background:none;font-size:1.2rem;color:var(--dark-border);border-radius:0;display:block">→</div></div>
-      <div class="qstep"><div class="qstep-num">2</div><div class="qstep-label">Property Size</div></div>
-      <div class="qstep"><div class="qstep-num" style="width:auto;height:auto;background:none;font-size:1.2rem;color:var(--dark-border);border-radius:0">→</div></div>
-      <div class="qstep"><div class="qstep-num">3</div><div class="qstep-label">Frequency</div></div>
-      <div class="qstep"><div class="qstep-num" style="width:auto;height:auto;background:none;font-size:1.2rem;color:var(--dark-border);border-radius:0">→</div></div>
-      <div class="qstep"><div class="qstep-num">4</div><div class="qstep-label">Contact Info</div></div>
-      <div class="qstep"><div class="qstep-num" style="width:auto;height:auto;background:none;font-size:1.2rem;color:var(--dark-border);border-radius:0">→</div></div>
-      <div class="qstep"><div class="qstep-num" style="background:var(--gold)">✓</div><div class="qstep-label">Confirmed</div></div>
-    </div>
-    <div class="two-col mt-24">
-      <div class="quote-mock">
-        <h3>Request a Quote</h3>
-        <div class="subtitle">Takes under 60 seconds. We respond same business day.</div>
-        <div class="form-group">
-          <label>What service do you need?</label>
-          <div class="radio-group">
-            <span class="radio-pill sel">🌿 Lawn Care</span>
-            <span class="radio-pill">🌳 Landscaping</span>
-            <span class="radio-pill">🌲 Tree Service</span>
-            <span class="radio-pill">🍂 Mulching</span>
-            <span class="radio-pill">🪴 Shrub Care</span>
-            <span class="radio-pill">📋 Maintenance Plan</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Property size (approx.)</label>
-          <div class="radio-group">
-            <span class="radio-pill">Under ¼ acre</span>
-            <span class="radio-pill sel">¼ – ½ acre</span>
-            <span class="radio-pill">½ – 1 acre</span>
-            <span class="radio-pill">1+ acre</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>How often do you need service?</label>
-          <div class="radio-group">
-            <span class="radio-pill">One-time</span>
-            <span class="radio-pill sel">Weekly</span>
-            <span class="radio-pill">Bi-weekly</span>
-            <span class="radio-pill">Monthly</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Your city</label>
-          <select class="form-control">
-            <option>Belleville, IL</option>
-            <option>O'Fallon, IL</option>
-            <option>Edwardsville, IL</option>
-            <option>Fairview Heights, IL</option>
-            <option>Swansea, IL</option>
-            <option>Collinsville, IL</option>
-            <option>Other Metro East</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Your name &amp; phone</label>
-          <input type="text" class="form-control" placeholder="Name" style="margin-bottom:8px"/>
-          <input type="tel" class="form-control" placeholder="Phone number"/>
-        </div>
-        <button class="form-submit">Send My Quote Request →</button>
-        <div class="quote-features">
-          <span class="qf">No obligation</span>
-          <span class="qf">Same-day response</span>
-          <span class="qf">Free estimate</span>
-          <span class="qf">No spam</span>
-        </div>
+    <div class="page-preview-wrap">
+      <div class="page-preview-bar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <div class="page-preview-url">🔒 tonybeal.net/lawnmex/quote.html</div>
       </div>
-      <div>
-        <div class="card" style="margin-bottom:16px">
-          <div class="card-icon">⚡</div>
-          <h3>What happens next</h3>
-          <p>You fill out the form → you get an automatic confirmation text + email → Lawn-Mex follows up within 1 business day with a real quote. No more wondering if anyone saw the form.</p>
-        </div>
-        <div class="card" style="margin-bottom:16px">
-          <div class="card-icon">🚫</div>
-          <h3>Filters bad leads</h3>
-          <p>By asking property size and frequency upfront, the form pre-qualifies leads so Lawn-Mex only spends time on customers who are actually ready to book.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon">🔁</div>
-          <h3>Automatic follow-up</h3>
-          <p>If someone requests a quote and doesn't hear back within 24 hours, they get a second automated touchpoint — no leads fall through the cracks.</p>
-        </div>
+      <div class="page-preview-frame-box">
+        <iframe src="lawnmex/quote.html" title="Lawn-Mex Quote System Preview" loading="lazy"></iframe>
+      </div>
+      <div class="page-preview-footer">
+        <span>5-step wizard — qualifies leads, captures contact, auto-confirms</span>
+        <a href="lawnmex/quote.html" target="_blank" class="btn-primary" style="padding:8px 18px;font-size:.82rem;">Open Full Page →</a>
       </div>
     </div>
   </div>
@@ -777,107 +672,20 @@ footer .strong{color:var(--text);font-weight:600}
     <div class="section-label">Invoice + Subscription System</div>
     <h2>Replace the Payment Box with a <span class="highlight">Real Invoice System</span></h2>
     <p>The current pay-invoice page is just a blank amount field. Here's what a professional invoice looks like — plus monthly subscription plans that create predictable income.</p>
-    <div style="text-align:center;margin:20px 0 32px;">
-      <a href="lawnmex/invoice.html" target="_blank" class="btn-primary" style="font-size:1rem;padding:13px 30px;">🚀 Open Live Invoice + Plans →</a>
+    <div style="text-align:center;margin:20px 0 0;">
+      <a href="lawnmex/invoice.html" target="_blank" class="btn-primary" style="font-size:1rem;padding:13px 30px;">🚀 Open Live Invoice Page →</a>
     </div>
-    <div class="two-col mt-32">
-      <div>
-        <div class="invoice-mock">
-          <div class="inv-header">
-            <div>
-              <div class="inv-logo">Lawn-Mex <span>Inc.</span></div>
-              <div style="color:rgba(255,255,255,.65);font-size:.8rem;margin-top:4px">Family-Owned · Belleville, IL · (618) 213-6228</div>
-            </div>
-            <div style="text-align:right">
-              <div class="inv-label">Invoice</div>
-              <div class="inv-num">#2026-0147</div>
-              <div style="font-size:.75rem;color:rgba(255,255,255,.6);margin-top:4px">Due: April 15, 2026</div>
-            </div>
-          </div>
-          <div class="inv-body">
-            <div class="inv-parties">
-              <div>
-                <div class="inv-party-label">Billed To</div>
-                <div class="inv-party-name">John &amp; Sarah Williams</div>
-                <div class="inv-party-detail">412 Maple Ridge Dr.<br/>Belleville, IL 62220</div>
-              </div>
-              <div>
-                <div class="inv-party-label">Service Date</div>
-                <div class="inv-party-name">April 8, 2026</div>
-                <div class="inv-party-detail">Spring Cleanup Package<br/>Property: ½ acre, residential</div>
-              </div>
-            </div>
-            <table class="inv-table">
-              <thead>
-                <tr><th>Service</th><th>Qty</th><th>Rate</th><th>Total</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>Spring Yard Cleanup &amp; Debris Removal</td><td>1</td><td>$175.00</td><td>$175.00</td></tr>
-                <tr><td>Pre-emergent Weed Control Treatment</td><td>1</td><td>$95.00</td><td>$95.00</td></tr>
-                <tr><td>Mulch Install — Landscaping Beds (4 yds)</td><td>4</td><td>$42.00</td><td>$168.00</td></tr>
-                <tr><td>Bed Edging &amp; Cleanup</td><td>1</td><td>$65.00</td><td>$65.00</td></tr>
-              </tbody>
-            </table>
-            <div class="inv-totals">
-              <div class="inv-total-row"><span>Subtotal</span><span class="amt">$503.00</span></div>
-              <div class="inv-total-row"><span>Tax (0%)</span><span class="amt">$0.00</span></div>
-              <div class="inv-total-row inv-total-final"><span>Total Due</span><span class="amt">$503.00</span></div>
-            </div>
-            <div class="inv-sub-banner">
-              <div class="inv-sub-icon">🔄</div>
-              <div>
-                <div class="inv-sub-text">Save with a Monthly Maintenance Plan</div>
-                <div class="inv-sub-detail">Lock in service every 2 weeks and save up to 15% vs. one-time rates. Auto-pay available.</div>
-              </div>
-            </div>
-          </div>
-          <div class="inv-footer-bar">
-            <div class="inv-footer-text">Thank you for choosing Lawn-Mex Inc.</div>
-            <button class="inv-pay-btn">Pay Now — $503.00</button>
-          </div>
-        </div>
+    <div class="page-preview-wrap">
+      <div class="page-preview-bar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <div class="page-preview-url">🔒 tonybeal.net/lawnmex/invoice.html</div>
       </div>
-      <div>
-        <h3 style="margin-bottom:8px">Monthly Subscription Plans</h3>
-        <p style="margin-bottom:24px">This is where unpredictable job income turns into steady monthly revenue. Offer customers a recurring plan — they never have to call, you never have to chase the booking.</p>
-        <div class="sub-plans">
-          <div class="sub-plan">
-            <h3>Basic Upkeep</h3>
-            <div class="sub-desc">For smaller yards that just need to stay clean.</div>
-            <ul class="sub-features">
-              <li>Bi-weekly mowing + edging</li>
-              <li>Clipping cleanup</li>
-              <li>Priority scheduling</li>
-              <li>Monthly auto-invoice</li>
-            </ul>
-            <a href="#quote-system" class="sub-cta">Get Started →</a>
-          </div>
-          <div class="sub-plan featured">
-            <h3>Full Maintenance</h3>
-            <div class="sub-desc">Most popular for homeowners who want it handled.</div>
-            <ul class="sub-features">
-              <li>Weekly mowing + edging</li>
-              <li>Seasonal cleanup (2x/yr included)</li>
-              <li>Shrub &amp; trim visits</li>
-              <li>Weed control applications</li>
-              <li>Priority same-week scheduling</li>
-              <li>Monthly auto-invoice</li>
-            </ul>
-            <a href="#quote-system" class="sub-cta">Get Started →</a>
-          </div>
-          <div class="sub-plan">
-            <h3>Premium Property</h3>
-            <div class="sub-desc">For larger lots or commercial properties.</div>
-            <ul class="sub-features">
-              <li>Everything in Full Maintenance</li>
-              <li>Mulch refresh (1x/yr included)</li>
-              <li>Tree &amp; shrub shaping</li>
-              <li>Dedicated crew contact</li>
-              <li>Monthly reporting summary</li>
-            </ul>
-            <a href="#quote-system" class="sub-cta">Get Started →</a>
-          </div>
-        </div>
+      <div class="page-preview-frame-box">
+        <iframe src="lawnmex/invoice.html" title="Lawn-Mex Invoice Preview" loading="lazy"></iframe>
+      </div>
+      <div class="page-preview-footer">
+        <span>Pay invoice online · View invoice example — branded, professional</span>
+        <a href="lawnmex/invoice.html" target="_blank" class="btn-primary" style="padding:8px 18px;font-size:.82rem;">Open Full Page →</a>
       </div>
     </div>
   </div>
@@ -897,44 +705,20 @@ footer .strong{color:var(--text);font-weight:600}
       <a href="lawnmex/collinsville-il.html" target="_blank" class="btn-primary" style="font-size:.9rem;padding:10px 22px;">Collinsville →</a>
       <a href="lawnmex/highland-il.html" target="_blank" class="btn-primary" style="font-size:.9rem;padding:10px 22px;">Highland →</a>
     </div>
-    <div class="city-example mt-24">
-      <div class="city-header">
-        <div class="city-breadcrumb">LAWN-MEX INC. » BELLEVILLE, IL</div>
-        <h3>Lawn Care &amp; Landscaping in Belleville, IL</h3>
-        <p>Professional lawn maintenance, landscaping design, tree service, and outdoor care for Belleville homeowners and businesses — from a Metro East family crew with 25+ years of experience.</p>
+    <div style="text-align:center;margin:20px 0 0;">
+      <a href="lawnmex/belleville-il.html" target="_blank" class="btn-primary" style="font-size:1rem;padding:13px 30px;">🚀 Open Live City Page Example →</a>
+    </div>
+    <div class="page-preview-wrap">
+      <div class="page-preview-bar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <div class="page-preview-url">🔒 tonybeal.net/lawnmex/belleville-il.html</div>
       </div>
-      <div class="city-body">
-        <div class="city-meta">
-          <span class="city-tag">📍 Belleville, IL 62220</span>
-          <span class="city-tag">🌿 Lawn Care</span>
-          <span class="city-tag">🌳 Landscaping</span>
-          <span class="city-tag">🌲 Tree Service</span>
-          <span class="city-tag">🍂 Mulching</span>
-          <span class="city-tag">⭐ 4.9 Google Rating</span>
-        </div>
-        <div class="city-content">
-          If you're searching for reliable lawn care in Belleville, IL, Lawn-Mex Inc. has been serving this community for over 25 years. We handle everything from weekly mowing and lawn maintenance to full landscaping design, tree trimming, and seasonal cleanups. We're a family business — Jeff and Erika run the operation, and we show up when we say we will. No sub-contractors. No surprises.
-        </div>
-        <div class="city-services">
-          <div class="city-service"><strong>Lawn Mowing</strong>Weekly &amp; bi-weekly for Belleville homes</div>
-          <div class="city-service"><strong>Landscaping</strong>Bed design, installs, and refresh</div>
-          <div class="city-service"><strong>Tree Service</strong>Shaping, trimming, removal</div>
-          <div class="city-service"><strong>Mulch Install</strong>Fresh mulch &amp; clean edging</div>
-          <div class="city-service"><strong>Weed Control</strong>Pre-emergent &amp; post-emergent</div>
-          <div class="city-service"><strong>Maintenance Plans</strong>Monthly subscription options</div>
-        </div>
-        <div class="city-review-pull">
-          <p>"I hired Lawn-Mex for a re-fresh on my landscaping beds last fall. They did such an excellent job, I called them again this spring for cleanup, pre-emergent, and mulch. Erika is super to work with and has great ideas!"</p>
-          <div class="author">★★★★★ — Donna Baker, Belleville IL</div>
-        </div>
-        <div class="city-seo-tags">
-          <span class="seo-tag">lawn care belleville il</span>
-          <span class="seo-tag">landscaping belleville illinois</span>
-          <span class="seo-tag">lawn mowing belleville il</span>
-          <span class="seo-tag">tree service belleville il</span>
-          <span class="seo-tag">mulching belleville illinois</span>
-          <span class="seo-tag">lawn maintenance 62220</span>
-        </div>
+      <div class="page-preview-frame-box">
+        <iframe src="lawnmex/belleville-il.html" title="Lawn-Mex Belleville City Page Preview" loading="lazy"></iframe>
+      </div>
+      <div class="page-preview-footer">
+        <span>SEO-optimized city page — schema markup, reviews, service grid, quote sidebar</span>
+        <a href="lawnmex/belleville-il.html" target="_blank" class="btn-primary" style="padding:8px 18px;font-size:.82rem;">Open Full Page →</a>
       </div>
     </div>
 
