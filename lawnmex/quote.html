@@ -270,7 +270,7 @@ function goStep(n) {
     document.getElementById('step-ind-'+n).classList.remove('done');
     document.getElementById('step-ind-'+n).classList.add('active');
   }
-  window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('stepBar').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 // Multi-select chips
 document.querySelectorAll('[data-multi]').forEach(chip=>{
