@@ -921,7 +921,7 @@ document.querySelectorAll('.radio-pill').forEach(pill=>{
 #tour-skip:hover{color:#fff;border-color:rgba(255,255,255,.5)}
 </style>
 
-<button id="tour-launcher">▶ Take the Tour</button>
+<button id="tour-launcher" onclick="startTour()">▶ Take the Tour</button>
 
 <div id="tour-overlay">
   <div id="tour-spotlight"></div>
@@ -941,159 +941,112 @@ document.querySelectorAll('.radio-pill').forEach(pill=>{
 </div>
 
 <script>
-(function(){
-  const steps=[
-    {
-      id:'hero',
-      label:'Step 1 of 8 · Overview',
-      title:'The Lawn-Mex Growth System',
-      body:"This is a private preview built specifically for Jeff. It shows exactly what Lawn-Mex's digital business could look like — revenue tools, SEO pages, email campaigns, and more. Click Next to walk through each piece.",
-      position:'center'
-    },
-    {
-      id:'growth-plan',
-      label:'Step 2 of 8 · The Opportunity',
-      title:'Where Lawn-Mex Stands Today',
-      body:"Jeff has 25 years of experience and real Google reviews. What's missing is the digital infrastructure — a system that captures leads, follows up automatically, and collects recurring payments while the crew is on a job.",
-      position:'bottom'
-    },
-    {
-      id:null,
-      label:'Step 3 of 8 · Real Work',
-      title:"Jeff's Work Speaks for Itself",
-      body:"These are actual photos pulled from lawnmexinc.com. The quality is already there. We just need the online presence to match it — so customers find them on Google instead of a competitor.",
-      position:'bottom',
-      scrollTo:'.real-photos-section'
-    },
-    {
-      id:'email-campaigns',
-      label:'Step 4 of 8 · Email System',
-      title:'2 Campaigns Per Month, Done for You',
-      body:"Spring kickoff, reactivation, upsell, subscription push, referral asks — all pre-written, branded, and ready to send. Jeff just approves and we hit send. This alone can add $3–5K in recovered revenue per season.",
-      position:'bottom'
-    },
-    {
-      id:'quote-system',
-      label:'Step 5 of 8 · Quote System',
-      title:'From "Contact Us" to Booked Job',
-      body:"Instead of phone tag, customers fill out a smart quote form that filters tire-kickers, captures job details, and triggers an automatic follow-up. Jeff gets a qualified lead with photos and a ZIP code — not a voicemail.",
-      position:'bottom'
-    },
-    {
-      id:'invoice-system',
-      label:'Step 6 of 8 · Invoicing',
-      title:'Professional Invoices That Get Paid',
-      body:"Replace the payment box with a branded invoice system. Customers pay online, Jeff gets notified, and the paper trail is automatic. No more chasing checks or awkward follow-ups.",
-      position:'bottom'
-    },
-    {
-      id:'city-pages',
-      label:'Step 7 of 8 · Local SEO',
-      title:'10 City Pages That Rank on Google',
-      body:"Each page targets a specific city — Belleville, O'Fallon, Edwardsville, Collinsville, and 6 more. When someone searches 'lawn care near me' in those cities, Lawn-Mex shows up. This is free traffic, every month, forever.",
-      position:'bottom'
-    },
-    {
-      id:null,
-      label:'Step 8 of 8 · Next Step',
-      title:"Ready to Make This Lawn-Mex's Reality?",
-      body:"Everything you've seen is already built and live. This is what the business looks like with the right digital infrastructure. Let's talk about getting this launched under Lawn-Mex's own domain.",
-      position:'center',
-      final:true
-    }
-  ];
+var _tourCurrent = 0;
+var _tourSteps = [
+  {id:'hero',label:'Step 1 of 8 · Overview',title:'The Lawn-Mex Growth System',body:"This is a private preview built specifically for Jeff. It shows exactly what Lawn-Mex's digital business could look like — revenue tools, SEO pages, email campaigns, and more. Click Next to walk through each piece.",position:'center'},
+  {id:'growth-plan',label:'Step 2 of 8 · The Opportunity',title:'Where Lawn-Mex Stands Today',body:"Jeff has 25 years of experience and real Google reviews. What's missing is the digital infrastructure — a system that captures leads, follows up automatically, and collects recurring payments while the crew is on a job.",position:'bottom'},
+  {id:null,scrollTo:'.real-photos-section',label:'Step 3 of 8 · Real Work',title:"Jeff's Work Speaks for Itself",body:"These are actual photos from lawnmexinc.com. The quality is already there. We just need the online presence to match it — so customers find Lawn-Mex on Google instead of a competitor.",position:'bottom'},
+  {id:'email-campaigns',label:'Step 4 of 8 · Email System',title:'2 Campaigns Per Month, Done for You',body:"Spring kickoff, reactivation, upsell, subscription push, referral asks — all pre-written, branded, and ready to send. Jeff just approves and we hit send. This alone can bring back $3-5K in recovered revenue per season.",position:'bottom'},
+  {id:'quote-system',label:'Step 5 of 8 · Quote System',title:'From Contact Form to Booked Job',body:"Instead of phone tag, customers fill out a smart quote form that captures job details and triggers automatic follow-up. Jeff gets a qualified lead with a ZIP code — not a voicemail.",position:'bottom'},
+  {id:'invoice-system',label:'Step 6 of 8 · Invoicing',title:'Professional Invoices That Get Paid',body:"Branded invoices with itemized services. Customers pay online, Jeff gets notified, and the paper trail is automatic. Monthly subscriptions bill automatically — no chasing checks.",position:'bottom'},
+  {id:'city-pages',label:'Step 7 of 8 · Local SEO',title:'10 City Pages That Rank on Google',body:"Each page targets a specific Metro East city — Belleville, O'Fallon, Edwardsville and 7 more. When someone searches lawn care near me, Lawn-Mex shows up. Free traffic, every month, forever.",position:'bottom'},
+  {id:null,label:'Step 8 of 8 · Next Step',title:"Ready to Make This Lawn-Mex's Reality?",body:"Everything you've seen is already built and live. This is what the business looks like with the right digital infrastructure. Let's talk about getting this launched.",position:'center',final:true}
+];
 
-  let current=0;
-  const overlay=document.getElementById('tour-overlay');
-  const card=document.getElementById('tour-card');
-  const dotsEl=document.getElementById('tour-dots');
-  const launcher=document.getElementById('tour-launcher');
-  const skipBtn=document.getElementById('tour-skip');
-  const prevBtn=document.getElementById('tour-prev');
-  const nextBtn=document.getElementById('tour-next');
+function startTour() {
+  var overlay = document.getElementById('tour-overlay');
+  var launcher = document.getElementById('tour-launcher');
+  if (!overlay || !launcher) { alert('Tour not ready yet — try again in a moment.'); return; }
+  overlay.classList.add('active');
+  launcher.style.display = 'none';
+  document.body.style.overflow = 'hidden';
+  _tourCurrent = 0;
+  _tourShowStep(0);
+}
 
-  function buildDots(){
-    dotsEl.innerHTML='';
-    steps.forEach((_,i)=>{
-      const d=document.createElement('div');
-      d.className='tour-dot'+(i===current?' active':'');
-      dotsEl.appendChild(d);
-    });
-  }
+function endTour() {
+  var overlay = document.getElementById('tour-overlay');
+  var launcher = document.getElementById('tour-launcher');
+  if (overlay) overlay.classList.remove('active');
+  if (launcher) launcher.style.display = '';
+  document.body.style.overflow = '';
+}
 
-  function positionCard(targetEl, position){
-    card.style.top='';card.style.bottom='';card.style.left='';card.style.right='';card.style.transform='';
-    if(position==='center'||!targetEl){
-      card.style.top='50%';card.style.left='50%';card.style.transform='translate(-50%,-50%)';
-      return;
-    }
-    const rect=targetEl.getBoundingClientRect();
-    const ch=card.offsetHeight||200;
-    const cw=card.offsetWidth||340;
-    const margin=20;
-    // Try to place below; fall back to above or center
-    if(rect.bottom+ch+margin<window.innerHeight){
-      card.style.top=(rect.bottom+margin)+'px';
-    } else if(rect.top-ch-margin>0){
-      card.style.top=(rect.top-ch-margin)+'px';
-    } else {
-      card.style.top='50%';card.style.left='50%';card.style.transform='translate(-50%,-50%)';return;
-    }
-    const idealLeft=rect.left+(rect.width/2)-(cw/2);
-    card.style.left=Math.max(margin,Math.min(window.innerWidth-cw-margin,idealLeft))+'px';
-  }
-
-  function showStep(idx){
-    current=idx;
-    const step=steps[idx];
-    document.getElementById('tour-label').textContent=step.label;
-    document.getElementById('tour-title').textContent=step.title;
-    document.getElementById('tour-body').textContent=step.body;
-    prevBtn.style.display=idx===0?'none':'';
-    nextBtn.textContent=step.final?'🎉 Let\'s Talk →':'Next →';
-    buildDots();
-
-    let targetEl=null;
-    if(step.id){
-      targetEl=document.getElementById(step.id);
-    } else if(step.scrollTo){
-      targetEl=document.querySelector(step.scrollTo);
-    }
-
-    if(targetEl){
-      targetEl.scrollIntoView({behavior:'smooth',block:'start'});
-      setTimeout(()=>positionCard(targetEl,step.position),420);
-    } else {
-      positionCard(null,'center');
-    }
-  }
-
-  function startTour(){
-    overlay.classList.add('active');
-    launcher.style.display='none';
-    document.body.style.overflow='hidden';
-    showStep(0);
-  }
-
-  function endTour(){
-    overlay.classList.remove('active');
-    launcher.style.display='';
-    document.body.style.overflow='';
-  }
-
-  launcher.addEventListener('click',startTour);
-  skipBtn.addEventListener('click',endTour);
-  prevBtn.addEventListener('click',()=>{ if(current>0) showStep(current-1); });
-  nextBtn.addEventListener('click',()=>{
-    if(steps[current].final){ endTour(); return; }
-    if(current<steps.length-1) showStep(current+1);
+function _tourBuildDots() {
+  var dotsEl = document.getElementById('tour-dots');
+  if (!dotsEl) return;
+  dotsEl.innerHTML = '';
+  _tourSteps.forEach(function(_, i) {
+    var d = document.createElement('div');
+    d.className = 'tour-dot' + (i === _tourCurrent ? ' active' : '');
+    dotsEl.appendChild(d);
   });
-  // Click backdrop to advance
-  document.getElementById('tour-spotlight').addEventListener('click',()=>{
-    if(steps[current].final){ endTour(); return; }
-    if(current<steps.length-1) showStep(current+1);
+}
+
+function _tourPosition(targetEl, position) {
+  var card = document.getElementById('tour-card');
+  if (!card) return;
+  card.style.top = ''; card.style.bottom = ''; card.style.left = ''; card.style.right = ''; card.style.transform = '';
+  if (position === 'center' || !targetEl) {
+    card.style.top = '50%'; card.style.left = '50%'; card.style.transform = 'translate(-50%,-50%)';
+    return;
+  }
+  var rect = targetEl.getBoundingClientRect();
+  var ch = card.offsetHeight || 220;
+  var cw = card.offsetWidth || 340;
+  var margin = 20;
+  if (rect.bottom + ch + margin < window.innerHeight) {
+    card.style.top = (rect.bottom + margin) + 'px';
+  } else if (rect.top - ch - margin > 0) {
+    card.style.top = (rect.top - ch - margin) + 'px';
+  } else {
+    card.style.top = '50%'; card.style.left = '50%'; card.style.transform = 'translate(-50%,-50%)'; return;
+  }
+  var idealLeft = rect.left + (rect.width / 2) - (cw / 2);
+  card.style.left = Math.max(margin, Math.min(window.innerWidth - cw - margin, idealLeft)) + 'px';
+}
+
+function _tourShowStep(idx) {
+  _tourCurrent = idx;
+  var step = _tourSteps[idx];
+  var lbl = document.getElementById('tour-label');
+  var ttl = document.getElementById('tour-title');
+  var bdy = document.getElementById('tour-body');
+  var prev = document.getElementById('tour-prev');
+  var next = document.getElementById('tour-next');
+  if (lbl) lbl.textContent = step.label;
+  if (ttl) ttl.textContent = step.title;
+  if (bdy) bdy.textContent = step.body;
+  if (prev) prev.style.display = idx === 0 ? 'none' : '';
+  if (next) next.textContent = step.final ? 'Done!' : 'Next →';
+  _tourBuildDots();
+  var targetEl = null;
+  if (step.id) { targetEl = document.getElementById(step.id); }
+  else if (step.scrollTo) { targetEl = document.querySelector(step.scrollTo); }
+  if (targetEl) {
+    targetEl.scrollIntoView({behavior:'smooth', block:'start'});
+    setTimeout(function() { _tourPosition(targetEl, step.position); }, 450);
+  } else {
+    _tourPosition(null, 'center');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var prev = document.getElementById('tour-prev');
+  var next = document.getElementById('tour-next');
+  var skip = document.getElementById('tour-skip');
+  var spotlight = document.getElementById('tour-spotlight');
+  if (prev) prev.addEventListener('click', function() { if (_tourCurrent > 0) _tourShowStep(_tourCurrent - 1); });
+  if (next) next.addEventListener('click', function() {
+    if (_tourSteps[_tourCurrent].final) { endTour(); return; }
+    if (_tourCurrent < _tourSteps.length - 1) _tourShowStep(_tourCurrent + 1);
   });
-})();
+  if (skip) skip.addEventListener('click', endTour);
+  if (spotlight) spotlight.addEventListener('click', function() {
+    if (_tourSteps[_tourCurrent].final) { endTour(); return; }
+    if (_tourCurrent < _tourSteps.length - 1) _tourShowStep(_tourCurrent + 1);
+  });
+});
 </script>
 
 <!-- ── INLINE DEMO VIEWER ── -->
