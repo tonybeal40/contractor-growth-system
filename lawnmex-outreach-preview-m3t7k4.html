@@ -277,23 +277,77 @@ footer .strong{color:var(--text);font-weight:600}
 .tag{background:rgba(56,169,87,.1);border:1px solid rgba(56,169,87,.2);color:var(--green-bright);font-size:.75rem;padding:4px 12px;border-radius:12px;font-weight:600}
 
 @media(max-width:640px){
-  #tour-card{max-width:92vw;left:4vw!important;right:4vw!important;transform:none!important;top:auto!important;bottom:16px!important;position:fixed!important}
+  /* ── TOUR: raise above cookie banner (cookie ~120px tall when wrapped) ── */
+  #tour-card{max-width:92vw;left:4vw!important;right:4vw!important;transform:none!important;top:auto!important;bottom:148px!important;position:fixed!important}
+  #tour-launcher{font-size:.8rem;padding:10px 16px;bottom:148px!important;right:16px!important}
+  /* When cookie already dismissed, drop back down */
+  .cookie-ok #tour-card{bottom:72px!important}
+  .cookie-ok #tour-launcher{bottom:72px!important}
+
+  /* ── DEMO VIEWER ── */
   #demo-viewer iframe{height:100vh}
+  .demo-back-bar{font-size:.82rem;padding:10px 16px}
+
+  /* ── PAGE PREVIEW IFRAMES: hide scaled iframe, show button only ── */
+  .page-preview-frame-box{display:none!important}
+  .mobile-preview-open{display:flex!important}
+
+  /* ── GRID STACKING ── */
   .section-grid,.two-col,.inv-parties{grid-template-columns:1fr!important}
   .email-card-grid{grid-template-columns:1fr!important}
   .city-links-grid{grid-template-columns:repeat(2,1fr)!important}
   .hero-kpi{grid-template-columns:repeat(2,1fr)!important}
-  #tour-launcher{font-size:.8rem;padding:10px 16px;bottom:16px;right:16px}
-  .demo-back-bar{font-size:.82rem;padding:10px 16px}
-  /* Before-After grid: stack on mobile */
   .ba-grid{grid-template-columns:1fr!important}
-  /* Template section grids */
   .storybrand-grid{grid-template-columns:1fr!important}
   .template-included-grid{grid-template-columns:1fr!important}
+
+  /* ── SECTION PADDING: reduce from 72px to 48px on mobile ── */
+  .full-bleed{padding:48px 20px!important}
+  section{padding:48px 20px!important}
+  #hero{padding:60px 20px 48px!important}
+
+  /* ── TYPOGRAPHY & SPACING ── */
+  h1{font-size:clamp(1.7rem,8vw,2.4rem)!important}
+  h2{font-size:clamp(1.3rem,6vw,1.8rem)!important}
+  .stats-row{gap:10px}
+  .stat-box{min-width:calc(50% - 5px);padding:14px 10px}
+
+  /* ── COMP / STRAT TABLES: ensure scrollable ── */
+  .comp-table,.strat-table{font-size:.78rem!important}
+  .comp-table th,.comp-table td,.strat-table th,.strat-table td{padding:9px 10px!important}
+
+  /* ── EMAIL TABS: wrap nicely ── */
+  .email-tabs{gap:6px}
+  .etab{padding:7px 12px;font-size:.82rem}
+
+  /* ── PHASE CARDS ── */
+  .phases{grid-template-columns:1fr!important}
+
+  /* ── CARD GRID ── */
+  .card-grid{grid-template-columns:1fr!important}
+
+  /* ── LAUNCH BAR ── */
+  .launch-bar-label{display:none}
+  .launch-bar{padding:10px 12px}
+
+  /* ── PAGE PREVIEW FOOTER: stack buttons vertically ── */
+  .page-preview-footer{flex-direction:column;align-items:stretch;gap:8px}
+  .page-preview-footer .btn-primary{text-align:center;padding:12px!important;font-size:.9rem!important}
 }
 @media(max-width:400px){
   .city-links-grid{grid-template-columns:1fr!important}
   .hero-kpi{grid-template-columns:1fr!important}
+  .stat-box{min-width:100%}
+}
+
+/* Mobile preview open button (shown only on mobile in place of iframe) */
+.mobile-preview-open{
+  display:none;
+  align-items:center;justify-content:center;
+  gap:12px;flex-wrap:wrap;
+  padding:20px 16px;
+  background:#0d1a10;
+  border-top:1px solid var(--dark-border);
 }
 
 </style>
@@ -450,6 +504,10 @@ footer .strong{color:var(--text);font-weight:600}
         <div class="page-preview-frame-box">
           <iframe src="lawnmex/index.html" title="Lawn-Mex Homepage Preview" loading="lazy"></iframe>
         </div>
+        <div class="mobile-preview-open">
+          <span style="font-size:.85rem;color:var(--text-muted)">Preview not available on this screen size.</span>
+          <a href="lawnmex/index.html" target="_blank" class="btn-primary" style="padding:12px 24px">🚀 Open Full Homepage →</a>
+        </div>
         <div class="page-preview-footer">
           <span>Live page — replace lawnmexinc.com with this</span>
           <a href="lawnmex/index.html" target="_blank" class="btn-primary" style="padding:8px 18px;font-size:.82rem;">Open Full Page →</a>
@@ -473,6 +531,10 @@ footer .strong{color:var(--text);font-weight:600}
         </div>
         <div class="page-preview-frame-box">
           <iframe src="lawnmex/belleville-il.html" title="Lawn-Mex Belleville City Page Preview" loading="lazy"></iframe>
+        </div>
+        <div class="mobile-preview-open">
+          <span style="font-size:.85rem;color:var(--text-muted)">Preview not available on this screen size.</span>
+          <a href="lawnmex/belleville-il.html" target="_blank" class="btn-primary" style="padding:12px 24px">🚀 Open Full City Page →</a>
         </div>
         <div class="page-preview-footer">
           <span>SEO-optimized — schema markup, Google reviews, service grid, quote sidebar</span>
@@ -1140,11 +1202,14 @@ document.querySelectorAll('.radio-pill').forEach(pill=>{
   scroll-margin-top:90px;
 }
 @media(max-width:540px){
-  #tour-card{padding:18px 16px 16px;bottom:90px}
+  #tour-card{padding:18px 16px 16px;bottom:148px!important}
   #tour-card h2{font-size:1rem}
   #tour-btn-prev,#tour-btn-next{padding:7px 12px;font-size:.79rem}
   #tour-cta-row{flex-direction:column}
-  #tour-launcher{bottom:84px;right:16px;font-size:.8rem;padding:10px 16px}
+  #tour-launcher{bottom:148px!important;right:16px!important;font-size:.8rem;padding:10px 16px}
+  /* When cookie dismissed */
+  .cookie-ok #tour-card{bottom:72px!important}
+  .cookie-ok #tour-launcher{bottom:72px!important}
 }
 </style>
 
@@ -1301,12 +1366,24 @@ document.querySelectorAll('a[href^="lawnmex/"]').forEach(function(a) {
 </script>
 
 <!-- ═══════ COPY PROTECTION + LEGAL BANNER ═══════ -->
-<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#0b1a0f;color:#cde3cd;padding:16px 24px;font-family:sans-serif;font-size:.85rem;display:flex;flex-wrap:wrap;align-items:center;gap:12px;border-top:2px solid #2e7d32">
+<style>
+/* Cookie banner compact on mobile */
+@media(max-width:640px){
+  #cookieBanner{padding:12px 16px!important;font-size:.78rem!important;gap:8px!important}
+  #cookieBanner span{font-size:.78rem!important;min-width:0!important}
+  #cookieBanner strong{font-size:.88rem!important}
+}
+</style>
+<div id="cookieBanner"style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#0b1a0f;color:#cde3cd;padding:16px 24px;font-family:sans-serif;font-size:.85rem;display:flex;flex-wrap:wrap;align-items:center;gap:12px;border-top:2px solid #2e7d32">
   <span style="flex:1;min-width:240px">&#128274; <strong style="color:#fff;font-size:1.05rem;letter-spacing:.3px">Confidential Demo</strong> — This presentation is proprietary and created exclusively for the intended recipient. By viewing this page you agree not to copy, reproduce, or distribute any content. This site uses session cookies for demo functionality only.</span>
-  <button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('lm_cookie_ok','1')" style="background:#2e7d32;color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-weight:700;white-space:nowrap">Got It</button>
+  <button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('lm_cookie_ok','1');document.documentElement.classList.add('cookie-ok')" style="background:#2e7d32;color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-weight:700;white-space:nowrap">Got It</button>
 </div>
 <script>
 (function(){
+  // Set cookie-ok class immediately if already dismissed (before DOM renders)
+  if(localStorage.getItem('lm_cookie_ok')){
+    document.documentElement.classList.add('cookie-ok');
+  }
   // Show cookie banner if not dismissed
   if(!localStorage.getItem('lm_cookie_ok')){
     var b=document.getElementById('cookieBanner');
