@@ -1369,14 +1369,21 @@ document.querySelectorAll('a[href^="lawnmex/"]').forEach(function(a) {
 <style>
 /* Cookie banner compact on mobile */
 @media(max-width:640px){
-  #cookieBanner{padding:12px 16px!important;font-size:.78rem!important;gap:8px!important}
-  #cookieBanner span{font-size:.78rem!important;min-width:0!important}
-  #cookieBanner strong{font-size:.88rem!important}
+  #cookieBanner{padding:10px 14px!important;font-size:.76rem!important;gap:8px!important;flex-wrap:nowrap!important;align-items:center!important}
+  #cookieBanner span{font-size:.76rem!important;min-width:0!important;flex:1!important}
+  #cookieBanner .cb-long{display:none!important}
+  #cookieBanner .cb-short{display:inline!important}
+  #cookieBanner strong{font-size:.82rem!important}
+  #cookieBanner button{padding:7px 14px!important;font-size:.8rem!important;flex-shrink:0}
+}
+@media(min-width:641px){
+  #cookieBanner .cb-short{display:none}
+  #cookieBanner .cb-long{display:inline}
 }
 </style>
-<div id="cookieBanner"style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#0b1a0f;color:#cde3cd;padding:16px 24px;font-family:sans-serif;font-size:.85rem;display:flex;flex-wrap:wrap;align-items:center;gap:12px;border-top:2px solid #2e7d32">
-  <span style="flex:1;min-width:240px">&#128274; <strong style="color:#fff;font-size:1.05rem;letter-spacing:.3px">Confidential Demo</strong> — This presentation is proprietary and created exclusively for the intended recipient. By viewing this page you agree not to copy, reproduce, or distribute any content. This site uses session cookies for demo functionality only.</span>
-  <button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('lm_cookie_ok','1');document.documentElement.classList.add('cookie-ok')" style="background:#2e7d32;color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-weight:700;white-space:nowrap">Got It</button>
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#0b1a0f;color:#cde3cd;padding:16px 24px;font-family:sans-serif;font-size:.85rem;display:flex;flex-wrap:wrap;align-items:center;gap:12px;border-top:2px solid #2e7d32">
+  <span style="flex:1;min-width:200px">&#128274; <strong style="color:#fff;font-size:1.05rem;letter-spacing:.3px">Confidential Demo</strong><span class="cb-long"> — This presentation is proprietary and created exclusively for the intended recipient. By viewing this page you agree not to copy, reproduce, or distribute any content. This site uses session cookies for demo functionality only.</span><span class="cb-short"> — For intended recipient only. Not for distribution.</span></span>
+  <button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('lm_cookie_ok','1');document.documentElement.classList.add('cookie-ok');positionTour()" style="background:#2e7d32;color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-weight:700;white-space:nowrap">Got It</button>
 </div>
 <script>
 (function(){
@@ -1406,6 +1413,29 @@ document.querySelectorAll('a[href^="lawnmex/"]').forEach(function(a) {
   // Disable drag
   document.addEventListener('dragstart',function(e){e.preventDefault();});
 })();
+</script>
+<script>
+// ── DYNAMIC TOUR POSITIONING ──
+// Positions tour launcher + card above actual cookie banner height
+function positionTour(){
+  var launcher=document.getElementById('tour-launcher');
+  var card=document.getElementById('tour-card');
+  var banner=document.getElementById('cookieBanner');
+  if(!launcher) return;
+  var bannerH=0;
+  if(banner && banner.style.display!=='none' && banner.offsetHeight){
+    bannerH=banner.offsetHeight;
+  }
+  var pad=bannerH>0?bannerH+16:24;
+  launcher.style.bottom=pad+'px';
+  if(card) card.style.bottom=pad+'px';
+}
+// Run on load
+document.addEventListener('DOMContentLoaded',function(){
+  setTimeout(positionTour,100);
+});
+// Also run on resize (orientation change)
+window.addEventListener('resize',positionTour);
 </script>
 <style>
   /* Disable text selection */
