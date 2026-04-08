@@ -1266,21 +1266,36 @@ button { font-family: inherit; cursor: pointer; border: none; }
   justify-content: center;
   width: 34px;
   height: 34px;
-  border-radius: 6px;
-  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(255,255,255,0.18);
   color: #fff;
   text-decoration: none;
-  transition: background 0.2s, transform 0.2s;
+  transition: background 0.2s, transform 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 .social-icon:hover {
-  background: rgba(255,255,255,0.25);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
 }
 .social-icon svg {
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
   fill: currentColor;
 }
+
+/* ── Brand colors — nav ── */
+.nav-social .social-linkedin  { background: #0a66c2; border-color: #0a66c2; }
+.nav-social .social-houzz     { background: #7db446; border-color: #7db446; }
+.nav-social .social-reddit    { background: #ff4500; border-color: #ff4500; }
+.nav-social .social-yelp      { background: #d32323; border-color: #d32323; }
+.nav-social .social-nextdoor  { background: #00b551; border-color: #00b551; }
+
+.nav-social .social-linkedin:hover  { background: #0856a8; border-color: #0856a8; }
+.nav-social .social-houzz:hover     { background: #6aa33a; border-color: #6aa33a; }
+.nav-social .social-reddit:hover    { background: #e03d00; border-color: #e03d00; }
+.nav-social .social-yelp:hover      { background: #b51c1c; border-color: #b51c1c; }
+.nav-social .social-nextdoor:hover  { background: #009944; border-color: #009944; }
+
 .footer-social {
   display: flex;
   gap: 0.75rem;
@@ -1289,38 +1304,29 @@ button { font-family: inherit; cursor: pointer; border: none; }
   flex-wrap: wrap;
   width: 100%;
 }
+
+/* ── Brand colors — footer ── */
 .footer-social .social-icon {
-  background: rgba(255,255,255,0.2);
-  border: 1.5px solid rgba(255,255,255,0.45);
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 2px solid transparent;
   color: #ffffff;
-  width: 42px;
-  height: 42px;
-  border-radius: 8px;
 }
+.footer-social .social-linkedin  { background: #0a66c2; border-color: #1878d4; }
+.footer-social .social-houzz     { background: #7db446; border-color: #8fc94f; }
+.footer-social .social-reddit    { background: #ff4500; border-color: #ff6a33; }
+.footer-social .social-yelp      { background: #d32323; border-color: #e83535; }
+.footer-social .social-nextdoor  { background: #00b551; border-color: #00cc5c; }
+
 .footer-social .social-icon:hover {
-  background: #CC0000;
-  border-color: #CC0000;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+  filter: brightness(1.15);
 }
 @media (max-width: 768px) {
   .nav-social { display: none; }
 }
-
-/* Reddit-specific hover color */
-.footer-social .social-reddit:hover,
-.nav-social .social-reddit:hover {
-  background: #FF4500 !important;
-  border-color: #FF4500 !important;
-}
-
-/* Yelp-specific hover color */
-.footer-social .social-yelp:hover,
-.nav-social .social-yelp:hover {
-  background: #FF1A1A !important;
-  border-color: #FF1A1A !important;
-}
-
-.social-nextdoor:hover { color: #00B551; }
 
 /* ── SERVICE HIGHLIGHTS (replaces photo grids) ──────────── */
 .highlights-section {
