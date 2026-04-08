@@ -952,6 +952,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .footer-bottom {
   border-top: 1px solid var(--dark4);
   padding-top: 2rem;
+  padding-bottom: 1.5rem;
   display: flex; justify-content: space-between; align-items: center;
   flex-wrap: wrap; gap: 1rem;
 }
@@ -1286,17 +1287,20 @@ button { font-family: inherit; cursor: pointer; border: none; }
   margin-top: 1rem;
   justify-content: center;
   flex-wrap: wrap;
+  width: 100%;
 }
 .footer-social .social-icon {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  width: 40px;
-  height: 40px;
+  background: rgba(255,255,255,0.2);
+  border: 1.5px solid rgba(255,255,255,0.45);
+  color: #ffffff;
+  width: 42px;
+  height: 42px;
   border-radius: 8px;
 }
 .footer-social .social-icon:hover {
   background: #CC0000;
   border-color: #CC0000;
+  transform: translateY(-2px);
 }
 @media (max-width: 768px) {
   .nav-social { display: none; }
