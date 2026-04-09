@@ -365,6 +365,13 @@ textarea.form-control{resize:vertical;min-height:100px}
 .tv-sec-caption strong{color:#fff;display:block;margin-top:2px}
 .tv-press-label{font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:16px}
 
+/* ── TEAM PHOTO PLACEHOLDERS ── */
+.team-card{transition:transform .15s,box-shadow .15s}
+.team-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.team-photo-placeholder{background:linear-gradient(135deg,var(--green-pale),#d0ecd0);border-bottom:1px solid var(--gray);height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;position:relative}
+.team-photo-icons{font-size:2.2rem;letter-spacing:4px}
+.team-photo-ask{font-size:.72rem;font-weight:700;color:var(--green-dark);background:#fff;border:1.5px dashed var(--green-bright);border-radius:20px;padding:5px 14px;text-align:center}
+
 /* ── FOOTER ── */
 .site-footer{background:var(--green-dark);color:rgba(255,255,255,.85);padding:52px 24px 24px}
 .footer-inner{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:40px}
