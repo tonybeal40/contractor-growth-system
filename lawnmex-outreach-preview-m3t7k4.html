@@ -34,8 +34,11 @@ body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--text);lin
 
 /* ── NAV ── */
 nav{position:sticky;top:0;z-index:100;background:rgba(11,26,15,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--dark-border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.nav-logo{font-weight:800;font-size:1.05rem;color:var(--green-bright);letter-spacing:.5px}
-.nav-logo span{color:var(--gold)}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-logo-img{height:48px;width:auto;max-width:180px;object-fit:contain;filter:brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(85deg) brightness(1.1)}
+.nav-logo-txt{display:flex;flex-direction:column;line-height:1.15}
+.nav-logo-name{font-weight:800;font-size:1.08rem;color:var(--green-bright);letter-spacing:.8px;text-transform:uppercase}
+.nav-logo-sub{font-size:.72rem;color:var(--gold);letter-spacing:.4px;font-weight:600}
 .nav-links{display:flex;flex-wrap:wrap;gap:8px}
 .nav-btn{display:inline-block;padding:7px 14px;border-radius:6px;font-size:.82rem;font-weight:600;text-decoration:none;border:1.5px solid transparent;cursor:pointer;transition:all .18s}
 .nav-btn.outline{border-color:var(--green-bright);color:var(--green-bright)}
@@ -371,7 +374,25 @@ footer .strong{color:var(--text);font-weight:600}
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">Lawn-Mex <span>Growth System</span></div>
+  <a href="lawnmex/index.html" target="_blank" class="nav-logo">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0">
+      <!-- Leaf wreath left -->
+      <ellipse cx="8" cy="18" rx="6" ry="3" fill="#38a957" transform="rotate(-30 8 18)" opacity=".85"/>
+      <ellipse cx="5" cy="13" rx="5" ry="2.5" fill="#38a957" transform="rotate(-55 5 13)" opacity=".7"/>
+      <ellipse cx="6" cy="23" rx="5" ry="2.5" fill="#38a957" transform="rotate(25 6 23)" opacity=".7"/>
+      <!-- Leaf wreath right -->
+      <ellipse cx="28" cy="18" rx="6" ry="3" fill="#38a957" transform="rotate(30 28 18)" opacity=".85"/>
+      <ellipse cx="31" cy="13" rx="5" ry="2.5" fill="#38a957" transform="rotate(55 31 13)" opacity=".7"/>
+      <ellipse cx="30" cy="23" rx="5" ry="2.5" fill="#38a957" transform="rotate(-25 30 23)" opacity=".7"/>
+      <!-- Center LM monogram -->
+      <circle cx="18" cy="18" r="8" fill="#0b1a0f" stroke="#38a957" stroke-width="1.5"/>
+      <text x="18" y="22" text-anchor="middle" font-family="Georgia,serif" font-size="8" font-weight="700" fill="#38a957">LM</text>
+    </svg>
+    <div class="nav-logo-txt">
+      <span class="nav-logo-name">Lawn-Mex Inc.</span>
+      <span class="nav-logo-sub">Growth System</span>
+    </div>
+  </a>
   <button class="nav-hamburger-out" id="outBurger" onclick="document.getElementById('outMobile').classList.toggle('open')" aria-label="Open menu"><span></span><span></span><span></span></button>
   <div class="nav-links">
     <a href="lawnmex/index.html" target="_blank" class="nav-btn outline">🏠 Homepage</a>
