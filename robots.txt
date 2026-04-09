@@ -1,3 +1,10 @@
 User-agent: *
 Allow: /
+# Private client preview pages — do not index
+Disallow: /lawnmex-outreach-preview-m3t7k4.html
+Disallow: /lawnmex-discovery-questions-m3t7k4.html
+Disallow: /lawnmex-pricing-m3t7k4.html
+Disallow: /allpro-crm-private-a9k3r7.html
+Disallow: /allpro-email-outreach-private-r4h8.html
+Disallow: /unsubscribe-allpro-r4h8.html
 Sitemap: https://allprometroeastconstruction.com/sitemap.xml
