@@ -48,6 +48,8 @@ nav{position:sticky;top:0;z-index:100;background:rgba(11,26,15,.96);backdrop-fil
 .nav-mobile-out .nav-btn{text-align:center;font-size:.9rem;padding:10px 16px}
 @media(max-width:820px){nav{flex-wrap:nowrap}.nav-links{display:none!important}.nav-hamburger-out{display:flex}}
 .nav-btn.gold:hover{background:var(--gold-light)}
+.nav-btn.meeting{background:rgba(232,64,64,.15);border-color:#e84040;color:#e84040;animation:pulse-red 2s infinite}
+@keyframes pulse-red{0%,100%{box-shadow:0 0 0 0 rgba(232,64,64,.4)}50%{box-shadow:0 0 0 6px rgba(232,64,64,0)}}
 
 /* ── SECTIONS ── */
 section{padding:72px 24px;max-width:1100px;margin:0 auto}
@@ -379,6 +381,7 @@ footer .strong{color:var(--text);font-weight:600}
     <a href="lawnmex/belleville-il.html" target="_blank" class="nav-btn outline">🗺️ City Pages</a>
     <a href="lawnmex/market-report.html" target="_blank" class="nav-btn gold">📊 Market Report</a>
     
+    <a href="lawnmex-discovery-questions-m3t7k4.html" class="nav-btn meeting">⚡ 2PM Meeting Questions</a>
   </div>
 </nav>
 <div class="nav-mobile-out" id="outMobile"></div>
