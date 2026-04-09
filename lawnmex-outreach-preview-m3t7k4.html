@@ -285,6 +285,29 @@ footer .strong{color:var(--text);font-weight:600}
 .soc-nextdoor .soc-label{color:#4ddc8c;font-size:.7rem;font-weight:800}
 .soc-facebook .soc-icon{background:#1877f2;border-color:#3b90ff}
 .soc-facebook .soc-label{color:#74b3ff}
+.soc-google .soc-icon{background:#fff;border-color:#dadce0}
+.soc-google .soc-icon svg{width:22px;height:22px}
+.soc-google .soc-label{color:#9aa0a6}
+/* Google Reviews Section */
+.google-reviews-section{background:#0d1f10;border-top:1px solid rgba(56,169,87,.2);border-bottom:1px solid rgba(56,169,87,.2);padding:40px 24px}
+.google-reviews-header{text-align:center;margin-bottom:28px}
+.google-rating-big{display:inline-flex;align-items:center;gap:14px;background:#0b1a0f;border:1px solid rgba(56,169,87,.3);border-radius:16px;padding:16px 28px;margin-bottom:16px}
+.google-rating-num{font-size:3rem;font-weight:800;color:#fff;line-height:1}
+.google-rating-stars{display:flex;flex-direction:column;gap:4px}
+.stars-row{display:flex;gap:3px}
+.star{color:#fbbc04;font-size:1.3rem}
+.google-rating-count{font-size:.82rem;color:rgba(255,255,255,.5)}
+.google-reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;max-width:1100px;margin:0 auto}
+.g-review-card{background:#0b1a0f;border:1px solid rgba(56,169,87,.2);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.g-review-header{display:flex;align-items:center;gap:10px}
+.g-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#38a957,#1a6b2e);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem;color:#fff;flex-shrink:0}
+.g-reviewer{font-weight:700;font-size:.88rem;color:#fff}
+.g-date{font-size:.72rem;color:rgba(255,255,255,.4)}
+.g-stars{display:flex;gap:2px}
+.g-star{color:#fbbc04;font-size:1rem}
+.g-text{font-size:.84rem;color:rgba(255,255,255,.75);line-height:1.55}
+.g-more-link{display:inline-block;margin-top:4px;color:#38a957;font-size:.8rem;font-weight:600;text-decoration:none}
+.g-more-link:hover{text-decoration:underline}
 
 /* ── UTILITY ── */
 .divider{height:1px;background:var(--dark-border);margin:0 24px}
@@ -1124,6 +1147,83 @@ footer .strong{color:var(--text);font-weight:600}
   </div>
 </div>
 
+<!-- GOOGLE REVIEWS SECTION -->
+<section class="google-reviews-section">
+  <div class="google-reviews-header">
+    <div style="display:flex;justify-content:center">
+      <div class="google-rating-big">
+        <div class="google-rating-num">4.7</div>
+        <div class="google-rating-stars">
+          <div class="stars-row"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star" style="color:#fbbc04;opacity:.7">★</span></div>
+          <div class="google-rating-count">166 Google Reviews</div>
+          <div class="google-rating-count" style="color:#38a957;font-weight:700">151 Five-Star Reviews</div>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      </div>
+    </div>
+    <h2 style="color:#fff;font-size:1.2rem;margin:12px 0 4px">What Customers Are Saying on Google</h2>
+    <a href="https://share.google/PKIpoC6PvpDcCK7hw" target="_blank" style="color:#38a957;font-size:.82rem;text-decoration:none;font-weight:600">View All 166 Reviews on Google →</a>
+  </div>
+  <div class="google-reviews-grid">
+    <div class="g-review-card">
+      <div class="g-review-header">
+        <div class="g-avatar">JB</div>
+        <div><div class="g-reviewer">Jennifer Bean</div><div class="g-date">2 months ago · Local Guide</div></div>
+      </div>
+      <div class="g-stars"><span class="g-star">★</span><span class="g-star">★</span><span class="g-star">★</span><span class="g-star">★</span><span class="g-star">★</span></div>
+      <p class="g-text">"I've been using Lawn Mex for years! They do an incredible job with my lawn, it's almost 2 acres. They are always so friendly and so respectful. I called last minute to have them remove some snow from my driveway, and they were able to squeeze me in. They are truly the best! And their prices are reasonable."</p>
+    </div>
+    <div class="g-review-card">
+      <div class="g-review-header">
+        <div class="g-avatar">ED</div>
+        <div><div class="g-reviewer">Erin DeVore</div><div class="g-date">6 months ago</div></div>
+      </div>
+      <div class="g-stars"><span class="g-star">★</span><span class="g-star">★</span><span class="g-star">★</span><span class="g-star">★</span><span class="g-star">★</span></div>
+      <p class="g-text">"Got a quote last week for a tree removal and within a week they were out and had the job done within 2 hours. Cleaned up everything! I would highly recommend them."</p>
+    </div>
+    <div class="g-review-card">
+      <div class="g-review-header">
+        <div class="g-avatar">SL</div>
+        <div><div class="g-reviewer">Susan Lachmann</div><div class="g-date">3 months ago</div></div>
+      </div>
+      <div class="g-stars"><span class="g-star">★</span><span class="g-star">★</span><span class="g-star">★</span><span class="g-star">★</span><span class="g-star">★</span></div>
+      <p class="g-text">"We hired Lawn-Mex to replace a wood deck with a composite, replace an upper and lower patio, replace a large retaining wall and remove a shed. To gain access to the backyard they had to remove sections of a vinyl fence. The quality of the work was exceptional."</p>
+      <a href="https://share.google/PKIpoC6PvpDcCK7hw" target="_blank" class="g-more-link">Read full review →</a>
+    </div>
+    <div class="g-review-card">
+      <div class="g-review-header">
+        <div class="g-avatar">KS</div>
+        <div><div class="g-reviewer">Krise Sander</div><div class="g-date">Edited · a year ago</div></div>
+      </div>
+      <div class="g-stars"><span class="g-star">★</span><span class="g-star">★</span><span class="g-star">★</span><span class="g-star">★</span><span class="g-star">★</span></div>
+      <p class="g-text">"Lawn Mex gets the golden buzzer! We have lived in our home for seven years and have been unsuccessful getting people who are willing to even bid or do work — we're on an extremely steep hill. Not only were Lawn Mex's prices reasonable, they showed up and delivered."</p>
+      <a href="https://share.google/PKIpoC6PvpDcCK7hw" target="_blank" class="g-more-link">Read full review →</a>
+    </div>
+    <div class="g-review-card">
+      <div class="g-review-header">
+        <div class="g-avatar">BJ</div>
+        <div><div class="g-reviewer">B Johnson</div><div class="g-date">3 months ago · Local Guide</div></div>
+      </div>
+      <div class="g-stars"><span class="g-star">★</span><span class="g-star">★</span><span class="g-star">★</span><span class="g-star">★</span><span class="g-star">★</span></div>
+      <p class="g-text">"This company bent over backwards for me. They were working on a neighbor's yard and I was impressed with the quality of the work. I asked them for a bid and was pleasantly surprised with the price. They started right away and did a fantastic job."</p>
+    </div>
+    <div class="g-review-card">
+      <div class="g-review-header">
+        <div class="g-avatar">CA</div>
+        <div><div class="g-reviewer">Cleta Abbott</div><div class="g-date">a year ago</div></div>
+      </div>
+      <div class="g-stars"><span class="g-star">★</span><span class="g-star">★</span><span class="g-star">★</span><span class="g-star">★</span><span class="g-star">★</span></div>
+      <p class="g-text">"Thank you Jeff and staff for painting my home. Jeff and the Lawn Mex staff has helped me maintain my home — they have replaced wood rot, cut grass, taken out trees and painted my home. I plan on asking them to do additional work in the future."</p>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:28px">
+    <a href="https://share.google/PKIpoC6PvpDcCK7hw" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#0b1a0f;border:1px solid rgba(56,169,87,.4);color:#38a957;padding:12px 24px;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      See All 166 Google Reviews (4.7 ⭐)
+    </a>
+  </div>
+</section>
+
 <footer>
   <p><span class="strong">Lawn-Mex Inc.</span> · Belleville, IL · (618) 213-6228 · Family-Owned Since 1999</p>
   <div style="margin-bottom:18px">
@@ -1131,6 +1231,10 @@ footer .strong{color:var(--text);font-weight:600}
     <img src="lawnmex/images/lawnmex-yelp-photo.jpg" alt="Lawn-Mex Inc. job photo from Yelp" style="width:100%;max-width:360px;border-radius:10px;object-fit:cover;border:2px solid rgba(56,169,87,.3)">
   </div>
   <div class="social-icons-row">
+    <a href="https://share.google/PKIpoC6PvpDcCK7hw" target="_blank" class="soc-btn soc-google" aria-label="Google Reviews" title="See us on Google">
+      <span class="soc-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg></span>
+      <span class="soc-label">Google</span>
+    </a>
     <a href="https://www.facebook.com/LawnMexInc/" target="_blank" class="soc-btn soc-facebook" aria-label="Facebook" title="Follow on Facebook">
       <span class="soc-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></span>
       <span class="soc-label">Facebook</span>
