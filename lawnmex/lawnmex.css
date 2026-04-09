@@ -100,6 +100,11 @@ p{color:var(--text-muted);margin-top:8px}
 .hero-inner{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
 @media(max-width:720px){.hero-inner{grid-template-columns:1fr}}
 .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.95);font-size:.75rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border-radius:20px;margin-bottom:18px}
+.trust-pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+.trust-pill{display:inline-flex;align-items:center;gap:6px;font-size:.9rem;font-weight:800;padding:8px 18px;border-radius:30px;letter-spacing:.3px;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+.trust-pill-gold{background:#f5a623;color:#1a1a1a;border:2px solid #ffcc55}
+.trust-pill-white{background:#fff;color:#1b5e20;border:2px solid #e0e0e0}
+.trust-pill-green{background:#2e7d32;color:#fff;border:2px solid #66bb6a}
 .hero h1{color:var(--white);font-size:clamp(2rem,4.5vw,3rem);margin-bottom:12px}
 .hero h1 span{color:var(--gold)}
 .hero p.lead{color:rgba(255,255,255,.82);font-size:1.05rem;margin-bottom:28px}
