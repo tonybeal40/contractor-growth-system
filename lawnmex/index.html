@@ -11,6 +11,48 @@
 <meta property="og:description" content="25+ years of family-owned lawn care across Metro East Illinois. Free quotes. Reliable service."/>
 <link rel="canonical" href="https://tonybeal.net/lawnmex/"/>
 <link rel="stylesheet" href="lawnmex.css"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LandscapingBusiness",
+  "name": "Lawn-Mex Inc.",
+  "url": "https://allprometroeastconstruction.com/lawnmex/",
+  "telephone": "+16182136228",
+  "email": "lawn-mexinc@live.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Belleville",
+    "addressRegion": "IL",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 38.5201,
+    "longitude": -89.9840
+  },
+  "areaServed": ["Belleville IL","O'Fallon IL","Edwardsville IL","Collinsville IL","Swansea IL","Shiloh IL","Fairview Heights IL","Highland IL","Columbia IL","Waterloo IL","Metro East Illinois"],
+  "description": "Family-owned lawn care, landscaping, tree service and outdoor maintenance serving Metro East Illinois for 25+ years.",
+  "foundingDate": "1999",
+  "priceRange": "$$",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.7",
+    "reviewCount": "100",
+    "bestRating": "5"
+  },
+  "sameAs": [
+    "https://www.facebook.com/LawnMexInc/",
+    "https://www.instagram.com/lawnmexinc/",
+    "https://www.yelp.com/biz/lawn-mex-professional-belleville"
+  ],
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+    "opens": "07:00",
+    "closes": "18:00"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -618,6 +660,11 @@ document.addEventListener('fullscreenchange',function(){
 
     </div>
     <p class="text-center mt-24" style="font-size:.88rem;color:var(--text-muted)">Custom plans available for commercial properties and HOAs. <a href="quote.html" style="font-weight:700">Contact us to build your plan &rarr;</a></p>
+    <!-- PRICING NOTE: Add starting prices here once confirmed e.g. "Essential from $XX/visit · Standard from $XX/visit · Full-Service from $XX/month" -->
+    <div class="pricing-placeholder">
+      <span>💬 Not sure which plan fits your yard?</span>
+      <a href="quote.html" class="btn btn-gold btn-sm">Get a Free Estimate — We'll Recommend the Right Plan →</a>
+    </div>
   </div>
 </section>
 
@@ -632,6 +679,65 @@ document.addEventListener('fullscreenchange',function(){
     </div>
   </div>
 </div>
+
+<!-- FAQ -->
+<section class="section" id="faq" style="background:#f9fdf9">
+  <div class="container" style="max-width:800px">
+    <div class="section-label">Common Questions</div>
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How much does lawn care cost? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p><!-- ADD ANSWER --></p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What areas do you service? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p><!-- ADD ANSWER --></p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Are you licensed and insured? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p><!-- ADD ANSWER --></p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How quickly can you start? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p><!-- ADD ANSWER --></p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Do you offer a satisfaction guarantee? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p><!-- ADD ANSWER --></p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Do you use subcontractors? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p><!-- ADD ANSWER --></p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What's included in a free estimate? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p><!-- ADD ANSWER --></p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Do you offer recurring maintenance plans? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p><!-- ADD ANSWER --></p></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<script>
+function toggleFaq(btn){
+  var a=btn.nextElementSibling;
+  var open=a.classList.contains('open');
+  document.querySelectorAll('.faq-a.open').forEach(function(el){el.classList.remove('open');el.previousElementSibling.querySelector('.faq-arrow').textContent='▼';});
+  if(!open){a.classList.add('open');btn.querySelector('.faq-arrow').textContent='▲';}
+}
+</script>
 
 <footer class="site-footer">
   <div class="footer-inner">
@@ -706,51 +812,6 @@ document.addEventListener('fullscreenchange',function(){
 </footer>
 
 
-<!-- ═══════ COPY PROTECTION + LEGAL BANNER ═══════ -->
-<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#0b1a0f;color:#cde3cd;padding:14px 24px;font-family:sans-serif;font-size:.82rem;display:flex;flex-wrap:wrap;align-items:center;gap:12px;border-top:2px solid #2e7d32">
-  <span style="flex:1;min-width:240px">&#128274; <strong style="color:#fff">Confidential Demo</strong> — This presentation is proprietary and created exclusively for the intended recipient. By viewing this page you agree not to copy, reproduce, or distribute any content. This site uses session cookies for demo functionality only.</span>
-  <button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('lm_cookie_ok','1')" style="background:#2e7d32;color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-weight:700;white-space:nowrap">Got It</button>
-</div>
-<script>
-(function(){
-  // Show cookie banner if not dismissed
-  if(!localStorage.getItem('lm_cookie_ok')){
-    var b=document.getElementById('cookieBanner');
-    if(b) b.style.display='flex';
-  }
-
-  // ── COPY PROTECTION ──
-  // Disable right-click
-  document.addEventListener('contextmenu',function(e){e.preventDefault();});
-
-  // Disable text selection via keyboard
-  document.addEventListener('keydown',function(e){
-    var k=e.key||e.keyCode;
-    // Block Ctrl+C, Ctrl+A, Ctrl+S, Ctrl+U, Ctrl+P, F12
-    if(e.ctrlKey&&['c','C','a','A','s','S','u','U','p','P'].indexOf(k)!==-1){e.preventDefault();}
-    if(k==='F12'||e.keyCode===123){e.preventDefault();}
-    if(e.ctrlKey&&e.shiftKey&&(k==='I'||k==='i'||k==='J'||k==='j'||k==='C'||k==='c')){e.preventDefault();}
-  });
-
-  // Disable drag
-  document.addEventListener('dragstart',function(e){e.preventDefault();});
-})();
-</script>
-<style>
-  /* Disable text selection */
-  body, body * {
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-  }
-  /* Allow selection inside form inputs */
-  input, textarea, select {
-    -webkit-user-select: text !important;
-    -moz-user-select: text !important;
-    user-select: text !important;
-  }
-</style>
 <!-- ═══════════════════════════════════════════════ -->
 
 <!-- STICKY MOBILE CTA BAR -->
