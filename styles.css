@@ -1438,7 +1438,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
   height: 90px;
   border-radius: 50%;
   object-fit: cover;
-  object-position: top center;
+  object-position: center 20%;
   border: 3px solid var(--red);
   flex-shrink: 0;
   box-shadow: 0 2px 12px rgba(200,16,46,.35);
