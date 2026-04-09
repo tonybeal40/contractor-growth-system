@@ -12,7 +12,7 @@
     p{color:#cbd5e1}
     .btn{display:inline-block;background:#dc2626;color:#fff;text-decoration:none;padding:10px 14px;border-radius:8px;margin:6px 8px 0 0;font-weight:700}
     ul{line-height:1.6}
-    .hide{display:none}
+    .hide{display:block}
     input{padding:10px;border-radius:8px;border:1px solid #64748b;background:#0b1220;color:#fff;width:260px}
   </style>
 </head>
@@ -50,15 +50,9 @@
     </div>
   </div>
   <script>
-    const PASS = "BillTax2026!";
-    const unlock = document.getElementById("unlock");
-    unlock.addEventListener("click", (e)=>{
-      e.preventDefault();
-      const val = document.getElementById("code").value;
-      const ok = (val === PASS);
-      document.getElementById("content").classList.toggle("hide", !ok);
-      document.getElementById("msg").textContent = ok ? "Access granted." : "Wrong code.";
-    });
+    // Access gate removed — open access
+    document.getElementById("gate").style.display = "none";
+    document.getElementById("content").classList.remove("hide");
     document.getElementById("emailBtn").addEventListener("click", (e)=>{
       e.preventDefault();
       const base = window.location.href.replace(/index\.html$/,"").replace(/\/$/,"")+"/";
