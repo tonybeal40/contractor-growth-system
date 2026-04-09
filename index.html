@@ -273,6 +273,14 @@
   </section>
 
 <section class="photo-section bath-feature-section">
+  <!-- SVG sharpening filter for service photos -->
+  <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="img-sharpen" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+        <feConvolveMatrix order="3" kernelMatrix="0 -0.5 0 -0.5 3 -0.5 0 -0.5 0" preserveAlpha="true"/>
+      </filter>
+    </defs>
+  </svg>
   <div class="container">
     <div class="section-header reveal">
       <div class="section-tag">Our Real Work</div>
@@ -282,7 +290,7 @@
     <div class="work-photo-grid reveal">
       <div class="work-photo-card">
         <div class="work-photo-wrap">
-          <img src="images/shower-remodel-belleville-il.png" alt="Custom walk-in shower remodel with tile and glass door - Metro East IL" loading="lazy">
+          <img src="images/shower-remodel-belleville-il.png" alt="Custom walk-in shower remodel with tile and glass door - Metro East IL" loading="eager" fetchpriority="high" decoding="async" width="206" height="206">
           <div class="work-photo-overlay"><span class="work-photo-tag">Shower Remodel</span></div>
         </div>
         <div class="work-photo-caption">
@@ -292,7 +300,7 @@
       </div>
       <div class="work-photo-card">
         <div class="work-photo-wrap">
-          <img src="images/deck-build-metro-east-il.png" alt="Two-level deck build with screened porch - Metro East IL contractor" loading="lazy">
+          <img src="images/deck-build-metro-east-il.png" alt="Two-level deck build with screened porch - Metro East IL contractor" loading="eager" fetchpriority="high" decoding="async" width="206" height="206">
           <div class="work-photo-overlay"><span class="work-photo-tag">Deck Build</span></div>
         </div>
         <div class="work-photo-caption">
@@ -302,7 +310,7 @@
       </div>
       <div class="work-photo-card">
         <div class="work-photo-wrap">
-          <img src="images/deck-lighting-belleville-il.png" alt="Deck with professional step lighting at night - Belleville IL" loading="lazy">
+          <img src="images/deck-lighting-belleville-il.png" alt="Deck with professional step lighting at night - Belleville IL" loading="eager" fetchpriority="high" decoding="async" width="206" height="206">
           <div class="work-photo-overlay"><span class="work-photo-tag">Deck Lighting</span></div>
         </div>
         <div class="work-photo-caption">
