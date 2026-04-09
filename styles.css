@@ -1390,29 +1390,33 @@ button { font-family: inherit; cursor: pointer; border: none; }
 
 /* === Service Area Map Section === */
 .service-area-map {
-  background: #f8f9fa;
-  padding: 3rem 0;
-  border-top: 1px solid #e0e0e0;
+  background: var(--dark2);
+  padding: 4rem 0;
+  border-top: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.06);
 }
 .map-section-heading {
-  font-size: 1.4rem;
-  font-weight: 700;
+  font-size: 1.5rem;
+  font-weight: 800;
   margin-bottom: .5rem;
-  color: var(--dark);
+  color: var(--white);
+  letter-spacing: -.01em;
 }
 .map-section-sub {
-  color: #555;
+  color: var(--gray2);
   margin-bottom: 1.5rem;
   font-size: .95rem;
+  max-width: 620px;
 }
 .map-embed-wrap {
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 2px 14px rgba(0,0,0,.13);
+  box-shadow: 0 4px 24px rgba(0,0,0,.45);
+  border: 1px solid rgba(255,255,255,.08);
 }
 .zip-coverage {
-  margin-top: 1rem;
-  font-size: .82rem;
-  color: #888;
-  line-height: 1.7;
+  margin-top: 1.2rem;
+  font-size: .8rem;
+  color: var(--gray3);
+  line-height: 1.8;
 }
