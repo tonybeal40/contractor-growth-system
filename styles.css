@@ -1420,3 +1420,64 @@ button { font-family: inherit; cursor: pointer; border: none; }
   color: var(--gray3);
   line-height: 1.8;
 }
+
+/* ── Bill Sessions Owner Card ── */
+.bill-owner-card {
+  background: var(--dark3);
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 14px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,.35);
+}
+.bill-photo {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top center;
+  border: 3px solid var(--red);
+  flex-shrink: 0;
+  box-shadow: 0 2px 12px rgba(200,16,46,.35);
+}
+.bill-owner-info { flex: 1; min-width: 0; }
+.bill-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -.01em;
+}
+.bill-title {
+  font-size: .75rem;
+  color: var(--red-light);
+  font-weight: 600;
+  margin-bottom: .6rem;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+.bill-quote {
+  font-size: .82rem;
+  color: var(--gray2);
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: .75rem;
+}
+.bill-cta {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  font-size: .8rem;
+  font-weight: 700;
+  padding: .45rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background .18s;
+}
+.bill-cta:hover { background: var(--red-dark); }
+@media (max-width: 480px) {
+  .bill-owner-card { flex-direction: column; text-align: center; }
+  .bill-photo { width: 80px; height: 80px; }
+}
