@@ -670,74 +670,91 @@
 <section class="service-area-map">
   <div class="container">
     <div class="map-section-heading">📍 Our Service Area — Metro East Illinois</div>
-    <p class="map-section-sub">Click any pin to see contractor services for that city. Serving 35+ communities across St. Clair, Madison, Monroe &amp; Randolph Counties.</p>
-    <div class="map-embed-wrap" id="allpro-map" style="height:460px;border-radius:10px;overflow:hidden;"></div>
+    <p class="map-section-sub">Click any city pin to see contractor services for that area. Serving 35+ communities across Metro East.</p>
+    <div id="allpro-map" style="height:460px;width:100%;border-radius:10px;border:1px solid rgba(255,255,255,.08);box-shadow:0 4px 24px rgba(0,0,0,.45);"></div>
     <div class="zip-coverage">
       <strong>Zip Codes Served:</strong> 62220, 62221, 62223, 62025, 62034, 62056, 62234, 62035, 62249, 62258, 62269, 62285, 62294, 62298, 62201, 62203, 62205, 62206, 62208, 62226, 62232, 62236, 62260, 62264, 62281, 62048, 62062, 62095, 62010, 62018, 62024, 62084, 62088 &amp; more.
     </div>
   </div>
 </section>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN/WLs=" crossorigin=""></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <script>
-(function(){
-  var map = L.map('allpro-map',{scrollWheelZoom:false}).setView([38.60,-89.95],9);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    maxZoom:18
+window.addEventListener('load', function() {
+  var mapEl = document.getElementById('allpro-map');
+  if (!mapEl) return;
+
+  var map = L.map('allpro-map', { scrollWheelZoom: false, zoomControl: true });
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
+    maxZoom: 13
   }).addTo(map);
 
-  var redIcon = L.divIcon({
-    className:'',
-    html:'<div style="width:14px;height:14px;background:#c8102e;border:2.5px solid #fff;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,.45);"></div>',
-    iconSize:[14,14],iconAnchor:[7,7],popupAnchor:[0,-10]
-  });
+  function pin(color) {
+    return L.divIcon({
+      className: '',
+      html: '<div style="width:16px;height:16px;background:' + color + ';border:2.5px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.5);cursor:pointer;"></div>',
+      iconSize: [16,16], iconAnchor: [8,8], popupAnchor: [0,-12]
+    });
+  }
 
   var cities = [
-    {name:"Belleville",lat:38.5201,lng:-89.9840,url:"index.html"},
-    {name:"O'Fallon",lat:38.5895,lng:-89.9112,url:"ofallon-il.html"},
-    {name:"Edwardsville",lat:38.8117,lng:-89.9534,url:"edwardsville-il.html"},
-    {name:"Fairview Heights",lat:38.5945,lng:-89.9940,url:"fairview-heights-il.html"},
-    {name:"Collinsville",lat:38.6706,lng:-89.9845,url:"collinsville-il.html"},
-    {name:"Swansea",lat:38.5323,lng:-89.9985,url:"swansea-il.html"},
-    {name:"Shiloh",lat:38.5587,lng:-89.9012,url:"shiloh-il.html"},
-    {name:"Mascoutah",lat:38.4923,lng:-89.7923,url:"mascoutah-il.html"},
-    {name:"Highland",lat:38.7440,lng:-89.6784,url:"highland-il.html"},
-    {name:"Waterloo",lat:38.3359,lng:-90.1501,url:"waterloo-il.html"},
-    {name:"Columbia",lat:38.4437,lng:-90.1984,url:"columbia-il.html"},
-    {name:"Alton",lat:38.8906,lng:-90.1840,url:"alton-il.html"},
-    {name:"Bethalto",lat:38.9123,lng:-90.0423,url:"bethalto-il.html"},
-    {name:"Breese",lat:38.6095,lng:-89.5273,url:"breese-il.html"},
-    {name:"Cahokia Heights",lat:38.5673,lng:-90.1834,url:"cahokia-heights-il.html"},
-    {name:"Centralia",lat:38.5248,lng:-89.1334,url:"centralia-il.html"},
-    {name:"Dupo",lat:38.5112,lng:-90.1267,url:"dupo-il.html"},
-    {name:"East St. Louis",lat:38.6245,lng:-90.1534,url:"east-st-louis-il.html"},
-    {name:"Freeburg",lat:38.4312,lng:-89.9162,url:"freeburg-il.html"},
-    {name:"Glen Carbon",lat:38.7523,lng:-89.9595,url:"glen-carbon-il.html"},
-    {name:"Godfrey",lat:38.9540,lng:-90.0501,url:"godfrey-il.html"},
-    {name:"Granite City",lat:38.7017,lng:-90.1484,url:"granite-city-il.html"},
-    {name:"Jerseyville",lat:39.1201,lng:-90.3284,url:"jerseyville-il.html"},
-    {name:"Lebanon",lat:38.6054,lng:-89.8062,url:"lebanon-il.html"},
-    {name:"Maryville",lat:38.7229,lng:-89.9584,url:"maryville-il.html"},
-    {name:"Millstadt",lat:38.4601,lng:-89.9817,url:"millstadt-il.html"},
-    {name:"Nashville",lat:38.3437,lng:-89.3762,url:"nashville-il.html"},
-    {name:"New Baden",lat:38.5387,lng:-89.7062,url:"new-baden-il.html"},
-    {name:"Okawville",lat:38.4318,lng:-89.5484,url:"okawville-il.html"},
-    {name:"Red Bud",lat:38.2118,lng:-89.9940,url:"red-bud-il.html"},
-    {name:"Scott AFB",lat:38.5446,lng:-89.8512,url:"scott-afb-il.html"},
-    {name:"Smithton",lat:38.4062,lng:-89.9901,url:"smithton-il.html"},
-    {name:"Sparta",lat:38.1237,lng:-89.7018,url:"sparta-il.html"},
-    {name:"Trenton",lat:38.5973,lng:-89.6812,url:"trenton-il.html"},
-    {name:"Troy",lat:38.7301,lng:-89.8884,url:"troy-il.html"},
-    {name:"Wood River",lat:38.8611,lng:-90.0840,url:"wood-river-il.html"}
+    ["Belleville","index.html",38.5201,-89.9840],
+    ["O'Fallon","ofallon-il.html",38.5895,-89.9112],
+    ["Edwardsville","edwardsville-il.html",38.8117,-89.9534],
+    ["Fairview Heights","fairview-heights-il.html",38.5945,-89.9940],
+    ["Collinsville","collinsville-il.html",38.6706,-89.9845],
+    ["Swansea","swansea-il.html",38.5323,-89.9985],
+    ["Shiloh","shiloh-il.html",38.5587,-89.9012],
+    ["Mascoutah","mascoutah-il.html",38.4923,-89.7923],
+    ["Highland","highland-il.html",38.7440,-89.6784],
+    ["Waterloo","waterloo-il.html",38.3359,-90.1501],
+    ["Columbia","columbia-il.html",38.4437,-90.1984],
+    ["Alton","alton-il.html",38.8906,-90.1840],
+    ["Bethalto","bethalto-il.html",38.9123,-90.0423],
+    ["Breese","breese-il.html",38.6095,-89.5273],
+    ["Cahokia Heights","cahokia-heights-il.html",38.5673,-90.1834],
+    ["Centralia","centralia-il.html",38.5248,-89.1334],
+    ["Dupo","dupo-il.html",38.5112,-90.1267],
+    ["East St. Louis","east-st-louis-il.html",38.6245,-90.1534],
+    ["Freeburg","freeburg-il.html",38.4312,-89.9162],
+    ["Glen Carbon","glen-carbon-il.html",38.7523,-89.9595],
+    ["Godfrey","godfrey-il.html",38.9540,-90.0501],
+    ["Granite City","granite-city-il.html",38.7017,-90.1484],
+    ["Jerseyville","jerseyville-il.html",39.1201,-90.3284],
+    ["Lebanon","lebanon-il.html",38.6054,-89.8062],
+    ["Maryville","maryville-il.html",38.7229,-89.9584],
+    ["Millstadt","millstadt-il.html",38.4601,-89.9817],
+    ["Nashville","nashville-il.html",38.3437,-89.3762],
+    ["New Baden","new-baden-il.html",38.5387,-89.7062],
+    ["Okawville","okawville-il.html",38.4318,-89.5484],
+    ["Red Bud","red-bud-il.html",38.2118,-89.9940],
+    ["Scott AFB","scott-afb-il.html",38.5446,-89.8512],
+    ["Smithton","smithton-il.html",38.4062,-89.9901],
+    ["Sparta","sparta-il.html",38.1237,-89.7018],
+    ["Trenton","trenton-il.html",38.5973,-89.6812],
+    ["Troy","troy-il.html",38.7301,-89.8884],
+    ["Wood River","wood-river-il.html",38.8611,-90.0840]
   ];
 
-  cities.forEach(function(c){
-    L.marker([c.lat,c.lng],{icon:redIcon})
+  var bounds = [];
+  cities.forEach(function(c) {
+    var ll = [c[2], c[3]];
+    bounds.push(ll);
+    L.marker(ll, { icon: pin('#c8102e') })
       .addTo(map)
-      .bindPopup('<div style="text-align:center;min-width:140px;"><strong style="font-size:.95rem;">'+c.name+', IL</strong><br><a href="'+c.url+'" style="color:#c8102e;font-size:.8rem;font-weight:700;text-decoration:none;">View Services →</a></div>');
+      .bindPopup(
+        '<div style="text-align:center;min-width:130px;font-family:sans-serif;">' +
+        '<strong style="font-size:.92rem;color:#111;">' + c[0] + ', IL</strong><br>' +
+        '<a href="' + c[1] + '" style="color:#c8102e;font-size:.8rem;font-weight:700;text-decoration:none;">View Services &rarr;</a>' +
+        '</div>'
+      );
   });
-})();
+
+  // Fit map exactly to city pins with padding
+  map.fitBounds(bounds, { padding: [30, 30] });
+});
 </script>
 
 <!-- LEAD FORM -->
