@@ -397,7 +397,17 @@ footer .strong{color:var(--text);font-weight:600}
   border-top:1px solid var(--dark-border);
 }
 
-</style>
+/* ── Full Screen button ── */
+.fullscreen-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 14px;border-radius:6px;
+  font-size:.8rem;font-weight:700;cursor:pointer;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);
+  color:#fff;transition:background .18s,border-color .18s,transform .18s;
+  flex-shrink:0;
+}
+.fullscreen-btn:hover{background:rgba(255,255,255,0.18);border-color:rgba(255,255,255,0.35);transform:translateY(-1px)}
+.fullscreen-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}</style>
 </head>
 <body>
 
@@ -443,6 +453,10 @@ footer .strong{color:var(--text);font-weight:600}
     <span class="launch-bar-label" style="margin-left:12px;border-left:1px solid #2e7d32;padding-left:14px;">&#128279; Free Profiles:</span>
     <a href="https://pro.homeadvisor.com/lead-services/?zip=62220" target="_blank" rel="noopener" style="background:#0E7B3E;color:#fff">HomeAdvisor</a>
     <a href="https://www.angi.com/companylist/us/il/belleville/lawn-services-reviews-35809.htm" target="_blank" rel="noopener" style="background:#FF6C2F;color:#fff">Angi</a>
+  <button class="fullscreen-btn" id="fsBtn" onclick="toggleFullScreen()" title="Toggle Full Screen">
+      <svg id="fsIcon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+      <span id="fsBtnTxt">&#x26F6; Full Screen</span>
+    </button>
   </div>
 </div>
 
@@ -1572,7 +1586,17 @@ document.querySelectorAll('.radio-pill').forEach(pill=>{
   .cookie-ok #tour-card{bottom:72px!important}
   .cookie-ok #tour-launcher{bottom:72px!important}
 }
-</style>
+/* ── Full Screen button ── */
+.fullscreen-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 14px;border-radius:6px;
+  font-size:.8rem;font-weight:700;cursor:pointer;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);
+  color:#fff;transition:background .18s,border-color .18s,transform .18s;
+  flex-shrink:0;
+}
+.fullscreen-btn:hover{background:rgba(255,255,255,0.18);border-color:rgba(255,255,255,0.35);transform:translateY(-1px)}
+.fullscreen-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}</style>
 
 <button id="tour-launcher" onclick="startTour()">&#9654; Take the Tour</button>
 
@@ -1692,7 +1716,17 @@ function _tourRender(){
 #demo-back:hover{background:var(--green-light)}
 #demo-title{font-size:.9rem;font-weight:600;color:var(--text-muted);flex:1}
 #demo-frame{flex:1;border:none;width:100%;height:100%}
-</style>
+/* ── Full Screen button ── */
+.fullscreen-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 14px;border-radius:6px;
+  font-size:.8rem;font-weight:700;cursor:pointer;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);
+  color:#fff;transition:background .18s,border-color .18s,transform .18s;
+  flex-shrink:0;
+}
+.fullscreen-btn:hover{background:rgba(255,255,255,0.18);border-color:rgba(255,255,255,0.35);transform:translateY(-1px)}
+.fullscreen-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}</style>
 
 <div id="demo-viewer">
   <div id="demo-bar">
@@ -1741,7 +1775,17 @@ document.querySelectorAll('a[href^="lawnmex/"]').forEach(function(a) {
   #cookieBanner .cb-short{display:none}
   #cookieBanner .cb-long{display:inline}
 }
-</style>
+/* ── Full Screen button ── */
+.fullscreen-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 14px;border-radius:6px;
+  font-size:.8rem;font-weight:700;cursor:pointer;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);
+  color:#fff;transition:background .18s,border-color .18s,transform .18s;
+  flex-shrink:0;
+}
+.fullscreen-btn:hover{background:rgba(255,255,255,0.18);border-color:rgba(255,255,255,0.35);transform:translateY(-1px)}
+.fullscreen-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}</style>
 <div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#0b1a0f;color:#cde3cd;padding:16px 24px;font-family:sans-serif;font-size:.85rem;display:flex;flex-wrap:wrap;align-items:center;gap:12px;border-top:2px solid #2e7d32">
   <span style="flex:1;min-width:200px">&#128274; <strong style="color:#fff;font-size:1.05rem;letter-spacing:.3px">Confidential Demo</strong><span class="cb-long"> — This presentation is proprietary and created exclusively for the intended recipient. By viewing this page you agree not to copy, reproduce, or distribute any content. This site uses session cookies for demo functionality only.</span><span class="cb-short"> — For intended recipient only. Not for distribution.</span></span>
   <button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('lm_cookie_ok','1');document.documentElement.classList.add('cookie-ok');positionTour()" style="background:#2e7d32;color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-weight:700;white-space:nowrap">Got It</button>
@@ -1812,9 +1856,49 @@ window.addEventListener('resize',positionTour);
     -moz-user-select: text !important;
     user-select: text !important;
   }
-</style>
+/* ── Full Screen button ── */
+.fullscreen-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 14px;border-radius:6px;
+  font-size:.8rem;font-weight:700;cursor:pointer;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);
+  color:#fff;transition:background .18s,border-color .18s,transform .18s;
+  flex-shrink:0;
+}
+.fullscreen-btn:hover{background:rgba(255,255,255,0.18);border-color:rgba(255,255,255,0.35);transform:translateY(-1px)}
+.fullscreen-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}</style>
 <!-- ═══════════════════════════════════════════════ -->
-</body>
+<script>
+function toggleFullScreen(){
+  var btn = document.getElementById('fsBtn');
+  var txt = document.getElementById('fsBtnTxt');
+  var icon = document.getElementById('fsIcon');
+  var expandPath = '<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>';
+  var collapsePath = '<path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>';
+  if(!document.fullscreenElement){
+    document.documentElement.requestFullscreen().catch(function(e){console.warn('FS error:',e)});
+    txt.textContent='Exit Full Screen';
+    icon.innerHTML=collapsePath;
+  } else {
+    document.exitFullscreen();
+    txt.textContent='Full Screen';
+    icon.innerHTML=expandPath;
+  }
+}
+document.addEventListener('fullscreenchange',function(){
+  var txt = document.getElementById('fsBtnTxt');
+  var icon = document.getElementById('fsIcon');
+  var expandPath = '<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>';
+  var collapsePath = '<path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>';
+  if(!document.fullscreenElement){
+    txt.textContent='Full Screen';
+    icon.innerHTML=expandPath;
+  } else {
+    txt.textContent='Exit Full Screen';
+    icon.innerHTML=collapsePath;
+  }
+});
+</script></body>
 </html>
 
 
