@@ -3,716 +3,888 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Lawn-Mex Discovery — 2PM Meeting Questions</title>
-<meta name="robots" content="noindex,nofollow,noarchive"/>
+<title>Lawn-Mex Inc. — Discovery Meeting | Tony Beal</title>
+<meta name="robots" content="noindex,nofollow"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --green:#1a5c2a;--green-mid:#226b34;--green-light:#2e8b44;--green-bright:#38a957;
-  --gold:#c9a227;--gold-light:#e8bf45;
-  --dark:#0b1a0f;--dark-card:#111e14;--dark-border:#1e3323;
-  --text:#e8f0ea;--text-muted:#8fad96;--white:#ffffff;
-  --red:#e84040;--blue:#3b82f6;--purple:#a855f7;--orange:#fb923c;
+  --dark:#0b1a0f;--dark2:#0f2218;--dark-card:#111e14;--dark-border:#1e3323;
+  --green:#38a957;--green-muted:#8fcf9e;--gold:#c9a227;--gold-light:#e8bf45;
+  --red:#e84040;--blue:#3b82f6;--orange:#fb923c;--purple:#a855f7;
+  --text:#cde8d2;--text-muted:#6b9b78;
 }
-html{scroll-behavior:smooth;scroll-padding-top:70px}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
 body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--text);line-height:1.6;font-size:15px}
 
+/* PROGRESS */
+.progress-bar{height:3px;background:var(--dark-border);position:fixed;top:0;left:0;right:0;z-index:300}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--gold));width:0%;transition:width .15s}
+
 /* NAV */
-nav{position:sticky;top:0;z-index:100;background:rgba(11,26,15,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--dark-border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.nav-logo{font-weight:800;font-size:1rem;color:var(--green-bright)}.nav-logo span{color:var(--gold)}
-.nav-right{display:flex;align-items:center;gap:10px}
-.nav-pill{background:rgba(56,169,87,.15);border:1.5px solid var(--green-bright);color:var(--green-bright);padding:5px 13px;border-radius:6px;font-size:.78rem;font-weight:700;text-decoration:none}
-.nav-pill.gold{background:rgba(201,162,39,.15);border-color:var(--gold);color:var(--gold)}
-.progress-bar{height:3px;background:var(--dark-border);position:fixed;top:0;left:0;right:0;z-index:200}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--green-bright),var(--gold));width:0%;transition:width .2s}
+nav{position:sticky;top:0;z-index:200;background:rgba(11,26,15,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--dark-border);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:56px;gap:12px}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-brand img{height:34px;width:auto;object-fit:contain}
+.nav-brand-txt strong{display:block;font-size:.88rem;font-weight:800;color:#fff}
+.nav-brand-txt span{font-size:.65rem;color:var(--text-muted)}
+.nav-actions{display:flex;gap:8px;align-items:center}
+.nav-pill{font-size:.75rem;font-weight:700;padding:5px 12px;border-radius:6px;text-decoration:none;white-space:nowrap}
+.nav-pill.outline{background:rgba(56,169,87,.12);border:1px solid rgba(56,169,87,.4);color:var(--green)}
+.nav-pill.gold{background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.4);color:var(--gold)}
+.nav-pill.red{background:rgba(232,64,64,.12);border:1px solid rgba(232,64,64,.35);color:var(--red)}
+.save-indicator{font-size:.68rem;color:var(--text-muted);display:flex;align-items:center;gap:4px}
+.save-dot{width:7px;height:7px;border-radius:50%;background:#38a957;flex-shrink:0}
 
 /* HERO */
-.hero{padding:48px 24px 32px;max-width:900px;margin:0 auto;text-align:center}
-.hero-badge{display:inline-block;background:rgba(201,162,39,.15);border:1.5px solid var(--gold);color:var(--gold);font-size:.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:16px}
-.hero h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:900;line-height:1.15;margin-bottom:10px}
-.hero h1 span{color:var(--green-bright)}
-.hero-sub{color:var(--text-muted);font-size:1rem;max-width:600px;margin:0 auto 24px}
-.stats-row{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:8px}
-.stat-chip{background:var(--dark-card);border:1px solid var(--dark-border);border-radius:8px;padding:8px 16px;font-size:.8rem;color:var(--text-muted)}.stat-chip strong{color:var(--text)}
+.hero{padding:44px 20px 28px;max-width:920px;margin:0 auto;text-align:center}
+.meet-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(232,64,64,.1);border:1.5px solid var(--red);color:var(--red);font-size:.72rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:18px;animation:pulse-badge 2s infinite}
+@keyframes pulse-badge{0%,100%{box-shadow:0 0 0 0 rgba(232,64,64,.25)}50%{box-shadow:0 0 0 8px rgba(232,64,64,0)}}
+.hero h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;line-height:1.2;margin-bottom:8px;color:#fff}
+.hero h1 em{color:var(--green);font-style:normal}
+.hero-sub{color:var(--text-muted);font-size:.92rem;max-width:580px;margin:0 auto 20px}
+.context-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:28px}
+.chip{display:inline-flex;align-items:center;gap:5px;background:var(--dark-card);border:1px solid var(--dark-border);color:var(--text-muted);font-size:.75rem;padding:4px 12px;border-radius:20px}
+.chip strong{color:var(--text)}
+.chip.hi{border-color:rgba(56,169,87,.35);background:rgba(56,169,87,.06);color:var(--green-muted)}
+.chip.hi strong{color:#fff}
 
-/* SECTIONS */
-.page-body{max-width:900px;margin:0 auto;padding:0 20px 60px}
-.section-block{margin-bottom:28px;border-radius:14px;overflow:hidden;border:1px solid var(--dark-border);background:var(--dark-card)}
-.section-header{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;user-select:none;background:rgba(255,255,255,.02);border-bottom:1px solid var(--dark-border)}
-.section-header:hover{background:rgba(255,255,255,.04)}
-.sec-icon{font-size:1.3rem;flex-shrink:0}
-.sec-title{font-weight:800;font-size:1rem;flex:1}
-.sec-badge{font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:4px;background:rgba(56,169,87,.15);color:var(--green-bright);border:1px solid rgba(56,169,87,.3);flex-shrink:0}
-.sec-badge.red{background:rgba(232,64,64,.12);color:var(--red);border-color:rgba(232,64,64,.3)}
-.sec-badge.gold{background:rgba(201,162,39,.12);color:var(--gold);border-color:rgba(201,162,39,.3)}
-.sec-badge.blue{background:rgba(59,130,246,.12);color:var(--blue);border-color:rgba(59,130,246,.3)}
-.sec-badge.purple{background:rgba(168,85,247,.12);color:var(--purple);border-color:rgba(168,85,247,.3)}
-.sec-toggle{color:var(--text-muted);font-size:.9rem;transition:transform .2s;flex-shrink:0}
-.section-header.open .sec-toggle{transform:rotate(180deg)}
-.section-body{padding:0}
-.q-row{display:flex;align-items:flex-start;gap:12px;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s}
+/* SCORE BAR */
+.score-bar{background:var(--dark-card);border:1px solid var(--dark-border);border-radius:12px;padding:20px 24px;max-width:920px;margin:0 auto 32px;display:flex;flex-wrap:wrap;align-items:center;gap:20px}
+.score-left{flex:1;min-width:160px}
+.score-label{font-size:.68rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:6px}
+.score-track{background:var(--dark-border);border-radius:4px;height:8px;overflow:hidden}
+.score-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--gold));border-radius:4px;width:0%;transition:width .5s}
+.score-nums{display:flex;justify-content:space-between;font-size:.72rem;color:var(--text-muted);margin-top:4px}
+.score-nums strong{color:var(--gold);font-size:.88rem}
+.score-sections{display:flex;flex-wrap:wrap;gap:8px}
+.score-sec{font-size:.72rem;padding:3px 10px;border-radius:4px;background:rgba(255,255,255,.04);color:var(--text-muted);border:1px solid rgba(255,255,255,.06)}
+.score-sec.done{background:rgba(56,169,87,.1);color:var(--green);border-color:rgba(56,169,87,.3)}
+
+/* PAGE BODY */
+.page-body{max-width:920px;margin:0 auto;padding:0 16px 80px}
+
+/* SECTION BLOCKS */
+.sec-block{margin-bottom:20px;border-radius:14px;overflow:hidden;border:1px solid var(--dark-border);background:var(--dark-card)}
+.sec-header{display:flex;align-items:center;gap:12px;padding:15px 20px;cursor:pointer;user-select:none;transition:background .15s}
+.sec-header:hover{background:rgba(255,255,255,.03)}
+.sec-icon{font-size:1.2rem;flex-shrink:0}
+.sec-title{font-weight:800;font-size:.97rem;color:#fff;flex:1}
+.sec-tag{font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:4px;flex-shrink:0;white-space:nowrap}
+.tag-green{background:rgba(56,169,87,.12);color:var(--green);border:1px solid rgba(56,169,87,.25)}
+.tag-red{background:rgba(232,64,64,.1);color:var(--red);border:1px solid rgba(232,64,64,.25)}
+.tag-gold{background:rgba(201,162,39,.1);color:var(--gold);border:1px solid rgba(201,162,39,.25)}
+.tag-blue{background:rgba(59,130,246,.1);color:var(--blue);border:1px solid rgba(59,130,246,.25)}
+.tag-purple{background:rgba(168,85,247,.1);color:var(--purple);border:1px solid rgba(168,85,247,.25)}
+.tag-orange{background:rgba(251,146,60,.1);color:var(--orange);border:1px solid rgba(251,146,60,.25)}
+.sec-chevron{color:var(--text-muted);transition:transform .2s;flex-shrink:0;font-size:.8rem}
+.sec-header.open .sec-chevron{transform:rotate(180deg)}
+.sec-body{display:none;border-top:1px solid var(--dark-border)}
+.sec-body.open{display:block}
+
+/* CONTEXT BOX — what we already know */
+.context-box{background:rgba(56,169,87,.04);border-bottom:1px solid rgba(56,169,87,.1);padding:12px 20px;display:flex;align-items:flex-start;gap:10px;font-size:.8rem}
+.context-box .ctx-label{color:var(--green);font-weight:700;white-space:nowrap;padding-top:1px}
+.context-box .ctx-text{color:var(--text-muted);line-height:1.55}
+.context-box .ctx-text strong{color:var(--text)}
+
+/* QUESTION ROWS */
+.q-row{display:flex;align-items:flex-start;gap:12px;padding:13px 20px;border-bottom:1px solid rgba(255,255,255,.035);transition:background .12s}
 .q-row:last-child{border-bottom:none}
-.q-row:hover{background:rgba(255,255,255,.025)}
-.q-check{flex-shrink:0;margin-top:2px}
-.q-check input[type=checkbox]{width:16px;height:16px;accent-color:var(--green-bright);cursor:pointer}
-.q-label{flex:1}
-.q-text{font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:4px}
-.q-why{font-size:.75rem;color:var(--text-muted);font-style:italic;margin-bottom:6px}
-.q-input{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--dark-border);border-radius:7px;padding:7px 10px;color:var(--text);font-family:'Inter',sans-serif;font-size:.82rem;resize:vertical;min-height:36px;transition:border-color .15s}
-.q-input:focus{outline:none;border-color:var(--green-bright);background:rgba(56,169,87,.06)}
-.q-input::placeholder{color:rgba(143,173,150,.5)}
-.q-priority{display:inline-block;font-size:.64rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;padding:1px 6px;border-radius:3px;margin-bottom:5px}
-.p-must{background:rgba(232,64,64,.15);color:var(--red)}
-.p-high{background:rgba(201,162,39,.15);color:var(--gold)}
-.p-med{background:rgba(56,169,87,.12);color:var(--green-bright)}
+.q-row:hover{background:rgba(255,255,255,.022)}
+.q-check input[type=checkbox]{width:16px;height:16px;accent-color:var(--green);cursor:pointer;margin-top:2px;flex-shrink:0}
+.q-body{flex:1}
+.q-text{font-size:.88rem;color:var(--text);font-weight:600;line-height:1.45;margin-bottom:4px}
+.q-why{font-size:.77rem;color:var(--text-muted);line-height:1.5;margin-bottom:6px}
+.q-why strong{color:var(--green-muted)}
+.q-answer{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--dark-border);border-radius:6px;color:var(--text);font-size:.82rem;padding:8px 10px;font-family:inherit;resize:vertical;min-height:52px;transition:border-color .15s}
+.q-answer:focus{outline:none;border-color:rgba(56,169,87,.5);background:rgba(56,169,87,.03)}
+.q-answer::placeholder{color:var(--text-muted)}
+.q-priority{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:2px 6px;border-radius:3px;margin-left:6px;vertical-align:middle}
+.p-critical{background:rgba(232,64,64,.15);color:var(--red)}
+.p-high{background:rgba(251,146,60,.12);color:var(--orange)}
+.p-med{background:rgba(59,130,246,.1);color:var(--blue)}
 
-/* OPPORTUNITY BANNER */
-.opp-banner{background:linear-gradient(135deg,rgba(56,169,87,.12),rgba(201,162,39,.08));border:1.5px solid rgba(56,169,87,.3);border-radius:12px;padding:18px 20px;margin-bottom:20px;display:flex;gap:14px;align-items:flex-start}
-.opp-icon{font-size:1.5rem;flex-shrink:0}
-.opp-title{font-weight:800;font-size:.92rem;color:var(--green-bright);margin-bottom:4px}
-.opp-text{font-size:.8rem;color:var(--text-muted);line-height:1.5}
+/* ACTION ITEMS SECTION */
+.action-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;padding:16px 20px}
+.action-card{background:rgba(56,169,87,.05);border:1px solid rgba(56,169,87,.2);border-radius:10px;padding:14px}
+.action-card .ac-num{font-size:1.2rem;font-weight:900;color:var(--green);margin-bottom:4px}
+.action-card .ac-title{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:4px}
+.action-card .ac-desc{font-size:.78rem;color:var(--text-muted);line-height:1.5}
 
-/* SAVE BAR */
-.save-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(11,26,15,.97);border-top:1px solid var(--dark-border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:100;backdrop-filter:blur(8px)}
-.save-bar-left{font-size:.8rem;color:var(--text-muted)}.save-bar-left strong{color:var(--green-bright)}
-.save-btn{background:var(--green-bright);border:none;color:#fff;font-weight:800;font-size:.82rem;padding:8px 18px;border-radius:7px;cursor:pointer;transition:background .15s}
-.save-btn:hover{background:var(--green-light)}
-.print-btn{background:transparent;border:1.5px solid var(--dark-border);color:var(--text-muted);font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:7px;cursor:pointer;transition:all .15s}
-.print-btn:hover{border-color:var(--text-muted);color:var(--text)}
+/* BOTTOM STRIP */
+.bottom-strip{position:fixed;bottom:0;left:0;right:0;background:rgba(11,26,15,.97);backdrop-filter:blur(8px);border-top:1px solid var(--dark-border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:200;flex-wrap:wrap}
+.bottom-left{font-size:.78rem;color:var(--text-muted)}
+.bottom-left strong{color:#fff}
+.bottom-actions{display:flex;gap:8px}
+.btn-bottom{padding:8px 18px;border-radius:6px;font-size:.8rem;font-weight:700;cursor:pointer;border:none;font-family:inherit}
+.btn-clear{background:rgba(232,64,64,.1);color:var(--red);border:1px solid rgba(232,64,64,.3)}
+.btn-export{background:var(--green);color:#0b1a0f}
 
-@media print{nav,.save-bar,.progress-bar{display:none!important}.section-body{display:block!important}.q-input{border:1px solid #ccc;background:#fff;color:#000}.page-body{padding-bottom:0}}
-@media(max-width:600px){.stats-row{gap:10px}.stat-chip{font-size:.72rem}}
+/* PRINT */
+@media print{
+  nav,.progress-bar,.bottom-strip,.score-bar,.sec-chevron,.q-check{display:none!important}
+  .sec-body{display:block!important}
+  .sec-block{border:1px solid #ccc;page-break-inside:avoid}
+  body{background:#fff;color:#111;font-size:12px}
+  .q-text{color:#111}.q-why{color:#555}.q-answer{border:1px solid #ccc;background:#f9f9f9}
+}
+
+@media(max-width:600px){
+  .nav-actions .nav-pill:not(.red){display:none}
+  .context-chips .chip:nth-child(n+5){display:none}
+  .action-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 
-<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
 
 <nav>
-  <div class="nav-logo">Lawn-<span>Mex</span> Discovery</div>
-  <div class="nav-right">
-    <span id="answered-count" style="font-size:.78rem;color:var(--text-muted)">0 answered</span>
-    <a href="lawnmex-outreach-preview-m3t7k4.html" class="nav-pill">← Back to Preview</a>
-    <button class="nav-pill gold" onclick="window.print()">🖨 Print</button>
+  <a href="lawnmex-outreach-preview-m3t7k4.html" class="nav-brand">
+    <img src="lawnmex/images/lawnmex-logo-real.webp" alt="Lawn-Mex">
+    <div class="nav-brand-txt">
+      <strong>Lawn-Mex Inc.</strong>
+      <span>Discovery Meeting — Jeff V.</span>
+    </div>
+  </a>
+  <div class="nav-actions">
+    <span class="save-indicator"><span class="save-dot" id="saveDot"></span><span id="saveLabel">Auto-saving</span></span>
+    <a href="lawnmex-outreach-preview-m3t7k4.html" class="nav-pill outline">← Preview</a>
+    <a href="lawnmex-news-kmov-winter-2022.html" target="_blank" class="nav-pill outline">📺 KMOV</a>
+    <button onclick="window.print()" class="nav-pill gold" style="border:none;cursor:pointer">🖨️ Print</button>
+    <button onclick="exportNotes()" class="nav-pill red" style="border:none;cursor:pointer">💾 Export</button>
   </div>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
-  <div class="hero-badge">⚡ 2PM Meeting — Today</div>
-  <h1>Lawn-Mex <span>Discovery Questions</span></h1>
-  <p class="hero-sub">McKinsey-level intake for Jeff. Every answer becomes a revenue lever. Fill in as you go — answers save automatically.</p>
-  <div class="stats-row">
-    <div class="stat-chip"><strong>9 sections</strong> · Full business audit</div>
-    <div class="stat-chip"><strong>60+ questions</strong> · Revenue, ops, digital</div>
-    <div class="stat-chip"><strong>Saves locally</strong> · Auto-saved in browser</div>
+  <div class="meet-badge">⚡ 2PM Meeting Today — Jeff Villavicencio · Lawn-Mex Inc.</div>
+  <h1>The Questions That Turn a <em>Discovery Call</em><br>Into a Signed Client</h1>
+  <p class="hero-sub">Based on what we know about Lawn-Mex — their Google reviews, LinkedIn hiring, KMOV feature, Today's Homeowner listing, and 25-year history — every question here has a purpose. Check off as you go. Notes auto-save.</p>
+  <div class="context-chips">
+    <div class="chip hi"><strong>4.7 ⭐</strong> 166 Google Reviews</div>
+    <div class="chip hi">📺 <strong>KMOV Channel 4</strong> Feature</div>
+    <div class="chip hi">🌿 <strong>Today's Homeowner</strong> Listed</div>
+    <div class="chip hi">💼 <strong>Hiring Now</strong> on LinkedIn</div>
+    <div class="chip"><strong>7 Plows</strong> · Snow Removal Fleet</div>
+    <div class="chip"><strong>Belleville IL</strong> · Since 1999</div>
+    <div class="chip"><strong>15 services</strong> verified</div>
+    <div class="chip">📞 (618) 213-6228</div>
   </div>
 </div>
 
-<div class="page-body">
-
-  <!-- OPPORTUNITY BANNER -->
-  <div class="opp-banner">
-    <div class="opp-icon">💡</div>
-    <div>
-      <div class="opp-title">Your goal walking out: find the $$ leaks and the growth levers.</div>
-      <div class="opp-text">Every question here maps to a billable service or a growth opportunity. Mark <strong style="color:var(--red)">MUST ASK</strong> questions first — those reveal the fastest wins. Answers auto-save in your browser so you can come back after the meeting.</div>
-    </div>
+<!-- SCORE BAR -->
+<div class="score-bar" style="padding:16px 20px">
+  <div class="score-left">
+    <div class="score-label">Meeting Progress</div>
+    <div class="score-track"><div class="score-fill" id="scoreFill"></div></div>
+    <div class="score-nums"><span>0 answered</span><strong id="scoreNum">0%</strong></div>
   </div>
+  <div class="score-sections" id="sectionDots"></div>
+</div>
 
-  <!-- ══ 1. BUSINESS OVERVIEW ══ -->
-  <div class="section-block">
-    <div class="section-header open" onclick="toggleSection(this)">
-      <div class="sec-icon">🏢</div>
-      <div class="sec-title">Business Overview & Revenue</div>
-      <div class="sec-badge red">MUST ASK</div>
-      <div class="sec-toggle">▼</div>
+<div class="page-body" id="pageBody">
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 1 — WARM OPENER / RELATIONSHIP
+══════════════════════════════════════════════════════ -->
+<div class="sec-block">
+  <div class="sec-header open" onclick="toggleSection(this)">
+    <span class="sec-icon">🤝</span>
+    <span class="sec-title">Opening — Build Rapport First</span>
+    <span class="sec-tag tag-green">Start Here</span>
+    <span class="sec-chevron">▼</span>
+  </div>
+  <div class="sec-body open">
+    <div class="context-box">
+      <span class="ctx-label">We Know:</span>
+      <span class="ctx-text">Jeff has been running Lawn-Mex since <strong>1999</strong>. He was featured on <strong>KMOV Channel 4</strong> by name. He's clearly proud of his work. Open warm, let him talk. Don't pitch yet.</span>
     </div>
-    <div class="section-body">
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q1"></div>
-        <div class="q-label">
-          <div class="q-priority p-must">Must Ask</div>
-          <div class="q-text">What is your approximate annual revenue right now?</div>
-          <div class="q-why">Sets the baseline. Everything else is sized against this number.</div>
-          <textarea class="q-input" data-q="q1" placeholder="e.g. $400K/yr, $1.2M, not sure..."></textarea>
-        </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Jeff, before we get into anything — how long have you been running Lawn-Mex, and what made you start it?<span class="q-priority p-critical">critical</span></div>
+        <div class="q-why">You already know the answer (~1999, 25 years). But <strong>let him tell his story.</strong> People reveal what they care most about when you ask about origins. Listen for pride points.</div>
+        <textarea class="q-answer" placeholder="His answer + notes..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q2"></div>
-        <div class="q-label">
-          <div class="q-priority p-must">Must Ask</div>
-          <div class="q-text">How many active customers do you have? How many repeat vs. new each season?</div>
-          <div class="q-why">Retention rate is usually the biggest growth lever for lawn/landscape companies.</div>
-          <textarea class="q-input" data-q="q2" placeholder="e.g. 85 recurring, 20 new this year..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">When Channel 4 showed up that winter — what was that like? Did you know they were coming or did they just find you?</div>
+        <div class="q-why">The <strong>KMOV feature</strong> is your secret weapon. It shows him you've done your research. This question makes him feel seen, not sold to.</div>
+        <textarea class="q-answer" placeholder="His answer..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q3"></div>
-        <div class="q-label">
-          <div class="q-priority p-high">High</div>
-          <div class="q-text">What are your top 3 services by revenue? What % does each represent?</div>
-          <div class="q-why">Identifies what to double down on vs. what's dragging margin.</div>
-          <textarea class="q-input" data-q="q3" placeholder="e.g. mowing 60%, landscaping 25%, snow 15%..."></textarea>
-        </div>
-      </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q4"></div>
-        <div class="q-label">
-          <div class="q-priority p-high">High</div>
-          <div class="q-text">How seasonal is the business? What months are dead and what months are overwhelming?</div>
-          <div class="q-why">Determines whether we need off-season revenue strategy (snow, holiday, etc.).</div>
-          <textarea class="q-input" data-q="q4" placeholder="e.g. May-Sept is slammed, Nov-Feb is dead..."></textarea>
-        </div>
-      </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q5"></div>
-        <div class="q-label">
-          <div class="q-priority p-med">Standard</div>
-          <div class="q-text">What is your average job size / ticket? Has that changed in the last 2 years?</div>
-          <textarea class="q-input" data-q="q5" placeholder="e.g. avg lawn mow $65, landscaping job $800..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">What's your busiest season right now — and what does a typical week look like for you personally?</div>
+        <div class="q-why">Helps you understand where <strong>his time is being eaten</strong>. If he says "I'm on the mower myself", that's a scaling problem you can solve.</div>
+        <textarea class="q-answer" placeholder="His answer..."></textarea>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ══ 2. INVOICING & PAYMENTS ══ -->
-  <div class="section-block">
-    <div class="section-header open" onclick="toggleSection(this)">
-      <div class="sec-icon">💳</div>
-      <div class="sec-title">Invoicing, Payments & Card Processing</div>
-      <div class="sec-badge red">MUST ASK</div>
-      <div class="sec-toggle">▼</div>
+<!-- ══════════════════════════════════════════════════════
+     SECTION 2 — REVENUE / MONEY
+══════════════════════════════════════════════════════ -->
+<div class="sec-block">
+  <div class="sec-header" onclick="toggleSection(this)">
+    <span class="sec-icon">💰</span>
+    <span class="sec-title">Revenue, Pricing & How Money Actually Flows</span>
+    <span class="sec-tag tag-gold">$$ Priority</span>
+    <span class="sec-chevron">▼</span>
+  </div>
+  <div class="sec-body">
+    <div class="context-box">
+      <span class="ctx-label">Context:</span>
+      <span class="ctx-text">Most contractors leave 20-40% revenue on the table through inconsistent pricing, no upsells, and zero recurring contract structure. You're here to find that gap.</span>
     </div>
-    <div class="section-body">
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q6"></div>
-        <div class="q-label">
-          <div class="q-priority p-must">Must Ask</div>
-          <div class="q-text">How do you currently invoice customers — paper, email, text, software?</div>
-          <div class="q-why">Manual invoicing = massive time leak and late payments. This is often a $10K+ fix.</div>
-          <textarea class="q-input" data-q="q6" placeholder="e.g. paper invoices, QuickBooks, text with Venmo link..."></textarea>
-        </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">How do you currently invoice customers — paper, email, app, QuickBooks?<span class="q-priority p-critical">critical</span></div>
+        <div class="q-why">This reveals <strong>operational maturity.</strong> If he's still on paper invoices, that's a direct value-add: we can solve it same day with a digital invoice page.</div>
+        <textarea class="q-answer" placeholder="Invoice method..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q7"></div>
-        <div class="q-label">
-          <div class="q-priority p-must">Must Ask</div>
-          <div class="q-text">Do you accept credit/debit cards? If yes, what processor (Square, Stripe, etc.)? What are you paying in fees?</div>
-          <div class="q-why">Most small contractors overpay 0.5–1% on processing fees. Easy upgrade opportunity.</div>
-          <textarea class="q-input" data-q="q7" placeholder="e.g. cash/check only, Square 2.6%+10¢, Venmo..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Do you accept credit cards? If not, how many customers have you lost because they couldn't pay the way they wanted?<span class="q-priority p-high">high</span></div>
+        <div class="q-why">Card processing = <strong>faster payment, bigger average ticket, less friction.</strong> Many contractors lose 15-20% of closes because they're cash-only.</div>
+        <textarea class="q-answer" placeholder="Payment methods + lost jobs..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q8"></div>
-        <div class="q-label">
-          <div class="q-priority p-must">Must Ask</div>
-          <div class="q-text">How long does it take to get paid after a job? What % of invoices are 30+ days late?</div>
-          <div class="q-why">Collections lag kills cash flow. Auto-pay and recurring billing fixes this.</div>
-          <textarea class="q-input" data-q="q8" placeholder="e.g. usually 2 weeks, maybe 10% go past 30 days..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Do you have seasonal contracts — where a customer pays upfront or monthly for all-season service?</div>
+        <div class="q-why">Seasonal contracts = <strong>predictable cash flow + locked-in customers.</strong> If he doesn't have them, this is a $50K+ annual revenue opportunity.</div>
+        <textarea class="q-answer" placeholder="Contract structure..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q9"></div>
-        <div class="q-label">
-          <div class="q-priority p-high">High</div>
-          <div class="q-text">Are any customers on recurring auto-pay or monthly billing? Would you want that?</div>
-          <div class="q-why">Recurring billing is the #1 revenue stability upgrade for lawn companies.</div>
-          <textarea class="q-input" data-q="q9" placeholder="e.g. none yet, a few regulars pay monthly manually..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">What's your average job size — and do you have a rough sense of annual revenue, or how many active customers?<span class="q-priority p-high">high</span></div>
+        <div class="q-why">You can't recommend a growth target without knowing the baseline. <strong>Even a rough range ($200K? $500K?) helps.</strong> If he hesitates, reassure him — it's just for context.</div>
+        <textarea class="q-answer" placeholder="Revenue range / job count..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q10"></div>
-        <div class="q-label">
-          <div class="q-priority p-med">Standard</div>
-          <div class="q-text">Do you use any field service or job management software (Jobber, ServiceTitan, Housecall Pro)?</div>
-          <textarea class="q-input" data-q="q10" placeholder="e.g. just spreadsheets, looking at Jobber..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">When a customer calls for a quote, how long does it typically take to get them a number?</div>
+        <div class="q-why"><strong>Speed to quote = revenue.</strong> If it takes 3 days, he's losing 40-50% of leads to faster competitors. Our online quote system solves this instantly.</div>
+        <textarea class="q-answer" placeholder="Quote turnaround time..."></textarea>
+      </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Do you charge differently for commercial vs. residential? And do you have any commercial property accounts — HOAs, apartment complexes, businesses?</div>
+        <div class="q-why">Commercial accounts = <strong>10x the residential ticket</strong> on recurring contracts. LinkedIn + property manager outreach could land him 3-5 commercial accounts this year.</div>
+        <textarea class="q-answer" placeholder="Commercial vs residential pricing..."></textarea>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ══ 3. CUSTOMER OUTREACH & CRM ══ -->
-  <div class="section-block">
-    <div class="section-header open" onclick="toggleSection(this)">
-      <div class="sec-icon">📲</div>
-      <div class="sec-title">Customer Outreach, CRM & Follow-Up</div>
-      <div class="sec-badge red">MUST ASK</div>
-      <div class="sec-toggle">▼</div>
+<!-- ══════════════════════════════════════════════════════
+     SECTION 3 — LEADS / HOW CUSTOMERS FIND HIM
+══════════════════════════════════════════════════════ -->
+<div class="sec-block">
+  <div class="sec-header" onclick="toggleSection(this)">
+    <span class="sec-icon">📣</span>
+    <span class="sec-title">Lead Generation — Where New Customers Come From</span>
+    <span class="sec-tag tag-red">Biggest Gap</span>
+    <span class="sec-chevron">▼</span>
+  </div>
+  <div class="sec-body">
+    <div class="context-box">
+      <span class="ctx-label">Context:</span>
+      <span class="ctx-text">With <strong>4.7 stars & 166 Google reviews</strong>, Lawn-Mex has strong organic credibility — but probably no system turning that into consistent leads. That's the gap.</span>
     </div>
-    <div class="section-body">
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q11"></div>
-        <div class="q-label">
-          <div class="q-priority p-must">Must Ask</div>
-          <div class="q-text">Where do new customers come from right now? (referrals, Google, Nextdoor, yard signs, etc.)</div>
-          <div class="q-why">Whatever's working gets 10x'd. Whatever's missing gets built.</div>
-          <textarea class="q-input" data-q="q11" placeholder="e.g. mostly word of mouth, some Google, Nextdoor helps..."></textarea>
-        </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Right now, where do most of your new customers come from — referrals, Google, word of mouth, door hangers?<span class="q-priority p-critical">critical</span></div>
+        <div class="q-why">This is the most important question in the meeting. <strong>If the answer is "referrals," he has no marketing system</strong> — he's at the mercy of whether someone recommends him this week.</div>
+        <textarea class="q-answer" placeholder="Lead sources in order of volume..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q12"></div>
-        <div class="q-label">
-          <div class="q-priority p-must">Must Ask</div>
-          <div class="q-text">When someone calls or texts for a quote — what happens? Walk me through the process start to finish.</div>
-          <div class="q-why">The quote-to-close gap is where most small businesses lose 30–50% of leads.</div>
-          <textarea class="q-input" data-q="q12" placeholder="e.g. I call them back, go look, send a text with price..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Are you running any paid ads — Google Ads, Facebook, Nextdoor? How much are you spending and are you tracking what jobs it's generating?<span class="q-priority p-high">high</span></div>
+        <div class="q-why">Most contractors either spend nothing or waste money on ads with no tracking. <strong>Either answer = opportunity.</strong></div>
+        <textarea class="q-answer" placeholder="Ad spend + tracking status..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q13"></div>
-        <div class="q-label">
-          <div class="q-priority p-must">Must Ask</div>
-          <div class="q-text">Do you follow up with leads who don't book? How many times? By call, text, or email?</div>
-          <div class="q-why">Most leads need 3–5 touches. If the answer is "once," there's immediate revenue on the table.</div>
-          <textarea class="q-input" data-q="q13" placeholder="e.g. I call once, if no answer I move on..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Have you ever gotten a lead from Nextdoor, Angie's List / Angi, HomeAdvisor, or Thumbtack?</div>
+        <div class="q-why">These platforms can be <strong>low-cost, high-intent lead sources</strong> for local lawn care. Most contractors ignore them.</div>
+        <textarea class="q-answer" placeholder="Platform presence..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q14"></div>
-        <div class="q-label">
-          <div class="q-priority p-high">High</div>
-          <div class="q-text">Do you reach back out to past customers at the start of each season? How?</div>
-          <div class="q-why">Reactivation campaigns typically recover 20–35% of lapsed customers.</div>
-          <textarea class="q-input" data-q="q14" placeholder="e.g. I text some regulars, not really systematic..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">When was the last time you reached out to a past customer you haven't heard from in 6+ months?</div>
+        <div class="q-why"><strong>Win-back campaigns</strong> are the lowest-cost revenue source in any service business. A single text to 50 past customers can generate $5-10K in work within a week.</div>
+        <textarea class="q-answer" placeholder="Last customer re-engagement..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q15"></div>
-        <div class="q-label">
-          <div class="q-priority p-high">High</div>
-          <div class="q-text">Do you have a customer list with phone numbers and emails? How many contacts?</div>
-          <div class="q-why">This is the most valuable asset in the business. If it doesn't exist, building it is priority #1.</div>
-          <textarea class="q-input" data-q="q15" placeholder="e.g. phone contacts only, maybe 150 numbers..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">You have 166 Google reviews — do you have a system for asking every customer to leave a review after a job, or does it happen randomly?<span class="q-priority p-high">high</span></div>
+        <div class="q-why"><strong>166 reviews at 4.7 stars is exceptional</strong> — but it's likely happening by accident. A simple post-job text asking for a review could double that in 6 months. More reviews = more Google Map Pack visibility.</div>
+        <textarea class="q-answer" placeholder="Review collection process..."></textarea>
+      </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Does your website currently show up on Google when someone searches "lawn care Belleville IL" or "snow removal Belleville"? Have you ever checked?</div>
+        <div class="q-why">Google Search Console + Google My Business optimization can put Lawn-Mex on page 1 for high-intent searches. If he doesn't know his rankings, <strong>he's flying blind.</strong></div>
+        <textarea class="q-answer" placeholder="SEO / search visibility..."></textarea>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ══ 4. MARKETING ══ -->
-  <div class="section-block">
-    <div class="section-header open" onclick="toggleSection(this)">
-      <div class="sec-icon">📣</div>
-      <div class="sec-title">Marketing — What's Running & What's Missing</div>
-      <div class="sec-badge gold">Growth Lever</div>
-      <div class="sec-toggle">▼</div>
+<!-- ══════════════════════════════════════════════════════
+     SECTION 4 — CUSTOMER EXPERIENCE / FOLLOW-UP
+══════════════════════════════════════════════════════ -->
+<div class="sec-block">
+  <div class="sec-header" onclick="toggleSection(this)">
+    <span class="sec-icon">📱</span>
+    <span class="sec-title">Customer Experience — From First Call to Follow-Up</span>
+    <span class="sec-tag tag-blue">Retention</span>
+    <span class="sec-chevron">▼</span>
+  </div>
+  <div class="sec-body">
+    <div class="context-box">
+      <span class="ctx-label">Context:</span>
+      <span class="ctx-text">Most service businesses lose 30-40% of customers simply through <strong>no follow-up.</strong> Automated texts and emails can fix this overnight.</span>
     </div>
-    <div class="section-body">
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q16"></div>
-        <div class="q-label">
-          <div class="q-priority p-must">Must Ask</div>
-          <div class="q-text">Are you running any paid advertising right now? (Google Ads, Facebook/Instagram, Nextdoor Ads, Yelp Ads)</div>
-          <div class="q-why">If not, Google Local Services Ads (pay-per-lead) is the fastest ROI for lawn companies.</div>
-          <textarea class="q-input" data-q="q16" placeholder="e.g. nothing paid, tried Facebook once..."></textarea>
-        </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">When a new customer calls you, what happens next — do they get a confirmation, a follow-up, or just show-up day?<span class="q-priority p-critical">critical</span></div>
+        <div class="q-why">The <strong>gap between "yes" and "first job" is where customers ghost.</strong> A confirmation text + reminder the night before kills no-shows and makes customers feel professional service starts immediately.</div>
+        <textarea class="q-answer" placeholder="New customer onboarding process..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q17"></div>
-        <div class="q-label">
-          <div class="q-priority p-high">High</div>
-          <div class="q-text">Do you post on social media? Which platforms? How often?</div>
-          <textarea class="q-input" data-q="q17" placeholder="e.g. Facebook occasionally, no Instagram..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">After a job is done, do you check in with the customer — text, call, anything?</div>
+        <div class="q-why">A simple "how did we do?" text after every job has two effects: <strong>it surfaces complaints before they become 1-star reviews, and it turns happy customers into referrers.</strong></div>
+        <textarea class="q-answer" placeholder="Post-job follow-up process..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q18"></div>
-        <div class="q-label">
-          <div class="q-priority p-high">High</div>
-          <div class="q-text">Do you have a referral program? Do you give customers anything for sending you new business?</div>
-          <div class="q-why">A $25–$50 referral credit typically generates 300–500% ROI for service businesses.</div>
-          <textarea class="q-input" data-q="q18" placeholder="e.g. no formal program, just say thanks..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Do you send anything to customers at the start of spring or winter — like a "We're ready for the season, want to book?" message?<span class="q-priority p-high">high</span></div>
+        <div class="q-why">Seasonal re-engagement campaigns are <strong>the single highest-ROI marketing activity</strong> for lawn care. One email/text blast at the right moment can book 30% of the next season in a day.</div>
+        <textarea class="q-answer" placeholder="Seasonal outreach..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q19"></div>
-        <div class="q-label">
-          <div class="q-priority p-high">High</div>
-          <div class="q-text">Do you ask customers for Google reviews? What's your current Google rating and review count?</div>
-          <div class="q-why">Every star above 4.0 increases conversion by ~18%. Review automation is fast and cheap to set up.</div>
-          <textarea class="q-input" data-q="q19" placeholder="e.g. 4.2 stars, 12 reviews, don't really ask..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">How do customers typically reach you — call, text, Facebook message, website form? Which one is the biggest?</div>
+        <div class="q-why">If most contacts come through Facebook or phone, we need to make sure <strong>every channel is monitored and nothing falls through.</strong> Missed messages = lost revenue.</div>
+        <textarea class="q-answer" placeholder="Primary contact channel..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q20"></div>
-        <div class="q-label">
-          <div class="q-priority p-med">Standard</div>
-          <div class="q-text">Do you have yard signs? Do you ask to put them out after jobs?</div>
-          <textarea class="q-input" data-q="q20" placeholder="e.g. have some but don't always use them..."></textarea>
-        </div>
-      </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q21"></div>
-        <div class="q-label">
-          <div class="q-priority p-med">Standard</div>
-          <div class="q-text">Have you ever sent email newsletters, texts, or seasonal promotions to your customer list?</div>
-          <textarea class="q-input" data-q="q21" placeholder="e.g. never, sent a few texts last spring..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Have you ever had a customer come back angry about something — and how did you handle it?</div>
+        <div class="q-why">This isn't a gotcha — it's a trust-builder. <strong>How he answers tells you everything about his customer care values</strong> and reveals whether he has a real resolution process.</div>
+        <textarea class="q-answer" placeholder="Complaint handling..."></textarea>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ══ 5. WEBSITE & SEO ══ -->
-  <div class="section-block">
-    <div class="section-header open" onclick="toggleSection(this)">
-      <div class="sec-icon">🌐</div>
-      <div class="sec-title">Website, SEO & Google Presence</div>
-      <div class="sec-badge blue">Digital Audit</div>
-      <div class="sec-toggle">▼</div>
+<!-- ══════════════════════════════════════════════════════
+     SECTION 5 — DIGITAL / WEBSITE / GOOGLE
+══════════════════════════════════════════════════════ -->
+<div class="sec-block">
+  <div class="sec-header" onclick="toggleSection(this)">
+    <span class="sec-icon">🌐</span>
+    <span class="sec-title">Website, Google & Digital Presence</span>
+    <span class="sec-tag tag-orange">SEO / Visibility</span>
+    <span class="sec-chevron">▼</span>
+  </div>
+  <div class="sec-body">
+    <div class="context-box">
+      <span class="ctx-label">We Know:</span>
+      <span class="ctx-text">Lawn-Mex is on <strong>Google (4.7★), Yelp, Today's Homeowner, Facebook, Instagram, LinkedIn.</strong> But we don't know if Google Analytics / Search Console is set up, or if anyone manages these listings actively.</span>
     </div>
-    <div class="section-body">
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q22"></div>
-        <div class="q-label">
-          <div class="q-priority p-must">Must Ask</div>
-          <div class="q-text">Do you have a Google Business Profile (the box that shows up on Google Maps)?</div>
-          <div class="q-why">This is the single highest-ROI free tool for local service businesses. If not claimed = leaving leads on the table daily.</div>
-          <textarea class="q-input" data-q="q22" placeholder="e.g. yes/no, not sure, someone set it up years ago..."></textarea>
-        </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Is your website lawnmexinc.com something you manage, or did someone else build it? When was the last update?<span class="q-priority p-critical">critical</span></div>
+        <div class="q-why">Most contractor websites are years out of date and not mobile-optimized. If he can't update it himself, <strong>he's paying for a ghost.</strong></div>
+        <textarea class="q-answer" placeholder="Website ownership + age..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q23"></div>
-        <div class="q-label">
-          <div class="q-priority p-must">Must Ask</div>
-          <div class="q-text">Do you have Google Analytics and Google Search Console set up on your website?</div>
-          <div class="q-why">Without these, you're flying blind. We can install both in 30 minutes and start tracking immediately.</div>
-          <textarea class="q-input" data-q="q23" placeholder="e.g. don't know, my nephew built the site..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Do you have Google Analytics or Google Search Console set up — do you know how many people are visiting your website per month?<span class="q-priority p-high">high</span></div>
+        <div class="q-why">If he doesn't know his traffic, <strong>he has no baseline.</strong> We can set up Analytics + Search Console and have real data within 48 hours — immediate value delivered.</div>
+        <textarea class="q-answer" placeholder="Analytics status..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q24"></div>
-        <div class="q-label">
-          <div class="q-priority p-high">High</div>
-          <div class="q-text">Have you ever searched "lawn service Belleville IL" or your other main services on Google? Where do you show up?</div>
-          <div class="q-why">If they're not page 1 for their city + service, they're invisible to the internet.</div>
-          <textarea class="q-input" data-q="q24" placeholder="e.g. page 2-3, don't know, shows up sometimes..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Is your Google Business Profile (the Google Maps listing) claimed by you — can you log in and update it?</div>
+        <div class="q-why">Unclaimed or outdated GBP profiles lose 30-50% of map traffic to competitors. <strong>A fully optimized GBP is free and worth $20K+ in annual leads</strong> for a lawn care company.</div>
+        <textarea class="q-answer" placeholder="GBP status..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q25"></div>
-        <div class="q-label">
-          <div class="q-priority p-high">High</div>
-          <div class="q-text">When did you last update your website? Who controls it — you, a web company, a family member?</div>
-          <textarea class="q-input" data-q="q25" placeholder="e.g. built 2019, my brother manages it..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Do you post anything on your Facebook or Instagram — before/afters, jobs, team photos? How often?</div>
+        <div class="q-why">Content frequency correlates directly with <strong>algorithm reach and inbound inquiries</strong> on Facebook for local service businesses. Even 2 posts/week makes a measurable difference.</div>
+        <textarea class="q-answer" placeholder="Social posting frequency..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q26"></div>
-        <div class="q-label">
-          <div class="q-priority p-high">High</div>
-          <div class="q-text">Does your website have a "Request a Quote" form? Do those leads actually come to you?</div>
-          <textarea class="q-input" data-q="q26" placeholder="e.g. has a form but I never see emails from it..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">You're on Yelp — have you ever gotten leads from there? Are you responding to reviews on Google and Yelp?</div>
+        <div class="q-why">Responding to reviews <strong>boosts Google rank and conversion rate.</strong> A study by Harvard Business Review found that businesses that respond to reviews get 12% more total reviews.</div>
+        <textarea class="q-answer" placeholder="Review response practice..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q27"></div>
-        <div class="q-label">
-          <div class="q-priority p-med">Standard</div>
-          <div class="q-text">Is your business listed on Yelp, Angi, Thumbtack, HomeAdvisor, or Houzz? Are those profiles active?</div>
-          <textarea class="q-input" data-q="q27" placeholder="e.g. on Yelp, not on Angi, not sure about others..."></textarea>
-        </div>
-      </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q28"></div>
-        <div class="q-label">
-          <div class="q-priority p-med">Standard</div>
-          <div class="q-text">Is your website mobile-friendly? Do you know what % of your visitors are on phones?</div>
-          <div class="q-why">70–80% of local service searches are on mobile. Slow or broken mobile = lost jobs.</div>
-          <textarea class="q-input" data-q="q28" placeholder="e.g. looks ok on my iPhone, not sure about speed..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Do you have a LinkedIn company page set up — separate from the job posting that's live right now?<span class="q-priority p-high">high</span></div>
+        <div class="q-why">There's an active <strong>Landscape Laborer job posting on LinkedIn</strong> but no company page behind it. Candidates and commercial clients click through and see nothing. This is a 20-minute fix worth thousands in hiring + credibility.</div>
+        <textarea class="q-answer" placeholder="LinkedIn page status..."></textarea>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ══ 6. OPERATIONS ══ -->
-  <div class="section-block">
-    <div class="section-header" onclick="toggleSection(this)">
-      <div class="sec-icon">⚙️</div>
-      <div class="sec-title">Operations — Staff, Trucks, Capacity</div>
-      <div class="sec-badge gold">Capacity Planning</div>
-      <div class="sec-toggle">▼</div>
+<!-- ══════════════════════════════════════════════════════
+     SECTION 6 — TEAM / OPERATIONS / HIRING
+══════════════════════════════════════════════════════ -->
+<div class="sec-block">
+  <div class="sec-header" onclick="toggleSection(this)">
+    <span class="sec-icon">👷</span>
+    <span class="sec-title">Team, Operations & Hiring</span>
+    <span class="sec-tag tag-purple">Scale</span>
+    <span class="sec-chevron">▼</span>
+  </div>
+  <div class="sec-body">
+    <div class="context-box">
+      <span class="ctx-label">We Know:</span>
+      <span class="ctx-text">Jeff has <strong>7 plows + multiple crew members</strong> (shown on KMOV). He's actively hiring a Landscape Laborer on LinkedIn. This is a growing operation.</span>
     </div>
-    <div class="section-body" style="display:none">
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q29"></div>
-        <div class="q-label">
-          <div class="q-priority p-high">High</div>
-          <div class="q-text">How many employees or crew members do you have? Full-time vs. seasonal?</div>
-          <textarea class="q-input" data-q="q29" placeholder="e.g. 2 full-time, 2 more in summer..."></textarea>
-        </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">How many full-time crew members do you have right now, and how many are you looking to add this season?<span class="q-priority p-high">high</span></div>
+        <div class="q-why">Team size tells you <strong>capacity limits.</strong> If he can't take on more jobs because he's understaffed, marketing spend is wasted. Hiring page + LinkedIn profile solve this.</div>
+        <textarea class="q-answer" placeholder="Team size + hiring targets..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q30"></div>
-        <div class="q-label">
-          <div class="q-priority p-high">High</div>
-          <div class="q-text">How many crews/trucks do you run? Are you at capacity or do you have room to grow?</div>
-          <textarea class="q-input" data-q="q30" placeholder="e.g. 1 crew, could handle 20% more..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">How do you currently find workers — word of mouth, Indeed, LinkedIn? What's your biggest hiring challenge?</div>
+        <div class="q-why">If he's struggling to find labor, <strong>a strong LinkedIn company page + "Why Work Here" section</strong> can meaningfully improve applicant quality and volume.</div>
+        <textarea class="q-answer" placeholder="Hiring channels + pain points..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q31"></div>
-        <div class="q-label">
-          <div class="q-priority p-med">Standard</div>
-          <div class="q-text">What is the biggest operational bottleneck right now — scheduling, labor, equipment, quoting?</div>
-          <textarea class="q-input" data-q="q31" placeholder="e.g. finding good workers, scheduling is messy..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Is Jeff — you — still doing physical work in the field? Or are you primarily managing operations?</div>
+        <div class="q-why">The classic contractor bottleneck: <strong>owner is the best worker, so they can never stop working.</strong> If this is true, you can frame the entire engagement around "freeing Jeff up."</div>
+        <textarea class="q-answer" placeholder="Jeff's role in daily operations..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q32"></div>
-        <div class="q-label">
-          <div class="q-priority p-med">Standard</div>
-          <div class="q-text">Do you do commercial accounts (HOAs, businesses, churches)? Interested in more?</div>
-          <textarea class="q-input" data-q="q32" placeholder="e.g. 2 commercial, want more, better than residential..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Do you use any job management software — Jobber, ServiceTitan, HouseCall Pro, or anything like that?</div>
+        <div class="q-why">No software = manual scheduling, double-booking risk, and no customer history. <strong>The right software pays for itself in the first month.</strong> If he uses one, understand it — don't reinvent it.</div>
+        <textarea class="q-answer" placeholder="Job management software..."></textarea>
+      </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">What happens when a key crew member calls in sick the morning of a big commercial job?</div>
+        <div class="q-why">This uncovers <strong>operational fragility.</strong> If the answer is "it's chaos," you can recommend scheduling redundancy systems — a real, tangible value-add.</div>
+        <textarea class="q-answer" placeholder="Backup staffing process..."></textarea>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ══ 7. REVIEWS & REPUTATION ══ -->
-  <div class="section-block">
-    <div class="section-header" onclick="toggleSection(this)">
-      <div class="sec-icon">⭐</div>
-      <div class="sec-title">Reviews, Reputation & Social Proof</div>
-      <div class="sec-badge gold">Trust Builder</div>
-      <div class="sec-toggle">▼</div>
+<!-- ══════════════════════════════════════════════════════
+     SECTION 7 — WINTER / SNOW REMOVAL SPECIFICALLY
+══════════════════════════════════════════════════════ -->
+<div class="sec-block">
+  <div class="sec-header" onclick="toggleSection(this)">
+    <span class="sec-icon">❄️</span>
+    <span class="sec-title">Snow Removal — Their Second Revenue Engine</span>
+    <span class="sec-tag tag-blue">Seasonal $$</span>
+    <span class="sec-chevron">▼</span>
+  </div>
+  <div class="sec-body">
+    <div class="context-box">
+      <span class="ctx-label">We Know:</span>
+      <span class="ctx-text">Lawn-Mex has <strong>7 plows, a calcium/salt/brine operation</strong>, and covers Belleville, Swansea, Fairview Heights, O'Fallon. KMOV featured them specifically for their storm prep. This is a big operation.</span>
     </div>
-    <div class="section-body" style="display:none">
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q33"></div>
-        <div class="q-label">
-          <div class="q-priority p-must">Must Ask</div>
-          <div class="q-text">How many Google reviews do you have? What's your rating?</div>
-          <textarea class="q-input" data-q="q33" placeholder="e.g. 8 reviews, 4.4 stars..."></textarea>
-        </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">How do you currently get snow removal customers — are they the same as your lawn customers, or a completely different list?<span class="q-priority p-high">high</span></div>
+        <div class="q-why">If there's overlap, that's a <strong>cross-sell opportunity.</strong> If it's separate, they need a dedicated snow removal marketing push before November.</div>
+        <textarea class="q-answer" placeholder="Snow customer overlap..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q34"></div>
-        <div class="q-label">
-          <div class="q-priority p-must">Must Ask</div>
-          <div class="q-text">Do you send a review request after every completed job? By text or email?</div>
-          <div class="q-why">Automated review requests after job completion = fastest way to build Google credibility.</div>
-          <textarea class="q-input" data-q="q34" placeholder="e.g. sometimes ask in person, never by text..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Do you have pre-season snow contracts locked in — where customers pay before the first snowfall?</div>
+        <div class="q-why">Pre-season contracts <strong>eliminate the scramble after every storm</strong> and provide working capital in October/November. This is a McKinsey 101 fix for seasonal businesses.</div>
+        <textarea class="q-answer" placeholder="Pre-season contract status..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q35"></div>
-        <div class="q-label">
-          <div class="q-priority p-high">High</div>
-          <div class="q-text">Have you ever had a negative review? How did you handle it?</div>
-          <textarea class="q-input" data-q="q35" placeholder="e.g. one bad one, ignored it, or responded..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">When KMOV covered you, did you get any business from it? Did the phone ring more?</div>
+        <div class="q-why">If the answer is "barely" or "I don't know" — <strong>that's the problem in a nutshell.</strong> Great press with no system to capture leads = money left on the table. Our news page fixes this.</div>
+        <textarea class="q-answer" placeholder="KMOV lead impact..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q36"></div>
-        <div class="q-label">
-          <div class="q-priority p-med">Standard</div>
-          <div class="q-text">Do customers ever send you before/after photos? Do you post them anywhere?</div>
-          <div class="q-why">Before/after content is the highest-converting social media content for home services.</div>
-          <textarea class="q-input" data-q="q36" placeholder="e.g. sometimes, just keep them in my phone..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Are any of your snow removal clients commercial — shopping centers, office parks, apartment complexes?</div>
+        <div class="q-why">A single commercial snow account can be worth $15-40K/season. <strong>If he has any, understand the contract structure.</strong> If not, LinkedIn + commercial outreach this fall could change his business.</div>
+        <textarea class="q-answer" placeholder="Commercial snow accounts..."></textarea>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ══ 8. PRICING & MARGINS ══ -->
-  <div class="section-block">
-    <div class="section-header" onclick="toggleSection(this)">
-      <div class="sec-icon">💰</div>
-      <div class="sec-title">Pricing, Margins & Competition</div>
-      <div class="sec-badge purple">Profit Analysis</div>
-      <div class="sec-toggle">▼</div>
+<!-- ══════════════════════════════════════════════════════
+     SECTION 8 — COMPETITION / MARKET POSITION
+══════════════════════════════════════════════════════ -->
+<div class="sec-block">
+  <div class="sec-header" onclick="toggleSection(this)">
+    <span class="sec-icon">⚔️</span>
+    <span class="sec-title">Competition & Market Position</span>
+    <span class="sec-tag tag-red">Intel</span>
+    <span class="sec-chevron">▼</span>
+  </div>
+  <div class="sec-body">
+    <div class="context-box">
+      <span class="ctx-label">Context:</span>
+      <span class="ctx-text">Belleville/Metro East has multiple lawn care companies. Lawn-Mex's <strong>4.7 stars + 25 years + TV feature</strong> puts them ahead — but Jeff may not know exactly why customers choose him over others.</span>
     </div>
-    <div class="section-body" style="display:none">
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q37"></div>
-        <div class="q-label">
-          <div class="q-priority p-must">Must Ask</div>
-          <div class="q-text">When did you last raise your prices? By how much?</div>
-          <div class="q-why">Most service businesses are 15–25% underpriced vs. market. This is a fast revenue lever.</div>
-          <textarea class="q-input" data-q="q37" placeholder="e.g. 2021, went up $5-10 per lawn..."></textarea>
-        </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Who do you think your biggest local competitor is — and why do your customers choose you over them?<span class="q-priority p-critical">critical</span></div>
+        <div class="q-why">This is gold. <strong>His answer becomes your USP copy.</strong> Whatever he says — write it down and use it in marketing, website headlines, and ad copy.</div>
+        <textarea class="q-answer" placeholder="Competitors + differentiators..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q38"></div>
-        <div class="q-label">
-          <div class="q-priority p-high">High</div>
-          <div class="q-text">Do you do upsells at the job site? (e.g. while we're here, want us to also trim/aerate/fertilize?)</div>
-          <textarea class="q-input" data-q="q38" placeholder="e.g. sometimes suggest it verbally, no system..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Are there jobs you consistently lose to competitors — certain services, price points, or service areas?</div>
+        <div class="q-why">Loss patterns reveal <strong>pricing gaps or service holes</strong> you can help him close. Maybe he's losing irrigation jobs because he doesn't promote that service well.</div>
+        <textarea class="q-answer" placeholder="Jobs/markets lost to competitors..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q39"></div>
-        <div class="q-label">
-          <div class="q-priority p-high">High</div>
-          <div class="q-text">Who are your main competitors? Do you know what they charge?</div>
-          <textarea class="q-input" data-q="q39" placeholder="e.g. Green Lawn Co, Metro Cuts, they're cheaper than me..."></textarea>
-        </div>
-      </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q40"></div>
-        <div class="q-label">
-          <div class="q-priority p-med">Standard</div>
-          <div class="q-text">Do you offer service packages or annual contracts? Or is it all one-time / per-visit?</div>
-          <div class="q-why">Annual contracts = predictable revenue. Even converting 20% of customers to a package changes the whole business.</div>
-          <textarea class="q-input" data-q="q40" placeholder="e.g. all one-time, a few semi-regulars..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Are there any national brands — TruGreen, LawnStarter, etc. — starting to take over in your area?</div>
+        <div class="q-why">National chains are winning on <strong>digital presence, not service quality.</strong> The answer to this shapes how aggressively you need to rebuild Lawn-Mex's digital footprint.</div>
+        <textarea class="q-answer" placeholder="National chain competition..."></textarea>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ══ 9. GOALS & VISION ══ -->
-  <div class="section-block">
-    <div class="section-header" onclick="toggleSection(this)">
-      <div class="sec-icon">🎯</div>
-      <div class="sec-title">Goals, Vision & What Keeps Him Up at Night</div>
-      <div class="sec-badge blue">Close the Meeting</div>
-      <div class="sec-toggle">▼</div>
+<!-- ══════════════════════════════════════════════════════
+     SECTION 9 — GOALS & WHAT SUCCESS LOOKS LIKE
+══════════════════════════════════════════════════════ -->
+<div class="sec-block">
+  <div class="sec-header" onclick="toggleSection(this)">
+    <span class="sec-icon">🎯</span>
+    <span class="sec-title">Goals — What Does "Winning" Look Like for Jeff?</span>
+    <span class="sec-tag tag-green">Close Here</span>
+    <span class="sec-chevron">▼</span>
+  </div>
+  <div class="sec-body">
+    <div class="context-box">
+      <span class="ctx-label">Strategy:</span>
+      <span class="ctx-text">Don't pitch until you've asked these. <strong>Let him describe his dream outcome — then your proposal is just "here's how we get there."</strong> That's not selling. That's solving.</span>
     </div>
-    <div class="section-body" style="display:none">
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q41"></div>
-        <div class="q-label">
-          <div class="q-priority p-must">Must Ask</div>
-          <div class="q-text">Where do you want this business to be in 3 years? Revenue target? More crews? Franchise it?</div>
-          <textarea class="q-input" data-q="q41" placeholder="e.g. want to hit $1M, maybe hire a manager so I can step back..."></textarea>
-        </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">If we're sitting here one year from now and things went perfectly — what changed for Lawn-Mex?<span class="q-priority p-critical">critical</span></div>
+        <div class="q-why">The single best closing question in consulting. <strong>Whatever he says is your proposal.</strong> More revenue? Less stress? A second location? Write it down verbatim.</div>
+        <textarea class="q-answer" placeholder="Jeff's 1-year vision..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q42"></div>
-        <div class="q-label">
-          <div class="q-priority p-must">Must Ask</div>
-          <div class="q-text">What's the #1 thing that would make the biggest difference in the business right now?</div>
-          <div class="q-why">This tells you exactly what to pitch first.</div>
-          <textarea class="q-input" data-q="q42" placeholder="e.g. more leads, better employees, stop chasing invoices..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Is the goal to grow the business aggressively, or is it more about making the same revenue with less chaos and stress?</div>
+        <div class="q-why">This determines whether you build a <strong>growth system vs. an efficiency system.</strong> Both are valuable but the deliverables look very different.</div>
+        <textarea class="q-answer" placeholder="Growth vs efficiency priority..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q43"></div>
-        <div class="q-label">
-          <div class="q-priority p-high">High</div>
-          <div class="q-text">Have you worked with a marketing or business consultant before? What happened?</div>
-          <div class="q-why">Objection intel. Know the previous bad experience before you get there.</div>
-          <textarea class="q-input" data-q="q43" placeholder="e.g. paid $1,500 for a website, got nothing..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">What would you say is the #1 thing holding the business back right now?<span class="q-priority p-critical">critical</span></div>
+        <div class="q-why">This is your headline. <strong>Whatever he says = your contract's first deliverable.</strong> Address it directly in your close — "Here's exactly how we fix that."</div>
+        <textarea class="q-answer" placeholder="#1 constraint today..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q44"></div>
-        <div class="q-label">
-          <div class="q-priority p-high">High</div>
-          <div class="q-text">What is the one thing about the business that frustrates you most week to week?</div>
-          <textarea class="q-input" data-q="q44" placeholder="e.g. customers who don't pay, can't find good workers..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">Have you ever worked with a marketing agency or consultant before? What happened?</div>
+        <div class="q-why">If he has, there's probably baggage. <strong>Understanding past failures lets you position yourself as different</strong> — and explains exactly why what you're offering isn't the same thing.</div>
+        <textarea class="q-answer" placeholder="Prior marketing experience..."></textarea>
       </div>
-      <div class="q-row">
-        <div class="q-check"><input type="checkbox" data-q="q45"></div>
-        <div class="q-label">
-          <div class="q-priority p-med">Standard</div>
-          <div class="q-text">What does success look like to you personally — more money, less stress, free weekends, legacy?</div>
-          <div class="q-why">Sell to the emotion, not the feature.</div>
-          <textarea class="q-input" data-q="q45" placeholder="e.g. want to not work Saturdays, want to take care of my family..."></textarea>
-        </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
+        <div class="q-text">What budget range are you thinking about for a growth partnership — rough ballpark? And what would justify that investment for you?<span class="q-priority p-high">high</span></div>
+        <div class="q-why">Never pitch a price before you've asked about budget. <strong>Frame it as a ROI conversation:</strong> "If we bring in 10 new seasonal contracts at $3K each, what's that worth to you?" Then the fee is obvious.</div>
+        <textarea class="q-answer" placeholder="Budget + ROI expectations..."></textarea>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- NOTES -->
-  <div class="section-block">
-    <div class="section-header open" onclick="toggleSection(this)">
-      <div class="sec-icon">📝</div>
-      <div class="sec-title">Additional Notes & Action Items</div>
-      <div class="sec-badge">Open Notes</div>
-      <div class="sec-toggle">▼</div>
-    </div>
-    <div class="section-body">
-      <div class="q-row">
-        <div class="q-label">
-          <div class="q-text">Free notes — things that come up in the meeting</div>
-          <textarea class="q-input" data-q="notes" placeholder="Write anything here..." style="min-height:100px"></textarea>
-        </div>
+<!-- ══════════════════════════════════════════════════════
+     SECTION 10 — YOUR ACTION ITEMS TO PRESENT
+══════════════════════════════════════════════════════ -->
+<div class="sec-block" style="border-color:rgba(56,169,87,.35)">
+  <div class="sec-header" onclick="toggleSection(this)" style="background:rgba(56,169,87,.05)">
+    <span class="sec-icon">🚀</span>
+    <span class="sec-title">What You're Presenting — Quick Wins to Mention Today</span>
+    <span class="sec-tag tag-green">Your Pitch</span>
+    <span class="sec-chevron">▼</span>
+  </div>
+  <div class="sec-body">
+    <div style="padding:16px 20px 4px;font-size:.8rem;color:var(--text-muted)">These are things you can demo <em>right now in the meeting</em> — live on your laptop. Real deliverables already built.</div>
+    <div class="action-grid">
+      <div class="action-card">
+        <div class="ac-num">01</div>
+        <div class="ac-title">📺 KMOV Press Page</div>
+        <div class="ac-desc">A full landing page built around their Channel 4 feature. Professional press coverage, Jeff's quotes, tweet embed, snow services. Live today at allprometroeastconstruction.com</div>
       </div>
-      <div class="q-row">
-        <div class="q-label">
-          <div class="q-text">Top 3 action items coming out of this meeting</div>
-          <textarea class="q-input" data-q="actions" placeholder="1. &#10;2. &#10;3. " style="min-height:80px"></textarea>
-        </div>
+      <div class="action-card">
+        <div class="ac-num">02</div>
+        <div class="ac-title">⭐ Google Reviews Section</div>
+        <div class="ac-desc">All 6 top reviews displayed with a 4.7★ badge, 166 total count. Customers see social proof before they scroll to the phone number.</div>
+      </div>
+      <div class="action-card">
+        <div class="ac-num">03</div>
+        <div class="ac-title">🌿 Today's Homeowner Badge</div>
+        <div class="ac-desc">Verified listing citation from Today's Homeowner with real hi-res logo + all 15 service tags. Adds 3rd-party credibility instantly.</div>
+      </div>
+      <div class="action-card">
+        <div class="ac-num">04</div>
+        <div class="ac-title">💼 LinkedIn Job + Company Page Plan</div>
+        <div class="ac-desc">Their live job post is linked. Show Jeff they're spending money on LinkedIn but have no company page — 20 minutes to fix, massive ROI on hiring + credibility.</div>
+      </div>
+      <div class="action-card">
+        <div class="ac-num">05</div>
+        <div class="ac-title">📊 Quote System</div>
+        <div class="ac-desc">Online quote form at lawnmex/quote.html — eliminates the 3-day quote delay that's costing him leads every week.</div>
+      </div>
+      <div class="action-card">
+        <div class="ac-num">06</div>
+        <div class="ac-title">💳 Invoice System</div>
+        <div class="ac-desc">Digital invoice page at lawnmex/invoice.html — replaces paper invoices, enables card payment, creates a paper trail. Show it live.</div>
+      </div>
+      <div class="action-card">
+        <div class="ac-num">07</div>
+        <div class="ac-title">📧 Email Campaigns</div>
+        <div class="ac-desc">Pre-written seasonal campaigns ready to deploy — spring re-engagement, win-back for dormant customers, snow pre-season signup. Each one designed to generate calls within 48 hours.</div>
+      </div>
+      <div class="action-card">
+        <div class="ac-num">08</div>
+        <div class="ac-title">🗺️ City SEO Pages</div>
+        <div class="ac-desc">Dedicated landing pages for Belleville, Swansea, Fairview Heights, O'Fallon — each one targeting local Google searches. Traffic starts within 2-4 weeks of Google indexing.</div>
+      </div>
+      <div class="action-card">
+        <div class="ac-num">09</div>
+        <div class="ac-title">📈 Google Analytics + Search Console</div>
+        <div class="ac-desc">Set up in 30 minutes. Within 48 hours Jeff will know exactly how many people find his site, what they search for, and what pages they visit. First real marketing data he's ever had.</div>
       </div>
     </div>
   </div>
+</div>
+
+<!-- CLOSING NOTE -->
+<div style="background:var(--dark-card);border:1px solid var(--dark-border);border-radius:14px;padding:24px 20px;margin-top:8px;text-align:center">
+  <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:8px">🎯 <strong style="color:#fff">Your close:</strong> "Jeff, I've already built this for you. I'm not asking you to imagine what it could look like — it's live right now. Let me show you."</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:16px">
+    <a href="lawnmex-outreach-preview-m3t7k4.html" style="background:var(--green);color:#0b1a0f;padding:10px 22px;border-radius:8px;font-weight:800;font-size:.88rem;text-decoration:none">Open Full Preview →</a>
+    <a href="lawnmex-news-kmov-winter-2022.html" target="_blank" style="background:rgba(59,130,246,.1);color:var(--blue);padding:10px 22px;border-radius:8px;font-weight:700;font-size:.88rem;text-decoration:none;border:1px solid rgba(59,130,246,.3)">📺 KMOV News Page</a>
+  </div>
+</div>
 
 </div><!-- /page-body -->
 
-<div class="save-bar">
-  <div class="save-bar-left">✅ <strong id="save-count">0</strong> of 45 questions answered · auto-saved</div>
-  <div style="display:flex;gap:8px">
-    <button class="print-btn" onclick="window.print()">🖨 Print / PDF</button>
-    <button class="save-btn" onclick="saveAll()">💾 Save All</button>
+<!-- BOTTOM STRIP -->
+<div class="bottom-strip">
+  <div class="bottom-left"><strong id="checkedCount">0</strong> of <span id="totalCount">0</span> questions answered</div>
+  <div class="bottom-actions">
+    <button class="btn-bottom btn-clear" onclick="clearAll()">Clear All</button>
+    <button class="btn-bottom btn-export" onclick="exportNotes()">💾 Export Notes</button>
   </div>
 </div>
 
 <script>
-// Auto-save to localStorage
-const KEY = 'lawnmex-discovery-v1';
-
-function loadSaved() {
-  try {
-    const data = JSON.parse(localStorage.getItem(KEY) || '{}');
-    Object.entries(data).forEach(([k, v]) => {
-      const input = document.querySelector(`[data-q="${k}"]`);
-      if (!input) return;
-      if (input.type === 'checkbox') input.checked = !!v;
-      else input.value = v || '';
-    });
-    updateCounts();
-  } catch(e) {}
+// ── SECTION TOGGLE ──
+function toggleSection(hdr){
+  hdr.classList.toggle('open');
+  hdr.nextElementSibling.classList.toggle('open');
 }
 
-function saveAll() {
-  const data = {};
-  document.querySelectorAll('[data-q]').forEach(el => {
-    if (el.type === 'checkbox') data[el.dataset.q + '_check'] = el.checked;
-    else data[el.dataset.q] = el.value;
+// ── SCORE / PROGRESS ──
+function updateScore(){
+  const all = document.querySelectorAll('.q-check input[type=checkbox]');
+  const done = document.querySelectorAll('.q-check input[type=checkbox]:checked');
+  const pct = all.length ? Math.round(done.length/all.length*100) : 0;
+  document.getElementById('scoreFill').style.width = pct+'%';
+  document.getElementById('scoreNum').textContent = pct+'%';
+  document.getElementById('checkedCount').textContent = done.length;
+  document.getElementById('totalCount').textContent = all.length;
+  // scroll progress
+  saveAll();
+}
+
+// Section completion dots
+function buildSectionDots(){
+  const blocks = document.querySelectorAll('.sec-block');
+  const container = document.getElementById('sectionDots');
+  container.innerHTML = '';
+  blocks.forEach((b,i)=>{
+    const all = b.querySelectorAll('.q-check input[type=checkbox]');
+    const done = b.querySelectorAll('.q-check input[type=checkbox]:checked');
+    const el = document.createElement('span');
+    el.className = 'score-sec' + (all.length && done.length===all.length?' done':'');
+    const title = b.querySelector('.sec-title').textContent.split('—')[0].trim().replace(/[^\w\s]/g,'').trim();
+    el.textContent = (done.length===all.length && all.length?'✓ ':'')+title.substring(0,16);
+    el.style.cursor='pointer';
+    el.onclick=()=>b.scrollIntoView({behavior:'smooth'});
+    container.appendChild(el);
   });
-  localStorage.setItem(KEY, JSON.stringify(data));
-  updateCounts();
-  const btn = document.querySelector('.save-btn');
-  btn.textContent = '✅ Saved!';
-  setTimeout(() => btn.textContent = '💾 Save All', 1500);
 }
 
-function updateCounts() {
-  const checks = document.querySelectorAll('input[type=checkbox]');
-  const answered = [...checks].filter(c => c.checked).length;
-  const pct = Math.round(answered / checks.length * 100);
-  document.getElementById('save-count').textContent = answered;
-  document.getElementById('answered-count').textContent = answered + ' answered';
-  document.getElementById('progress').style.width = pct + '%';
-}
-
-// Auto-save on any input
-document.addEventListener('input', () => { saveAll(); updateCounts(); });
-document.addEventListener('change', () => { saveAll(); updateCounts(); });
-
-function toggleSection(header) {
-  const body = header.nextElementSibling;
-  const isOpen = header.classList.contains('open');
-  if (isOpen) {
-    header.classList.remove('open');
-    body.style.display = 'none';
-  } else {
-    header.classList.add('open');
-    body.style.display = 'block';
-  }
-}
-
-// Progress bar on scroll
-window.addEventListener('scroll', () => {
-  const doc = document.documentElement;
-  const pct = (doc.scrollTop) / (doc.scrollHeight - doc.clientHeight) * 100;
-  document.getElementById('progress').style.width = pct + '%';
+// ── SCROLL PROGRESS BAR ──
+window.addEventListener('scroll',()=>{
+  const d = document.documentElement;
+  const pct = (d.scrollTop/(d.scrollHeight-d.clientHeight))*100;
+  document.getElementById('prog').style.width = pct+'%';
 });
 
-loadSaved();
+// ── AUTO-SAVE ──
+const KEY = 'lawnmex-discovery-v2';
+function saveAll(){
+  const data = {};
+  document.querySelectorAll('.q-answer').forEach((t,i)=>data['a'+i]=t.value);
+  document.querySelectorAll('.q-check input').forEach((c,i)=>data['c'+i]=c.checked);
+  localStorage.setItem(KEY,JSON.stringify(data));
+  document.getElementById('saveDot').style.background='#38a957';
+  document.getElementById('saveLabel').textContent='Saved';
+  setTimeout(()=>document.getElementById('saveLabel').textContent='Auto-saving',2000);
+  buildSectionDots();
+}
+function loadAll(){
+  const raw = localStorage.getItem(KEY);
+  if(!raw)return;
+  try{
+    const data = JSON.parse(raw);
+    document.querySelectorAll('.q-answer').forEach((t,i)=>{if(data['a'+i])t.value=data['a'+i];});
+    document.querySelectorAll('.q-check input').forEach((c,i)=>{if(data['c'+i])c.checked=true;});
+  }catch(e){}
+}
+document.querySelectorAll('.q-answer').forEach(t=>t.addEventListener('input',saveAll));
+document.querySelectorAll('.q-check input').forEach(c=>c.addEventListener('change',saveAll));
+
+// ── CLEAR ──
+function clearAll(){
+  if(!confirm('Clear all answers and checkboxes?'))return;
+  document.querySelectorAll('.q-answer').forEach(t=>t.value='');
+  document.querySelectorAll('.q-check input').forEach(c=>c.checked=false);
+  localStorage.removeItem(KEY);
+  updateScore();
+}
+
+// ── EXPORT ──
+function exportNotes(){
+  const sections = document.querySelectorAll('.sec-block');
+  let out = 'LAWN-MEX INC. — DISCOVERY MEETING NOTES\n';
+  out += '=========================================\n';
+  out += 'Date: '+new Date().toLocaleDateString()+'\n\n';
+  sections.forEach(sec=>{
+    const title = sec.querySelector('.sec-title').textContent;
+    out += '\n## '+title+'\n';
+    out += '-'.repeat(50)+'\n';
+    sec.querySelectorAll('.q-row').forEach(row=>{
+      const q = row.querySelector('.q-text')?.textContent?.replace(/\s+/g,' ').trim()||'';
+      const a = row.querySelector('.q-answer')?.value?.trim()||'';
+      const done = row.querySelector('input[type=checkbox]')?.checked;
+      out += (done?'[✓] ':'[ ] ')+q+'\n';
+      if(a) out += '    ANSWER: '+a+'\n';
+      out += '\n';
+    });
+  });
+  const blob = new Blob([out],{type:'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href=url; a.download='lawnmex-discovery-notes-'+new Date().toISOString().slice(0,10)+'.txt';
+  a.click(); URL.revokeObjectURL(url);
+}
+
+// ── INIT ──
+window.addEventListener('load',()=>{
+  loadAll();
+  updateScore();
+  buildSectionDots();
+});
 </script>
 </body>
 </html>
