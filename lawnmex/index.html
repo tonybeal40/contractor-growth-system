@@ -29,6 +29,7 @@
       <span></span><span></span><span></span>
     </button>
     <div class="nav-phone">📞 <a href="tel:6182136228" style="color:inherit;font-weight:700">(618) 213-6228</a></div>
+    <button class="fullscreen-btn" id="fsBtn" onclick="toggleFullscreen()" title="Fullscreen">⛶</button>
   </div>
   <div class="nav-mobile-menu" id="navMobile"></div>
 </nav>
@@ -38,6 +39,22 @@
   var d=document.querySelector('.nav-links');
   if(m&&d){m.innerHTML=d.innerHTML;}
 })();
+function toggleFullscreen(){
+  var btn=document.getElementById('fsBtn');
+  if(!document.fullscreenElement){
+    document.documentElement.requestFullscreen();
+    btn.textContent='✕';
+    btn.title='Exit Fullscreen';
+  } else {
+    document.exitFullscreen();
+    btn.textContent='⛶';
+    btn.title='Fullscreen';
+  }
+}
+document.addEventListener('fullscreenchange',function(){
+  var btn=document.getElementById('fsBtn');
+  if(!document.fullscreenElement){btn.textContent='⛶';btn.title='Fullscreen';}
+});
 </script>
 
 <!-- HERO -->

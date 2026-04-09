@@ -82,6 +82,8 @@ p{color:var(--text-muted);margin-top:8px}
 .nav-cta{background:var(--gold);color:var(--text-dark)!important;padding:9px 18px;border-radius:8px;font-size:.88rem;font-weight:800;transition:background .16s;margin-left:6px;white-space:nowrap}
 .nav-cta:hover{background:var(--gold-dark);color:var(--text-dark)!important}
 .nav-phone{font-size:.85rem;font-weight:700;color:var(--green-dark);white-space:nowrap}
+.fullscreen-btn{background:none;border:2px solid var(--green);color:var(--green-dark);border-radius:8px;width:36px;height:36px;font-size:1.1rem;cursor:pointer;margin-left:8px;display:flex;align-items:center;justify-content:center;transition:all .16s;flex-shrink:0}
+.fullscreen-btn:hover{background:var(--green);color:#fff}
 /* Sticky mobile CTA bar */
 .sticky-cta-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:999;display:flex;background:#fff;border-top:3px solid var(--green);box-shadow:0 -3px 16px rgba(0,0,0,.18)}
 .sticky-cta-call{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:14px 10px;background:#1b5e20;color:#fff;font-weight:800;font-size:1rem;text-decoration:none;border-right:1px solid rgba(255,255,255,.2)}
