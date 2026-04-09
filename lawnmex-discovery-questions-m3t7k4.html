@@ -337,6 +337,14 @@ nav{position:sticky;top:0;z-index:200;background:rgba(11,26,15,.97);backdrop-fil
     <div class="q-row">
       <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
       <div class="q-body">
+        <div class="q-text">We searched Angi, HomeAdvisor, and Thumbtack — Lawn-Mex has no active profile on any of them. Is that intentional?</div>
+        <div class="q-why">This is a <strong>significant gap</strong>. Competitors are getting leads from these platforms right now. Angi alone sends 150M+ homeowner requests/year. A free or low-cost profile with your 4.7★ reviews could generate 5–15 qualified leads/month. I can set this up in under an hour.</div>
+        <textarea class="q-answer" placeholder="Their reason / reaction..."></textarea>
+      </div>
+    </div>
+    <div class="q-row">
+      <div class="q-check"><input type="checkbox" onchange="updateScore()"></div>
+      <div class="q-body">
         <div class="q-text">When was the last time you reached out to a past customer you haven't heard from in 6+ months?</div>
         <div class="q-why"><strong>Win-back campaigns</strong> are the lowest-cost revenue source in any service business. A single text to 50 past customers can generate $5-10K in work within a week.</div>
         <textarea class="q-answer" placeholder="Last customer re-engagement..."></textarea>
@@ -755,6 +763,47 @@ nav{position:sticky;top:0;z-index:200;background:rgba(11,26,15,.97);backdrop-fil
   </div>
 </div>
 
+<!-- MEETING SUMMARY -->
+<div id="summary-block" style="background:var(--dark-card);border:1.5px solid rgba(201,162,39,.35);border-radius:14px;padding:24px 20px;margin-top:8px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+    <span style="font-size:1.3rem">📋</span>
+    <div>
+      <div style="font-weight:800;font-size:1rem;color:#fff">Meeting Summary</div>
+      <div style="font-size:.75rem;color:var(--text-muted)">Fill this in after the call. Captures Jeff's deal status, key takeaways, and your next steps.</div>
+    </div>
+    <span style="margin-left:auto;font-size:.65rem;font-weight:700;padding:2px 9px;border-radius:4px;background:rgba(201,162,39,.1);color:var(--gold);border:1px solid rgba(201,162,39,.25)">POST-MEETING</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+    <div>
+      <label style="font-size:.72rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.8px">Deal Status</label>
+      <select id="sum-status" onchange="saveSummary()" style="width:100%;background:var(--dark);border:1px solid var(--dark-border);color:var(--text);border-radius:6px;padding:8px 10px;font-size:.85rem;font-family:inherit">
+        <option value="">— Select —</option>
+        <option value="Hot — Ready to close">🔥 Hot — Ready to close</option>
+        <option value="Warm — Follow up in 48h">🌡️ Warm — Follow up in 48 hrs</option>
+        <option value="Interested — Needs proposal">📄 Interested — Needs proposal</option>
+        <option value="Not ready — Re-engage later">⏳ Not ready — Re-engage later</option>
+        <option value="Not a fit">❌ Not a fit</option>
+      </select>
+    </div>
+    <div>
+      <label style="font-size:.72rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.8px">Follow-Up Date</label>
+      <input id="sum-followup" type="date" onchange="saveSummary()" style="width:100%;background:var(--dark);border:1px solid var(--dark-border);color:var(--text);border-radius:6px;padding:8px 10px;font-size:.85rem;font-family:inherit"/>
+    </div>
+  </div>
+  <div style="margin-bottom:14px">
+    <label style="font-size:.72rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.8px">Key Takeaways from Jeff</label>
+    <textarea id="sum-takeaways" oninput="saveSummary()" rows="4" placeholder="What did Jeff say about his business? What pain points stood out? What excited him most?" style="width:100%;background:var(--dark);border:1px solid var(--dark-border);color:var(--text);border-radius:8px;padding:10px 14px;font-size:.88rem;font-family:inherit;resize:vertical;line-height:1.6"></textarea>
+  </div>
+  <div style="margin-bottom:14px">
+    <label style="font-size:.72rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.8px">Agreed Next Steps</label>
+    <textarea id="sum-nextsteps" oninput="saveSummary()" rows="3" placeholder="e.g. Send proposal by Friday, Add him to Google Search Console, Schedule website audit call..." style="width:100%;background:var(--dark);border:1px solid var(--dark-border);color:var(--text);border-radius:8px;padding:10px 14px;font-size:.88rem;font-family:inherit;resize:vertical;line-height:1.6"></textarea>
+  </div>
+  <div>
+    <label style="font-size:.72rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.8px">Tony's Notes / Gut Check</label>
+    <textarea id="sum-notes" oninput="saveSummary()" rows="3" placeholder="Your honest read on the deal — confidence level, objections raised, anything to remember..." style="width:100%;background:var(--dark);border:1px solid var(--dark-border);color:var(--text);border-radius:8px;padding:10px 14px;font-size:.88rem;font-family:inherit;resize:vertical;line-height:1.6"></textarea>
+  </div>
+</div>
+
 <!-- CLOSING NOTE -->
 <div style="background:var(--dark-card);border:1px solid var(--dark-border);border-radius:14px;padding:24px 20px;margin-top:8px;text-align:center">
   <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:8px">🎯 <strong style="color:#fff">Your close:</strong> "Jeff, I've already built this for you. I'm not asking you to imagine what it could look like — it's live right now. Let me show you."</p>
@@ -844,21 +893,72 @@ function loadAll(){
 document.querySelectorAll('.q-answer').forEach(t=>t.addEventListener('input',saveAll));
 document.querySelectorAll('.q-check input').forEach(c=>c.addEventListener('change',saveAll));
 
+// ── SUMMARY SAVE/LOAD ──
+const SKEY = 'lawnmex-summary-v1';
+function saveSummary(){
+  const d = {
+    status: document.getElementById('sum-status').value,
+    followup: document.getElementById('sum-followup').value,
+    takeaways: document.getElementById('sum-takeaways').value,
+    nextsteps: document.getElementById('sum-nextsteps').value,
+    notes: document.getElementById('sum-notes').value
+  };
+  localStorage.setItem(SKEY, JSON.stringify(d));
+  document.getElementById('saveDot').style.background='#38a957';
+  document.getElementById('saveLabel').textContent='Saved';
+  setTimeout(()=>document.getElementById('saveLabel').textContent='Auto-saving',2000);
+}
+function loadSummary(){
+  const raw = localStorage.getItem(SKEY);
+  if(!raw) return;
+  try{
+    const d = JSON.parse(raw);
+    if(d.status) document.getElementById('sum-status').value = d.status;
+    if(d.followup) document.getElementById('sum-followup').value = d.followup;
+    if(d.takeaways) document.getElementById('sum-takeaways').value = d.takeaways;
+    if(d.nextsteps) document.getElementById('sum-nextsteps').value = d.nextsteps;
+    if(d.notes) document.getElementById('sum-notes').value = d.notes;
+  }catch(e){}
+}
+
 // ── CLEAR ──
 function clearAll(){
-  if(!confirm('Clear all answers and checkboxes?'))return;
+  if(!confirm('Clear all answers, checkboxes, and summary?'))return;
   document.querySelectorAll('.q-answer').forEach(t=>t.value='');
   document.querySelectorAll('.q-check input').forEach(c=>c.checked=false);
+  ['sum-status','sum-followup','sum-takeaways','sum-nextsteps','sum-notes'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.tagName==='SELECT' ? el.value='' : el.value='';
+  });
   localStorage.removeItem(KEY);
+  localStorage.removeItem(SKEY);
   updateScore();
 }
 
 // ── EXPORT ──
 function exportNotes(){
   const sections = document.querySelectorAll('.sec-block');
+  const status = document.getElementById('sum-status').value;
+  const followup = document.getElementById('sum-followup').value;
+  const takeaways = document.getElementById('sum-takeaways').value;
+  const nextsteps = document.getElementById('sum-nextsteps').value;
+  const notes = document.getElementById('sum-notes').value;
+
   let out = 'LAWN-MEX INC. — DISCOVERY MEETING NOTES\n';
   out += '=========================================\n';
   out += 'Date: '+new Date().toLocaleDateString()+'\n\n';
+
+  if(status || takeaways || nextsteps || notes){
+    out += '## MEETING SUMMARY\n';
+    out += '-'.repeat(50)+'\n';
+    if(status)   out += 'Deal Status:   '+status+'\n';
+    if(followup) out += 'Follow-Up:     '+followup+'\n';
+    if(takeaways)out += '\nKey Takeaways:\n'+takeaways+'\n';
+    if(nextsteps)out += '\nNext Steps:\n'+nextsteps+'\n';
+    if(notes)    out += '\nTony Notes:\n'+notes+'\n';
+    out += '\n';
+  }
+
   sections.forEach(sec=>{
     const title = sec.querySelector('.sec-title').textContent;
     out += '\n## '+title+'\n';
@@ -882,6 +982,7 @@ function exportNotes(){
 // ── INIT ──
 window.addEventListener('load',()=>{
   loadAll();
+  loadSummary();
   updateScore();
   buildSectionDots();
 });
