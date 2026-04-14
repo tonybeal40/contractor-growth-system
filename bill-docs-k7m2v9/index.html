@@ -33,6 +33,8 @@
     th{background:#1e3a5f;color:#f59e0b;padding:8px 10px;text-align:left}
     td{border:1px solid #1e3a5f;padding:7px 10px;color:#cbd5e1}
     tr:nth-child(even){background:#0d1b30}
+    .total-row{background:#1e3a5f !important}
+    .total-row td{color:#f59e0b;font-weight:700;border-color:#1e3a5f}
     .highlight{background:#1a3a1a;color:#4ade80;font-weight:700}
     .warn-row{background:#3a1a1a;color:#f87171}
     .cost-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
@@ -211,7 +213,7 @@
         <h3>2026 Quarterly Payment Schedule</h3>
         <table>
           <tr><th>Quarter</th><th>Due Date</th><th>Est. Payment</th><th>IRS Form</th></tr>
-          <tr><td>Q1 (Jan–Mar)</td><td><strong>April 15, 2026</strong></td><td>~$15,000</td><td>1040-ES</td></tr>
+          <tr style="background:#3a1a1a"><td>Q1 (Jan–Mar)</td><td><strong style="color:#f87171">April 15, 2026 ⚠️ THIS WEEK</strong></td><td>~$15,000</td><td>1040-ES</td></tr>
           <tr><td>Q2 (Apr–May)</td><td><strong>June 15, 2026</strong></td><td>~$15,000</td><td>1040-ES</td></tr>
           <tr><td>Q3 (Jun–Aug)</td><td><strong>September 15, 2026</strong></td><td>~$15,000</td><td>1040-ES</td></tr>
           <tr><td>Q4 (Sep–Dec)</td><td><strong>January 15, 2027</strong></td><td>~$15,000</td><td>1040-ES</td></tr>
@@ -227,18 +229,84 @@
         </ol>
         <p>Also pay <strong>Illinois estimated tax</strong> at <a href="https://mytax.illinois.gov" target="_blank" style="color:#38bdf8">mytax.illinois.gov</a> (IL rate = 4.95%)</p>
 
-        <h3>What We'll Do for 2026 Taxes</h3>
-        <ul>
-          <li>&#9989; Bill sends bank statements each quarter (or all at year end)</li>
-          <li>&#9989; We run the same system — auto-categorize all transactions</li>
-          <li>&#9989; Generate updated P&amp;L and filing guides</li>
-          <li>&#9989; File on FreeTaxUSA (~$14.99 again)</li>
-          <li>&#9989; SEP-IRA contribution before deadline</li>
-        </ul>
-        <p style="color:#4ade80"><strong>The system is built. 2026 will be faster and cheaper than this year.</strong></p>
-
         <h3>&#128680; Penalty Warning</h3>
         <p style="color:#f87171">If Bill does NOT make estimated payments and owes more than $1,000 at filing, the IRS charges an underpayment penalty (~8% annualized). <strong>Setting up quarterly payments avoids this.</strong></p>
+      </div>
+
+      <!-- ===== 2024 PREPARATION ===== -->
+      <div class="section-sep" id="prep-2024">
+        <h2 style="margin-top:0;color:#f59e0b">&#128203; 2024 — Next Up <span class="badge badge-action">NEED BANK STATEMENTS</span></h2>
+        <p>2024 is the missing year between the loss year (2023) and the profitable year (2025). The 2023 NOL carryforward ($39,666) will apply here first.</p>
+
+        <h3>What We Need From Bill for 2024</h3>
+        <div style="background:#0b1a2e;border:1px solid #38bdf8;border-radius:8px;padding:16px;margin:14px 0">
+          <table>
+            <tr><th style="width:30px">&#9744;</th><th>Item</th><th>Why</th></tr>
+            <tr><td>&#9744;</td><td><strong>All 12 months of 2024 bank statements (Jan–Dec)</strong></td><td>We run the same AI categorization system — this is the #1 thing we need</td></tr>
+            <tr><td>&#9744;</td><td>2024 credit card statements (if business card)</td><td>Captures expenses paid by card</td></tr>
+            <tr><td>&#9744;</td><td>Any 1099-NEC forms Bill received for 2024</td><td>Client payments / reported income</td></tr>
+            <tr><td>&#9744;</td><td>Any 1099-NEC forms Bill ISSUED for 2024</td><td>Contract labor paid to workers</td></tr>
+            <tr><td>&#9744;</td><td>Equipment/vehicle purchases in 2024</td><td>Section 179 deductions</td></tr>
+            <tr><td>&#9744;</td><td>Any estimated tax payments made in 2024</td><td>Credits against tax owed</td></tr>
+            <tr><td>&#9744;</td><td>Health insurance premiums paid in 2024</td><td>Above-the-line deduction</td></tr>
+          </table>
+        </div>
+
+        <h3>Questions for Bill About 2024</h3>
+        <div style="background:#0b1a2e;border:1px solid #f59e0b;border-radius:8px;padding:16px;margin:14px 0">
+          <p><strong>1.</strong> Was 2024 a profitable year or a slow year? (Rough estimate of revenue)</p>
+          <p><strong>2.</strong> Same workers? (Brian Davis, Casey, Logan, others?)</p>
+          <p><strong>3.</strong> Any major equipment purchases?</p>
+          <p><strong>4.</strong> Same business bank account as 2023/2025?</p>
+          <p><strong>5.</strong> Any issues — lawsuits, theft, insurance claims, disasters?</p>
+          <p><strong>6.</strong> Did he file an extension for 2024? (Would have been due April 2025)</p>
+        </div>
+
+        <h3>What Happens When We Get the Statements</h3>
+        <ul>
+          <li>&#9989; Run the same AI categorization system (already built — takes ~30 min)</li>
+          <li>&#9989; Apply 2023 NOL carryforward ($39,666) — reduces 2024 taxable income</li>
+          <li>&#9989; Generate FreeTaxUSA guide with every number filled in</li>
+          <li>&#9989; File on FreeTaxUSA ($0 fed + $14.99 IL)</li>
+        </ul>
+        <p style="color:#4ade80"><strong>The system is built. Bill just needs to hand over the bank statements and we'll have 2024 done in a day.</strong></p>
+      </div>
+
+      <!-- ===== 2026 BANK STATEMENT UPLOAD ===== -->
+      <div class="section-sep" id="upload-2026">
+        <h2 style="margin-top:0;color:#f59e0b">&#128200; 2026 Q1 Processing (Jan 1 – Apr 14) <span class="badge badge-new">IN PROGRESS</span></h2>
+        <p>We're starting 2026 bookkeeping <strong>now</strong> so Bill isn't scrambling next year. Send bank statements for January through mid-April.</p>
+
+        <h3>What to Send Tony for Q1 2026</h3>
+        <div style="background:#0b1a2e;border:1px solid #4ade80;border-radius:8px;padding:16px;margin:14px 0">
+          <table>
+            <tr><th style="width:30px">&#9744;</th><th>Statement</th><th>Period</th></tr>
+            <tr><td>&#9744;</td><td><strong>January 2026 bank statement</strong></td><td>Jan 1–31</td></tr>
+            <tr><td>&#9744;</td><td><strong>February 2026 bank statement</strong></td><td>Feb 1–28</td></tr>
+            <tr><td>&#9744;</td><td><strong>March 2026 bank statement</strong></td><td>Mar 1–31</td></tr>
+            <tr><td>&#9744;</td><td><strong>April 2026 (partial — through Apr 14)</strong></td><td>Apr 1–14</td></tr>
+            <tr><td>&#9744;</td><td>Credit card statements (if business card)</td><td>Jan–Apr</td></tr>
+          </table>
+        </div>
+
+        <h3>What We'll Do With Q1 2026</h3>
+        <ul>
+          <li>&#9989; Run AI categorization on all transactions</li>
+          <li>&#9989; Generate Q1 2026 P&amp;L and expense breakdown</li>
+          <li>&#9989; Calculate accurate Q2 estimated payment (due June 15)</li>
+          <li>&#9989; Track revenue vs. prior year (is 2026 trending up or down?)</li>
+          <li>&#9989; Update quarterly payment amounts based on actual income</li>
+        </ul>
+        <p style="color:#4ade80"><strong>Send statements to Tony at <a href="mailto:tbeal@tonybeal.net" style="color:#4ade80">tbeal@tonybeal.net</a> or upload to Bill's bank portal and share login.</strong></p>
+
+        <h3>2026 Processing Schedule</h3>
+        <table>
+          <tr><th>Quarter</th><th>Statements Needed</th><th>Process By</th><th>Result</th></tr>
+          <tr style="background:#1a3a1a"><td><strong>Q1</strong></td><td>Jan–Mar + Apr 1-14</td><td><strong>This week</strong></td><td>Q1 P&amp;L + accurate Q2 estimate</td></tr>
+          <tr><td>Q2</td><td>Apr–Jun</td><td>July 2026</td><td>Q2 P&amp;L + Q3 estimate</td></tr>
+          <tr><td>Q3</td><td>Jul–Sep</td><td>October 2026</td><td>Q3 P&amp;L + Q4 estimate</td></tr>
+          <tr><td>Q4</td><td>Oct–Dec</td><td>January 2027</td><td>Full year P&amp;L + filing guide</td></tr>
+        </table>
       </div>
 
       <!-- ===== DO NOT CLAIM ===== -->
@@ -278,9 +346,35 @@
           <tr><th>Item</th><th style="text-align:right">Cost</th></tr>
           <tr><td>32GB RAM upgrade (for AI processing)</td><td style="text-align:right">$290.00</td></tr>
           <tr><td>AI Agent build-out subscription</td><td style="text-align:right">$300.00</td></tr>
-          <tr><td>Tony's labor — 20 hours @ $20/hr<br><span style="font-size:.75rem;color:#94a3b8">Data cleanup, categorization, guide creation, portal build, tax strategy, deployment</span></td><td style="text-align:right">$400.00</td></tr>
           <tr><td>FreeTaxUSA filing (2 years × $14.99/yr state)</td><td style="text-align:right">$29.98</td></tr>
-          <tr class="total-row" style="background:#2563eb !important"><td style="color:#fff"><strong>TOTAL COST TO BILL</strong></td><td style="text-align:right;color:#fff"><strong>$1,019.98</strong></td></tr>
+          <tr class="total-row" style="background:#7c3aed !important"><td style="color:#fff"><strong>FIXED COSTS</strong></td><td style="text-align:right;color:#fff"><strong>$619.98</strong></td></tr>
+        </table>
+
+        <h3>&#128338; Hours Owed This Week (April 14, 2026)</h3>
+        <table>
+          <tr><th>Date</th><th>Task</th><th style="text-align:right">Hours</th></tr>
+          <tr style="background:#1a3a1a"><td colspan="3" style="color:#4ade80"><strong>Monday April 14 (Today)</strong></td></tr>
+          <tr><td>Apr 14</td><td>Download &amp; analyze 6 tax documents from portal</td><td style="text-align:right">1.0</td></tr>
+          <tr><td>Apr 14</td><td>Clean 350 miscategorized transactions (2025 Excel)</td><td style="text-align:right">2.5</td></tr>
+          <tr><td>Apr 14</td><td>Re-categorize ATM/Other as Materials per Bill</td><td style="text-align:right">0.5</td></tr>
+          <tr><td>Apr 14</td><td>Create FreeTaxUSA PDF guides (2023 + 2025)</td><td style="text-align:right">2.0</td></tr>
+          <tr><td>Apr 14</td><td>Build HTML filing guides, checklists, email template</td><td style="text-align:right">1.5</td></tr>
+          <tr><td>Apr 14</td><td>Design &amp; build full web portal</td><td style="text-align:right">2.0</td></tr>
+          <tr><td>Apr 14</td><td>SEP-IRA guide, equipment questions, 2024/2026 sections</td><td style="text-align:right">1.5</td></tr>
+          <tr><td>Apr 14</td><td>Tax research, savings strategy, Section 179 analysis</td><td style="text-align:right">1.0</td></tr>
+          <tr><td>Apr 14</td><td>Git deployment, conflict resolution, troubleshooting</td><td style="text-align:right">0.5</td></tr>
+          <tr class="total-row"><td colspan="2"><strong>TODAY'S TOTAL</strong></td><td style="text-align:right"><strong>12.5 hours</strong></td></tr>
+        </table>
+        <br>
+        <table>
+          <tr><th>Hours Summary</th><th style="text-align:right">Hours</th><th style="text-align:right">@ $20/hr</th></tr>
+          <tr style="background:#1a3a1a"><td>Today (Monday Apr 14)</td><td style="text-align:right">12.5</td><td style="text-align:right">$250.00</td></tr>
+          <tr><td>Remaining this week (if 2024/2026 work)</td><td style="text-align:right">TBD</td><td style="text-align:right">TBD</td></tr>
+          <tr class="total-row" style="background:#2563eb !important"><td style="color:#fff"><strong>HOURS OWED SO FAR</strong></td><td style="text-align:right;color:#fff"><strong>12.5 hrs</strong></td><td style="text-align:right;color:#fff"><strong>$250.00</strong></td></tr>
+        </table>
+        <br>
+        <table>
+          <tr class="total-row" style="background:#dc2626 !important"><td style="color:#fff"><strong>TOTAL OWED TO TONY</strong></td><td style="text-align:right;color:#fff"><strong>$619.98 (fixed) + $250.00 (hours) = $869.98</strong></td></tr>
         </table>
 
         <h3 style="color:#4ade80">&#128170; The Bottom Line</h3>
@@ -288,27 +382,51 @@
           <div class="cost-box theirs">
             <h4>H&amp;R Block / CPA</h4>
             <div class="price">$2,400–$4,000</div>
-            <p style="font-size:.8rem">2 years, wouldn't have caught the $127K problem, no portal, no guides</p>
+            <p style="font-size:.8rem">2 years, wouldn't have caught the $127K problem, no portal, no guides, no ongoing system</p>
           </div>
           <div class="cost-box ours">
             <h4>Tony + AI System</h4>
-            <div class="price" style="color:#4ade80">$1,019.98</div>
-            <p style="font-size:.8rem">Both years filed, portal, guides, cleaned data, SEP-IRA strategy, 2026 plan — <strong>saves Bill $30K–$50K+</strong></p>
+            <div class="price" style="color:#4ade80">$869.98</div>
+            <p style="font-size:.8rem">Both years filed, portal, guides, cleaned data, SEP-IRA strategy, 2024 prep, 2026 quarterly system — <strong>saves Bill $30K–$50K+</strong></p>
           </div>
         </div>
+      </div>
 
-        <h3>&#128338; Work Breakdown (20 hours this week)</h3>
-        <table>
-          <tr><th>Task</th><th style="text-align:right">Hours</th></tr>
-          <tr><td>Download, extract &amp; analyze 6 tax documents</td><td style="text-align:right">2</td></tr>
-          <tr><td>Clean 350 miscategorized transactions (2025 Excel)</td><td style="text-align:right">5</td></tr>
-          <tr><td>Create FreeTaxUSA PDF guides (2023 + 2025)</td><td style="text-align:right">4</td></tr>
-          <tr><td>Build HTML filing guides &amp; checklists</td><td style="text-align:right">3</td></tr>
-          <tr><td>Design &amp; build web portal (SEP-IRA, quarterly plan, etc.)</td><td style="text-align:right">3</td></tr>
-          <tr><td>Tax research, strategy &amp; email formatting</td><td style="text-align:right">2</td></tr>
-          <tr><td>Git deployment &amp; troubleshooting</td><td style="text-align:right">1</td></tr>
-          <tr class="total-row"><td><strong>TOTAL HOURS</strong></td><td style="text-align:right"><strong>20 hrs × $20 = $400</strong></td></tr>
-        </table>
+      <!-- ===== FINALIZE / ACTION BUTTONS ===== -->
+      <div class="section-sep" id="finalize">
+        <h2 style="margin-top:0;color:#f59e0b">&#9989; Finalize — Click When Done <span class="badge badge-action">ACTION ITEMS</span></h2>
+        <p>Use these buttons to track what's been completed. Click each one when the task is done.</p>
+
+        <div style="margin:12px 0">
+          <h3 style="margin-bottom:10px">Filing</h3>
+          <a class="btn green action-btn" href="#" data-task="filed-2023" id="btn-filed-2023">&#9744; Mark 2023 as Filed</a>
+          <a class="btn green action-btn" href="#" data-task="filed-2025" id="btn-filed-2025">&#9744; Mark 2025 as Filed</a>
+          <a class="btn green action-btn" href="#" data-task="saved-pdfs" id="btn-saved-pdfs">&#9744; Saved Return PDFs</a>
+        </div>
+
+        <div style="margin:12px 0">
+          <h3 style="margin-bottom:10px">Worker Info</h3>
+          <a class="btn purple action-btn" href="#" data-task="w9-logan" id="btn-w9-logan">&#9744; Got Logan's W-9/SSN</a>
+          <a class="btn purple action-btn" href="#" data-task="w9-brian" id="btn-w9-brian">&#9744; Got Brian's W-9/SSN</a>
+          <a class="btn purple action-btn" href="#" data-task="w9-casey" id="btn-w9-casey">&#9744; Got Casey's W-9/SSN</a>
+        </div>
+
+        <div style="margin:12px 0">
+          <h3 style="margin-bottom:10px">SEP-IRA &amp; Payments</h3>
+          <a class="btn orange action-btn" href="#" data-task="sep-ira" id="btn-sep-ira">&#9744; SEP-IRA Opened/Discussed</a>
+          <a class="btn orange action-btn" href="#" data-task="q1-payment" id="btn-q1-payment">&#9744; Q1 2026 Estimated Payment Made</a>
+        </div>
+
+        <div style="margin:12px 0">
+          <h3 style="margin-bottom:10px">Next Steps</h3>
+          <a class="btn blue action-btn" href="#" data-task="2024-statements" id="btn-2024-statements">&#9744; Got 2024 Bank Statements</a>
+          <a class="btn blue action-btn" href="#" data-task="2026-q1-statements" id="btn-2026-q1-statements">&#9744; Got 2026 Q1 Statements (Jan–Apr)</a>
+          <a class="btn blue action-btn" href="#" data-task="equipment-answered" id="btn-equipment-answered">&#9744; Bill Answered Equipment Questions</a>
+        </div>
+
+        <div id="finalize-status" style="margin-top:14px;padding:10px;background:#0b1a2e;border-radius:8px;font-size:.85rem;color:#94a3b8">
+          Click buttons above as you complete each item. Progress saves in your browser.
+        </div>
       </div>
 
       <!-- ===== WHAT WE DID ===== -->
@@ -320,12 +438,16 @@
         <div class="item done"><strong>Created step-by-step FreeTaxUSA guides</strong> with every number filled in</div>
         <div class="item done"><strong>Identified $127K in non-deductible items</strong> that would have been claimed incorrectly</div>
         <div class="item done"><strong>Built tax savings strategy</strong> — SEP-IRA, QBI, home office, phone deduction</div>
+        <div class="item done"><strong>Built Section 179 equipment questionnaire</strong> — path to $0 tax bill</div>
+        <div class="item done"><strong>Built web portal</strong> with all docs, guides, buttons, and tracking</div>
         <div class="item next"><strong>2024</strong> — ready to process when bank statements arrive</div>
-        <div class="item next"><strong>2026</strong> — quarterly system in place, repeat the process</div>
+        <div class="item next"><strong>2026 Q1</strong> — ready for Jan–Apr bank statements</div>
+        <div class="item next"><strong>2026 ongoing</strong> — quarterly processing system in place</div>
       </div>
 
       <br>
       <a class="btn blue" href="#" id="emailBtn">&#128231; Email All Docs to Bill</a>
+      <a class="btn purple" href="mailto:tbeal@tonybeal.net?subject=AllPro%20Bank%20Statements&body=Hey%20Tony%2C%0A%0AAttached%20are%20the%20bank%20statements%20for%3A%0A%0A%5B%20%5D%202024%20(all%2012%20months)%0A%5B%20%5D%202026%20Q1%20(Jan-Apr)%0A%0A-%20Bill">&#128231; Send Tony Bank Statements</a>
 
       <p style="color:#64748b;font-size:.75rem;margin-top:20px"><strong>Disclaimer:</strong> This is for reference only. Final CPA/attorney review recommended before filing. | AllPro Construction &amp; Landscape | Prepared by Tony Beal | April 2026</p>
     </div>
@@ -340,6 +462,50 @@
       document.getElementById("content").classList.toggle("hide", !ok);
       document.getElementById("msg").textContent = ok ? "" : "Wrong code.";
     });
+
+    // Finalization buttons — save to localStorage
+    const STORE_KEY = "allpro_finalize";
+    function loadFinalized(){
+      try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch(e){ return {}; }
+    }
+    function saveFinalized(data){ localStorage.setItem(STORE_KEY, JSON.stringify(data)); }
+    function updateBtnState(btn, done){
+      const task = btn.getAttribute("data-task");
+      const label = btn.textContent.replace(/^[\u2610\u2611\u2612\u2713\u2714\u2715\u2716☐☑✅❌] ?/,"");
+      if(done){
+        btn.textContent = "✅ " + label;
+        btn.style.opacity = "0.6";
+        btn.style.background = "#065f46";
+      } else {
+        btn.textContent = "☐ " + label;
+        btn.style.opacity = "1";
+        btn.style.background = "";
+      }
+    }
+    function updateStatus(){
+      const data = loadFinalized();
+      const total = document.querySelectorAll(".action-btn").length;
+      const done = Object.values(data).filter(v=>v).length;
+      const el = document.getElementById("finalize-status");
+      if(done === 0) el.innerHTML = "Click buttons above as you complete each item. Progress saves in your browser.";
+      else if(done < total) el.innerHTML = "<span style='color:#fbbf24'>"+done+" of "+total+" completed.</span> Keep going!";
+      else el.innerHTML = "<span style='color:#4ade80;font-size:1.1rem'>🎉 ALL DONE! Everything is filed and finalized.</span>";
+    }
+    document.querySelectorAll(".action-btn").forEach(btn => {
+      const task = btn.getAttribute("data-task");
+      const data = loadFinalized();
+      updateBtnState(btn, !!data[task]);
+      btn.addEventListener("click", (e)=>{
+        e.preventDefault();
+        const data = loadFinalized();
+        data[task] = !data[task];
+        saveFinalized(data);
+        updateBtnState(btn, data[task]);
+        updateStatus();
+      });
+    });
+    updateStatus();
+
     document.getElementById("emailBtn").addEventListener("click", (e)=>{
       e.preventDefault();
       const subj = encodeURIComponent("All-Pro Tax Documents Ready (2023 & 2025)");
@@ -361,14 +527,19 @@
         "- Revenue: $369,332 | Net Income: $256,895\n"+
         "- SEP-IRA could save $15,000-$18,000 in taxes\n"+
         "- DO NOT claim the $127,696 in non-deductible transfers\n\n"+
+        "QUESTIONS FOR BILL (can lower 2025 tax to $0):\n"+
+        "- Did you buy any trucks/vehicles in 2025?\n"+
+        "- Any heavy equipment (excavator, skid steer, trailer)?\n"+
+        "- Any major tool purchases ($1,000+)?\n"+
+        "- Finance anything for the business?\n\n"+
         "SEP-IRA (BIG TAX SAVER):\n"+
         "- Open at Fidelity, Schwab, or Vanguard (free, 15 min)\n"+
         "- Contribute what you can — even $5K saves ~$1,500\n"+
         "- Must contribute before filing deadline\n\n"+
-        "2026 QUARTERLY TAXES:\n"+
-        "- Set up estimated payments (~$15K/quarter)\n"+
-        "- Pay at irs.gov/payments/direct-pay\n"+
-        "- Avoids underpayment penalties\n\n"+
+        "NEXT UP:\n"+
+        "- Need 2024 bank statements (all 12 months) for next filing\n"+
+        "- Need 2026 Jan-Apr statements to start quarterly bookkeeping\n"+
+        "- Q1 2026 estimated payment (~$15K) due April 15\n\n"+
         "All guides, spreadsheets, and checklists are on the portal.\n\n"+
         "- Tony"
       );
