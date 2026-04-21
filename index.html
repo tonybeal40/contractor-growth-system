@@ -1,14 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-35DEM1MGDT"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-35DEM1MGDT');
-</script>
+<!-- Analytics stub — actual scripts load after page is interactive -->
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="canonical" href="https://allprometroeastconstruction.com/">
@@ -22,6 +16,7 @@
 <link rel="icon" type="image/png" href="/images/branding/logo-square.png">
 <link rel="shortcut icon" href="/images/branding/logo-square.png">
 <link rel="apple-touch-icon" href="/images/branding/logo-square.png">
+<link rel="preload" as="image" href="/images/branding/logo-nav.webp" type="image/webp">
 <link rel="stylesheet" href="styles.css">
 <script type="application/ld+json">
 {
@@ -149,7 +144,7 @@
 <meta name="twitter:description" content="Licensed contractor in Belleville IL for decks, fencing, patios, landscaping &amp; remodeling. All-Pro Construction — free estimates, owner on every job.">
 <meta name="twitter:image" content="https://allprometroeastconstruction.com/images/branding/og-image.jpg">
 <!-- Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","weti9tqt5q");</script>
+<script>/* Clarity loads after page interactive — see deferred analytics block below */</script>
 </head>
 <body><!-- NAV -->
 <nav class="nav" id="nav">
@@ -856,6 +851,9 @@
           <li><a href="decks.html">Decks &amp; Porches</a></li>
           <li><a href="fencing.html">Fencing</a></li>
           <li><a href="landscaping.html">Landscaping</a></li>
+          <li><a href="tree-service-metro-east.html">Tree Service</a></li>
+          <li><a href="mulch-rock-metro-east.html">Mulch &amp; Rock</a></li>
+          <li><a href="landscape-cleanup-metro-east.html">Landscape Cleanup</a></li>
           <li><a href="concrete.html">Concrete</a></li>
           <li><a href="patios.html">Patios &amp; Walls</a></li>
           <li><a href="remodeling.html">Remodeling</a></li>
@@ -962,6 +960,21 @@ countEls.forEach(el => countObserver.observe(el));
       }
     });
   });
+</script>
+<script>
+/* Deferred analytics — loads after page is interactive, removing render-blocking */
+(function(){
+  function loadAnalytics(){
+    var ga=document.createElement('script');
+    ga.src='https://www.googletagmanager.com/gtag/js?id=G-35DEM1MGDT';
+    ga.async=true;
+    document.head.appendChild(ga);
+    gtag('config','G-35DEM1MGDT');
+    (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i+'?ref=bwt';y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,'clarity','script','weti9tqt5q');
+  }
+  if(document.readyState==='complete'){loadAnalytics();}
+  else{window.addEventListener('load',loadAnalytics);}
+})();
 </script>
 </body>
 </html>
