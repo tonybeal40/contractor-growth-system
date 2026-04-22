@@ -1,0 +1,31 @@
+TODAY'S LEAD GEN CHECKLIST -- All-Pro Metro East
+=================================================
+
+IMMEDIATE (next 2 hours):
+[ ] Text 5-10 past customers using 02-review-request-sms.txt
+    -> Each new Google review = local pack ranking boost
+[ ] Post 1 Facebook post from 03-facebook-posts.txt WITH a real photo
+[ ] Post 1 GBP update from 01-gbp-posts.txt WITH a real photo
+    -> business.google.com > Posts > Add Update
+
+TODAY (this afternoon):
+[ ] Set up Google Local Services Ads
+    -> ads.google.com/local-services-ads
+    -> $10/day, pay per CALL only, shows Google Guaranteed badge
+    -> Services: Decks, Fencing, Landscaping, Tree Service, Remodeling
+    -> Area: Belleville IL + 25mi radius
+    -> Upload license + insurance for the Google Guarantee badge
+[ ] Post 2nd Facebook post (tree trimming or spring cleanup)
+[ ] Share Facebook post to Belleville/O'Fallon community groups
+
+THIS WEEK:
+[ ] 1 GBP post per day (16 ready in 01-gbp-posts.txt)
+[ ] 2-3 Facebook posts this week (5 ready in 03-facebook-posts.txt)
+[ ] Day 3 review request follow-up SMS for non-responders
+[ ] Add real before/after job photos to GBP (42% more map clicks)
+
+FILES IN: leads-today/
+  01-gbp-posts.txt          -- 16 GBP post captions
+  02-review-request-sms.txt -- 5 SMS templates
+  03-facebook-posts.txt     -- 5 Facebook posts
+  00-TODAYS-CHECKLIST.txt   -- this file
