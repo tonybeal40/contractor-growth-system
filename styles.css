@@ -966,24 +966,41 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .footer-bottom p { font-size: .8rem; color: var(--gray2); }
 
 .sticky-call {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--red);
-  color: #fff;
-  padding: .9rem 1.2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: .8rem;
-  z-index: 1200;
-  box-shadow: 0 -14px 30px rgba(0,0,0,.35);
-  font-weight: 700;
+  display: none;
 }
-.sticky-call a {
-  color: #fff;
-  font-weight: 800;
+@media (max-width: 767px) {
+  .sticky-call {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1200;
+    box-shadow: 0 -4px 20px rgba(0,0,0,.4);
+  }
+  .sticky-call a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .4rem;
+    padding: 1rem .5rem;
+    font-size: 1rem;
+    font-weight: 800;
+    text-decoration: none;
+    line-height: 1.2;
+  }
+  .sticky-call a:first-child {
+    background: #111;
+    color: #fff;
+  }
+  .sticky-call a:last-child {
+    background: var(--red);
+    color: #fff;
+  }
+  body {
+    padding-bottom: 62px;
+  }
 }
 .estimate-banner {
   background: linear-gradient(135deg, rgba(200,16,46,.9), rgba(230,152,107,.95));
