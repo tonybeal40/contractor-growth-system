@@ -7,6 +7,7 @@
   <title>Contact All-Pro Construction | Free Estimates in Metro East IL</title>
   <meta name="description" content="Contact All-Pro Construction for decks, patios, fencing, concrete, and remodeling in Metro East IL. Request your free estimate today." />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="preload" as="image" href="/images/branding/logo-nav.webp" type="image/webp">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -55,9 +56,17 @@
 <body>
 <nav class="nav" id="nav">
   <div class="nav-inner">
-    <div class="nav-logo"><img src="/images/branding/logo-web.png" alt="All-Pro Metro East Construction logo" class="nav-logo-img" loading="eager">
-      <a href="index.html" style="color:inherit;"><span>All-Pro</span> Construction
-      <small>&amp; Landscape</small></a>
+    <div class="nav-logo">
+      <a href="index.html" class="nav-logo-link" aria-label="Go to All-Pro home page">
+        <picture>
+          <source srcset="/images/branding/logo-nav.webp" type="image/webp">
+          <img src="/images/branding/logo-web-sm.png" alt="All-Pro Metro East Construction logo" class="nav-logo-img" width="55" height="48" loading="eager" fetchpriority="high">
+        </picture>
+        <div class="nav-logo-text">
+          <div><span>All-Pro</span> Construction</div>
+          <small>&amp; Landscape</small>
+        </div>
+      </a>
     </div>
     <ul class="nav-links">
       <li><a href="index.html#services">Services</a></li>
