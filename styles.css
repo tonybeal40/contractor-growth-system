@@ -1181,6 +1181,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
 }
 .trust-badge-ha   { background: #0E7B3E !important; }
 .trust-badge-angi { background: #FF6C2F !important; }
+.trust-badge-houzz { background: #4DBC15 !important; }
 .trust-badge-text {
   font-size: 0.82rem;
   line-height: 1.3;
