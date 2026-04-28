@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <!-- Analytics stub — actual scripts load after page is interactive -->
@@ -18,6 +18,29 @@
 <link rel="apple-touch-icon" href="/images/branding/logo-square.png">
 <link rel="preload" as="image" href="/images/branding/logo-nav.webp" type="image/webp">
 <link rel="stylesheet" href="styles.css">
+<style>
+/* ── Revenue Engine Additions ── */
+.pricing-anchors{background:linear-gradient(135deg,#1a1a1a 0%,#2a1a1a 100%);border-top:3px solid #c8102e;border-bottom:3px solid #c8102e;padding:1.25rem 1.5rem;text-align:center}
+.pricing-anchors strong{display:block;color:#fff;font-size:1rem;font-weight:800;letter-spacing:.02em;margin-bottom:.75rem}
+.pricing-anchor-list{display:flex;flex-wrap:wrap;justify-content:center;gap:.75rem 1.5rem;margin-bottom:.6rem}
+.pricing-anchor-list span{color:rgba(255,255,255,.7);font-size:.9rem}
+.pricing-anchor-list span strong{display:inline;font-size:.9rem;color:#fff;margin-bottom:0}
+.pricing-anchors>p{color:rgba(255,255,255,.55);font-size:.82rem;margin-top:.4rem}
+
+/* ── Fast Track section ── */
+.fast-track{background:linear-gradient(135deg,#0d0d0d 0%,#1a0000 100%);border-top:1px solid rgba(200,16,46,.25);border-bottom:1px solid rgba(200,16,46,.25);padding:3.5rem 0}
+.fast-track-inner{max-width:780px;margin:0 auto;text-align:center;padding:0 1.5rem}
+.ft-badge{display:inline-block;background:rgba(200,16,46,.15);border:1px solid rgba(200,16,46,.45);color:#c8102e;font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.35rem .9rem;border-radius:30px;margin-bottom:1rem}
+.fast-track h2{font-size:clamp(1.7rem,4vw,2.4rem);font-weight:900;color:#fff;margin-bottom:.6rem}
+.fast-track>div>p{color:rgba(255,255,255,.6);font-size:1rem;margin-bottom:1.75rem}
+.ft-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.75rem;margin-bottom:1.75rem;max-width:620px;margin-left:auto;margin-right:auto}
+.ft-item{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.8rem 1rem;color:#fff;font-size:.92rem;font-weight:600}
+.ft-cta{display:flex;flex-direction:column;align-items:center;gap:.6rem}
+.ft-note{color:rgba(255,255,255,.45);font-size:.8rem}
+
+/* ── Why-us extras ── */
+.why-us-headline{font-size:1.1rem;font-weight:800;color:#c8102e;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.25rem}
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -207,14 +230,14 @@
         Belleville · O'Fallon · Edwardsville · 35+ Metro East Cities
       </div>
       <h1 class="hero-heading hero-heading-animated">
-        The Contractor<br>
-        Metro East Trusts<br>
-        <em>to Show Up.</em>
+        Metro East's Go-To<br>
+        Contractor for Outdoor<br>
+        <em>&amp; Home Projects.</em>
       </h1>
-      <p class="hero-sub">Most contractors send a salesman, take your deposit, and vanish. All-Pro is different — Bill Sessions personally handles every estimate and is on every job site. 23 years. Written quotes. No surprises. No excuses.</p>
+      <p class="hero-sub">Decks · Fencing · Concrete · Landscaping · Remodeling — all done right. Bill Sessions personally handles every estimate and is on every job site. 23 years. Written quotes. No surprises. No excuses.</p>
       <div class="hero-actions">
-        <a href="#contact" class="btn btn-red">Get a Free Estimate →</a>
-        <a href="estimator.html" class="btn btn-outline">Smart Estimator</a>
+        <a href="estimator.html" class="btn btn-red">⚡ Get a Fast Estimate in 60 Seconds →</a>
+        <a href="#contact" class="btn btn-outline">Free Estimate Form</a>
         <a href="tel:6185810676" class="btn btn-outline call-now">📞 618-581-0676</a>
       </div>
       <div class="hero-proof">
@@ -270,9 +293,16 @@
   </div>
 </section>
 
-  <section class="estimate-banner">
-    <strong>24-hour estimate response</strong>
-    <p>Submit your project on any page and we’ll reply within 24 hours with availability and next steps.</p>
+  <section class="estimate-banner pricing-anchors">
+    <strong>Typical Project Ranges — Real Numbers, No Teaser Prices</strong>
+    <div class="pricing-anchor-list">
+      <span>🪵 Deck Builds: <strong>$5K–$20K+</strong></span>
+      <span>🔩 Fencing: <strong>$1,500–$8,000</strong></span>
+      <span>🏗️ Concrete &amp; Patios: <strong>$1K–$8K</strong></span>
+      <span>🔨 Small Projects: <strong>$500–$5,000</strong></span>
+      <span>🛁 Bath &amp; Kitchen Remodels: <strong>$5K–$25K+</strong></span>
+    </div>
+    <p>Get a written estimate before you commit to anything. No pressure, no obligation.</p>
   </section>
 
 <section class="photo-section bath-feature-section">
@@ -433,6 +463,27 @@
   </div>
 </section>
 
+<!-- FAST TRACK -->
+<section class="fast-track" id="fast-track">
+  <div class="container">
+    <div class="fast-track-inner">
+      <div class="ft-badge">⚡ Limited Availability</div>
+      <h2>Need It Done Fast?</h2>
+      <p>We hold a few spots each week specifically for smaller, focused jobs. These fill up quickly — especially spring through fall.</p>
+      <div class="ft-grid">
+        <div class="ft-item">🪵 Deck Repairs &amp; Board Replacements</div>
+        <div class="ft-item">🔩 Fence Installs &amp; Fixes</div>
+        <div class="ft-item">🏗️ Concrete Patches &amp; Small Pads</div>
+        <div class="ft-item">🌿 Yard Grading &amp; Cleanup</div>
+      </div>
+      <div class="ft-cta">
+        <a href="estimator.html" class="btn btn-red">⚡ Claim a Fast Track Spot →</a>
+        <span class="ft-note">Most small jobs completed in 1–3 days · Written estimate first · No obligation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- PROCESS -->
 <section class="process">
   <div class="container">
@@ -500,6 +551,27 @@
             <div class="why-item-text">
               <h3>We Stand Behind Our Work</h3>
               <p>Final walkthrough on every job. If it's not right, we fix it &mdash; no excuses, no extra charge.</p>
+            </div>
+          </li>
+          <li class="why-item">
+            <div class="why-item-icon">⏰</div>
+            <div class="why-item-text">
+              <h3>We Show Up When We Say We Will</h3>
+              <p>No waiting around for days after a deposit. We schedule, we confirm, and we're there. Every time.</p>
+            </div>
+          </li>
+          <li class="why-item">
+            <div class="why-item-icon">🧹</div>
+            <div class="why-item-text">
+              <h3>Clean Job Sites — Every Single Day</h3>
+              <p>We clean up at the end of every work day. Your property isn't a storage yard. We treat it like our own.</p>
+            </div>
+          </li>
+          <li class="why-item">
+            <div class="why-item-icon">💬</div>
+            <div class="why-item-text">
+              <h3>You're Never Left Wondering What's Next</h3>
+              <p>Bill communicates at every stage — before, during, and after the job. No ghosting. No deposit-and-disappear.</p>
             </div>
           </li>
         </ul>
