@@ -17,7 +17,6 @@ Disallow: /review-card.html
 Disallow: /change-order-bj-floor.html
 Disallow: /marketing-dashboard.html
 Disallow: /linkedin-growth-system.html
-Disallow: /outdoor-living-metro-east.html
 Disallow: /OUTREACH-ACTIONS.md
 Disallow: /GBP-AND-ADS.md
 Disallow: /NEXT-PAGE-PLAN.md
