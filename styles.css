@@ -1504,3 +1504,11 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .ba-cta{text-align:center}
 .ba-cta a.btn{margin:0 auto}
 .ba-note{text-align:center;color:rgba(255,255,255,.4);font-size:.8rem;margin-top:.75rem}
+
+/* ── Nearby Cities Cross-link Strip ── */
+.nearby-cities-strip{background:#f8f8f8;border-top:2px solid #e8e8e8;border-bottom:2px solid #e8e8e8;padding:.9rem 1rem;text-align:center}
+.nearby-cities-strip .container{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.5rem .75rem}
+.nearby-label{color:#555;font-size:.85rem;font-weight:600;margin:0;white-space:nowrap}
+.nearby-links{display:flex;flex-wrap:wrap;gap:.4rem .6rem;justify-content:center}
+.nearby-links a{display:inline-block;padding:.3rem .75rem;background:#fff;border:1px solid #ddd;border-radius:20px;color:#c8102e;font-size:.82rem;font-weight:700;text-decoration:none;transition:background .15s,border-color .15s}
+.nearby-links a:hover{background:#c8102e;color:#fff;border-color:#c8102e}
