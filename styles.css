@@ -1108,20 +1108,20 @@ button { font-family: inherit; cursor: pointer; border: none; }
 
 /* Hero Heading Animation */
 @keyframes heroFadeUp {
-  from { opacity: 0; transform: translateY(30px); }
+  from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .hero-heading-animated {
-  animation: heroFadeUp 1s ease-out 0.2s both;
+  animation: heroFadeUp .6s ease-out 0s forwards;
 }
 .hero-badge {
-  animation: heroFadeUp 1s ease-out 0s both;
+  animation: heroFadeUp .5s ease-out 0s forwards;
 }
 .hero-sub {
-  animation: heroFadeUp 1s ease-out 0.4s both;
+  animation: heroFadeUp .6s ease-out .1s both;
 }
 .hero-cta {
-  animation: heroFadeUp 1s ease-out 0.6s both;
+  animation: heroFadeUp .6s ease-out .15s both;
 }
 
 @media (max-width: 768px) {
