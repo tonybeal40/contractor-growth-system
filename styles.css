@@ -2,6 +2,16 @@
    ALL-PRO CONSTRUCTION & LANDSCAPE — Premium Design System
    ============================================================ */
 
+/* Manrope fallback — size-adjust prevents CLS on font swap */
+@font-face {
+  font-family: "Manrope Fallback";
+  src: local("Segoe UI"), local("system-ui");
+  size-adjust: 98%;
+  ascent-override: 96%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
 :root {
   --red:       #c8102e;
   --red-dark:  #9e0c23;
@@ -24,7 +34,7 @@
 
   --gold: #e8b84b;
 
-  --font-sans:  "Manrope", "Segoe UI", system-ui, sans-serif;
+  --font-sans:  "Manrope", "Manrope Fallback", "Segoe UI", system-ui, sans-serif;
   --font-serif: "Instrument Serif", Georgia, serif;
 
   --radius-sm: 6px;
