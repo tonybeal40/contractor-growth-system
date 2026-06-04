@@ -12,7 +12,7 @@
 - Keep linking to Google/Angi/HomeAdvisor + your `reviews.html` form.
 
 ### Meet the Team (`team.html`)
-- Short bios for Bill Sessions + foremen, emphasizing owner presence.
+- Short bios for Bill Session + foremen, emphasizing owner presence.
 - Include trust badges (licensed, insured, BBB, Angi/HA logos).
 - Insert a CTA “Owner-led estimates → contact.html”.
 - Schema: `Person` entries referencing each team member (name, role, description, image).

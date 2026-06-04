@@ -15,5 +15,5 @@ HomeAdvisor: https://www.homeadvisor.com/rated/{your-profile}
 You can also scan the attached QR code or visit https://www.allprometroeastconstruction.com/review-card.html from your phone to post a review instantly.
 
 Warmly,  
-Bill Sessions  
+Bill Session  
 Owner, All-Pro Construction
