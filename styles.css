@@ -1191,6 +1191,16 @@ button { font-family: inherit; cursor: pointer; border: none; }
 }
 .trust-badge-ha   { background: #0E7B3E !important; }
 .trust-badge-angi { background: #FF6C2F !important; }
+.trust-badge-nextdoor {
+  background: #00b551 !important;
+  color: #003d17;
+  font-weight: 900;
+  font-size: 1.1rem;
+}
+.trust-badge-featured {
+  border-color: rgba(0, 181, 81, 0.65);
+  background: rgba(0, 181, 81, 0.14);
+}
 .trust-badge-text {
   font-size: 0.82rem;
   line-height: 1.3;
