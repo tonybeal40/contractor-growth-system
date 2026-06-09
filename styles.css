@@ -1331,6 +1331,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
   fill: currentColor;
 }
 /* Nav icons — neutral by default, brand color on hover */
+.nav-social .social-facebook:hover  { background: #1877f2; border-color: #1877f2; color: #fff; }
 .nav-social .social-linkedin:hover  { background: #0a66c2; border-color: #0a66c2; color: #fff; }
 .nav-social .social-houzz:hover     { background: #7db446; border-color: #7db446; color: #fff; }
 .nav-social .social-reddit:hover    { background: #ff4500; border-color: #ff4500; color: #fff; }
@@ -1356,6 +1357,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
   border: 2px solid transparent;
   color: #ffffff;
 }
+.footer-social .social-facebook  { background: #1877f2; border-color: #2f86f6; }
 .footer-social .social-linkedin  { background: #0a66c2; border-color: #1878d4; }
 .footer-social .social-houzz     { background: #7db446; border-color: #8fc94f; }
 .footer-social .social-reddit    { background: #ff4500; border-color: #ff6a33; }
