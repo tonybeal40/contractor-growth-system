@@ -1,6 +1,18 @@
 (function () {
   const siteOrigin = "https://allprometroeastconstruction.com";
   const formSelector = 'form[action*="formsubmit.co/"]';
+  const routing = {
+    leadInbox: "https://formsubmit.co/williamosessionallpro@gmail.com",
+    reviewInbox: "https://formsubmit.co/tonybeal40@gmail.com",
+    ownerCopy: "tonybeal40@gmail.com",
+    smsCopies: [
+      "6185810676@tmomail.net",
+      "6185810676@txt.att.net",
+      "6185810676@vtext.com",
+      "6185810676@email.uscc.net"
+    ],
+    blacklist: "viagra,casino,payday loan,crypto investment,seo service"
+  };
   const storageKeys = {
     sessionId: "allpro_lead_session_id",
     firstTouch: "allpro_first_touch"
@@ -198,6 +210,34 @@
     return field;
   }
 
+  function uniqueEmails(values) {
+    const seen = new Set();
+
+    return values.filter(function (value) {
+      const normalized = String(value || "").trim().toLowerCase();
+
+      if (!normalized || seen.has(normalized)) {
+        return false;
+      }
+
+      seen.add(normalized);
+      return true;
+    });
+  }
+
+  function removeNamedField(form, name) {
+    const field = findNamedField(form, name);
+
+    if (field) {
+      if (field.parentElement && field.parentElement !== form && field.parentElement.childElementCount === 1) {
+        field.parentElement.remove();
+        return;
+      }
+
+      field.remove();
+    }
+  }
+
   function getFormName(form) {
     const dataForm = form.getAttribute("data-form");
     if (dataForm) {
@@ -212,15 +252,61 @@
     return document.title || window.location.pathname;
   }
 
+  function isReviewForm(formName) {
+    return /review/i.test(formName) || /reviews\.html$/i.test(window.location.pathname);
+  }
+
+  function wantsSmsCopies(formName) {
+    return /contact page|get-quote page/i.test(formName) || /contact\.html$|get-quote\.html$/i.test(window.location.pathname);
+  }
+
+  function applyRouting(form, formName) {
+    if (isReviewForm(formName)) {
+      form.action = routing.reviewInbox;
+      removeNamedField(form, "_cc");
+      return;
+    }
+
+    const ccList = [routing.ownerCopy];
+
+    if (wantsSmsCopies(formName)) {
+      ccList.push.apply(ccList, routing.smsCopies);
+    }
+
+    form.action = routing.leadInbox;
+    ensureHiddenField(form, "_cc", uniqueEmails(ccList).join(","));
+  }
+
+  function applyReplyTo(form) {
+    const emailField = findNamedField(form, "email");
+
+    if (!emailField) {
+      removeNamedField(form, "_replyto");
+      return;
+    }
+
+    const emailValue = String(emailField.value || "").trim();
+
+    if (!emailValue) {
+      removeNamedField(form, "_replyto");
+      return;
+    }
+
+    ensureHiddenField(form, "_replyto", emailValue);
+  }
+
   function populateTracking(form, snapshot) {
     const formName = getFormName(form);
     const formSlug = slugify(formName);
     const pageUrl = window.location.href;
     const thankYouUrl = siteOrigin + "/thank-you.html?src=form&form=" + encodeURIComponent(formSlug);
 
+    applyRouting(form, formName);
+    applyReplyTo(form);
     ensureHiddenField(form, "_captcha", "false");
     ensureHiddenField(form, "_template", "table");
     ensureHiddenField(form, "_next", thankYouUrl);
+    ensureHiddenField(form, "_blacklist", routing.blacklist);
     ensureHiddenField(form, "form_name", formName);
     ensureHiddenField(form, "form_slug", formSlug);
     ensureHiddenField(form, "page_title", document.title || "");

@@ -950,9 +950,9 @@
       <div class="lead-form-card reveal reveal-delay-2">
         <h3>Request a Free Estimate</h3>
         <p>Tell us about your project and we'll be in touch within 24 hours.</p>
-        <form name="estimate" method="POST" action="https://formsubmit.co/tonybeal40@gmail.com" data-form="Homepage Estimate">
+        <form name="estimate" method="POST" action="https://formsubmit.co/williamosessionallpro@gmail.com" data-form="Homepage Estimate">
           <input type="hidden" name="_subject" value="New Estimate Request - All-Pro Construction">
-            <input type="hidden" name="_cc" value="williamosessionallpro@gmail.com" />
+            <input type="hidden" name="_cc" value="tonybeal40@gmail.com" />
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_next" value="https://allprometroeastconstruction.com/thank-you.html?src=form&amp;form=homepage">
           <div class="form-row">
@@ -967,10 +967,15 @@
           </div>
           <div class="form-row">
             <div class="form-group">
+              <label for="estimate-email">Email Address <span style="font-weight:400;color:var(--gray3);">(optional)</span></label>
+              <input type="email" id="estimate-email" name="email" placeholder="you@example.com">
+            </div>
+            <div class="form-group">
               <label for="city">Your City</label>
               <input type="text" id="city" name="city" placeholder="Belleville, O'Fallon..." required>
             </div>
-            <div class="form-group">
+          </div>
+          <div class="form-group">
               <label for="service">Service Needed</label>
               <select id="service" name="service">
                 <option value="">Select...</option>
@@ -985,7 +990,6 @@
                 <option value="remodeling">Remodeling</option>
                 <option value="other">Other / Not Sure</option>
               </select>
-            </div>
           </div>
           <div class="form-group">
             <label>What needs done? <span style="font-weight:400;color:var(--gray3);">(check all that apply)</span></label>
@@ -1012,6 +1016,12 @@
             <label style="display:flex;align-items:flex-start;gap:.55rem;font-size:.88rem;font-weight:400;color:var(--light);cursor:pointer;line-height:1.5;">
               <input type="checkbox" name="estimate_contact_consent" value="yes" required style="accent-color:#c8102e;width:15px;height:15px;margin-top:.2rem;">
               <span>I agree to be contacted about my estimate request. See our <a href="privacy.html" style="color:#ffd7dc;text-decoration:underline;">Privacy Policy</a> and <a href="terms.html" style="color:#ffd7dc;text-decoration:underline;">Terms of Service</a>.</span>
+            </label>
+          </div>
+          <div style="margin:0 0 .9rem;">
+            <label style="display:flex;align-items:flex-start;gap:.55rem;font-size:.88rem;font-weight:400;color:var(--light);cursor:pointer;line-height:1.5;">
+              <input type="checkbox" name="email_marketing_opt_in" value="yes" style="accent-color:#c8102e;width:15px;height:15px;margin-top:.2rem;">
+              <span>Send me occasional project tips, seasonal reminders, and local deals by email. I can unsubscribe anytime.</span>
             </label>
           </div>
           <button type="submit" class="btn btn-red form-submit">Send My Free Estimate Request →</button>
