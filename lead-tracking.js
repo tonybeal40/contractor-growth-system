@@ -164,3 +164,43 @@
     });
   })();
 })();
+
+  // ── Floating Call/Quote Button ──────────────────────────────────────────────
+  (function injectFloatingCTA() {
+    // Skip on the get-quote page itself (it already has the form front-and-center)
+    const skip = ['/get-quote.html', '/thank-you.html', '/contact.html'];
+    if (skip.some(function(p){ return window.location.pathname.endsWith(p); })) return;
+
+    const style = doc.createElement('style');
+    style.textContent = [
+      '#ap-float{position:fixed;bottom:18px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}',
+      '#ap-float a{display:inline-flex;align-items:center;gap:7px;padding:13px 18px;border-radius:50px;font-family:Manrope,system-ui,sans-serif;font-weight:800;font-size:.92rem;text-decoration:none;box-shadow:0 4px 18px rgba(0,0,0,.35);transition:transform .15s,box-shadow .15s;white-space:nowrap;}',
+      '#ap-float a:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.45);}',
+      '#ap-float .ap-call{background:#16a34a;color:#fff;}',
+      '#ap-float .ap-quote{background:#1a56db;color:#fff;}',
+      '#ap-float-dismiss{position:fixed;bottom:14px;left:12px;z-index:9999;background:rgba(15,23,42,.7);border:none;color:#64748b;font-size:.7rem;cursor:pointer;padding:4px 8px;border-radius:20px;font-family:inherit;}',
+      '@media(max-width:480px){#ap-float a{padding:12px 14px;font-size:.85rem;}}'
+    ].join('');
+    doc.head.appendChild(style);
+
+    const wrap = doc.createElement('div');
+    wrap.id = 'ap-float';
+    wrap.innerHTML = [
+      '<a href="tel:6185810676" class="ap-call" aria-label="Call All-Pro Construction">',
+      '  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>',
+      '  Call Bill',
+      '</a>',
+      '<a href="/get-quote.html" class="ap-quote" aria-label="Get a free quote">',
+      '  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13z"/></svg>',
+      '  Free Quote',
+      '</a>'
+    ].join('');
+    doc.body.appendChild(wrap);
+
+    // Track clicks
+    wrap.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        track('floating_cta_click', { cta_type: a.classList.contains('ap-call') ? 'call' : 'quote' });
+      });
+    });
+  })();
