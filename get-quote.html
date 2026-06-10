@@ -32,8 +32,11 @@
     .qhero h1{font-size:clamp(1.9rem,4vw,2.9rem);font-weight:800;color:#f8fafc;line-height:1.15;margin-bottom:14px}
     .qhero h1 span{color:#60a5fa}
     .qhero-sub{font-size:1rem;color:#94a3b8;max-width:520px;margin:0 auto 32px;line-height:1.65}
-    .qcta-call{display:inline-flex;align-items:center;gap:10px;background:#16a34a;color:#fff;font-size:1.25rem;font-weight:800;padding:16px 36px;border-radius:50px;text-decoration:none;margin-bottom:10px;transition:background .2s;box-shadow:0 4px 24px rgba(22,163,74,.3)}
+    .qcta-row{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+    .qcta-call{display:inline-flex;align-items:center;gap:10px;background:#16a34a;color:#fff;font-size:1.25rem;font-weight:800;padding:16px 36px;border-radius:50px;text-decoration:none;transition:background .2s;box-shadow:0 4px 24px rgba(22,163,74,.3)}
     .qcta-call:hover{background:#15803d}
+    .qcta-text{display:inline-flex;align-items:center;gap:10px;background:transparent;color:#cbd5e1;font-size:1rem;font-weight:800;padding:14px 24px;border-radius:50px;text-decoration:none;border:1px solid #334155;transition:border-color .2s,color .2s,background .2s}
+    .qcta-text:hover{border-color:#60a5fa;color:#f8fafc;background:rgba(96,165,250,.08)}
     .qcta-sub{color:#64748b;font-size:.82rem;margin-bottom:24px}
     .qdivider{display:flex;align-items:center;gap:12px;color:#475569;font-size:.82rem;max-width:480px;margin:0 auto 32px}
     .qdivider::before,.qdivider::after{content:'';flex:1;height:1px;background:#334155}
@@ -52,6 +55,9 @@
     .qfull{margin-bottom:16px}
     .qconsent{display:flex;align-items:flex-start;gap:10px;font-size:.84rem;color:#94a3b8;margin-bottom:20px;line-height:1.5}
     .qconsent input[type=checkbox]{margin-top:3px;flex-shrink:0;width:15px;height:15px;accent-color:#1a56db}
+    .qlegal-links{text-align:center;font-size:.78rem;color:#64748b;line-height:1.6;margin:-6px 0 20px}
+    .qlegal-links a{color:#93c5fd;text-decoration:none}
+    .qlegal-links a:hover{text-decoration:underline}
     .qsubmit{width:100%;background:var(--brand);color:#fff;font-size:1.1rem;font-weight:800;padding:16px;border:none;border-radius:10px;cursor:pointer;font-family:inherit;transition:background .2s;letter-spacing:.3px}
     .qsubmit:hover{background:#1d4ed8}
     .qnote{text-align:center;font-size:.78rem;color:#475569;margin-top:10px}
@@ -100,7 +106,10 @@
       <h1>Get a <span>Free Estimate</span><br>from Metro East's Trusted Contractor</h1>
       <p class="qhero-sub">Decks · Patios · Fencing · Concrete · Landscaping · Kitchen &amp; Bath Remodeling<br>Belleville, O'Fallon, Edwardsville &amp; all of Metro East IL</p>
 
-      <a href="tel:6185810676" class="qcta-call">📞 Call Bill — 618-581-0676</a>
+      <div class="qcta-row">
+        <a href="tel:6185810676" class="qcta-call">📞 Call Bill — 618-581-0676</a>
+        <a href="sms:6185810676" class="qcta-text">💬 Text Bill Photos</a>
+      </div>
       <p class="qcta-sub">Fastest response — owner picks up, no call center</p>
 
       <div class="qdivider">or fill out the form below</div>
@@ -117,7 +126,6 @@
         <input type="hidden" name="_cc" value="williamosessionallpro@gmail.com,6185810676@tmomail.net,6185810676@txt.att.net,6185810676@vtext.com,6185810676@email.uscc.net">
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_next" value="https://allprometroeastconstruction.com/thank-you.html?src=form&amp;form=get-quote">
-        <input type="hidden" name="_autoresponse" value="Hi — thanks for reaching out to All-Pro Construction! We received your request and will follow up within 2 hours during business hours. Need us faster? Call Bill directly at 618-581-0676.">
         <input type="hidden" name="_template" value="table">
 
         <div class="qrow">
@@ -138,7 +146,7 @@
           </div>
           <div class="qg" style="align-self:flex-end;">
             <label style="font-size:.72rem;color:#334155;">&#8203;</label>
-            <p style="font-size:.78rem;color:#475569;padding:10px 0;line-height:1.5;">📬 Optional — we'll only use it to send your estimate and occasional local deals. Never shared.</p>
+            <p style="font-size:.78rem;color:#475569;padding:10px 0;line-height:1.5;">📬 Optional — use your email for the estimate, project updates, and follow-up. Marketing emails only if you opt in below.</p>
           </div>
         </div>
 
@@ -172,9 +180,16 @@
         </div>
 
         <div class="qconsent">
-          <input type="checkbox" id="gq-consent" name="consent" required>
-          <label for="gq-consent">I agree to be contacted about my estimate request. We never sell or share your information.</label>
+          <input type="checkbox" id="gq-consent" name="estimate_contact_consent" value="yes" required>
+          <label for="gq-consent">I agree to be contacted by phone, text, or email about my estimate request. We never sell your information.</label>
         </div>
+
+        <div class="qconsent">
+          <input type="checkbox" id="gq-marketing" name="email_marketing_opt_in" value="yes">
+          <label for="gq-marketing">Send me occasional project tips, seasonal reminders, and local deals by email. I can unsubscribe anytime.</label>
+        </div>
+
+        <p class="qlegal-links">By submitting this form, you agree to our <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>.</p>
 
         <button type="submit" class="qsubmit">🚀 Send My Request — It's Free</button>
         <p class="qnote">No obligation · No pressure · We respond within 2 hours during business hours</p>
@@ -238,6 +253,7 @@
 <footer class="qfooter">
   <p>© 2026 All-Pro Construction &amp; Landscape · Metro East, IL · Licensed &amp; Insured · Deployed June 9, 2026</p>
   <p style="margin-top:6px;"><a href="tel:6185810676">618-581-0676</a> · <a href="index.html">Home</a> · <a href="contact.html">Contact</a> · <a href="reviews.html">Reviews</a> · <a href="blog/">Blog</a></p>
+  <p style="margin-top:6px;"><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a></p>
 </footer>
 
 <script type="application/ld+json">
