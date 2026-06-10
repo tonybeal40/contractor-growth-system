@@ -295,6 +295,109 @@
     ensureHiddenField(form, "_replyto", emailValue);
   }
 
+  function findSubmitControl(form) {
+    return form.querySelector('button[type="submit"], input[type="submit"]');
+  }
+
+  function hasLegalLinks(form) {
+    return !!form.querySelector('a[href="privacy.html"], a[href="/privacy.html"]') &&
+      !!form.querySelector('a[href="terms.html"], a[href="/terms.html"]');
+  }
+
+  function createConsentBlock(name, required, text) {
+    const wrapper = document.createElement("div");
+    wrapper.style.margin = required ? "12px 0 10px" : "0 0 10px";
+
+    const label = document.createElement("label");
+    label.style.display = "flex";
+    label.style.alignItems = "flex-start";
+    label.style.gap = "0.6rem";
+    label.style.fontSize = "0.9rem";
+    label.style.lineHeight = "1.5";
+    label.style.color = "inherit";
+
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.name = name;
+    input.value = "yes";
+    input.style.marginTop = "0.25rem";
+
+    if (required) {
+      input.required = true;
+    }
+
+    const textNode = document.createElement("span");
+    textNode.textContent = text;
+
+    label.appendChild(input);
+    label.appendChild(textNode);
+    wrapper.appendChild(label);
+    return wrapper;
+  }
+
+  function createLegalNote() {
+    const note = document.createElement("p");
+    note.setAttribute("data-lead-legal-note", "true");
+    note.style.fontSize = "0.82rem";
+    note.style.lineHeight = "1.6";
+    note.style.margin = "0 0 12px";
+
+    const intro = document.createTextNode("By submitting this form, you agree to our ");
+    const termsLink = document.createElement("a");
+    termsLink.href = "terms.html";
+    termsLink.textContent = "Terms of Service";
+    const joiner = document.createTextNode(" and ");
+    const privacyLink = document.createElement("a");
+    privacyLink.href = "privacy.html";
+    privacyLink.textContent = "Privacy Policy";
+    const period = document.createTextNode(".");
+
+    note.appendChild(intro);
+    note.appendChild(termsLink);
+    note.appendChild(joiner);
+    note.appendChild(privacyLink);
+    note.appendChild(period);
+    return note;
+  }
+
+  function ensureLeadDisclosures(form, formName) {
+    if (isReviewForm(formName)) {
+      return;
+    }
+
+    const submitControl = findSubmitControl(form);
+
+    if (!submitControl) {
+      return;
+    }
+
+    const additions = [];
+
+    if (!findNamedField(form, "estimate_contact_consent")) {
+      additions.push(createConsentBlock(
+        "estimate_contact_consent",
+        true,
+        "I agree to be contacted by phone, text, or email about my estimate request."
+      ));
+    }
+
+    if (!findNamedField(form, "email_marketing_opt_in")) {
+      additions.push(createConsentBlock(
+        "email_marketing_opt_in",
+        false,
+        "Send me occasional project tips, seasonal reminders, and local deals by email. I can unsubscribe anytime."
+      ));
+    }
+
+    if (!hasLegalLinks(form) && !form.querySelector('[data-lead-legal-note="true"]')) {
+      additions.push(createLegalNote());
+    }
+
+    additions.forEach(function (node) {
+      form.insertBefore(node, submitControl);
+    });
+  }
+
   function populateTracking(form, snapshot) {
     const formName = getFormName(form);
     const formSlug = slugify(formName);
@@ -368,8 +471,10 @@
     };
 
     forms.forEach(function (form) {
+      ensureLeadDisclosures(form, getFormName(form));
       populateTracking(form, snapshot);
       form.addEventListener("submit", function () {
+        ensureLeadDisclosures(form, getFormName(form));
         populateTracking(form, snapshot);
         trackSubmit(snapshot, getFormName(form));
       });
