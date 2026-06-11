@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="/images/branding/logo-square.png">
+  <link rel="shortcut icon" href="/images/branding/logo-square.png">
+  <link rel="apple-touch-icon" href="/images/branding/logo-square.png">
+  <title>All-Pro Private Leads Board</title>
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+  <meta name="description" content="Private internal leads board for All Pro Metro East Construction." />
+  <style>
+    :root{
+      --bg:#07111f;
+      --panel:#101d33;
+      --panel-2:#142744;
+      --line:#2e4670;
+      --text:#eef4ff;
+      --muted:#aab9d6;
+      --accent:#2f7bf2;
+      --accent-dark:#1d4f9a;
+      --danger:#c8102e;
+      --ok:#1fa35f;
+      --warn:#f0b24d;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Segoe UI",Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(47,123,242,.18), transparent 38%),
+        linear-gradient(180deg, #08101d 0%, var(--bg) 100%);
+      line-height:1.55;
+    }
+    a{color:#8dc0ff}
+    .wrap{width:min(1180px,calc(100% - 28px));margin:18px auto 40px;display:grid;gap:14px}
+    .card{
+      background:linear-gradient(180deg,var(--panel) 0%, var(--panel-2) 100%);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:18px;
+      box-shadow:0 14px 40px rgba(0,0,0,.35);
+    }
+    .hero{
+      display:grid;
+      grid-template-columns:1.25fr .75fr;
+      gap:14px;
+      align-items:start;
+    }
+    h1,h2,h3{margin:0 0 10px}
+    h1{font-size:1.95rem;line-height:1.1}
+    h2{font-size:1.2rem}
+    h3{font-size:1rem}
+    .muted{color:var(--muted)}
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 12px;
+      border-radius:999px;
+      border:1px solid rgba(47,123,242,.45);
+      background:rgba(47,123,242,.12);
+      color:#d9e8ff;
+      font-size:.8rem;
+      font-weight:800;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+    .warning{
+      border-left:4px solid var(--warn);
+      background:rgba(240,178,77,.12);
+      padding:12px 14px;
+      border-radius:10px;
+      color:#ffe5b4;
+      font-size:.92rem;
+    }
+    .danger{
+      border-left:4px solid var(--danger);
+      background:rgba(200,16,46,.12);
+      padding:12px 14px;
+      border-radius:10px;
+      color:#ffd5dc;
+      font-size:.92rem;
+    }
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:11px 15px;
+      border-radius:11px;
+      border:1px solid #3a629d;
+      background:linear-gradient(180deg,var(--accent),var(--accent-dark));
+      color:#fff;
+      text-decoration:none;
+      font-weight:800;
+    }
+    .btn.ghost{
+      background:#12233e;
+      border-color:#3a5784;
+    }
+    .btn.phone{
+      background:linear-gradient(180deg,#239d60,#197744);
+      border-color:#2d9c62;
+    }
+    .meta-list{
+      display:grid;
+      gap:8px;
+      font-size:.96rem;
+    }
+    .meta-list strong{color:#fff}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .contact{
+      border:1px solid #35517f;
+      border-radius:14px;
+      padding:14px;
+      background:rgba(6,14,26,.3);
+    }
+    .contact .type{
+      color:#98c0ff;
+      text-transform:uppercase;
+      font-size:.76rem;
+      font-weight:800;
+      letter-spacing:.05em;
+      margin-bottom:6px;
+    }
+    .contact .name{
+      font-size:1.08rem;
+      font-weight:800;
+      margin-bottom:4px;
+    }
+    .contact p{margin:6px 0}
+    .source-list{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:grid;
+      gap:10px;
+    }
+    .source-list li{
+      border:1px solid #35517f;
+      border-radius:12px;
+      padding:12px 13px;
+      background:rgba(7,16,30,.35);
+    }
+    .source-list strong{display:block;margin-bottom:4px}
+    .mini{
+      font-size:.88rem;
+      color:var(--muted);
+    }
+    .notes{
+      white-space:pre-wrap;
+      font-family:Consolas,"Courier New",monospace;
+      font-size:.86rem;
+      background:#0a1526;
+      border:1px solid #304b75;
+      border-radius:12px;
+      padding:12px;
+      color:#dfe9ff;
+    }
+    @media (max-width:920px){
+      .hero,.grid-2,.grid-3{grid-template-columns:1fr}
+    }
+  </style>
+<!-- Microsoft Clarity -->
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","weti9tqt5q");</script>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card hero">
+      <div>
+        <div class="pill">Private Leads Board</div>
+        <h1>All-Pro Belleville / Metro East Lead Board</h1>
+        <p class="muted">Private internal page for Bill and Tony. Built from public-source lead research on June 11, 2026.</p>
+        <div class="danger" style="margin-top:12px;">
+          This page is hidden from navigation and marked <strong>noindex</strong>, but it is still a static web page.
+          That means it is private-ish, not truly secure. Anyone with the full URL can open it.
+        </div>
+        <div class="row" style="margin-top:14px;">
+          <a class="btn phone" href="tel:6185810676">Call Bill: 618-581-0676</a>
+          <a class="btn ghost" href="allpro-crm-private-a9k3r7.html">Open Private CRM</a>
+          <a class="btn ghost" href="allpro-email-outreach-private-r4h8.html">Open Outreach Kit</a>
+        </div>
+      </div>
+      <div class="card" style="margin:0;">
+        <h2>What To Work First</h2>
+        <div class="meta-list">
+          <div><strong>1. Property managers</strong><br><span class="muted">Fastest commercial maintenance lane.</span></div>
+          <div><strong>2. Official bid boards</strong><br><span class="muted">Recurring public work and vendor opportunities.</span></div>
+          <div><strong>3. Homeowner marketplaces</strong><br><span class="muted">Where Belleville residents already ask for quotes.</span></div>
+          <div><strong>4. Hiring / labor boards</strong><br><span class="muted">Signals who is busy and who needs help now.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Verified Local Contacts</h2>
+      <div class="grid-3">
+        <article class="contact">
+          <div class="type">Property Management</div>
+          <div class="name">Yellow Brick Realty &amp; Management</div>
+          <p>601 Freeburg Ave, Belleville, IL 62220</p>
+          <p><a href="tel:6183982400">618-398-2400</a></p>
+          <p><a href="mailto:joanne@ybrentals.com">joanne@ybrentals.com</a></p>
+          <p class="mini">Serves Madison, St. Clair, Clinton, Bond, and Monroe counties.</p>
+          <p><a href="https://ybrentals.com/" target="_blank" rel="noopener">Open site</a></p>
+        </article>
+        <article class="contact">
+          <div class="type">Property Management</div>
+          <div class="name">Kunkel Wittenauer Group</div>
+          <p>Southern Illinois / Metro East property management and brokerage.</p>
+          <p class="mini">Publicly states it handles routine residential and commercial property maintenance.</p>
+          <p><a href="https://choosekwg.com/" target="_blank" rel="noopener">Open site</a></p>
+        </article>
+        <article class="contact">
+          <div class="type">Property Management</div>
+          <div class="name">Strano &amp; Associates Property Management</div>
+          <p>Southern Illinois property management office.</p>
+          <p class="mini">Publicly states it handles tenant placement, rent collection, property maintenance, and lease administration.</p>
+          <p><a href="https://www.strano.com/propertymanagementdepartment" target="_blank" rel="noopener">Open site</a></p>
+        </article>
+        <article class="contact">
+          <div class="type">Chamber / Local Business</div>
+          <div class="name">Greater Belleville Chamber of Commerce</div>
+          <p>216 East A Street, Belleville, Illinois 62220</p>
+          <p><a href="tel:6182332015">618-233-2015</a></p>
+          <p><a href="mailto:info@bellevillechamber.org">info@bellevillechamber.org</a></p>
+          <p><a href="https://www.bellevillechamber.org/directory/" target="_blank" rel="noopener">Open directory</a></p>
+        </article>
+        <article class="contact">
+          <div class="type">Bid Source</div>
+          <div class="name">Southwestern Illinois College Purchasing</div>
+          <p><a href="mailto:purchasing@swic.edu">purchasing@swic.edu</a></p>
+          <p class="mini">SWIC public bids page showed a Belleville-area landscaping bid source when checked.</p>
+          <p><a href="https://www.swic.edu/about/purchasing-department/bids-and-proposal-projects/" target="_blank" rel="noopener">Open bid page</a></p>
+        </article>
+        <article class="contact">
+          <div class="type">Local Market Signal</div>
+          <div class="name">Craigslist Belleville Labor Gigs</div>
+          <p class="mini">Short-turn homeowner and small-operator help requests. One Belleville moving-helper post was live when checked.</p>
+          <p><a href="https://stlouis.craigslist.org/search/belleville-il/lbg" target="_blank" rel="noopener">Open gigs page</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <section class="card">
+        <h2>Official Bid And Public Notice Sources</h2>
+        <ul class="source-list">
+          <li>
+            <strong>City of Belleville Bids</strong>
+            <span class="mini">Official contractor, vendor, and service-provider page.</span><br>
+            <a href="https://www.belleville.net/Bids.aspx?CatID=showStatus&Status=open&showAllBids=on&txtSort=Category" target="_blank" rel="noopener">belleville.net bids</a>
+          </li>
+          <li>
+            <strong>St. Clair County Public Notices</strong>
+            <span class="mini">County notice board including airport and facilities-style notices.</span><br>
+            <a href="https://www.co.st-clair.il.us/public-notices" target="_blank" rel="noopener">co.st-clair.il.us public notices</a>
+          </li>
+          <li>
+            <strong>O'Fallon Bids</strong><br>
+            <a href="https://www.ofallon.org/Bids.aspx" target="_blank" rel="noopener">ofallon.org bids</a>
+          </li>
+          <li>
+            <strong>Swansea Bids</strong><br>
+            <a href="https://www.swanseail.org/Bids.aspx" target="_blank" rel="noopener">swanseail.org bids</a>
+          </li>
+          <li>
+            <strong>Madison County Purchasing</strong><br>
+            <a href="https://www.madisoncountyil.gov/departments/purchasing/bids.php" target="_blank" rel="noopener">madisoncountyil.gov bids</a>
+          </li>
+          <li>
+            <strong>St. Clair County Transit District RFPs</strong><br>
+            <a href="https://scctd.org/category/rfps/" target="_blank" rel="noopener">scctd.org RFPs</a>
+          </li>
+          <li>
+            <strong>IDOT Contractors Bulletin</strong><br>
+            <a href="https://idot.illinois.gov/procurement/procurement-opportunities/contractors-bulletin.html" target="_blank" rel="noopener">idot.illinois.gov bulletin</a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Residential And Marketplace Sources</h2>
+        <ul class="source-list">
+          <li>
+            <strong>Angi Belleville Lawn / Yard Work</strong>
+            <span class="mini">Homeowner quote activity and Belleville-area service demand.</span><br>
+            <a href="https://www.angi.com/companylist/us/il/belleville/lawn-and-yard-work.htm" target="_blank" rel="noopener">Open Angi page</a>
+          </li>
+          <li>
+            <strong>HomeAdvisor Belleville Remodeling</strong>
+            <span class="mini">Public remodeling quote-request flow in Belleville.</span><br>
+            <a href="https://www.homeadvisor.com/c.Additions-Remodeling.Belleville.IL.-12001.html" target="_blank" rel="noopener">Open HomeAdvisor page</a>
+          </li>
+          <li>
+            <strong>Lawn Love Belleville</strong>
+            <span class="mini">Shows active Belleville lawn-care providers and completed-job counts.</span><br>
+            <a href="https://lawnlove.com/illinois/st-louis-lawn-care/belleville-lawn-care" target="_blank" rel="noopener">Open Lawn Love page</a>
+          </li>
+          <li>
+            <strong>Belleville Patch Classifieds</strong><br>
+            <a href="https://patch.com/illinois/belleville-il/classifieds" target="_blank" rel="noopener">Open Patch classifieds</a>
+          </li>
+          <li>
+            <strong>Belleville News-Democrat Jobs</strong><br>
+            <a href="https://jobs.bnd.com/" target="_blank" rel="noopener">Open BND jobs</a>
+          </li>
+        </ul>
+      </section>
+    </section>
+
+    <section class="grid-2">
+      <section class="card">
+        <h2>Hiring And Labor Signals</h2>
+        <ul class="source-list">
+          <li>
+            <strong>Minton Outdoor Careers</strong>
+            <span class="mini">Verified public jobs page showing a lawn-care laborer role plus a part-time secretary role when checked June 11, 2026.</span><br>
+            <a href="https://mintonoutdoor.com/careers/" target="_blank" rel="noopener">Open careers page</a>
+          </li>
+          <li>
+            <strong>Sebert Landscaping Careers</strong>
+            <span class="mini">Commercial landscape company with a public hiring page and growth language around field, sales, and leadership.</span><br>
+            <a href="https://sebert.com/careers/" target="_blank" rel="noopener">Open careers page</a>
+          </li>
+          <li>
+            <strong>Indeed Remodeling Jobs</strong>
+            <span class="mini">Search result showed 85 remodeling jobs in Belleville on June 11, 2026. Indeed blocked direct fetch, so use browser manually.</span><br>
+            <a href="https://www.indeed.com/q-Remodeling-l-Belleville,-IL-jobs.html" target="_blank" rel="noopener">Open Indeed search</a>
+          </li>
+          <li>
+            <strong>iHire Construction Sales</strong><br>
+            <a href="https://www.ihireconstruction.com/t-construction-sales-s-illinois-c-belleville-jobs.html" target="_blank" rel="noopener">Open iHire search</a>
+          </li>
+          <li>
+            <strong>Snagajob Construction Jobs</strong><br>
+            <a href="https://www.snagajob.com/find-jobs/w-belleville,+il,i-construction" target="_blank" rel="noopener">Open Snagajob search</a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Simple Outreach Notes</h2>
+        <div class="notes">Property manager opening line:
+"We handle small-to-mid-size turnover work, cleanup, fencing, decks, concrete, hauling, lawn and punch-list projects across Belleville and the Metro East. If you need a reliable backup vendor or overflow help, Bill can price work fast."
+
+What to push hardest:
+- cleanup and hauling
+- lawn / landscape maintenance
+- fence and deck repairs
+- concrete and patio repairs
+- rental turnover punch-list work
+- small projects bigger contractors skip
+
+Best first commercial targets:
+1. Yellow Brick
+2. Kunkel Wittenauer Group
+3. Strano Property Management
+4. Belleville Chamber directory members
+
+Best first public-source routine:
+- check Belleville bids
+- check St. Clair County notices
+- check SWIC bids
+- check Craigslist labor / trades
+- check Patch / BND jobs</div>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
