@@ -14,10 +14,12 @@
 <link rel="icon" type="image/png" href="/images/branding/logo-square.png">
 <link rel="shortcut icon" href="/images/branding/logo-square.png">
 <link rel="apple-touch-icon" href="/images/branding/logo-square.png">
-<link rel="preload" as="image" href="/images/branding/logo-nav.webp" type="image/webp">
-<link rel="preload" as="image" href="/images/shower-remodel-belleville-il.png">
-<link rel="preload" as="image" href="/images/deck-build-metro-east-il.png">
-<link rel="preload" as="image" href="/images/deck-lighting-belleville-il.png">
+<!-- Only preload the true LCP image (hero logo) — removed competing below-fold image preloads -->
+<link rel="preload" as="image" href="/images/branding/logo-nav.webp" type="image/webp" fetchpriority="high">
+<!-- DNS prefetch for 3rd parties to speed up connections -->
+<link rel="dns-prefetch" href="https://formsubmit.co">
+<link rel="dns-prefetch" href="https://unpkg.com">
+<link rel="preconnect" href="https://formsubmit.co" crossorigin>
 <link rel="stylesheet" href="styles.css">
 <style>
 /* ── Revenue Engine Additions ── */
@@ -241,7 +243,7 @@
     <div class="hero-content">
       <picture>
         <source srcset="/images/branding/logo-nav.webp" type="image/webp">
-        <img src="/images/branding/logo-web-sm.png" alt="All-Pro Metro East Construction logo" class="hero-brand-mark" width="91" height="80" loading="lazy">
+        <img src="/images/branding/logo-web-sm.png" alt="All-Pro Metro East Construction logo" class="hero-brand-mark" width="91" height="80" loading="eager" fetchpriority="high" decoding="async">
       </picture>
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
@@ -347,7 +349,7 @@
     <div class="work-photo-grid reveal">
       <div class="work-photo-card">
         <div class="work-photo-wrap">
-          <img src="images/shower-remodel-belleville-il.png" alt="Custom walk-in shower remodel with tile and glass door - Metro East IL" loading="eager" fetchpriority="high" decoding="async" width="206" height="206">
+          <img src="images/shower-remodel-belleville-il.png" alt="Custom walk-in shower remodel with tile and glass door - Metro East IL" loading="lazy" decoding="async" width="206" height="206">
           <div class="work-photo-overlay"><span class="work-photo-tag">Shower Remodel</span></div>
         </div>
         <div class="work-photo-caption">
@@ -357,7 +359,7 @@
       </div>
       <div class="work-photo-card">
         <div class="work-photo-wrap">
-          <img src="images/deck-build-metro-east-il.png" alt="Two-level deck build with screened porch - Metro East IL contractor" loading="eager" fetchpriority="high" decoding="async" width="206" height="206">
+          <img src="images/deck-build-metro-east-il.png" alt="Two-level deck build with screened porch - Metro East IL contractor" loading="lazy" decoding="async" width="206" height="206">
           <div class="work-photo-overlay"><span class="work-photo-tag">Deck Build</span></div>
         </div>
         <div class="work-photo-caption">
@@ -367,7 +369,7 @@
       </div>
       <div class="work-photo-card">
         <div class="work-photo-wrap">
-          <img src="images/deck-lighting-belleville-il.png" alt="Deck with professional step lighting at night - Belleville IL" loading="eager" fetchpriority="high" decoding="async" width="206" height="206">
+          <img src="images/deck-lighting-belleville-il.png" alt="Deck with professional step lighting at night - Belleville IL" loading="lazy" decoding="async" width="206" height="206">
           <div class="work-photo-overlay"><span class="work-photo-tag">Deck Lighting</span></div>
         </div>
         <div class="work-photo-caption">
@@ -1136,39 +1138,49 @@
 </div>
 
 <script>
-// Nav scroll effect
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 20);
-}, { passive: true });
+// Run all non-critical JS after browser is idle to reduce TBT
+(window.requestIdleCallback || function(cb){ setTimeout(cb, 1); })(function() {
 
-// Scroll reveal
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); }
-  });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  // Nav scroll effect
+  var nav = document.getElementById('nav');
+  if (nav) {
+    window.addEventListener('scroll', function() {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+  }
 
-// Animated counters
-const countEls = document.querySelectorAll('[data-count]');
-const countObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    const el = e.target;
-    const target = parseInt(el.dataset.count);
-    let start = 0;
-    const step = target / 40;
-    const timer = setInterval(() => {
-      start = Math.min(start + step, target);
-      el.textContent = Math.round(start) + (el.dataset.suffix || '');
-      if (start >= target) clearInterval(timer);
-    }, 30);
-  countObserver.unobserve(el);
-  });
-}, { threshold: 0.5 });
-countEls.forEach(el => countObserver.observe(el));
+  // Scroll reveal
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
 
+    // Animated counters
+    var countEls = document.querySelectorAll('[data-count]');
+    if (countEls.length) {
+      var countObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (!e.isIntersecting) return;
+          var el = e.target;
+          var target = parseInt(el.dataset.count);
+          var start = 0;
+          var step = target / 40;
+          var timer = setInterval(function() {
+            start = Math.min(start + step, target);
+            el.textContent = Math.round(start) + (el.dataset.suffix || '');
+            if (start >= target) clearInterval(timer);
+          }, 30);
+          countObserver.unobserve(el);
+        });
+      }, { threshold: 0.5 });
+      countEls.forEach(function(el) { countObserver.observe(el); });
+    }
+  }
+
+}); // end requestIdleCallback
 </script>
 <script defer src="lead-tracking.js"></script>
   <script src="formsubmit-lead-tracking.js?v=20260610b" defer></script>
