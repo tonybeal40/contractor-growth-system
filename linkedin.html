@@ -29,37 +29,37 @@
 
 <style>
 /* ============================================================
-   NEXTDOOR-STYLE — Green & White Design System
-   Primary green: #00B246 (Nextdoor brand)
+   LINKEDIN-STYLE — Blue & Warm-Gray Design System
+   Primary blue: #0A66C2 · Background: #F3F2EF
    ============================================================ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --nd-green:       #00B246;
-  --nd-green-dark:  #008f38;
-  --nd-green-light: #e6f7ec;
-  --nd-green-mid:   #ccefda;
-  --nd-white:       #ffffff;
-  --nd-bg:          #f4f6f5;
-  --nd-card:        #ffffff;
-  --nd-border:      #e0e6e2;
-  --nd-text:        #1a1a1a;
-  --nd-text-mid:    #4a5568;
-  --nd-text-light:  #718096;
-  --nd-red:         #e53e3e;
-  --nd-font:        'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --nd-radius:      12px;
-  --nd-radius-sm:   8px;
-  --nd-radius-lg:   20px;
-  --nd-shadow:      0 2px 12px rgba(0,0,0,.08);
-  --nd-shadow-md:   0 4px 24px rgba(0,0,0,.10);
+  --li-green:       #0A66C2;
+  --li-green-dark:  #004182;
+  --li-green-light: #EBF3FB;
+  --li-green-mid:   #C3DCF5;
+  --li-white:       #ffffff;
+  --li-bg:          #F3F2EF;
+  --li-card:        #ffffff;
+  --li-border:      #E0DDD8;
+  --li-text:        #1D2226;
+  --li-text-mid:    #434649;
+  --li-text-light:  #747579;
+  --li-red:         #e53e3e;
+  --li-font:        'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --li-radius:      12px;
+  --li-radius-sm:   8px;
+  --li-radius-lg:   20px;
+  --li-shadow:      0 2px 12px rgba(0,0,0,.08);
+  --li-shadow-md:   0 4px 24px rgba(0,0,0,.10);
 }
 
 html { scroll-behavior: smooth; font-size: 16px; }
 body {
-  font-family: var(--nd-font);
-  background: var(--nd-bg);
-  color: var(--nd-text);
+  font-family: var(--li-font);
+  background: var(--li-bg);
+  color: var(--li-text);
   line-height: 1.6;
   overflow-x: hidden;
   padding-bottom: 64px; /* room for sticky bar */
@@ -70,65 +70,65 @@ button { font-family: inherit; cursor: pointer; border: none; }
 input, select, textarea { font-family: inherit; }
 
 /* ── NAV ─────────────────────────────────────────────────── */
-.nd-nav {
+.li-nav {
   position: sticky; top: 0; z-index: 200;
-  background: var(--nd-green);
-  box-shadow: 0 2px 8px rgba(0,120,60,.18);
+  background: var(--li-green);
+  box-shadow: 0 2px 8px rgba(10,102,194,.18);
 }
-.nd-nav-inner {
+.li-nav-inner {
   max-width: 1100px; margin: 0 auto;
   padding: 0 1.5rem;
   height: 64px;
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
 }
-.nd-nav-logo {
+.li-nav-logo {
   display: flex; align-items: center; gap: .65rem;
   text-decoration: none; flex-shrink: 0;
 }
-.nd-nav-logo img {
+.li-nav-logo img {
   width: 40px; height: 40px;
   border-radius: 8px;
   background: #fff;
   padding: 2px;
 }
-.nd-nav-logo-text strong {
+.li-nav-logo-text strong {
   font-size: .95rem; font-weight: 800;
-  color: #fff; display: block; line-height: 1.2;
+  color: var(--li-text); display: block; line-height: 1.2;
 }
-.nd-nav-logo-text small {
-  font-size: .72rem; color: rgba(255,255,255,.8); display: block;
+.li-nav-logo-text small {
+  font-size: .72rem; color: var(--li-text-light); display: block;
 }
-.nd-nav-phone {
-  font-size: 1rem; font-weight: 700; color: #fff;
+.li-nav-phone {
+  font-size: 1rem; font-weight: 700; color: var(--li-text-mid);
   display: flex; align-items: center; gap: .35rem;
 }
-.nd-nav-phone a { color: inherit; }
-.nd-nav-cta {
-  background: #fff; color: var(--nd-green);
+.li-nav-phone a { color: var(--li-blue); }
+.li-nav-cta {
+  background: #fff; color: var(--li-green);
   font-size: .88rem; font-weight: 800;
   padding: .55rem 1.3rem; border-radius: 100px;
   white-space: nowrap;
   transition: background .15s;
 }
-.nd-nav-cta:hover { background: var(--nd-green-light); }
-@media (max-width:580px) { .nd-nav-phone { display:none; } }
+.li-nav-cta:hover { background: var(--li-green-light); }
+@media (max-width:580px) { .li-nav-phone { display:none; } }
 
 /* ── HERO ────────────────────────────────────────────────── */
-.nd-hero {
-  background: linear-gradient(150deg, var(--nd-green) 0%, #007a32 100%);
+.li-hero {
+  background: linear-gradient(150deg, var(--li-green) 0%, #004182 100%);
   padding: 3.5rem 1.5rem 4rem;
   text-align: center;
   position: relative; overflow: hidden;
 }
-.nd-hero::after {
+.li-hero::after {
   content: "";
   position: absolute; bottom: -1px; left: 0; right: 0;
   height: 48px;
-  background: var(--nd-bg);
+  background: var(--li-bg);
   clip-path: ellipse(55% 100% at 50% 100%);
 }
-.nd-hero-inner { max-width: 780px; margin: 0 auto; position: relative; z-index: 1; }
-.nd-hero-badge {
+.li-hero-inner { max-width: 780px; margin: 0 auto; position: relative; z-index: 1; }
+.li-hero-badge {
   display: inline-flex; align-items: center; gap: .45rem;
   background: rgba(255,255,255,.18);
   border: 1px solid rgba(255,255,255,.35);
@@ -137,36 +137,36 @@ input, select, textarea { font-family: inherit; }
   text-transform: uppercase; padding: .35rem .95rem; border-radius: 100px;
   margin-bottom: 1.4rem;
 }
-.nd-hero-badge-dot {
+.li-hero-badge-dot {
   width: 7px; height: 7px; border-radius: 50%;
   background: #fff; opacity: .9;
-  animation: nd-pulse 2s infinite;
+  animation: li-pulse 2s infinite;
 }
-@keyframes nd-pulse { 0%,100%{opacity:.9} 50%{opacity:.4} }
-.nd-hero h1 {
+@keyframes li-pulse { 0%,100%{opacity:.9} 50%{opacity:.4} }
+.li-hero h1 {
   font-size: clamp(2rem, 5.5vw, 3.4rem);
   font-weight: 800; color: #fff; line-height: 1.15;
   margin-bottom: 1.1rem;
 }
-.nd-hero-sub {
+.li-hero-sub {
   font-size: clamp(1rem, 2.2vw, 1.15rem);
   color: rgba(255,255,255,.9); line-height: 1.75;
   max-width: 680px; margin: 0 auto 2.2rem;
 }
-.nd-hero-ctas {
+.li-hero-ctas {
   display: flex; flex-wrap: wrap; gap: .9rem; justify-content: center;
 }
-.nd-btn-primary {
+.li-btn-primary {
   display: inline-flex; align-items: center; gap: .5rem;
-  background: #fff; color: var(--nd-green);
+  background: #fff; color: var(--li-green);
   font-size: 1.1rem; font-weight: 800;
   padding: 1rem 2.2rem; border-radius: 100px;
   transition: transform .15s, box-shadow .15s;
   box-shadow: 0 4px 20px rgba(0,0,0,.15);
   white-space: nowrap;
 }
-.nd-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,.18); }
-.nd-btn-outline-white {
+.li-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,.18); }
+.li-btn-outline-white {
   display: inline-flex; align-items: center; gap: .5rem;
   background: transparent; color: #fff;
   font-size: 1rem; font-weight: 700;
@@ -175,372 +175,372 @@ input, select, textarea { font-family: inherit; }
   transition: border-color .15s, background .15s;
   white-space: nowrap;
 }
-.nd-btn-outline-white:hover { border-color: #fff; background: rgba(255,255,255,.1); }
-.nd-hero-note {
+.li-btn-outline-white:hover { border-color: #fff; background: rgba(255,255,255,.1); }
+.li-hero-note {
   margin-top: 1.2rem; color: rgba(255,255,255,.75);
   font-size: .85rem;
 }
 
 /* ── TRUST BAR ───────────────────────────────────────────── */
-.nd-trust {
-  background: var(--nd-white);
-  border-bottom: 1px solid var(--nd-border);
+.li-trust {
+  background: var(--li-white);
+  border-bottom: 1px solid var(--li-border);
   padding: 1rem 1.5rem;
 }
-.nd-trust-inner {
+.li-trust-inner {
   max-width: 1000px; margin: 0 auto;
   display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem 2rem;
 }
-.nd-trust-item {
+.li-trust-item {
   display: flex; align-items: center; gap: .45rem;
-  font-size: .9rem; font-weight: 600; color: var(--nd-text-mid);
+  font-size: .9rem; font-weight: 600; color: var(--li-text-mid);
 }
-.nd-trust-item strong { color: var(--nd-text); }
-.nd-trust-sep { color: var(--nd-border); font-size: .8rem; }
-@media (max-width:600px) { .nd-trust-sep { display:none; } }
+.li-trust-item strong { color: var(--li-text); }
+.li-trust-sep { color: var(--li-border); font-size: .8rem; }
+@media (max-width:600px) { .li-trust-sep { display:none; } }
 
 /* ── SECTION BASE ────────────────────────────────────────── */
-.nd-section { padding: 3.5rem 1.5rem; }
-.nd-section-white { background: var(--nd-white); }
-.nd-section-gray  { background: var(--nd-bg); }
-.nd-section-green { background: var(--nd-green-light); }
-.nd-section-inner { max-width: 1100px; margin: 0 auto; }
-.nd-section-header { text-align: center; margin-bottom: 2.5rem; }
-.nd-section-label {
+.li-section { padding: 3.5rem 1.5rem; }
+.li-section-white { background: var(--li-white); }
+.li-section-gray  { background: var(--li-bg); }
+.li-section-green { background: var(--li-green-light); }
+.li-section-inner { max-width: 1100px; margin: 0 auto; }
+.li-section-header { text-align: center; margin-bottom: 2.5rem; }
+.li-section-label {
   display: inline-block;
-  background: var(--nd-green-light);
-  color: var(--nd-green-dark);
+  background: var(--li-green-light);
+  color: var(--li-green-dark);
   font-size: .72rem; font-weight: 800; letter-spacing: .14em;
   text-transform: uppercase; padding: .3rem .9rem; border-radius: 100px;
   margin-bottom: .75rem;
 }
-.nd-section-title {
+.li-section-title {
   font-size: clamp(1.6rem, 3.5vw, 2.3rem);
-  font-weight: 800; color: var(--nd-text); margin-bottom: .5rem;
+  font-weight: 800; color: var(--li-text); margin-bottom: .5rem;
 }
-.nd-section-sub {
-  font-size: 1.05rem; color: var(--nd-text-light); max-width: 560px;
+.li-section-sub {
+  font-size: 1.05rem; color: var(--li-text-light); max-width: 560px;
   margin: 0 auto;
 }
 
 /* ── SERVICES GRID ───────────────────────────────────────── */
-.nd-services-grid {
+.li-services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
   gap: 1rem;
 }
-.nd-service-card {
-  background: var(--nd-white);
-  border: 1.5px solid var(--nd-border);
-  border-radius: var(--nd-radius);
+.li-service-card {
+  background: var(--li-white);
+  border: 1.5px solid var(--li-border);
+  border-radius: var(--li-radius);
   padding: 1.3rem 1.1rem;
   display: flex; flex-direction: column; gap: .45rem;
   transition: border-color .2s, box-shadow .2s, transform .2s;
   cursor: default;
 }
-.nd-service-card:hover {
-  border-color: var(--nd-green);
-  box-shadow: 0 4px 20px rgba(0,178,70,.12);
+.li-service-card:hover {
+  border-color: var(--li-green);
+  box-shadow: 0 4px 20px rgba(10,102,194,.12);
   transform: translateY(-2px);
 }
-.nd-service-icon { font-size: 1.7rem; }
-.nd-service-name { font-size: .97rem; font-weight: 800; color: var(--nd-text); }
-.nd-service-desc { font-size: .8rem; color: var(--nd-text-light); line-height: 1.45; }
+.li-service-icon { font-size: 1.7rem; }
+.li-service-name { font-size: .97rem; font-weight: 800; color: var(--li-text); }
+.li-service-desc { font-size: .8rem; color: var(--li-text-light); line-height: 1.45; }
 @media (max-width:480px) {
-  .nd-services-grid { grid-template-columns: repeat(2,1fr); }
+  .li-services-grid { grid-template-columns: repeat(2,1fr); }
 }
 
 /* ── CTA INLINE ──────────────────────────────────────────── */
-.nd-cta-row {
+.li-cta-row {
   text-align: center; margin-top: 2.2rem;
 }
-.nd-btn-green {
+.li-btn-green {
   display: inline-flex; align-items: center; gap: .5rem;
-  background: var(--nd-green); color: #fff;
+  background: var(--li-green); color: #fff;
   font-size: 1.08rem; font-weight: 800;
   padding: 1rem 2.2rem; border-radius: 100px;
   transition: background .15s, transform .15s;
-  box-shadow: 0 4px 18px rgba(0,178,70,.25);
+  box-shadow: 0 4px 18px rgba(10,102,194,.25);
   white-space: nowrap;
 }
-.nd-btn-green:hover { background: var(--nd-green-dark); transform: translateY(-2px); }
-.nd-btn-green-lg {
+.li-btn-green:hover { background: var(--li-green-dark); transform: translateY(-2px); }
+.li-btn-green-lg {
   font-size: 1.2rem; padding: 1.1rem 2.6rem;
 }
 
 /* ── FORM CARD ───────────────────────────────────────────── */
-.nd-form-card {
-  background: var(--nd-white);
-  border: 1.5px solid var(--nd-border);
-  border-radius: var(--nd-radius-lg);
+.li-form-card {
+  background: var(--li-white);
+  border: 1.5px solid var(--li-border);
+  border-radius: var(--li-radius-lg);
   padding: 2.4rem 2rem;
   max-width: 700px;
-  box-shadow: var(--nd-shadow-md);
+  box-shadow: var(--li-shadow-md);
 }
-.nd-form-card h3 {
-  font-size: 1.45rem; font-weight: 800; color: var(--nd-text);
+.li-form-card h3 {
+  font-size: 1.45rem; font-weight: 800; color: var(--li-text);
   margin-bottom: .4rem;
 }
-.nd-form-card > p {
-  color: var(--nd-text-light); font-size: .97rem;
+.li-form-card > p {
+  color: var(--li-text-light); font-size: .97rem;
   margin-bottom: 1.6rem; line-height: 1.6;
 }
 /* form fields */
-.nd-form label {
+.li-form label {
   display: block;
-  font-size: .88rem; font-weight: 700; color: var(--nd-text-mid);
+  font-size: .88rem; font-weight: 700; color: var(--li-text-mid);
   margin-bottom: .35rem;
 }
-.nd-form input,
-.nd-form select,
-.nd-form textarea {
+.li-form input,
+.li-form select,
+.li-form textarea {
   width: 100%;
   background: #fff;
   border: 1.5px solid #cbd5e0;
-  border-radius: var(--nd-radius-sm);
-  color: var(--nd-text);
+  border-radius: var(--li-radius-sm);
+  color: var(--li-text);
   font-size: 1rem;
   padding: .8rem 1rem;
   margin-bottom: 1.1rem;
   transition: border-color .2s, box-shadow .2s;
 }
-.nd-form input:focus,
-.nd-form select:focus,
-.nd-form textarea:focus {
+.li-form input:focus,
+.li-form select:focus,
+.li-form textarea:focus {
   outline: none;
-  border-color: var(--nd-green);
-  box-shadow: 0 0 0 3px rgba(0,178,70,.12);
+  border-color: var(--li-green);
+  box-shadow: 0 0 0 3px rgba(10,102,194,.12);
 }
-.nd-form input::placeholder,
-.nd-form textarea::placeholder { color: #a0aec0; }
-.nd-form select { appearance: auto; cursor: pointer; }
-.nd-form textarea { resize: vertical; min-height: 100px; }
-.nd-form-row {
+.li-form input::placeholder,
+.li-form textarea::placeholder { color: #a0aec0; }
+.li-form select { appearance: auto; cursor: pointer; }
+.li-form textarea { resize: vertical; min-height: 100px; }
+.li-form-row {
   display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem;
 }
-@media (max-width:580px) { .nd-form-row { grid-template-columns: 1fr; } }
-.nd-btn-submit {
+@media (max-width:580px) { .li-form-row { grid-template-columns: 1fr; } }
+.li-btn-submit {
   width: 100%;
-  background: var(--nd-green); color: #fff;
+  background: var(--li-green); color: #fff;
   font-size: 1.1rem; font-weight: 800;
   padding: 1rem; border-radius: 100px; border: none;
   cursor: pointer;
   transition: background .15s, transform .15s;
-  box-shadow: 0 4px 18px rgba(0,178,70,.28);
+  box-shadow: 0 4px 18px rgba(10,102,194,.28);
   margin-top: .25rem;
 }
-.nd-btn-submit:hover { background: var(--nd-green-dark); transform: translateY(-1px); }
-.nd-form-note {
-  text-align: center; color: var(--nd-text-light);
+.li-btn-submit:hover { background: var(--li-green-dark); transform: translateY(-1px); }
+.li-form-note {
+  text-align: center; color: var(--li-text-light);
   font-size: .83rem; margin-top: .85rem;
 }
-.nd-photo-note {
-  font-size: .81rem; color: var(--nd-text-light);
+.li-photo-note {
+  font-size: .81rem; color: var(--li-text-light);
   margin-top: -.65rem; margin-bottom: 1rem;
   padding: .55rem .8rem;
-  background: var(--nd-green-light);
+  background: var(--li-green-light);
   border-radius: 6px;
-  border-left: 3px solid var(--nd-green);
+  border-left: 3px solid var(--li-green);
 }
 
 /* ── SUCCESS BANNER (hidden until submit) ─────────────────── */
-.nd-success-banner {
+.li-success-banner {
   display: none;
-  background: var(--nd-green-light);
-  border: 2px solid var(--nd-green);
-  border-radius: var(--nd-radius);
+  background: var(--li-green-light);
+  border: 2px solid var(--li-green);
+  border-radius: var(--li-radius);
   padding: 1.2rem 1.5rem;
   text-align: center;
   margin-bottom: 1.5rem;
 }
-.nd-success-banner p { font-size: 1.05rem; font-weight: 700; color: var(--nd-green-dark); }
-.nd-success-banner.visible { display: block; }
+.li-success-banner p { font-size: 1.05rem; font-weight: 700; color: var(--li-green-dark); }
+.li-success-banner.visible { display: block; }
 
 /* ── WORKER CARDS ────────────────────────────────────────── */
-.nd-worker-grid {
+.li-worker-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1.1rem;
   margin-bottom: 2.4rem;
 }
-.nd-worker-card {
-  background: var(--nd-white);
-  border: 1.5px solid var(--nd-border);
-  border-radius: var(--nd-radius);
+.li-worker-card {
+  background: var(--li-white);
+  border: 1.5px solid var(--li-border);
+  border-radius: var(--li-radius);
   padding: 1.6rem;
   transition: border-color .2s, box-shadow .2s;
 }
-.nd-worker-card:hover {
-  border-color: var(--nd-green);
-  box-shadow: 0 4px 18px rgba(0,178,70,.1);
+.li-worker-card:hover {
+  border-color: var(--li-green);
+  box-shadow: 0 4px 18px rgba(10,102,194,.1);
 }
-.nd-worker-card h4 {
-  font-size: 1.1rem; font-weight: 800; color: var(--nd-text);
+.li-worker-card h4 {
+  font-size: 1.1rem; font-weight: 800; color: var(--li-text);
   margin-bottom: .55rem; display: flex; align-items: center; gap: .45rem;
 }
-.nd-worker-card p { font-size: .9rem; color: var(--nd-text-mid); line-height: 1.6; }
-.nd-worker-tag {
+.li-worker-card p { font-size: .9rem; color: var(--li-text-mid); line-height: 1.6; }
+.li-worker-tag {
   display: inline-block;
-  background: var(--nd-green-light);
-  color: var(--nd-green-dark);
+  background: var(--li-green-light);
+  color: var(--li-green-dark);
   font-size: .75rem; font-weight: 700;
   padding: .2rem .65rem; border-radius: 100px;
   margin: .2rem .15rem 0 0;
 }
 
 /* ── WHY LIST ────────────────────────────────────────────── */
-.nd-why-grid {
+.li-why-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   gap: .85rem;
   list-style: none;
 }
-.nd-why-grid li {
+.li-why-grid li {
   display: flex; align-items: flex-start; gap: .65rem;
-  background: var(--nd-white);
-  border: 1.5px solid var(--nd-border);
-  border-radius: var(--nd-radius-sm);
+  background: var(--li-white);
+  border: 1.5px solid var(--li-border);
+  border-radius: var(--li-radius-sm);
   padding: .95rem 1rem;
-  font-size: .97rem; font-weight: 600; color: var(--nd-text-mid);
+  font-size: .97rem; font-weight: 600; color: var(--li-text-mid);
   line-height: 1.4;
 }
-.nd-why-check {
+.li-why-check {
   width: 22px; height: 22px; border-radius: 50%;
-  background: var(--nd-green);
+  background: var(--li-green);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0; margin-top: .05rem;
   font-size: .7rem; color: #fff; font-weight: 900;
 }
 
 /* ── REVIEWS ─────────────────────────────────────────────── */
-.nd-reviews-grid {
+.li-reviews-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
   gap: 1.1rem;
   margin-bottom: 1.8rem;
 }
-.nd-review-card {
-  background: var(--nd-white);
-  border: 1.5px solid var(--nd-border);
-  border-radius: var(--nd-radius);
+.li-review-card {
+  background: var(--li-white);
+  border: 1.5px solid var(--li-border);
+  border-radius: var(--li-radius);
   padding: 1.5rem;
   display: flex; flex-direction: column; gap: .75rem;
   transition: box-shadow .2s;
 }
-.nd-review-card:hover { box-shadow: var(--nd-shadow-md); }
-.nd-review-stars { color: #f6ad55; font-size: 1.05rem; letter-spacing: .04em; }
-.nd-review-text {
-  font-size: .95rem; color: var(--nd-text-mid); line-height: 1.65; flex: 1;
+.li-review-card:hover { box-shadow: var(--li-shadow-md); }
+.li-review-stars { color: #f6ad55; font-size: 1.05rem; letter-spacing: .04em; }
+.li-review-text {
+  font-size: .95rem; color: var(--li-text-mid); line-height: 1.65; flex: 1;
 }
-.nd-review-author { display: flex; align-items: center; gap: .7rem; }
-.nd-review-avatar {
+.li-review-author { display: flex; align-items: center; gap: .7rem; }
+.li-review-avatar {
   width: 38px; height: 38px; border-radius: 50%;
-  background: var(--nd-green-light);
-  border: 2px solid var(--nd-green);
+  background: var(--li-green-light);
+  border: 2px solid var(--li-green);
   display: flex; align-items: center; justify-content: center;
-  font-size: .78rem; font-weight: 900; color: var(--nd-green-dark);
+  font-size: .78rem; font-weight: 900; color: var(--li-green-dark);
   flex-shrink: 0;
 }
-.nd-review-name { font-size: .9rem; font-weight: 800; color: var(--nd-text); }
-.nd-review-meta { font-size: .77rem; color: var(--nd-text-light); }
-.nd-verified {
+.li-review-name { font-size: .9rem; font-weight: 800; color: var(--li-text); }
+.li-review-meta { font-size: .77rem; color: var(--li-text-light); }
+.li-verified {
   display: inline-flex; align-items: center; gap: .25rem;
-  font-size: .73rem; color: var(--nd-green-dark); font-weight: 700;
+  font-size: .73rem; color: var(--li-green-dark); font-weight: 700;
 }
-.nd-review-btns {
+.li-review-btns {
   display: flex; flex-wrap: wrap; gap: .8rem; justify-content: center;
   margin-top: .5rem;
 }
-.nd-review-btn {
+.li-review-btn {
   display: inline-flex; align-items: center; gap: .4rem;
-  background: var(--nd-white);
-  border: 1.5px solid var(--nd-border);
-  color: var(--nd-text-mid);
+  background: var(--li-white);
+  border: 1.5px solid var(--li-border);
+  color: var(--li-text-mid);
   font-size: .88rem; font-weight: 700;
   padding: .65rem 1.3rem; border-radius: 100px;
   transition: border-color .15s, color .15s, box-shadow .15s;
 }
-.nd-review-btn:hover {
-  border-color: var(--nd-green); color: var(--nd-green-dark);
-  box-shadow: 0 2px 12px rgba(0,178,70,.12);
+.li-review-btn:hover {
+  border-color: var(--li-green); color: var(--li-green-dark);
+  box-shadow: 0 2px 12px rgba(10,102,194,.12);
 }
 
 /* ── SERVICE AREA ────────────────────────────────────────── */
-.nd-area-grid {
+.li-area-grid {
   display: flex; flex-wrap: wrap; gap: .55rem; margin-bottom: 1.3rem;
 }
-.nd-area-tag {
-  background: var(--nd-white);
-  border: 1.5px solid var(--nd-border);
-  color: var(--nd-text-mid);
+.li-area-tag {
+  background: var(--li-white);
+  border: 1.5px solid var(--li-border);
+  color: var(--li-text-mid);
   font-size: .85rem; font-weight: 600;
   padding: .4rem .95rem; border-radius: 100px;
   transition: border-color .15s, color .15s;
 }
-.nd-area-tag:hover { border-color: var(--nd-green); color: var(--nd-green-dark); }
+.li-area-tag:hover { border-color: var(--li-green); color: var(--li-green-dark); }
 
 /* ── PHONE BIG ───────────────────────────────────────────── */
-.nd-big-phone {
+.li-big-phone {
   display: inline-block;
   font-size: clamp(2rem, 6vw, 3.4rem);
-  font-weight: 800; color: var(--nd-green);
+  font-weight: 800; color: var(--li-green);
   letter-spacing: -.01em;
   margin: .75rem 0 1.6rem;
 }
-.nd-big-phone a { color: inherit; }
+.li-big-phone a { color: inherit; }
 
 /* ── FINAL CTA SECTION ───────────────────────────────────── */
-.nd-final {
-  background: linear-gradient(135deg, var(--nd-green) 0%, #007a32 100%);
+.li-final {
+  background: linear-gradient(135deg, var(--li-green) 0%, #004182 100%);
   padding: 4.5rem 1.5rem;
   text-align: center;
 }
-.nd-final h2 { font-size: clamp(1.8rem,4vw,2.8rem); font-weight:800; color:#fff; margin-bottom:.6rem; }
-.nd-final p  { color: rgba(255,255,255,.88); font-size:1.05rem; margin-bottom:1.5rem; }
-.nd-final-phone { font-size: clamp(2rem,6vw,3.5rem); font-weight:800; color:#fff; margin-bottom:1.8rem; }
-.nd-final-phone a { color: inherit; }
-.nd-final-ctas { display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; }
+.li-final h2 { font-size: clamp(1.8rem,4vw,2.8rem); font-weight:800; color:#fff; margin-bottom:.6rem; }
+.li-final p  { color: rgba(255,255,255,.88); font-size:1.05rem; margin-bottom:1.5rem; }
+.li-final-phone { font-size: clamp(2rem,6vw,3.5rem); font-weight:800; color:#fff; margin-bottom:1.8rem; }
+.li-final-phone a { color: inherit; }
+.li-final-ctas { display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; }
 
 /* ── FOOTER ──────────────────────────────────────────────── */
-.nd-footer {
-  background: var(--nd-white);
-  border-top: 1px solid var(--nd-border);
+.li-footer {
+  background: var(--li-white);
+  border-top: 1px solid var(--li-border);
   padding: 1.8rem 1.5rem 2rem;
   text-align: center;
 }
-.nd-footer p { color: var(--nd-text-light); font-size: .85rem; line-height: 1.7; }
-.nd-footer a { color: var(--nd-green-dark); font-weight: 600; }
-.nd-footer a:hover { text-decoration: underline; }
+.li-footer p { color: var(--li-text-light); font-size: .85rem; line-height: 1.7; }
+.li-footer a { color: var(--li-green-dark); font-weight: 600; }
+.li-footer a:hover { text-decoration: underline; }
 
 /* ── STICKY BAR ──────────────────────────────────────────── */
-.nd-sticky {
+.li-sticky {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
   display: flex;
   box-shadow: 0 -2px 16px rgba(0,0,0,.1);
 }
-.nd-sticky a {
+.li-sticky a {
   flex: 1; display: flex; align-items: center; justify-content: center;
   font-size: .97rem; font-weight: 800;
   padding: .9rem .5rem; text-decoration: none; gap: .35rem;
   transition: background .15s;
 }
-.nd-sticky-call {
-  background: var(--nd-green); color: #fff !important;
+.li-sticky-call {
+  background: var(--li-green); color: #fff !important;
 }
-.nd-sticky-call:hover { background: var(--nd-green-dark) !important; }
-.nd-sticky-form {
-  background: #fff; color: var(--nd-green) !important;
-  border-top: 2px solid var(--nd-green);
+.li-sticky-call:hover { background: var(--li-green-dark) !important; }
+.li-sticky-form {
+  background: #fff; color: var(--li-green) !important;
+  border-top: 2px solid var(--li-green);
 }
-.nd-sticky-form:hover { background: var(--nd-green-light) !important; }
+.li-sticky-form:hover { background: var(--li-green-light) !important; }
 
 /* ── DIVIDER ─────────────────────────────────────────────── */
-.nd-hr { border: none; border-top: 1px solid var(--nd-border); margin: 0; }
+.li-hr { border: none; border-top: 1px solid var(--li-border); margin: 0; }
 
 /* ── UTIL ────────────────────────────────────────────────── */
-.nd-center { text-align: center; }
-.nd-mt-sm { margin-top: 1rem; }
-.nd-mb-0 { margin-bottom: 0; }
+.li-center { text-align: center; }
+.li-mt-sm { margin-top: 1rem; }
+.li-mb-0 { margin-bottom: 0; }
 </style>
 </head>
 <body>
@@ -548,79 +548,78 @@ input, select, textarea { font-family: inherit; }
 <!-- ╔══════════════════════════════════════════════════════╗
      ║  NAV                                                 ║
      ╚══════════════════════════════════════════════════════╝ -->
-<nav class="nd-nav">
-  <div class="nd-nav-inner">
-    <a href="index.html" class="nd-nav-logo">
+<nav class="li-nav">
+  <div class="li-nav-inner">
+    <a href="index.html" class="li-nav-logo">
       <picture>
         <source srcset="/images/branding/logo-nav.webp" type="image/webp">
         <img src="/images/branding/logo-web-sm.png" alt="All-Pro Metro East Construction" width="40" height="40" loading="eager">
       </picture>
-      <div class="nd-nav-logo-text">
+      <div class="li-nav-logo-text">
         <strong>All-Pro Construction</strong>
         <small>Metro East IL · Est. 2001</small>
       </div>
     </a>
-    <div class="nd-nav-phone">📞 <a href="tel:6185810676">618-581-0676</a></div>
-    <a href="#homeowner-form" class="nd-nav-cta">Free Estimate</a>
+    <div class="li-nav-phone">📞 <a href="tel:6185810676">618-581-0676</a></div>
+    <a href="#homeowner-form" class="li-nav-cta">Free Estimate</a>
   </div>
 </nav>
 
 <!-- ╔══════════════════════════════════════════════════════╗
      ║  HERO                                                ║
      ╚══════════════════════════════════════════════════════╝ -->
-<section class="nd-hero">
-  <div class="nd-hero-inner">
-    <div class="nd-hero-badge">
-      <span class="nd-hero-badge-dot"></span>
+<section class="li-hero">
+  <div class="li-hero-inner">
+    <div class="li-hero-badge">
+      <span class="li-hero-badge-dot"></span>
       Serving Your Neighborhood Since 2001
     </div>
     <h1>Found Us on LinkedIn?<br>Need Help With a Project?</h1>
-    <p class="nd-hero-sub">
+    <p class="li-hero-sub">
       All Pro Metro East Construction helps Metro East homeowners with kitchen remodels, bathroom remodels, decks, fencing, landscaping, lawn care, pressure washing, drywall, flooring, concrete, hauling, cleanups, and general home improvement projects.
     </p>
-    <div class="nd-hero-ctas">
-      <a href="tel:6185810676" class="nd-btn-primary">📞 Call or Text Bill: 618-581-0676</a>
-      <a href="#homeowner-form" class="nd-btn-outline-white">Request a Free Estimate →</a>
+    <div class="li-hero-ctas">
+      <a href="tel:6185810676" class="li-btn-primary">📞 Call or Text Bill: 618-581-0676</a>
+      <a href="#homeowner-form" class="li-btn-outline-white">Request a Free Estimate →</a>
     </div>
-    <p class="nd-hero-note">Owner Bill Sessions answers personally &mdash; no call centers, no runaround.</p>
+    <p class="li-hero-note">Owner Bill Sessions answers personally &mdash; no call centers, no runaround.</p>
   </div>
 </section>
 
 <!-- ╔══════════════════════════════════════════════════════╗
      ║  TRUST BAR                                           ║
      ╚══════════════════════════════════════════════════════╝ -->
-<div class="nd-trust">
-  <div class="nd-trust-inner">
-    <div class="nd-trust-item"><strong>🏆 23 Years</strong> Serving Metro East</div>
-    <span class="nd-trust-sep">·</span>
-    <div class="nd-trust-item"><strong>✅ Licensed &amp; Insured</strong></div>
-    <span class="nd-trust-sep">·</span>
-    <div class="nd-trust-item"><strong>⭐ 4.7 Star</strong> HomeAdvisor Rating</div>
-    <span class="nd-trust-sep">·</span>
-    <div class="nd-trust-item"><strong>💬 40 Verified</strong> Reviews</div>
-    <span class="nd-trust-sep">·</span>
-    <div class="nd-trust-item"><strong>👷 Owner</strong> on Every Job</div>
+<div class="li-trust">
+  <div class="li-trust-inner">
+    <div class="li-trust-item"><strong>🏆 23 Years</strong> Serving Metro East</div>
+    <span class="li-trust-sep">·</span>
+    <div class="li-trust-item"><strong>✅ Licensed &amp; Insured</strong></div>
+    <span class="li-trust-sep">·</span>
+    <div class="li-trust-item"><strong>⭐ 4.7 Star</strong> HomeAdvisor Rating</div>
+    <span class="li-trust-sep">·</span>
+    <div class="li-trust-item"><strong>💬 40 Verified</strong> Reviews</div>
+    <span class="li-trust-sep">·</span>
+    <div class="li-trust-item"><strong>👷 Owner</strong> on Every Job</div>
   </div>
 </div>
 
 <!-- ╔══════════════════════════════════════════════════════╗
      ║  LINKEDIN PROFILE BANNER                             ║
      ╚══════════════════════════════════════════════════════╝ -->
-<div style="background:#fff;border-bottom:1px solid #e0e6e2;padding:1rem 1.5rem;">
-  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;flex-wrap:wrap;gap:1rem;justify-content:space-between;">
+<div style="background:#fff;border-bottom:1px solid #E0DDD8;padding:1rem 1.5rem;">
+  <div style="max-width:1128px;margin:0 auto;display:flex;align-items:center;flex-wrap:wrap;gap:1rem;justify-content:space-between;">
     <div style="display:flex;align-items:center;gap:.85rem;">
-      <!-- LinkedIn logo mark -->
       <div style="width:44px;height:44px;border-radius:10px;background:#0A66C2;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26" fill="#fff">
           <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
         </svg>
       </div>
       <div>
-        <div style="font-size:.95rem;font-weight:800;color:#1a1a1a;line-height:1.2;">Connect With Us on LinkedIn</div>
-        <div style="font-size:.8rem;color:#718096;">All-Pro Metro East Construction · Metro East, IL</div>
+        <div style="font-size:.95rem;font-weight:800;color:#1D2226;line-height:1.2;">Connect With Us on LinkedIn</div>
+        <div style="font-size:.8rem;color:#747579;">All-Pro Metro East Construction · Metro East, IL</div>
       </div>
     </div>
-    <a href="https://www.linkedin.com/company/all-pro-metro-east-construction"
+    <a href="https://www.linkedin.com/company/all-pro-metro-metro-east-construction/posts/?feedView=all"
        target="_blank" rel="noopener"
        style="display:inline-flex;align-items:center;gap:.45rem;background:#0A66C2;color:#fff;font-size:.9rem;font-weight:800;padding:.6rem 1.4rem;border-radius:100px;text-decoration:none;white-space:nowrap;transition:background .15s;box-shadow:0 2px 10px rgba(10,102,194,.25);"
        onmouseover="this.style.background='#004182'" onmouseout="this.style.background='#0A66C2'">
@@ -632,102 +631,102 @@ input, select, textarea { font-family: inherit; }
 <!-- ╔══════════════════════════════════════════════════════╗
      ║  SERVICES                                            ║
      ╚══════════════════════════════════════════════════════╝ -->
-<section class="nd-section nd-section-white">
-  <div class="nd-section-inner">
-    <div class="nd-section-header">
-      <span class="nd-section-label">What We Do</span>
-      <h2 class="nd-section-title">What Can We Help With?</h2>
-      <p class="nd-section-sub">Big project or small, we handle it. Just pick what you need.</p>
+<section class="li-section li-section-white">
+  <div class="li-section-inner">
+    <div class="li-section-header">
+      <span class="li-section-label">What We Do</span>
+      <h2 class="li-section-title">What Can We Help With?</h2>
+      <p class="li-section-sub">Big project or small, we handle it. Just pick what you need.</p>
     </div>
-    <div class="nd-services-grid">
-      <div class="nd-service-card">
-        <div class="nd-service-icon">🍳</div>
-        <div class="nd-service-name">Kitchen Remodel</div>
-        <div class="nd-service-desc">Cabinets, counters, flooring &amp; full kitchen upgrades.</div>
+    <div class="li-services-grid">
+      <div class="li-service-card">
+        <div class="li-service-icon">🍳</div>
+        <div class="li-service-name">Kitchen Remodel</div>
+        <div class="li-service-desc">Cabinets, counters, flooring &amp; full kitchen upgrades.</div>
       </div>
-      <div class="nd-service-card">
-        <div class="nd-service-icon">🛁</div>
-        <div class="nd-service-name">Bathroom Remodel</div>
-        <div class="nd-service-desc">Showers, tubs, vanities, tile &amp; complete bath renovations.</div>
+      <div class="li-service-card">
+        <div class="li-service-icon">🛁</div>
+        <div class="li-service-name">Bathroom Remodel</div>
+        <div class="li-service-desc">Showers, tubs, vanities, tile &amp; complete bath renovations.</div>
       </div>
-      <div class="nd-service-card">
-        <div class="nd-service-icon">🪵</div>
-        <div class="nd-service-name">Decks &amp; Porches</div>
-        <div class="nd-service-desc">New decks built to last. Wood or composite.</div>
+      <div class="li-service-card">
+        <div class="li-service-icon">🪵</div>
+        <div class="li-service-name">Decks &amp; Porches</div>
+        <div class="li-service-desc">New decks built to last. Wood or composite.</div>
       </div>
-      <div class="nd-service-card">
-        <div class="nd-service-icon">🔒</div>
-        <div class="nd-service-name">Fencing</div>
-        <div class="nd-service-desc">Chain link, wood, privacy &amp; ornamental fence installation.</div>
+      <div class="li-service-card">
+        <div class="li-service-icon">🔒</div>
+        <div class="li-service-name">Fencing</div>
+        <div class="li-service-desc">Chain link, wood, privacy &amp; ornamental fence installation.</div>
       </div>
-      <div class="nd-service-card">
-        <div class="nd-service-icon">🌿</div>
-        <div class="nd-service-name">Landscaping &amp; Cleanup</div>
-        <div class="nd-service-desc">Yard design, grading, beds, mulch &amp; seasonal cleanups.</div>
+      <div class="li-service-card">
+        <div class="li-service-icon">🌿</div>
+        <div class="li-service-name">Landscaping &amp; Cleanup</div>
+        <div class="li-service-desc">Yard design, grading, beds, mulch &amp; seasonal cleanups.</div>
       </div>
-      <div class="nd-service-card">
-        <div class="nd-service-icon">🌱</div>
-        <div class="nd-service-name">Lawn Care &amp; Maintenance</div>
-        <div class="nd-service-desc">Mowing, edging, trimming &amp; regular lawn upkeep.</div>
+      <div class="li-service-card">
+        <div class="li-service-icon">🌱</div>
+        <div class="li-service-name">Lawn Care &amp; Maintenance</div>
+        <div class="li-service-desc">Mowing, edging, trimming &amp; regular lawn upkeep.</div>
       </div>
-      <div class="nd-service-card">
-        <div class="nd-service-icon">💧</div>
-        <div class="nd-service-name">Pressure Washing</div>
-        <div class="nd-service-desc">Driveways, decks, siding, patios &amp; fences cleaned up.</div>
+      <div class="li-service-card">
+        <div class="li-service-icon">💧</div>
+        <div class="li-service-name">Pressure Washing</div>
+        <div class="li-service-desc">Driveways, decks, siding, patios &amp; fences cleaned up.</div>
       </div>
-      <div class="nd-service-card">
-        <div class="nd-service-icon">🏠</div>
-        <div class="nd-service-name">Drywall &amp; Flooring</div>
-        <div class="nd-service-desc">Patch, repair, hang, finish &amp; install new floors.</div>
+      <div class="li-service-card">
+        <div class="li-service-icon">🏠</div>
+        <div class="li-service-name">Drywall &amp; Flooring</div>
+        <div class="li-service-desc">Patch, repair, hang, finish &amp; install new floors.</div>
       </div>
-      <div class="nd-service-card">
-        <div class="nd-service-icon">🧱</div>
-        <div class="nd-service-name">Concrete &amp; Patios</div>
-        <div class="nd-service-desc">Driveways, sidewalks, patios &amp; retaining walls.</div>
+      <div class="li-service-card">
+        <div class="li-service-icon">🧱</div>
+        <div class="li-service-name">Concrete &amp; Patios</div>
+        <div class="li-service-desc">Driveways, sidewalks, patios &amp; retaining walls.</div>
       </div>
-      <div class="nd-service-card">
-        <div class="nd-service-icon">🌲</div>
-        <div class="nd-service-name">Tree Trimming &amp; Brush</div>
-        <div class="nd-service-desc">Trimming, hauling brush &amp; clearing overgrown areas.</div>
+      <div class="li-service-card">
+        <div class="li-service-icon">🌲</div>
+        <div class="li-service-name">Tree Trimming &amp; Brush</div>
+        <div class="li-service-desc">Trimming, hauling brush &amp; clearing overgrown areas.</div>
       </div>
-      <div class="nd-service-card">
-        <div class="nd-service-icon">🚚</div>
-        <div class="nd-service-name">Hauling &amp; Junk Removal</div>
-        <div class="nd-service-desc">Debris, yard waste, old materials &mdash; we haul it away.</div>
+      <div class="li-service-card">
+        <div class="li-service-icon">🚚</div>
+        <div class="li-service-name">Hauling &amp; Junk Removal</div>
+        <div class="li-service-desc">Debris, yard waste, old materials &mdash; we haul it away.</div>
       </div>
-      <div class="nd-service-card">
-        <div class="nd-service-icon">🔧</div>
-        <div class="nd-service-name">Small Projects / Not Sure</div>
-        <div class="nd-service-desc">Not sure what you need? Tell us and Bill will figure it out.</div>
+      <div class="li-service-card">
+        <div class="li-service-icon">🔧</div>
+        <div class="li-service-name">Small Projects / Not Sure</div>
+        <div class="li-service-desc">Not sure what you need? Tell us and Bill will figure it out.</div>
       </div>
     </div>
-    <div class="nd-cta-row">
-      <a href="tel:6185810676" class="nd-btn-green">📞 Call or Text Bill: 618-581-0676</a>
+    <div class="li-cta-row">
+      <a href="tel:6185810676" class="li-btn-green">📞 Call or Text Bill: 618-581-0676</a>
     </div>
   </div>
 </section>
 
-<hr class="nd-hr">
+<hr class="li-hr">
 
 <!-- ╔══════════════════════════════════════════════════════╗
      ║  HOMEOWNER FORM                                      ║
      ╚══════════════════════════════════════════════════════╝ -->
-<section class="nd-section nd-section-gray" id="homeowner-form">
-  <div class="nd-section-inner">
-    <div class="nd-section-header">
-      <span class="nd-section-label">For Homeowners</span>
-      <h2 class="nd-section-title">Tell Us What You Need Done</h2>
-      <p class="nd-section-sub">Whether it is a small repair, a cleanup, or a bigger remodel &mdash; send us a few details and Bill will follow up personally.</p>
+<section class="li-section li-section-gray" id="homeowner-form">
+  <div class="li-section-inner">
+    <div class="li-section-header">
+      <span class="li-section-label">For Homeowners</span>
+      <h2 class="li-section-title">Tell Us What You Need Done</h2>
+      <p class="li-section-sub">Whether it is a small repair, a cleanup, or a bigger remodel &mdash; send us a few details and Bill will follow up personally.</p>
     </div>
 
-    <div class="nd-form-card" style="margin:0 auto;">
-      <div class="nd-success-banner" id="hw-success">
+    <div class="li-form-card" style="margin:0 auto;">
+      <div class="li-success-banner" id="hw-success">
         <p>✅ Thanks! Bill will be in touch with you shortly. You can also text him directly at 618-581-0676.</p>
       </div>
       <h3>Request a Free Estimate</h3>
       <p>Fill this out and Bill will respond — usually the same day.</p>
 
-      <form class="nd-form" id="hw-form" method="POST"
+      <form class="li-form" id="hw-form" method="POST"
             action="https://formsubmit.co/tonybeal40@gmail.com"
             data-form="LinkedIn Homeowner">
         <input type="hidden" name="_subject"  value="LinkedIn — Homeowner Estimate Request">
@@ -738,7 +737,7 @@ input, select, textarea { font-family: inherit; }
         <input type="hidden" name="source"    value="LinkedIn Landing Page">
         <input type="hidden" name="form_type" value="Homeowner Estimate">
 
-        <div class="nd-form-row">
+        <div class="li-form-row">
           <div>
             <label for="hw-name">Your Name *</label>
             <input type="text" id="hw-name" name="name" placeholder="Jane Smith" required>
@@ -748,11 +747,11 @@ input, select, textarea { font-family: inherit; }
             <input type="tel" id="hw-phone" name="phone" placeholder="618-555-0100" required>
           </div>
         </div>
-        <div class="nd-form-row">
+        <div class="li-form-row">
           <div>
-            <label for="hw-email">Email Address <span style="font-size:.78rem;font-weight:600;color:var(--nd-green-dark);">— helps Bill follow up faster</span></label>
+            <label for="hw-email">Email Address <span style="font-size:.78rem;font-weight:600;color:var(--li-green-dark);">— helps Bill follow up faster</span></label>
             <input type="email" id="hw-email" name="email" placeholder="you@email.com (recommended)">
-            <p style="font-size:.78rem;color:var(--nd-text-light);margin-top:-.75rem;margin-bottom:1.1rem;">📧 Not required, but an email lets Bill send you a written quote.</p>
+            <p style="font-size:.78rem;color:var(--li-text-light);margin-top:-.75rem;margin-bottom:1.1rem;">📧 Not required, but an email lets Bill send you a written quote.</p>
           </div>
           <div>
             <label for="hw-city">Your City *</label>
@@ -796,72 +795,72 @@ input, select, textarea { font-family: inherit; }
 
         <label for="hw-details">Tell Us About the Project</label>
         <textarea id="hw-details" name="details" placeholder="A little detail helps Bill prepare. Don't worry about getting it perfect."></textarea>
-        <p class="nd-photo-note">📸 You can text photos to Bill after submitting: <strong>618-581-0676</strong></p>
+        <p class="li-photo-note">📸 You can text photos to Bill after submitting: <strong>618-581-0676</strong></p>
 
-        <button type="submit" class="nd-btn-submit">Send My Request to Bill →</button>
-        <p class="nd-form-note">No pressure. No spam. Just a real response from Bill.</p>
+        <button type="submit" class="li-btn-submit">Send My Request to Bill →</button>
+        <p class="li-form-note">No pressure. No spam. Just a real response from Bill.</p>
       </form>
     </div>
   </div>
 </section>
 
-<hr class="nd-hr">
+<hr class="li-hr">
 
 <!-- ╔══════════════════════════════════════════════════════╗
      ║  WORKERS & PARTNERS                                  ║
      ╚══════════════════════════════════════════════════════╝ -->
-<section class="nd-section nd-section-white" id="workers">
-  <div class="nd-section-inner">
-    <div class="nd-section-header">
-      <span class="nd-section-label">For Workers &amp; Partners</span>
-      <h2 class="nd-section-title">Looking For Work or Want to Partner?</h2>
-      <p class="nd-section-sub">We need reliable help and trusted local partners. If you do quality work and show up, we want to connect.</p>
+<section class="li-section li-section-white" id="workers">
+  <div class="li-section-inner">
+    <div class="li-section-header">
+      <span class="li-section-label">For Workers &amp; Partners</span>
+      <h2 class="li-section-title">Looking For Work or Want to Partner?</h2>
+      <p class="li-section-sub">We need reliable help and trusted local partners. If you do quality work and show up, we want to connect.</p>
     </div>
 
-    <div class="nd-worker-grid">
-      <div class="nd-worker-card">
+    <div class="li-worker-grid">
+      <div class="li-worker-card">
         <h4>🔨 Skilled Workers</h4>
         <p>Looking for reliable hands-on help across a variety of projects.</p>
         <div style="margin-top:.6rem;">
-          <span class="nd-worker-tag">Carpentry</span>
-          <span class="nd-worker-tag">Drywall</span>
-          <span class="nd-worker-tag">Painting</span>
-          <span class="nd-worker-tag">Flooring</span>
-          <span class="nd-worker-tag">Decks</span>
-          <span class="nd-worker-tag">Fencing</span>
-          <span class="nd-worker-tag">Lawn Care</span>
-          <span class="nd-worker-tag">Landscaping</span>
-          <span class="nd-worker-tag">Pressure Washing</span>
+          <span class="li-worker-tag">Carpentry</span>
+          <span class="li-worker-tag">Drywall</span>
+          <span class="li-worker-tag">Painting</span>
+          <span class="li-worker-tag">Flooring</span>
+          <span class="li-worker-tag">Decks</span>
+          <span class="li-worker-tag">Fencing</span>
+          <span class="li-worker-tag">Lawn Care</span>
+          <span class="li-worker-tag">Landscaping</span>
+          <span class="li-worker-tag">Pressure Washing</span>
         </div>
       </div>
-      <div class="nd-worker-card">
+      <div class="li-worker-card">
         <h4>⚡ Subcontractors</h4>
         <p>Licensed and insured subs we can trust and refer to clients.</p>
         <div style="margin-top:.6rem;">
-          <span class="nd-worker-tag">Electrical</span>
-          <span class="nd-worker-tag">Plumbing</span>
-          <span class="nd-worker-tag">Roofing</span>
-          <span class="nd-worker-tag">Gutters</span>
-          <span class="nd-worker-tag">Concrete</span>
-          <span class="nd-worker-tag">Tree Work</span>
-          <span class="nd-worker-tag">Excavation</span>
-          <span class="nd-worker-tag">Waterproofing</span>
+          <span class="li-worker-tag">Electrical</span>
+          <span class="li-worker-tag">Plumbing</span>
+          <span class="li-worker-tag">Roofing</span>
+          <span class="li-worker-tag">Gutters</span>
+          <span class="li-worker-tag">Concrete</span>
+          <span class="li-worker-tag">Tree Work</span>
+          <span class="li-worker-tag">Excavation</span>
+          <span class="li-worker-tag">Waterproofing</span>
         </div>
       </div>
-      <div class="nd-worker-card">
+      <div class="li-worker-card">
         <h4>🤝 Local Companies</h4>
         <p>If you get jobs outside your scope, we may be able to trade referrals or work together as long-term partners in Metro East.</p>
       </div>
     </div>
 
-    <div class="nd-form-card" style="margin:0 auto;">
-      <div class="nd-success-banner" id="wp-success">
+    <div class="li-form-card" style="margin:0 auto;">
+      <div class="li-success-banner" id="wp-success">
         <p>✅ Got it! Bill will follow up with you directly. You can also text him at 618-581-0676.</p>
       </div>
       <h3>Connect With Bill</h3>
       <p>Tell us about your skills and how we can work together.</p>
 
-      <form class="nd-form" id="wp-form" method="POST"
+      <form class="li-form" id="wp-form" method="POST"
             action="https://formsubmit.co/tonybeal40@gmail.com"
             data-form="LinkedIn Worker/Partner">
         <input type="hidden" name="_subject"  value="LinkedIn — Worker/Partner Inquiry">
@@ -872,7 +871,7 @@ input, select, textarea { font-family: inherit; }
         <input type="hidden" name="source"    value="LinkedIn Landing Page">
         <input type="hidden" name="form_type" value="Worker/Partner">
 
-        <div class="nd-form-row">
+        <div class="li-form-row">
           <div>
             <label for="wp-name">Your Name *</label>
             <input type="text" id="wp-name" name="name" placeholder="John Smith" required>
@@ -882,11 +881,11 @@ input, select, textarea { font-family: inherit; }
             <input type="tel" id="wp-phone" name="phone" placeholder="618-555-0100" required>
           </div>
         </div>
-        <div class="nd-form-row">
+        <div class="li-form-row">
           <div>
-            <label for="wp-email">Email Address <span style="font-size:.78rem;font-weight:600;color:var(--nd-green-dark);">— helps Bill follow up faster</span></label>
+            <label for="wp-email">Email Address <span style="font-size:.78rem;font-weight:600;color:var(--li-green-dark);">— helps Bill follow up faster</span></label>
             <input type="email" id="wp-email" name="email" placeholder="you@email.com (recommended)">
-            <p style="font-size:.78rem;color:var(--nd-text-light);margin-top:-.75rem;margin-bottom:1.1rem;">📧 Not required, but an email lets Bill send you details in writing.</p>
+            <p style="font-size:.78rem;color:var(--li-text-light);margin-top:-.75rem;margin-bottom:1.1rem;">📧 Not required, but an email lets Bill send you details in writing.</p>
           </div>
           <div>
             <label for="wp-company">Company Name (if any)</label>
@@ -897,7 +896,7 @@ input, select, textarea { font-family: inherit; }
         <label for="wp-work-type">What Type of Work Do You Do? *</label>
         <input type="text" id="wp-work-type" name="work_type" placeholder="e.g. carpentry, drywall, electrical..." required>
 
-        <div class="nd-form-row">
+        <div class="li-form-row">
           <div>
             <label for="wp-insured">Are You Insured?</label>
             <select id="wp-insured" name="insured">
@@ -923,139 +922,139 @@ input, select, textarea { font-family: inherit; }
         <label for="wp-details">Tell Us How We Can Work Together</label>
         <textarea id="wp-details" name="details" placeholder="A little about your background and what you're looking for..."></textarea>
 
-        <button type="submit" class="nd-btn-submit">Connect With Bill →</button>
-        <p class="nd-form-note">We read every submission. Bill will follow up directly.</p>
+        <button type="submit" class="li-btn-submit">Connect With Bill →</button>
+        <p class="li-form-note">We read every submission. Bill will follow up directly.</p>
       </form>
     </div>
   </div>
 </section>
 
-<hr class="nd-hr">
+<hr class="li-hr">
 
 <!-- ╔══════════════════════════════════════════════════════╗
      ║  WHY CHOOSE                                          ║
      ╚══════════════════════════════════════════════════════╝ -->
-<section class="nd-section nd-section-gray">
-  <div class="nd-section-inner">
-    <div class="nd-section-header">
-      <span class="nd-section-label">Why All-Pro</span>
-      <h2 class="nd-section-title">Why Neighbors Choose All Pro</h2>
-      <p class="nd-section-sub">We keep it simple — do good work, show up, treat people right.</p>
+<section class="li-section li-section-gray">
+  <div class="li-section-inner">
+    <div class="li-section-header">
+      <span class="li-section-label">Why All-Pro</span>
+      <h2 class="li-section-title">Why Neighbors Choose All Pro</h2>
+      <p class="li-section-sub">We keep it simple — do good work, show up, treat people right.</p>
     </div>
-    <ul class="nd-why-grid">
-      <li><span class="nd-why-check">✓</span> Bill personally handles all estimates</li>
-      <li><span class="nd-why-check">✓</span> Written quotes &mdash; no surprises</li>
-      <li><span class="nd-why-check">✓</span> Fair, honest pricing</li>
-      <li><span class="nd-why-check">✓</span> Owner involved on every job</li>
-      <li><span class="nd-why-check">✓</span> Small projects welcome</li>
-      <li><span class="nd-why-check">✓</span> We show up when we say we will</li>
-      <li><span class="nd-why-check">✓</span> We clean up after ourselves</li>
-      <li><span class="nd-why-check">✓</span> 23-year local Metro East company</li>
-      <li><span class="nd-why-check">✓</span> Licensed &amp; fully insured</li>
-      <li><span class="nd-why-check">✓</span> 4.7 stars &middot; 40 verified reviews</li>
+    <ul class="li-why-grid">
+      <li><span class="li-why-check">✓</span> Bill personally handles all estimates</li>
+      <li><span class="li-why-check">✓</span> Written quotes &mdash; no surprises</li>
+      <li><span class="li-why-check">✓</span> Fair, honest pricing</li>
+      <li><span class="li-why-check">✓</span> Owner involved on every job</li>
+      <li><span class="li-why-check">✓</span> Small projects welcome</li>
+      <li><span class="li-why-check">✓</span> We show up when we say we will</li>
+      <li><span class="li-why-check">✓</span> We clean up after ourselves</li>
+      <li><span class="li-why-check">✓</span> 23-year local Metro East company</li>
+      <li><span class="li-why-check">✓</span> Licensed &amp; fully insured</li>
+      <li><span class="li-why-check">✓</span> 4.7 stars &middot; 40 verified reviews</li>
     </ul>
-    <div class="nd-cta-row">
-      <a href="tel:6185810676" class="nd-btn-green">📞 Call or Text Bill: 618-581-0676</a>
+    <div class="li-cta-row">
+      <a href="tel:6185810676" class="li-btn-green">📞 Call or Text Bill: 618-581-0676</a>
     </div>
   </div>
 </section>
 
-<hr class="nd-hr">
+<hr class="li-hr">
 
 <!-- ╔══════════════════════════════════════════════════════╗
      ║  REVIEWS                                             ║
      ╚══════════════════════════════════════════════════════╝ -->
-<section class="nd-section nd-section-white" id="reviews">
-  <div class="nd-section-inner">
-    <div class="nd-section-header">
-      <span class="nd-section-label">Real Neighbors, Real Reviews</span>
-      <h2 class="nd-section-title">What Metro East Homeowners Say</h2>
-      <p class="nd-section-sub">40 verified reviews on HomeAdvisor. Real customers, real projects.</p>
+<section class="li-section li-section-white" id="reviews">
+  <div class="li-section-inner">
+    <div class="li-section-header">
+      <span class="li-section-label">Real Neighbors, Real Reviews</span>
+      <h2 class="li-section-title">What Metro East Homeowners Say</h2>
+      <p class="li-section-sub">40 verified reviews on HomeAdvisor. Real customers, real projects.</p>
     </div>
-    <div class="nd-reviews-grid">
-      <div class="nd-review-card">
-        <div class="nd-review-stars">★★★★★</div>
-        <p class="nd-review-text">"Entire process from beginning to end was flawless! My new deck is incredible! The owner and workers were in contact with me through the whole process, and I wouldn't hesitate to recommend them to anyone!"</p>
-        <div class="nd-review-author">
-          <div class="nd-review-avatar">JB</div>
+    <div class="li-reviews-grid">
+      <div class="li-review-card">
+        <div class="li-review-stars">★★★★★</div>
+        <p class="li-review-text">"Entire process from beginning to end was flawless! My new deck is incredible! The owner and workers were in contact with me through the whole process, and I wouldn't hesitate to recommend them to anyone!"</p>
+        <div class="li-review-author">
+          <div class="li-review-avatar">JB</div>
           <div>
-            <div class="nd-review-name">Jeannie B.</div>
-            <div class="nd-review-meta">Deck Build &nbsp;<span class="nd-verified">✔ HomeAdvisor Verified</span></div>
+            <div class="li-review-name">Jeannie B.</div>
+            <div class="li-review-meta">Deck Build &nbsp;<span class="li-verified">✔ HomeAdvisor Verified</span></div>
           </div>
         </div>
       </div>
-      <div class="nd-review-card">
-        <div class="nd-review-stars">★★★★★</div>
-        <p class="nd-review-text">"I got 337 ft of chain link fence installed in 3 days. They worked in the rain, didn't leave one scrap of trash on the ground, and my fence looks FANTASTIC!! Thanks Bill and Jordan!"</p>
-        <div class="nd-review-author">
-          <div class="nd-review-avatar">KS</div>
+      <div class="li-review-card">
+        <div class="li-review-stars">★★★★★</div>
+        <p class="li-review-text">"I got 337 ft of chain link fence installed in 3 days. They worked in the rain, didn't leave one scrap of trash on the ground, and my fence looks FANTASTIC!! Thanks Bill and Jordan!"</p>
+        <div class="li-review-author">
+          <div class="li-review-avatar">KS</div>
           <div>
-            <div class="nd-review-name">Katy S.</div>
-            <div class="nd-review-meta">Fencing &nbsp;<span class="nd-verified">✔ HomeAdvisor Verified</span></div>
+            <div class="li-review-name">Katy S.</div>
+            <div class="li-review-meta">Fencing &nbsp;<span class="li-verified">✔ HomeAdvisor Verified</span></div>
           </div>
         </div>
       </div>
-      <div class="nd-review-card">
-        <div class="nd-review-stars">★★★★★</div>
-        <p class="nd-review-text">"All-Pro crew members are kind, friendly and enjoyable to work with. Bill discussed every upgrade and allowed us to make decisions. Our new landscaping is beautiful!"</p>
-        <div class="nd-review-author">
-          <div class="nd-review-avatar">DT</div>
+      <div class="li-review-card">
+        <div class="li-review-stars">★★★★★</div>
+        <p class="li-review-text">"All-Pro crew members are kind, friendly and enjoyable to work with. Bill discussed every upgrade and allowed us to make decisions. Our new landscaping is beautiful!"</p>
+        <div class="li-review-author">
+          <div class="li-review-avatar">DT</div>
           <div>
-            <div class="nd-review-name">Debbie T.</div>
-            <div class="nd-review-meta">Landscaping &nbsp;<span class="nd-verified">✔ HomeAdvisor Verified</span></div>
+            <div class="li-review-name">Debbie T.</div>
+            <div class="li-review-meta">Landscaping &nbsp;<span class="li-verified">✔ HomeAdvisor Verified</span></div>
           </div>
         </div>
       </div>
-      <div class="nd-review-card">
-        <div class="nd-review-stars">★★★★★</div>
-        <p class="nd-review-text">"I hired All-Pro to replace my old brick, crooked, trip-hazard patio. They did what they said when they said they'd do it. They even finished early. Customer service focused, good people!"</p>
-        <div class="nd-review-author">
-          <div class="nd-review-avatar">JM</div>
+      <div class="li-review-card">
+        <div class="li-review-stars">★★★★★</div>
+        <p class="li-review-text">"I hired All-Pro to replace my old brick, crooked, trip-hazard patio. They did what they said when they said they'd do it. They even finished early. Customer service focused, good people!"</p>
+        <div class="li-review-author">
+          <div class="li-review-avatar">JM</div>
           <div>
-            <div class="nd-review-name">Jean M.</div>
-            <div class="nd-review-meta">Patio Install &nbsp;<span class="nd-verified">✔ HomeAdvisor Verified</span></div>
+            <div class="li-review-name">Jean M.</div>
+            <div class="li-review-meta">Patio Install &nbsp;<span class="li-verified">✔ HomeAdvisor Verified</span></div>
           </div>
         </div>
       </div>
     </div>
-    <div class="nd-review-btns">
+    <div class="li-review-btns">
       <a href="https://www.angi.com/companylist/us/il/new-athens/all-pro-construction-and-landscape-reviews-6233409.htm"
-         target="_blank" rel="noopener" class="nd-review-btn">📋 Read Our Angi Reviews</a>
-      <a href="https://www.linkedin.com/company/all-pro-metro-east-construction" target="_blank" rel="noopener" class="nd-review-btn">🔗 Follow on LinkedIn</a>
-      <a href="tel:6185810676" class="nd-review-btn">📞 Call Bill</a>
+         target="_blank" rel="noopener" class="li-review-btn">📋 Read Our Angi Reviews</a>
+      <a href="https://www.linkedin.com/company/all-pro-metro-metro-east-construction/posts/?feedView=all" target="_blank" rel="noopener" class="li-review-btn">🔗 Follow on LinkedIn</a>
+      <a href="tel:6185810676" class="li-review-btn">📞 Call Bill</a>
     </div>
   </div>
 </section>
 
-<hr class="nd-hr">
+<hr class="li-hr">
 
 <!-- ╔══════════════════════════════════════════════════════╗
      ║  SERVICE AREA                                        ║
      ╚══════════════════════════════════════════════════════╝ -->
-<section class="nd-section nd-section-green">
-  <div class="nd-section-inner">
-    <div class="nd-section-header">
-      <span class="nd-section-label">Where We Work</span>
-      <h2 class="nd-section-title">Serving Metro East Homeowners</h2>
-      <p class="nd-section-sub">Based in Metro East. Licensed and insured across the region. Not sure if we cover your area? Just call.</p>
+<section class="li-section li-section-green">
+  <div class="li-section-inner">
+    <div class="li-section-header">
+      <span class="li-section-label">Where We Work</span>
+      <h2 class="li-section-title">Serving Metro East Homeowners</h2>
+      <p class="li-section-sub">Based in Metro East. Licensed and insured across the region. Not sure if we cover your area? Just call.</p>
     </div>
-    <div class="nd-area-grid" style="justify-content:center;">
-      <span class="nd-area-tag">Belleville</span>
-      <span class="nd-area-tag">O'Fallon</span>
-      <span class="nd-area-tag">Shiloh</span>
-      <span class="nd-area-tag">Swansea</span>
-      <span class="nd-area-tag">Fairview Heights</span>
-      <span class="nd-area-tag">Collinsville</span>
-      <span class="nd-area-tag">Edwardsville</span>
-      <span class="nd-area-tag">Glen Carbon</span>
-      <span class="nd-area-tag">Maryville</span>
-      <span class="nd-area-tag">Troy</span>
-      <span class="nd-area-tag">New Athens</span>
-      <span class="nd-area-tag">Mascoutah</span>
-      <span class="nd-area-tag">Columbia</span>
-      <span class="nd-area-tag">Waterloo</span>
-      <span class="nd-area-tag">Highland</span>
-      <span class="nd-area-tag">+ Surrounding Metro East</span>
+    <div class="li-area-grid" style="justify-content:center;">
+      <span class="li-area-tag">Belleville</span>
+      <span class="li-area-tag">O'Fallon</span>
+      <span class="li-area-tag">Shiloh</span>
+      <span class="li-area-tag">Swansea</span>
+      <span class="li-area-tag">Fairview Heights</span>
+      <span class="li-area-tag">Collinsville</span>
+      <span class="li-area-tag">Edwardsville</span>
+      <span class="li-area-tag">Glen Carbon</span>
+      <span class="li-area-tag">Maryville</span>
+      <span class="li-area-tag">Troy</span>
+      <span class="li-area-tag">New Athens</span>
+      <span class="li-area-tag">Mascoutah</span>
+      <span class="li-area-tag">Columbia</span>
+      <span class="li-area-tag">Waterloo</span>
+      <span class="li-area-tag">Highland</span>
+      <span class="li-area-tag">+ Surrounding Metro East</span>
     </div>
   </div>
 </section>
@@ -1063,15 +1062,15 @@ input, select, textarea { font-family: inherit; }
 <!-- ╔══════════════════════════════════════════════════════╗
      ║  FINAL CTA                                           ║
      ╚══════════════════════════════════════════════════════╝ -->
-<section class="nd-final">
+<section class="li-final">
   <div style="max-width:680px;margin:0 auto;">
-    <span class="nd-section-label" style="background:rgba(255,255,255,.2);color:#fff;margin-bottom:1rem;display:inline-block;">Ready to Get Started?</span>
+    <span class="li-section-label" style="background:rgba(255,255,255,.2);color:#fff;margin-bottom:1rem;display:inline-block;">Ready to Get Started?</span>
     <h2>Need Help With a Project?</h2>
     <p>Call, text, or fill out the form above. Bill responds personally &mdash; usually same day.</p>
-    <div class="nd-final-phone"><a href="tel:6185810676">📞 618-581-0676</a></div>
-    <div class="nd-final-ctas">
-      <a href="tel:6185810676" class="nd-btn-primary" style="font-size:1.05rem;">Call or Text Bill Now</a>
-      <a href="#homeowner-form" class="nd-btn-outline-white" style="font-size:1.05rem;">Request a Free Estimate →</a>
+    <div class="li-final-phone"><a href="tel:6185810676">📞 618-581-0676</a></div>
+    <div class="li-final-ctas">
+      <a href="tel:6185810676" class="li-btn-primary" style="font-size:1.05rem;">Call or Text Bill Now</a>
+      <a href="#homeowner-form" class="li-btn-outline-white" style="font-size:1.05rem;">Request a Free Estimate →</a>
     </div>
   </div>
 </section>
@@ -1079,9 +1078,9 @@ input, select, textarea { font-family: inherit; }
 <!-- ╔══════════════════════════════════════════════════════╗
      ║  FOOTER                                              ║
      ╚══════════════════════════════════════════════════════╝ -->
-<footer class="nd-footer">
+<footer class="li-footer">
   <p>
-    <strong style="color:var(--nd-text);">All-Pro Construction &amp; Landscape</strong><br>
+    <strong style="color:var(--li-text);">All-Pro Construction &amp; Landscape</strong><br>
     Metro East, IL &nbsp;·&nbsp; 23 Years &nbsp;·&nbsp; Licensed &amp; Insured &nbsp;·&nbsp; 4.7 ⭐ HomeAdvisor<br>
     <a href="index.html">Home</a> &nbsp;·&nbsp;
     <a href="decks.html">Decks</a> &nbsp;·&nbsp;
@@ -1090,7 +1089,7 @@ input, select, textarea { font-family: inherit; }
     <a href="contact.html">Contact</a> &nbsp;·&nbsp;
     <a href="nextdoor.html">Nextdoor</a> &nbsp;·&nbsp;
     <a href="facebook.html">Facebook</a> &nbsp;·&nbsp;
-    <a href="https://nextdoor.com/page/all-pro-landscape-construction-belleville-il/" target="_blank" rel="noopener">Our Nextdoor Profile</a>
+    <a href="https://www.linkedin.com/company/all-pro-metro-metro-east-construction/posts/?feedView=all" target="_blank" rel="noopener">Our LinkedIn Page</a>
   </p>
   <p style="margin-top:.6rem;">© 2026 All-Pro Construction &amp; Landscape. All rights reserved.</p>
 </footer>
@@ -1098,9 +1097,9 @@ input, select, textarea { font-family: inherit; }
 <!-- ╔══════════════════════════════════════════════════════╗
      ║  STICKY BAR                                          ║
      ╚══════════════════════════════════════════════════════╝ -->
-<div class="nd-sticky">
-  <a href="tel:6185810676" class="nd-sticky-call">📞 Call Bill: 618-581-0676</a>
-  <a href="#homeowner-form" class="nd-sticky-form">Get Free Estimate</a>
+<div class="li-sticky">
+  <a href="tel:6185810676" class="li-sticky-call">📞 Call Bill: 618-581-0676</a>
+  <a href="#homeowner-form" class="li-sticky-form">Get Free Estimate</a>
 </div>
 
 <script>
