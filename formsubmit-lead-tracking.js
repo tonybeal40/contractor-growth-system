@@ -3,6 +3,7 @@
   const formSelector = 'form[action*="formsubmit.co/"]';
   const routing = {
     leadInbox: "https://formsubmit.co/williamosessionallpro@gmail.com",
+    leadInboxEmail: "williamosessionallpro@gmail.com",
     reviewInbox: "https://formsubmit.co/tonybeal40@gmail.com",
     ownerCopy: "tonybeal40@gmail.com",
     smsCopies: [
@@ -263,7 +264,7 @@
   function applyRouting(form, formName) {
     if (isReviewForm(formName)) {
       form.action = routing.reviewInbox;
-      removeNamedField(form, "_cc");
+      ensureHiddenField(form, "_cc", uniqueEmails([routing.leadInboxEmail]).join(","));
       return;
     }
 
