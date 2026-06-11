@@ -161,6 +161,15 @@
       padding:12px;
       color:#dfe9ff;
     }
+    .fresh-meta{
+      margin-top:10px;
+      padding:10px 12px;
+      border:1px solid #35517f;
+      border-radius:12px;
+      background:rgba(7,16,30,.35);
+      font-size:.9rem;
+      color:var(--muted);
+    }
     @media (max-width:920px){
       .hero,.grid-2,.grid-3{grid-template-columns:1fr}
     }
@@ -174,7 +183,7 @@
       <div>
         <div class="pill">Private Leads Board</div>
         <h1>All-Pro Belleville / Metro East Lead Board</h1>
-        <p class="muted">Private internal page for Bill and Tony. Built from legal public-source lead research on June 11, 2026, focused on places where people or organizations may actually need service.</p>
+        <p class="muted">Private internal page for Bill and Tony. Built from legal public-source lead research and focused on fresh Belleville / Metro East demand without scraping private data.</p>
         <div class="danger" style="margin-top:12px;">
           This page is hidden from navigation and marked <strong>noindex</strong>, but it is still a static web page.
           That means it is private-ish, not truly secure. Anyone with the full URL can open it.
@@ -187,6 +196,11 @@
       </div>
       <div class="card" style="margin:0;">
         <h2>What To Work First</h2>
+        <div class="fresh-meta">
+          Board date: <strong data-board-date></strong><br>
+          Fresh public-ask window: <strong data-window-start></strong> through <strong data-board-date></strong><br>
+          Live fresh items on board: <strong data-fresh-count>0</strong>
+        </div>
         <div class="meta-list">
           <div><strong>1. Property managers</strong><br><span class="muted">Fastest commercial maintenance lane.</span></div>
           <div><strong>2. Official bid boards</strong><br><span class="muted">Recurring public work and vendor opportunities.</span></div>
@@ -234,13 +248,13 @@
           <div class="type">Bid Source</div>
           <div class="name">Southwestern Illinois College Purchasing</div>
           <p><a href="mailto:purchasing@swic.edu">purchasing@swic.edu</a></p>
-          <p class="mini">SWIC public bids page showed a Belleville-area landscaping bid source when checked.</p>
+          <p class="mini">SWIC public bids page has been a reliable Belleville-area landscaping and facilities bid source.</p>
           <p><a href="https://www.swic.edu/about/purchasing-department/bids-and-proposal-projects/" target="_blank" rel="noopener">Open bid page</a></p>
         </article>
         <article class="contact">
           <div class="type">Local Market Signal</div>
           <div class="name">Craigslist Belleville Labor Gigs</div>
-          <p class="mini">Short-turn homeowner and small-operator help requests. One Belleville moving-helper post was live when checked.</p>
+          <p class="mini">Short-turn homeowner and small-operator help requests. Best used as a daily manual-check lane for same-day work.</p>
           <p><a href="https://stlouis.craigslist.org/search/belleville-il/lbg" target="_blank" rel="noopener">Open gigs page</a></p>
         </article>
       </div>
@@ -288,7 +302,7 @@
         <ul class="source-list">
           <li>
             <strong>Craigslist Belleville Labor Gigs</strong>
-            <span class="mini">Public short-turn requests from homeowners and small operators. Verified live Belleville-area gig activity when checked.</span><br>
+            <span class="mini">Public short-turn requests from homeowners and small operators. Best same-day lane for manual checks.</span><br>
             <a href="https://stlouis.craigslist.org/search/belleville-il/lbg" target="_blank" rel="noopener">Open Belleville labor gigs</a>
           </li>
           <li>
@@ -316,58 +330,55 @@
     </section>
 
     <section class="card">
-      <h2>Live Belleville Public Need Signals</h2>
+      <h2>Fresh 5-Day Public Need Signals</h2>
       <div class="warning" style="margin-bottom:14px;">
-        These are public-demand signals checked on June 11, 2026. Best move is to reply in-platform or through the official posting link.
-        Do not export personal data from private groups or scrape behind logins.
+        This section is for fresh public asks only. It should only show public leads published or observed within the last 5 calendar days.
+        Board window: <strong data-window-start></strong> through <strong data-board-date></strong>. Reply in-platform or through the official posting link only.
+      </div>
+      <div id="fresh-leads-empty" class="warning" style="margin-bottom:14px;" hidden>
+        No fresh public Belleville asks are on the board right now for the current 5-day window.
+        Use the daily-check channels below until new public requests appear.
       </div>
       <div class="grid-2">
         <div>
-          <h3>Residential / Small-Job Requests</h3>
+          <h3>Fresh Public Asks</h3>
           <ul class="source-list">
-            <li>
-              <strong>Facebook: Belleville yard cleanup / haul-away request</strong>
-              <span class="mini">Published about 2 weeks ago. Public post asking for weed-eating, cutting back growth around a fenced area, and hauling cuttings away. Strong fit for cleanup, hauling, and small recurring maintenance.</span><br>
-              <a href="https://www.facebook.com/groups/2062807867420384/posts/2814151875619309/" target="_blank" rel="noopener">Open public post</a>
-            </li>
-            <li>
-              <strong>Facebook: Licensed contractor wanted for full interior remodel</strong>
-              <span class="mini">Published about 3 months ago. Belleville homeowner/investor-style request for a licensed and insured contractor for a broader interior remodel.</span><br>
-              <a href="https://www.facebook.com/groups/492214672469283/posts/1473254007698673/" target="_blank" rel="noopener">Open public post</a>
-            </li>
-            <li>
-              <strong>Facebook: Bathroom remodel request in Belleville</strong>
-              <span class="mini">Published last month. Public request for a licensed contractor to handle a bathroom remodel quickly. Good fit for bathroom, shower, drywall, and finish-work lanes.</span><br>
-              <a href="https://www.facebook.com/groups/1634447556848853/posts/3913954102231509/" target="_blank" rel="noopener">Open public post</a>
-            </li>
-            <li>
-              <strong>Facebook: Deck, fence, roof-leak, and small repairs request</strong>
-              <span class="mini">Published last year. Public rehab / rental-style request looking for an experienced insured handyman for deck and fence repair plus other small fixes.</span><br>
-              <a href="https://www.facebook.com/groups/2362497313890982/posts/4932131843594170/" target="_blank" rel="noopener">Open public post</a>
-            </li>
-            <li>
+            <li class="fresh-lead" data-fresh-date="2026-06-08">
               <strong>Facebook: New Belleville house needs multiple trades</strong>
-              <span class="mini">Published 3 days ago. Public post from someone who just bought a house in Belleville and is looking for multiple people. Good possible partner or overflow lane if Bill can quote a chunk of the work.</span><br>
+              <span class="mini">Public result date: June 8, 2026. Someone who just bought a house in Belleville is looking for multiple people. Good fit for chunked remodel, repair, cleanup, or partner-referral work.</span><br>
+              <span class="mini" data-fresh-stamp></span><br>
               <a href="https://www.facebook.com/tyland.moore.2025/posts/just-bought-this-house-in-belleville-il-and-im-looking-for-3-different-people-to/4409845902667447/" target="_blank" rel="noopener">Open public post</a>
+            </li>
+            <li class="fresh-lead" data-fresh-date="2026-06-11">
+              <strong>Facebook: Belleville 62220 hourly work available tomorrow</strong>
+              <span class="mini">Observed in current public search on June 11, 2026. Search snippet shows hourly work available tomorrow in Belleville 62220. Use this as a same-day manual-check lane because the public search result does not expose the full original platform timestamp.</span><br>
+              <span class="mini" data-fresh-stamp></span><br>
+              <a href="https://www.facebook.com/groups/1531847773650825/posts/3282646035237648/" target="_blank" rel="noopener">Open public post</a>
+            </li>
+            <li class="fresh-lead" data-fresh-date="2026-06-11">
+              <strong>Craigslist: Belleville labor-gigs board checked live today</strong>
+              <span class="mini">Observed on June 11, 2026. Use this as the daily same-day board for cleanup, hauling, helper work, punch-list work, and homeowner odd jobs. Keep it on the fresh board only while it is checked daily.</span><br>
+              <span class="mini" data-fresh-stamp></span><br>
+              <a href="https://stlouis.craigslist.org/search/belleville-il/lbg" target="_blank" rel="noopener">Open Belleville labor gigs</a>
             </li>
           </ul>
         </div>
         <div>
-          <h3>Commercial / Overflow / Platform Signals</h3>
+          <h3>Daily Check Channels</h3>
           <ul class="source-list">
             <li>
-              <strong>Facebook: Belleville properties need handyman / maintenance crew</strong>
-              <span class="mini">Published about 8 months ago. Public post seeking reliable handyman or maintenance / renovation crews for properties in Belleville. Good recurring rental-turnover lane.</span><br>
-              <a href="https://www.facebook.com/groups/1845572545695014/posts/4073846826200897/" target="_blank" rel="noopener">Open public post</a>
-            </li>
-            <li>
               <strong>Craigslist Belleville labor gigs</strong>
-              <span class="mini">Still one of the clearest open public request channels. Belleville-area gig activity was live when checked, including a pool-deck-related post and other short-turn help requests.</span><br>
+              <span class="mini">Best open public lane for same-day homeowner, helper, and odd-job demand.</span><br>
               <a href="https://stlouis.craigslist.org/search/belleville-il/lbg" target="_blank" rel="noopener">Open Belleville labor gigs</a>
             </li>
             <li>
+              <strong>Handyman County STL / public Facebook search hits</strong>
+              <span class="mini">Useful for Belleville 62220-style small labor, cleanup, and handyman posts when they surface publicly. Manual check only.</span><br>
+              <a href="https://www.facebook.com/groups/1531847773650825/" target="_blank" rel="noopener">Open group</a>
+            </li>
+            <li>
               <strong>City of Belleville public bids</strong>
-              <span class="mini">Real public commercial / municipal work lane. One Belleville bid package specifically called out landscaping and irrigation-only subcontract opportunities.</span><br>
+              <span class="mini">Real public commercial / municipal work lane. Use for recurring subcontract and vendor opportunities.</span><br>
               <a href="https://www.belleville.net/bids.aspx?bidID=106" target="_blank" rel="noopener">Open example bid</a>
             </li>
             <li>
@@ -388,7 +399,7 @@
         <ul class="source-list">
           <li>
             <strong>Minton Outdoor Careers</strong>
-            <span class="mini">Verified public jobs page showing a lawn-care laborer role plus a part-time secretary role when checked June 11, 2026.</span><br>
+            <span class="mini">Public jobs page that has shown lawn-care labor and office-support demand on recent checks.</span><br>
             <a href="https://mintonoutdoor.com/careers/" target="_blank" rel="noopener">Open careers page</a>
           </li>
           <li>
@@ -398,7 +409,7 @@
           </li>
           <li>
             <strong>Indeed Remodeling Jobs</strong>
-            <span class="mini">Search result showed 85 remodeling jobs in Belleville on June 11, 2026. Indeed blocked direct fetch, so use browser manually.</span><br>
+            <span class="mini">Recent search results have shown active remodeling demand in Belleville. Indeed blocks direct fetch, so use browser manually.</span><br>
             <a href="https://www.indeed.com/q-Remodeling-l-Belleville,-IL-jobs.html" target="_blank" rel="noopener">Open Indeed search</a>
           </li>
           <li>
@@ -434,6 +445,11 @@ Do not do:
 - mass-message random people
 - treat recommendation directories like direct lead lists
 
+Fresh-board rule:
+- only keep public asks that are published or observed within the last 5 calendar days
+- if a lead ages out, remove it from the fresh board and replace it with a newer one
+- use exact dates when known; use observed date only when the platform search result does not expose the original timestamp
+
 Property manager opening line:
 "We handle small-to-mid-size turnover work, cleanup, fencing, decks, concrete, hauling, lawn and punch-list projects across Belleville and the Metro East. If you need a reliable backup vendor or overflow help, Bill can price work fast."
 
@@ -461,5 +477,60 @@ Best first public-source routine:
       </section>
     </section>
   </main>
+<script>
+  (function () {
+    const freshWindowDays = 5;
+    const msPerDay = 24 * 60 * 60 * 1000;
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    });
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const windowStart = new Date(today);
+    windowStart.setDate(windowStart.getDate() - freshWindowDays);
+
+    document.querySelectorAll("[data-board-date]").forEach((el) => {
+      el.textContent = formatter.format(today);
+    });
+
+    document.querySelectorAll("[data-window-start]").forEach((el) => {
+      el.textContent = formatter.format(windowStart);
+    });
+
+    let visibleCount = 0;
+
+    document.querySelectorAll(".fresh-lead").forEach((lead) => {
+      const rawDate = lead.getAttribute("data-fresh-date");
+      const stamp = lead.querySelector("[data-fresh-stamp]");
+      const leadDate = rawDate ? new Date(rawDate + "T00:00:00") : null;
+
+      if (!leadDate || Number.isNaN(leadDate.getTime()) || leadDate < windowStart || leadDate > today) {
+        lead.hidden = true;
+        return;
+      }
+
+      visibleCount += 1;
+
+      if (stamp) {
+        const ageDays = Math.round((today.getTime() - leadDate.getTime()) / msPerDay);
+        const ageLabel = ageDays === 0 ? "today" : ageDays === 1 ? "1 day old" : ageDays + " days old";
+        stamp.textContent = "Fresh date: " + formatter.format(leadDate) + " · " + ageLabel;
+      }
+    });
+
+    document.querySelectorAll("[data-fresh-count]").forEach((el) => {
+      el.textContent = String(visibleCount);
+    });
+
+    const emptyState = document.getElementById("fresh-leads-empty");
+    if (emptyState) {
+      emptyState.hidden = visibleCount !== 0;
+    }
+  }());
+</script>
 </body>
 </html>
