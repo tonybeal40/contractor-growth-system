@@ -104,51 +104,82 @@ function isReviewSubmission(data) {
 }
 
 function buildSubject(data, isReview) {
-  var prefix = isReview ? "⭐ New Review" : "🔔 New Lead";
+  var prefix  = isReview ? "⭐ New Review" : "🔔 New Lead";
   var name    = data["name"] || data["full_name"] || "Unknown";
   var service = data["service"] || data["project"] || "";
   var city    = data["city"] || "";
-  var page    = data["form_name"] || data["page_path"] || "";
+  // Show the channel they came from — e.g. "linkedin", "facebook", "google-organic"
+  var source  = data["lead_source"] || data["first_touch_source"] || "";
   var parts   = [name];
   if (service) parts.push(service);
   if (city)    parts.push(city);
-  if (page)    parts.push("— " + page);
+  if (source)  parts.push("via " + source);
   return prefix + " · " + parts.join(" · ") + " — All-Pro";
 }
 
 function buildEmailBody(data) {
   var skip = ["_honey", "_captcha", "_template", "_next", "_subject", "_cc", "_replyto", "_blacklist"];
-  var lines = ["All-Pro Form Submission\n"];
-  var priority = ["name", "phone", "email", "service", "city", "message", "details", "timeline"];
+  var lines = [];
 
-  // Priority fields first
-  for (var i = 0; i < priority.length; i++) {
-    var k = priority[i];
+  // ── 1. WHERE THIS LEAD CAME FROM (top of email — marketing view) ────────────
+  lines.push("=== WHERE THEY CAME FROM ===");
+  var formName    = data["form_name"]          || data["page_path"] || "Unknown form";
+  var pageUrl     = data["page_url"]           || "";
+  var source      = data["lead_source"]        || "direct";
+  var firstTouch  = data["first_touch_source"] || source;
+  var utmSource   = data["utm_source"]         || "";
+  var utmCampaign = data["utm_campaign"]       || "";
+  var utmMedium   = data["utm_medium"]         || "";
+  var utmTerm     = data["utm_term"]           || "";
+  var referrer    = data["referrer"]           || "";
+  var gclid       = data["gclid"]              || "";
+  var fbclid      = data["fbclid"]             || "";
+
+  lines.push("Form: "        + formName);
+  lines.push("Page: "        + pageUrl);
+  lines.push("Source: "      + source);
+  if (firstTouch !== source)
+    lines.push("First touch: " + firstTouch);
+  if (utmSource)   lines.push("UTM source: "   + utmSource);
+  if (utmMedium)   lines.push("UTM medium: "   + utmMedium);
+  if (utmCampaign) lines.push("UTM campaign: " + utmCampaign);
+  if (utmTerm)     lines.push("UTM term: "     + utmTerm);
+  if (referrer)    lines.push("Referrer: "     + referrer);
+  if (gclid)       lines.push("Google ad click (gclid): " + gclid);
+  if (fbclid)      lines.push("Facebook ad click (fbclid): " + fbclid);
+
+  // ── 2. LEAD CONTACT INFO ─────────────────────────────────────────────────────
+  lines.push("\n=== LEAD INFO ===");
+  var contactFields = ["name", "phone", "email", "service", "city", "timeline", "message", "details", "review", "rating"];
+  for (var i = 0; i < contactFields.length; i++) {
+    var k = contactFields[i];
     if (data[k] && String(data[k]).trim()) {
       lines.push(titleCase(k) + ": " + data[k]);
     }
   }
 
-  lines.push("\n--- Tracking ---");
-  var trackFields = ["page_url", "lead_source", "first_touch_source", "utm_source",
-                     "utm_campaign", "referrer", "lead_session_id", "submission_time_local"];
-  for (var j = 0; j < trackFields.length; j++) {
-    var tk = trackFields[j];
-    if (data[tk] && String(data[tk]).trim()) {
-      lines.push(titleCase(tk.replace(/_/g, " ")) + ": " + data[tk]);
-    }
-  }
+  // ── 3. META ──────────────────────────────────────────────────────────────────
+  lines.push("\n=== META ===");
+  lines.push("Submitted: "   + (data["submission_time_local"] || new Date().toLocaleString()));
+  lines.push("Session ID: "  + (data["lead_session_id"] || "n/a"));
 
-  lines.push("\n--- All Fields ---");
-  var keys = Object.keys(data).sort();
-  for (var m = 0; m < keys.length; m++) {
-    var key = keys[m];
-    if (skip.indexOf(key) > -1) continue;
-    if (priority.indexOf(key) > -1) continue;
-    if (trackFields.indexOf(key) > -1) continue;
-    if (data[key] && String(data[key]).trim()) {
-      lines.push(titleCase(key.replace(/_/g, " ")) + ": " + data[key]);
+  // ── 4. REMAINING FIELDS ──────────────────────────────────────────────────────
+  var allHandled = skip.concat(contactFields).concat([
+    "form_name","form_slug","page_url","page_path","lead_source","first_touch_source",
+    "first_touch_detail","landing_page","landing_path","referrer","first_referrer",
+    "utm_source","utm_medium","utm_campaign","utm_term","utm_content",
+    "gclid","fbclid","msclkid","lead_session_id","submission_time_local","submission_time_utc",
+    "page_title","estimate_contact_consent","email_marketing_opt_in"
+  ]);
+  var extras = [];
+  Object.keys(data).sort().forEach(function(key) {
+    if (allHandled.indexOf(key) === -1 && data[key] && String(data[key]).trim()) {
+      extras.push(titleCase(key.replace(/_/g, " ")) + ": " + data[key]);
     }
+  });
+  if (extras.length) {
+    lines.push("\n=== OTHER FIELDS ===");
+    extras.forEach(function(e) { lines.push(e); });
   }
 
   return lines.join("\n");
@@ -177,29 +208,41 @@ function logToSheet(data, subject) {
   if (!sheet) {
     sheet = ss.insertSheet("Leads");
     sheet.appendRow([
-      "Timestamp", "Subject", "Name", "Phone", "Email", "Service",
-      "City", "Message", "Page URL", "Lead Source", "First Touch",
-      "UTM Source", "UTM Campaign", "Session ID", "Form Name"
+      "Timestamp", "Name", "Phone", "Email", "Service", "City",
+      "Form Name", "Page URL", "Lead Source", "First Touch Source",
+      "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term",
+      "Referrer", "Google Ad (gclid)", "FB Ad (fbclid)",
+      "Session ID", "Submitted At", "Message"
     ]);
     sheet.setFrozenRows(1);
+    // Bold header row
+    sheet.getRange(1, 1, 1, 20).setFontWeight("bold");
+    sheet.setColumnWidth(1, 160);  // Timestamp
+    sheet.setColumnWidth(8, 280);  // Page URL
+    sheet.setColumnWidth(20, 400); // Message
   }
 
   sheet.appendRow([
     new Date(),
-    subject,
-    data["name"] || "",
-    data["phone"] || "",
-    data["email"] || "",
+    data["name"]                 || "",
+    data["phone"]                || "",
+    data["email"]                || "",
     data["service"] || data["project"] || "",
-    data["city"] || "",
-    (data["message"] || data["details"] || "").substring(0, 500),
-    data["page_url"] || "",
-    data["lead_source"] || "",
-    data["first_touch_source"] || "",
-    data["utm_source"] || "",
-    data["utm_campaign"] || "",
-    data["lead_session_id"] || "",
-    data["form_name"] || ""
+    data["city"]                 || "",
+    data["form_name"]            || data["page_path"] || "",
+    data["page_url"]             || "",
+    data["lead_source"]          || "direct",
+    data["first_touch_source"]   || "",
+    data["utm_source"]           || "",
+    data["utm_medium"]           || "",
+    data["utm_campaign"]         || "",
+    data["utm_term"]             || "",
+    data["referrer"]             || "",
+    data["gclid"]                || "",
+    data["fbclid"]               || "",
+    data["lead_session_id"]      || "",
+    data["submission_time_local"]|| "",
+    (data["message"] || data["details"] || data["review"] || "").substring(0, 500)
   ]);
 }
 
