@@ -2,25 +2,30 @@
  * All-Pro Metro East — Gmail Lead Recovery
  *
  * Add this file to the SAME Apps Script project as allpro-form-handler.gs.
- * Then run recoverGmailLeads() ONCE from the script editor to import all
- * historical FormSubmit emails into the Google Sheet.
  *
- * It is SAFE to run multiple times — it skips any thread it has already processed.
+ * Two recovery functions:
+ *   recoverGmailLeads()  — imports FormSubmit website leads → "Recovered Leads" tab
+ *   recoverAngiLeads()   — imports Angi lead emails → "Angi Leads" tab
+ *
+ * Both functions are SAFE to run multiple times (already-processed threads are skipped).
  *
  * HOW TO RUN:
  *  1. In Apps Script editor → open allpro-gmail-recovery.gs
- *  2. Select function: recoverGmailLeads
- *  3. Click ▶ Run
- *  4. Check "All-Pro Leads" → "Recovered Leads" tab in Google Sheets
+ *  2. Select function name from dropdown → click ▶ Run
+ *  3. Open the Google Sheet to see results
  */
 
-// ── Config (must match allpro-form-handler.gs) ────────────────────────────────
+// ── Config ────────────────────────────────────────────────────────────────────
 var RECOVERY_CONFIG = {
   sheetName:       "All-Pro Leads",       // Must match CONFIG.sheetName
-  recoveryTab:     "Recovered Leads",     // Separate tab so live leads stay clean
+  recoveryTab:     "Recovered Leads",     // FormSubmit website leads tab
+  angiTab:         "Angi Leads",          // Angi leads tab
+  // Target spreadsheet (the All-Pro Leads Google Sheet):
+  targetSheetId:   "1xcc0xo4UeN3EaZUMNn_qFJ-xgX6ZPg7l7sTMSLsT6GE",
   gmailSender:     "noreply@formsubmit.co",
   maxEmails:       500,                   // Safety cap — raise if you have more
-  stateKey:        "recovery_processed"   // PropertiesService key for dedup tracking
+  stateKey:        "recovery_processed",  // PropertiesService key for dedup tracking
+  angiStateKey:    "angi_processed"       // Separate dedup key for Angi
 };
 
 // ── Main recovery function ────────────────────────────────────────────────────
@@ -145,19 +150,20 @@ function parseFormSubmitEmail(body, subject, date) {
   return data;
 }
 
-// ── Get or create the Recovered Leads sheet tab ───────────────────────────────
-function getRecoverySheet() {
-  var ss = null;
-  try { ss = SpreadsheetApp.getActiveSpreadsheet(); } catch(_) {}
-  if (!ss) {
-    var files = DriveApp.getFilesByName(RECOVERY_CONFIG.sheetName);
-    if (files.hasNext()) {
-      ss = SpreadsheetApp.open(files.next());
-    } else {
-      ss = SpreadsheetApp.create(RECOVERY_CONFIG.sheetName);
-    }
-  }
+// ── Preview helper: dry run FormSubmit, no writes ────────────────────────────
+function previewGmailLeads() {
+  var query   = "from:" + RECOVERY_CONFIG.gmailSender;
+  var threads = GmailApp.search(query, 0, 20);
+  Logger.log("Preview: found " + threads.length + " threads (showing first 20)");
+  threads.forEach(function(thread) {
+    var msg = thread.getMessages()[0];
+    Logger.log("---\nDate: " + msg.getDate() + "\nSubject: " + msg.getSubject() +
+               "\nBody:\n" + msg.getPlainBody().substring(0, 300));
+  });
+}
 
+// ── Get or create the Recovered Leads sheet tab ───────────────────────────────
+function getRecoverySheet() {  var ss = getTargetSpreadsheet();
   var tab = ss.getSheetByName(RECOVERY_CONFIG.recoveryTab);
   if (!tab) {
     tab = ss.insertSheet(RECOVERY_CONFIG.recoveryTab);
@@ -168,11 +174,10 @@ function getRecoverySheet() {
     tab.appendRow(headers);
     tab.setFrozenRows(1);
     tab.getRange(1, 1, 1, headers.length).setFontWeight("bold");
-    tab.setColumnWidth(1,  160);  // Date
-    tab.setColumnWidth(7,  280);  // Subject
-    tab.setColumnWidth(9,  400);  // Message
-    tab.setColumnWidth(11, 240);  // Thread ID
-    // Color header row
+    tab.setColumnWidth(1,  160);
+    tab.setColumnWidth(7,  280);
+    tab.setColumnWidth(9,  400);
+    tab.setColumnWidth(11, 240);
     tab.getRange(1, 1, 1, headers.length)
        .setBackground("#1a3a5c")
        .setFontColor("#ffffff");
@@ -180,17 +185,219 @@ function getRecoverySheet() {
   return tab;
 }
 
-// ── Test helper: run this first to see a preview without writing ──────────────
-function previewGmailLeads() {
-  var query   = "from:" + RECOVERY_CONFIG.gmailSender;
-  var threads = GmailApp.search(query, 0, 20);
-  Logger.log("Preview: found " + threads.length + " threads (showing first 20)");
+// ── Shared: open the target spreadsheet by ID ────────────────────────────────
+function getTargetSpreadsheet() {
+  try {
+    return SpreadsheetApp.openById(RECOVERY_CONFIG.targetSheetId);
+  } catch(e) {
+    // Fallback: find/create by name
+    var files = DriveApp.getFilesByName(RECOVERY_CONFIG.sheetName);
+    if (files.hasNext()) return SpreadsheetApp.open(files.next());
+    return SpreadsheetApp.create(RECOVERY_CONFIG.sheetName);
+  }
+}
 
-  threads.forEach(function(thread) {
-    var msg     = thread.getMessages()[0];
-    var subject = msg.getSubject();
-    var date    = msg.getDate();
-    var body    = msg.getPlainBody().substring(0, 300);
-    Logger.log("---\nDate: " + date + "\nSubject: " + subject + "\nBody:\n" + body);
+// ══════════════════════════════════════════════════════════════════════════════
+// ANGI LEADS RECOVERY
+// Searches Bill's Gmail for Angi lead notification emails and imports them
+// into the "Angi Leads" tab of the target spreadsheet.
+// ══════════════════════════════════════════════════════════════════════════════
+
+function recoverAngiLeads() {
+  var sheet    = getAngiSheet();
+  var props    = PropertiesService.getScriptProperties();
+  var doneRaw  = props.getProperty(RECOVERY_CONFIG.angiStateKey) || "[]";
+  var done     = JSON.parse(doneRaw);
+
+  // Angi sends lead emails from several addresses — cast wide net
+  var queries = [
+    "from:leads@angi.com",
+    "from:noreply@angi.com",
+    "from:leads@homeadvisor.com",
+    "from:noreply@homeadvisor.com",
+    "from:leadresponder@angi.com",
+    "subject:\"new lead\" angi",
+    "subject:\"homeowner request\" angi",
+    "subject:\"new request\" angi"
+  ];
+
+  var allThreadIds = {};  // deduplicate across queries
+  queries.forEach(function(q) {
+    try {
+      var threads = GmailApp.search(q, 0, 200);
+      threads.forEach(function(t) { allThreadIds[t.getId()] = t; });
+    } catch(e) {
+      Logger.log("Query failed: " + q + " — " + e);
+    }
   });
+
+  var threadList = Object.values(allThreadIds);
+  Logger.log("Found " + threadList.length + " Angi email threads");
+
+  var newCount  = 0;
+  var skipCount = 0;
+
+  threadList.forEach(function(thread) {
+    var threadId = thread.getId();
+    if (done.indexOf(threadId) > -1) { skipCount++; return; }
+
+    thread.getMessages().forEach(function(msg) {
+      var subject = msg.getSubject();
+      var body    = msg.getPlainBody();
+      var date    = msg.getDate();
+      var data    = parseAngiEmail(body, subject, date);
+      if (!data) return;
+
+      sheet.appendRow([
+        date,                                            // A: Date
+        data.name        || "",                          // B: Name
+        data.phone       || "",                          // C: Phone
+        data.email       || "",                          // D: Email
+        data.project     || data.service || "",          // E: Project / Service
+        data.city        || data.location || "",         // F: City / Location
+        data.budget      || "",                          // G: Budget
+        data.timeline    || "",                          // H: Timeline
+        (data.notes || data.message || "").substring(0, 600), // I: Notes
+        data.leadId      || "",                          // J: Angi Lead ID
+        subject          || "",                          // K: Email Subject
+        threadId                                         // L: Thread ID (dedup)
+      ]);
+      newCount++;
+    });
+
+    done.push(threadId);
+  });
+
+  props.setProperty(RECOVERY_CONFIG.angiStateKey, JSON.stringify(done));
+
+  var summary = "✅ Angi recovery complete: " + newCount + " leads imported, " + skipCount + " already processed.";
+  Logger.log(summary);
+  try { SpreadsheetApp.getUi().alert(summary); } catch(_) {}
+  return summary;
+}
+
+// ── Parse an Angi lead notification email ────────────────────────────────────
+function parseAngiEmail(body, subject, date) {
+  if (!body) return null;
+
+  var data = {};
+  var lower = body.toLowerCase();
+
+  // Only process if this actually looks like a lead notification
+  if (lower.indexOf("angi") === -1 &&
+      lower.indexOf("homeadvisor") === -1 &&
+      lower.indexOf("new lead") === -1 &&
+      lower.indexOf("homeowner") === -1) {
+    return null;
+  }
+
+  var lines = body.split(/\r?\n/);
+
+  // Angi emails use several formats — try labeled field parsing first
+  var fieldMap = {
+    "name":           ["name", "customer name", "contact name", "homeowner"],
+    "phone":          ["phone", "phone number", "telephone", "mobile", "cell"],
+    "email":          ["email", "email address", "e-mail"],
+    "project":        ["project type", "project", "service requested", "service needed",
+                       "type of project", "what do you need", "work needed", "job type",
+                       "request type", "category"],
+    "city":           ["city", "location", "zip", "zip code", "address", "area"],
+    "budget":         ["budget", "estimated budget", "project budget"],
+    "timeline":       ["timeline", "when do you need", "start date", "desired start",
+                       "time frame", "urgency"],
+    "notes":          ["notes", "message", "details", "description", "comments",
+                       "additional info", "project details", "more details", "tell us more"]
+  };
+
+  lines.forEach(function(line) {
+    var trimmed   = line.trim();
+    var colonIdx  = trimmed.indexOf(":");
+    if (colonIdx < 1) return;
+    var rawKey = trimmed.substring(0, colonIdx).trim().toLowerCase();
+    var val    = trimmed.substring(colonIdx + 1).trim();
+    if (!val) return;
+
+    Object.keys(fieldMap).forEach(function(field) {
+      if (data[field]) return;  // already set
+      fieldMap[field].forEach(function(alias) {
+        if (rawKey === alias || rawKey.indexOf(alias) > -1) {
+          data[field] = val;
+        }
+      });
+    });
+  });
+
+  // Try regex fallback for phone / email if labeled parsing didn't find them
+  if (!data.phone) {
+    var phoneMatch = body.match(/\(?\d{3}\)?[\s.\-]\d{3}[\s.\-]\d{4}/);
+    if (phoneMatch) data.phone = phoneMatch[0];
+  }
+  if (!data.email) {
+    var emailMatch = body.match(/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/);
+    if (emailMatch &&
+        emailMatch[0].indexOf("angi.com") === -1 &&
+        emailMatch[0].indexOf("homeadvisor.com") === -1) {
+      data.email = emailMatch[0];
+    }
+  }
+
+  // Grab Angi lead ID from body if present
+  var leadIdMatch = body.match(/lead\s*(?:id|#|number)[:\s]+([A-Z0-9\-]+)/i);
+  if (leadIdMatch) data.leadId = leadIdMatch[1];
+
+  // Reject if truly nothing useful extracted
+  if (!data.name && !data.phone && !data.email && !data.project) return null;
+
+  return data;
+}
+
+// ── Create or get the Angi Leads tab ─────────────────────────────────────────
+function getAngiSheet() {
+  var ss  = getTargetSpreadsheet();
+  var tab = ss.getSheetByName(RECOVERY_CONFIG.angiTab);
+  if (!tab) {
+    tab = ss.insertSheet(RECOVERY_CONFIG.angiTab);
+    var headers = [
+      "Date Received", "Name", "Phone", "Email",
+      "Project / Service", "City / Location", "Budget", "Timeline",
+      "Notes", "Angi Lead ID", "Email Subject", "Thread ID"
+    ];
+    tab.appendRow(headers);
+    tab.setFrozenRows(1);
+    tab.getRange(1, 1, 1, headers.length)
+       .setFontWeight("bold")
+       .setBackground("#b34700")   // Angi orange
+       .setFontColor("#ffffff");
+    tab.setColumnWidth(1,  155);   // Date
+    tab.setColumnWidth(5,  220);   // Project
+    tab.setColumnWidth(6,  160);   // City
+    tab.setColumnWidth(9,  400);   // Notes
+    tab.setColumnWidth(11, 280);   // Subject
+    tab.setColumnWidth(12, 240);   // Thread ID
+  }
+  return tab;
+}
+
+// ── Preview helper: dry run, no writes ───────────────────────────────────────
+function previewAngiLeads() {
+  var queries = [
+    "from:leads@angi.com OR from:noreply@angi.com OR from:leads@homeadvisor.com",
+    "subject:\"new lead\" angi"
+  ];
+  var found = 0;
+  queries.forEach(function(q) {
+    try {
+      var threads = GmailApp.search(q, 0, 50);
+      threads.forEach(function(t) {
+        found++;
+        var msg = t.getMessages()[0];
+        Logger.log("---\nDate: " + msg.getDate() +
+                   "\nSubject: " + msg.getSubject() +
+                   "\nFrom: " + msg.getFrom() +
+                   "\nBody (first 400 chars):\n" +
+                   msg.getPlainBody().substring(0, 400));
+      });
+    } catch(e) { Logger.log("Query failed: " + q); }
+  });
+  Logger.log("Preview: " + found + " Angi threads found");
 }

@@ -193,8 +193,13 @@ function buildThankYouUrl(data) {
 
 function logToSheet(data, subject) {
   var ss = null;
-  try { ss = SpreadsheetApp.getActiveSpreadsheet(); } catch(_) {}
+  // Use the known target spreadsheet ID first
+  var TARGET_SHEET_ID = "1xcc0xo4UeN3EaZUMNn_qFJ-xgX6ZPg7l7sTMSLsT6GE";
+  try { ss = SpreadsheetApp.openById(TARGET_SHEET_ID); } catch(_) {}
 
+  if (!ss) {
+    try { ss = SpreadsheetApp.getActiveSpreadsheet(); } catch(_) {}
+  }
   if (!ss) {
     var files = DriveApp.getFilesByName(CONFIG.sheetName);
     if (files.hasNext()) {
