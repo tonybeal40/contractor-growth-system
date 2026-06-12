@@ -5,7 +5,7 @@
   // ── Custom endpoint (Google Apps Script Web App) ───────────────────────────
   // Set this after deploying allpro-form-handler.gs.
   // Leave empty to use FormSubmit only.
-  const CUSTOM_ENDPOINT = "https://script.google.com/macros/s/AKfycbzeT5diTjZnhGYM1WotnvYvDv4NWiGTwbcwvVq3PCPKQvxzVv-Ist90J9nABxGQNeUcug/exec";
+  const CUSTOM_ENDPOINT = "https://script.google.com/macros/s/AKfycbyiF6ZHsk699T7x3sillL8Vevmaywb9Mvhm9RsIsmSDMmOjQkyhPN8wvpBfMb56bh_Shg/exec";
   // ──────────────────────────────────────────────────────────────────────────
 
   const routing = {

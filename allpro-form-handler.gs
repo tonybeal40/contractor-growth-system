@@ -72,8 +72,10 @@ function doPost(e) {
       name: "All-Pro Form Handler"
     });
 
-    // Log to Sheet
-    logToSheet(data, subject);
+    // Log to Sheet (non-fatal — email already sent)
+    try { logToSheet(data, subject); } catch(sheetErr) {
+      console.warn("Sheet log failed (non-fatal):", sheetErr);
+    }
 
     return jsonResponse({ ok: true, redirect: buildThankYouUrl(data) }, headers);
 
@@ -159,11 +161,10 @@ function buildThankYouUrl(data) {
 }
 
 function logToSheet(data, subject) {
-  var ss;
-  try {
-    ss = SpreadsheetApp.getActiveSpreadsheet();
-  } catch(_) {
-    // If no sheet is bound, create/open one by name
+  var ss = null;
+  try { ss = SpreadsheetApp.getActiveSpreadsheet(); } catch(_) {}
+
+  if (!ss) {
     var files = DriveApp.getFilesByName(CONFIG.sheetName);
     if (files.hasNext()) {
       ss = SpreadsheetApp.open(files.next());
