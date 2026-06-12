@@ -163,7 +163,6 @@
       currency: 'USD',
     });
   })();
-})();
 
   // ── Floating Call/Quote Button ──────────────────────────────────────────────
   (function injectFloatingCTA() {
@@ -204,3 +203,4 @@
       });
     });
   })();
+})();
