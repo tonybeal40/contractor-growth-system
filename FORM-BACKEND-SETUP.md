@@ -1,0 +1,90 @@
+# All-Pro Form Backend Setup
+
+## What this does
+Replaces FormSubmit.co dependency with a Google Apps Script endpoint you own.
+Every lead goes to:
+1. **Your Apps Script** → email to Bill + Tony + logged to Google Sheet (permanent record)
+2. **FormSubmit** → automatic fallback if the custom endpoint ever fails
+
+## Deploy in 5 minutes
+
+### Step 1 — Create the Apps Script
+1. Go to [script.google.com](https://script.google.com) → **New project**
+2. Delete the empty `function myFunction()` placeholder
+3. Paste the entire contents of `allpro-form-handler.gs` (this repo)
+4. Rename the project: `All-Pro Form Handler`
+5. Click **Save**
+
+### Step 2 — Authorize it
+1. Click **Run** → select `doGet` → click **Run**
+2. Google will ask for permissions — click **Review permissions** → **Allow**
+   - Gmail (to send emails)
+   - Google Drive / Sheets (to log leads)
+
+### Step 3 — Deploy as Web App
+1. Click **Deploy** → **New deployment**
+2. Click the gear ⚙ next to "Select type" → choose **Web app**
+3. Settings:
+   - **Description**: All-Pro Form Handler v1
+   - **Execute as**: Me *(your Google account)*
+   - **Who has access**: Anyone
+4. Click **Deploy** → copy the **Web App URL**
+   - Looks like: `https://script.google.com/macros/s/AKfycb.../exec`
+
+### Step 4 — Wire it in
+Open `formsubmit-lead-tracking.js` and find this line near the top:
+
+```js
+const CUSTOM_ENDPOINT = "";
+```
+
+Replace the empty string with your Web App URL:
+
+```js
+const CUSTOM_ENDPOINT = "https://script.google.com/macros/s/YOUR_ID_HERE/exec";
+```
+
+### Step 5 — Push to GitHub
+```
+git add formsubmit-lead-tracking.js
+git commit -m "Wire custom form endpoint"
+git push origin main
+```
+
+Done. Every form submission now hits your Apps Script first. If it fails for any reason, the form falls back to FormSubmit automatically — no lead dropped.
+
+---
+
+## Where leads are stored
+
+| Destination | What goes there |
+|---|---|
+| Bill's Gmail (`williamosessionallpro@gmail.com`) | Every customer lead |
+| Tony's Gmail (`tonybeal40@gmail.com`) | CC on every lead |
+| Google Sheet "All-Pro Leads" → "Leads" tab | Every submission, every field, timestamp |
+
+The Sheet is created automatically the first time a form is submitted. Find it in your Google Drive.
+
+---
+
+## Updating the script
+If you need to change the email body or add fields:
+1. Edit the `.gs` file in `script.google.com`
+2. Deploy → **New deployment** → copy the new URL
+3. Update `CUSTOM_ENDPOINT` in `formsubmit-lead-tracking.js` → push
+
+---
+
+## Troubleshooting
+
+**Forms still go to FormSubmit only**
+→ `CUSTOM_ENDPOINT` is still empty. Follow Step 4.
+
+**Emails not arriving**
+→ Check Apps Script execution log: `script.google.com` → your project → **Executions**
+
+**Sheet not created**
+→ Make sure you authorized Google Drive in Step 2. Re-run `doGet` to re-authorize.
+
+**Rate limit from FormSubmit**
+→ Once `CUSTOM_ENDPOINT` is set, FormSubmit is only used as fallback and won't be hit for normal submissions.

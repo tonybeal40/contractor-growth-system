@@ -1,6 +1,13 @@
 (function () {
   const siteOrigin = "https://allprometroeastconstruction.com";
   const formSelector = 'form[action*="formsubmit.co/"]';
+
+  // ── Custom endpoint (Google Apps Script Web App) ───────────────────────────
+  // Set this after deploying allpro-form-handler.gs.
+  // Leave empty to use FormSubmit only.
+  const CUSTOM_ENDPOINT = "";
+  // ──────────────────────────────────────────────────────────────────────────
+
   const routing = {
     leadInbox: "https://formsubmit.co/williamosessionallpro@gmail.com",
     leadInboxEmail: "williamosessionallpro@gmail.com",
@@ -452,6 +459,76 @@
     });
   }
 
+  // ── Dual-submit: try custom endpoint first, fall back to FormSubmit ─────────
+  function collectFormData(form) {
+    const data = {};
+    const fd = new FormData(form);
+    fd.forEach(function (value, key) {
+      data[key] = value;
+    });
+    return data;
+  }
+
+  function submitToCustomEndpoint(form, snapshot) {
+    return new Promise(function (resolve, reject) {
+      ensureLeadDisclosures(form, getFormName(form));
+      populateTracking(form, snapshot);
+      const data = collectFormData(form);
+      const nextUrl = data["_next"] || (siteOrigin + "/thank-you.html?src=form");
+
+      fetch(CUSTOM_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      })
+        .then(function (res) {
+          if (!res.ok) { reject(new Error("Custom endpoint HTTP " + res.status)); return; }
+          return res.json();
+        })
+        .then(function (json) {
+          if (json && json.ok) {
+            resolve(json.redirect || nextUrl);
+          } else {
+            reject(new Error("Custom endpoint returned ok=false"));
+          }
+        })
+        .catch(reject);
+    });
+  }
+
+  function interceptForm(form, snapshot) {
+    form.addEventListener("submit", function (event) {
+      ensureLeadDisclosures(form, getFormName(form));
+      populateTracking(form, snapshot);
+      trackSubmit(snapshot, getFormName(form));
+
+      if (!CUSTOM_ENDPOINT) {
+        return; // no custom endpoint set — let native FormSubmit POST happen
+      }
+
+      event.preventDefault();
+
+      var submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending…";
+      }
+
+      submitToCustomEndpoint(form, snapshot)
+        .then(function (redirectUrl) {
+          window.location.href = redirectUrl;
+        })
+        .catch(function () {
+          // Custom endpoint failed — fall back to native FormSubmit POST
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = submitBtn.getAttribute("data-original-text") || "Submit";
+          }
+          form.submit();
+        });
+    });
+  }
+
   function init() {
     const forms = document.querySelectorAll(formSelector);
 
@@ -472,13 +549,13 @@
     };
 
     forms.forEach(function (form) {
+      var submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
+      if (submitBtn && submitBtn.textContent) {
+        submitBtn.setAttribute("data-original-text", submitBtn.textContent.trim());
+      }
       ensureLeadDisclosures(form, getFormName(form));
       populateTracking(form, snapshot);
-      form.addEventListener("submit", function () {
-        ensureLeadDisclosures(form, getFormName(form));
-        populateTracking(form, snapshot);
-        trackSubmit(snapshot, getFormName(form));
-      });
+      interceptForm(form, snapshot);
     });
   }
 
