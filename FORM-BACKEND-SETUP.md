@@ -67,11 +67,34 @@ The Sheet is created automatically the first time a form is submitted. Find it i
 
 ---
 
-## Updating the script
+## Updating the script (after code changes)
 If you need to change the email body or add fields:
-1. Edit the `.gs` file in `script.google.com`
-2. Deploy → **New deployment** → copy the new URL
-3. Update `CUSTOM_ENDPOINT` in `formsubmit-lead-tracking.js` → push
+1. Go to `script.google.com` → open **All-Pro Form Handler**
+2. Click the **+** next to Files → **Script** → paste the updated `.gs` file (or edit in place)
+3. `Ctrl+S` to save
+4. **Deploy → Manage deployments → ✏️ pencil → New version → Deploy**
+   - URL stays the same — no change needed in `formsubmit-lead-tracking.js`
+
+---
+
+## Recovering old leads from Gmail (one-time)
+
+All past FormSubmit emails are in Bill's Gmail inbox. Run this once to import them into the Sheet:
+
+1. Open the **All-Pro Form Handler** project at `script.google.com`
+2. Click **+** next to Files → **Script** → name it `allpro-gmail-recovery`
+3. Paste the entire contents of `allpro-gmail-recovery.gs` (this repo)
+4. `Ctrl+S` to save
+5. **First run (preview only — no writes):**
+   - Select function: `previewGmailLeads` → click ▶ Run
+   - Open **Execution log** — you'll see the first 20 FormSubmit emails found
+6. **Full recovery run:**
+   - Select function: `recoverGmailLeads` → click ▶ Run
+   - Approve Gmail read permission when prompted
+   - When done: opens an alert with count — e.g. "✅ Recovery complete: 47 new leads imported"
+7. Open your **All-Pro Leads** Google Sheet → **Recovered Leads** tab
+
+✅ Safe to run multiple times — already-processed emails are skipped automatically.
 
 ---
 
