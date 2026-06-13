@@ -9,10 +9,17 @@
  *
  * Both functions are SAFE to run multiple times (already-processed threads are skipped).
  *
+ * ⚠️  IMPORTANT — run this under TONY'S Google account (tonybeal40@gmail.com).
+ *     FormSubmit sends lead emails TO Tony as the primary recipient; Bill is CC'd.
+ *     If you run it under Bill's account it will still find leads (as CC), but
+ *     Tony's inbox is the authoritative copy with all of them.
+ *
  * HOW TO RUN:
- *  1. In Apps Script editor → open allpro-gmail-recovery.gs
- *  2. Select function name from dropdown → click ▶ Run
- *  3. Open the Google Sheet to see results
+ *  1. Sign in to script.google.com as tonybeal40@gmail.com
+ *  2. Open the All-Pro Form Handler project (or create it there)
+ *  3. Add / update allpro-gmail-recovery.gs
+ *  4. Select function name from dropdown → click ▶ Run
+ *  5. Open the Google Sheet to see results
  */
 
 // ── Config ────────────────────────────────────────────────────────────────────
@@ -22,7 +29,7 @@ var RECOVERY_CONFIG = {
   angiTab:         "Angi Leads",          // Angi leads tab
   // Target spreadsheet (the All-Pro Leads Google Sheet):
   targetSheetId:   "1xcc0xo4UeN3EaZUMNn_qFJ-xgX6ZPg7l7sTMSLsT6GE",
-  gmailSender:     "noreply@formsubmit.co",
+  gmailSender:     "submissions@formsubmit.co OR noreply@formsubmit.co",
   maxEmails:       500,                   // Safety cap — raise if you have more
   stateKey:        "recovery_processed",  // PropertiesService key for dedup tracking
   angiStateKey:    "angi_processed"       // Separate dedup key for Angi
@@ -35,7 +42,7 @@ function recoverGmailLeads() {
   var doneRaw  = props.getProperty(RECOVERY_CONFIG.stateKey) || "[]";
   var done     = JSON.parse(doneRaw);  // array of processed thread IDs
 
-  var query    = "from:" + RECOVERY_CONFIG.gmailSender;
+  var query    = "from:(" + RECOVERY_CONFIG.gmailSender + ")";
   var threads  = GmailApp.search(query, 0, RECOVERY_CONFIG.maxEmails);
   Logger.log("Found " + threads.length + " FormSubmit email threads");
 
@@ -152,13 +159,14 @@ function parseFormSubmitEmail(body, subject, date) {
 
 // ── Preview helper: dry run FormSubmit, no writes ────────────────────────────
 function previewGmailLeads() {
-  var query   = "from:" + RECOVERY_CONFIG.gmailSender;
+  var query   = "from:(" + RECOVERY_CONFIG.gmailSender + ")";
   var threads = GmailApp.search(query, 0, 20);
   Logger.log("Preview: found " + threads.length + " threads (showing first 20)");
   threads.forEach(function(thread) {
     var msg = thread.getMessages()[0];
     Logger.log("---\nDate: " + msg.getDate() + "\nSubject: " + msg.getSubject() +
-               "\nBody:\n" + msg.getPlainBody().substring(0, 300));
+               "\nReply-To: " + msg.getReplyTo() +
+               "\nBody:\n" + msg.getPlainBody().substring(0, 400));
   });
 }
 
