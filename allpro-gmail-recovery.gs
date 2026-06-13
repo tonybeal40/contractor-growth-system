@@ -64,22 +64,24 @@ function recoverGmailLeads() {
       var subject = msg.getSubject();
       var body    = msg.getPlainBody();
       var date    = msg.getDate();
+      // Reply-To header carries the customer's email in FormSubmit
+      var replyTo = msg.getReplyTo() || "";
 
-      var data    = parseFormSubmitEmail(body, subject, date);
+      var data    = parseFormSubmitEmail(body, subject, replyTo);
       if (!data) continue;
 
       sheet.appendRow([
-        date,                              // A: Received Date
-        data.name      || "",              // B: Name
-        data.phone     || "",              // C: Phone
-        data.email     || "",              // D: Email
-        data.service   || "",              // E: Service
-        data.city      || "",              // F: City
-        subject        || "",              // G: Form/Subject
-        data.source    || "FormSubmit",    // H: Source
-        (data.message  || "").substring(0, 500), // I: Message
-        "recovered",                       // J: Type (vs "live")
-        threadId                           // K: Thread ID (for dedup audit)
+        date,
+        data.name      || "",
+        data.phone     || "",
+        data.email     || "",
+        data.service   || "",
+        data.city      || "",
+        subject        || "",
+        data.source    || "website-form",
+        (data.message  || "").substring(0, 500),
+        "recovered",
+        threadId
       ]);
       newCount++;
     }
@@ -93,66 +95,105 @@ function recoverGmailLeads() {
   var summary = "✅ Recovery complete: " + newCount + " new leads imported, " + skipCount + " already processed.";
   Logger.log(summary);
   SpreadsheetApp.getUi && SpreadsheetApp.getUi().alert(summary);
+  // Note: getUi() throws when run from script editor — that's harmless, ignore it
   return summary;
 }
 
 // ── Parse a FormSubmit plain-text email body ──────────────────────────────────
-function parseFormSubmitEmail(body, subject, date) {
+// FormSubmit sends emails with fields as "key: value" lines but field names vary.
+// We also receive the Reply-To header separately (that's the customer's email).
+function parseFormSubmitEmail(body, subject, replyTo) {
   if (!body) return null;
 
   var data = {};
-  var lines = body.split(/\r?\n/);
 
-  // Parse "Field: Value" lines
+  // Customer email comes from Reply-To header, not the body field
+  if (replyTo) {
+    var emailInReplyTo = replyTo.match(/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/);
+    if (emailInReplyTo) data.email = emailInReplyTo[0];
+  }
+
+  // Collect all raw "key: value" lines from body
+  var lines = body.split(/\r?\n/);
+  var rawFields = {};
+  var extraLines = [];
+
   for (var i = 0; i < lines.length; i++) {
     var line = lines[i].trim();
+    if (!line) continue;
     var colonPos = line.indexOf(":");
-    if (colonPos < 1) continue;
-    var key = line.substring(0, colonPos).trim().toLowerCase().replace(/\s+/g, "_");
-    var val = line.substring(colonPos + 1).trim();
-    if (!val) continue;
-
-    // Map common field names
-    switch (key) {
-      case "name":     case "full_name":               data.name    = val; break;
-      case "phone":    case "phone_number":             data.phone   = val; break;
-      case "email":                                     data.email   = val; break;
-      case "service":  case "service_type":
-      case "project":  case "project_type":             data.service = val; break;
-      case "city":     case "location":                 data.city    = val; break;
-      case "message":  case "details": case "comments": data.message = val; break;
-      default:
-        // Catch anything else as part of message
-        if (!data.extras) data.extras = [];
-        data.extras.push(key + ": " + val);
+    if (colonPos < 1) {
+      extraLines.push(line);
+      continue;
     }
+    var rawKey = line.substring(0, colonPos).trim().toLowerCase().replace(/[\s_\-]+/g, "_");
+    var val    = line.substring(colonPos + 1).trim();
+    if (val) rawFields[rawKey] = val;
   }
 
-  // Append extras into message if there are any
-  if (data.extras && data.extras.length) {
-    data.message = (data.message ? data.message + "\n" : "") + data.extras.join("\n");
+  // Map every plausible field name to our data object
+  var nameKeys    = ["name","full_name","your_name","contact_name","first_name","fname"];
+  var phoneKeys   = ["phone","phone_number","telephone","mobile","cell","your_phone","call"];
+  var emailKeys   = ["email","email_address","e_mail","your_email","reply_to"];
+  var serviceKeys = ["service","service_type","project","project_type","job_type",
+                     "type","work_type","request_type","what_service","what_do_you_need"];
+  var cityKeys    = ["city","location","area","zip","zip_code","town","your_city","where"];
+  var msgKeys     = ["message","details","comments","description","notes","more_info",
+                     "additional","project_details","tell_us","info","other","timeline",
+                     "budget","how_can_we_help","work_description"];
+
+  function firstMatch(keys) {
+    for (var k = 0; k < keys.length; k++) {
+      if (rawFields[keys[k]]) return rawFields[keys[k]];
+    }
+    return null;
   }
 
-  // Guess source from subject line
-  var subjectLower = (subject || "").toLowerCase();
-  if      (subjectLower.indexOf("facebook")  > -1) data.source = "facebook";
-  else if (subjectLower.indexOf("linkedin")  > -1) data.source = "linkedin";
-  else if (subjectLower.indexOf("nextdoor")  > -1) data.source = "nextdoor";
-  else if (subjectLower.indexOf("review")    > -1) data.source = "review";
-  else if (subjectLower.indexOf("estimat")   > -1) data.source = "estimator";
-  else if (subjectLower.indexOf("tree")      > -1) data.source = "tree-service";
-  else if (subjectLower.indexOf("lawn")      > -1) data.source = "lawn-maintenance";
-  else if (subjectLower.indexOf("mulch")     > -1) data.source = "mulch-rock";
-  else if (subjectLower.indexOf("landscape") > -1) data.source = "landscape-cleanup";
-  else if (subjectLower.indexOf("fence")     > -1) data.source = "fence";
-  else if (subjectLower.indexOf("patio")     > -1) data.source = "patio";
-  else if (subjectLower.indexOf("compost") > -1 ||
-           subjectLower.indexOf("composite") > -1) data.source = "composite-decking";
-  else if (subjectLower.indexOf("deck")      > -1) data.source = "deck-builder";
-  else                                              data.source = "website-form";
+  data.name    = data.name    || firstMatch(nameKeys);
+  data.phone   = data.phone   || firstMatch(phoneKeys);
+  data.email   = data.email   || firstMatch(emailKeys);
+  data.service = data.service || firstMatch(serviceKeys);
+  data.city    = data.city    || firstMatch(cityKeys);
 
-  // Only return if we got at least a name or phone
-  if (!data.name && !data.phone && !data.email) return null;
+  // Gather all remaining fields into message/notes
+  var msgParts = [];
+  var handled  = nameKeys.concat(phoneKeys, emailKeys, serviceKeys, cityKeys);
+  Object.keys(rawFields).forEach(function(k) {
+    if (handled.indexOf(k) === -1) {
+      msgParts.push(k.replace(/_/g," ") + ": " + rawFields[k]);
+    }
+  });
+  // Also pick up any message-specific fields explicitly
+  var msgVal = firstMatch(msgKeys);
+  if (msgVal) msgParts.unshift(msgVal);
+  if (msgParts.length) data.message = msgParts.join("\n");
+
+  // Phone regex fallback — catches (618) 555-1234 style in body
+  if (!data.phone) {
+    var phoneMatch = body.match(/\(?\d{3}\)?[\s.\-]\d{3}[\s.\-]\d{4}/);
+    if (phoneMatch) data.phone = phoneMatch[0];
+  }
+
+  // Source from subject
+  var s = (subject || "").toLowerCase();
+  if      (s.indexOf("facebook")  > -1) data.source = "facebook";
+  else if (s.indexOf("linkedin")  > -1) data.source = "linkedin";
+  else if (s.indexOf("nextdoor")  > -1) data.source = "nextdoor";
+  else if (s.indexOf("review")    > -1) data.source = "review";
+  else if (s.indexOf("estimat")   > -1) data.source = "estimator";
+  else if (s.indexOf("tree")      > -1) data.source = "tree-service";
+  else if (s.indexOf("lawn")      > -1) data.source = "lawn-maintenance";
+  else if (s.indexOf("mulch")     > -1) data.source = "mulch-rock";
+  else if (s.indexOf("landscape") > -1) data.source = "landscape-cleanup";
+  else if (s.indexOf("fence")     > -1) data.source = "fence";
+  else if (s.indexOf("patio")     > -1) data.source = "patio";
+  else if (s.indexOf("composite") > -1) data.source = "composite-decking";
+  else if (s.indexOf("deck")      > -1) data.source = "deck-builder";
+  else                                   data.source = "website-form";
+
+  // Accept the lead if we got ANY useful field — don't drop it
+  var hasData = data.name || data.phone || data.email || data.service || data.message;
+  if (!hasData) return null;
 
   return data;
 }
@@ -168,6 +209,44 @@ function previewGmailLeads() {
                "\nReply-To: " + msg.getReplyTo() +
                "\nBody:\n" + msg.getPlainBody().substring(0, 400));
   });
+}
+
+// ── Diagnose which emails failed to parse and why ─────────────────────────────
+// Run diagnoseEmails() and check the Execution log to see every failed email.
+function diagnoseEmails() {
+  var query   = "from:(" + RECOVERY_CONFIG.gmailSender + ")";
+  var threads = GmailApp.search(query, 0, RECOVERY_CONFIG.maxEmails);
+  Logger.log("=== DIAGNOSING " + threads.length + " threads ===\n");
+
+  var passed = 0; var failed = 0;
+  threads.forEach(function(thread) {
+    var msg     = thread.getMessages()[0];
+    var subject = msg.getSubject();
+    var body    = msg.getPlainBody();
+    var replyTo = msg.getReplyTo() || "";
+    var date    = msg.getDate();
+    var data    = parseFormSubmitEmail(body, subject, replyTo);
+
+    if (data) {
+      passed++;
+      Logger.log("✅ PARSED | " + date + " | " + subject +
+                 "\n   name=" + (data.name||"?") + " phone=" + (data.phone||"?") +
+                 " email=" + (data.email||"?") + " service=" + (data.service||"?"));
+    } else {
+      failed++;
+      Logger.log("❌ FAILED | " + date + " | " + subject +
+                 "\n   Reply-To: " + replyTo +
+                 "\n   Body (first 600 chars):\n" + body.substring(0, 600) +
+                 "\n   ---");
+    }
+  });
+  Logger.log("\n=== RESULT: " + passed + " parsed, " + failed + " failed ===");
+}
+
+// ── Reset processed state — run this before re-importing with fixed parser ────
+function resetRecoveryState() {
+  PropertiesService.getScriptProperties().deleteProperty(RECOVERY_CONFIG.stateKey);
+  Logger.log("✅ Reset complete — recoverGmailLeads() will re-process all 19 threads.");
 }
 
 // ── Get or create the Recovered Leads sheet tab ───────────────────────────────
