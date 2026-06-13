@@ -401,3 +401,73 @@ function previewAngiLeads() {
   });
   Logger.log("Preview: " + found + " Angi threads found");
 }
+
+// ── Manually add leads Tony pasted in ────────────────────────────────────────
+// Run addManualLeads() ONCE — safe to re-run (checks for duplicates by phone).
+function addManualLeads() {
+  var ss   = getTargetSpreadsheet();
+  var tab  = ss.getSheetByName("Leads");
+  if (!tab) {
+    tab = ss.insertSheet("Leads");
+    tab.appendRow([
+      "Timestamp","Name","Phone","Email","Service","City",
+      "Form Name","Page URL","Lead Source","First Touch Source",
+      "UTM Source","UTM Medium","UTM Campaign","UTM Term",
+      "Referrer","Google Ad (gclid)","FB Ad (fbclid)",
+      "Session ID","Submitted At","Message"
+    ]);
+    tab.setFrozenRows(1);
+    tab.getRange(1,1,1,20).setFontWeight("bold").setBackground("#1a3a5c").setFontColor("#ffffff");
+  }
+
+  var manualLeads = [
+    {
+      date:    new Date("2026-06-13"),
+      name:    "William Lancaster",
+      phone:   "618-610-1299",
+      email:   "",
+      service: "Soffit / Fascia — Woodpecker siding damage repair",
+      city:    "Glen Carbon, IL",
+      form:    "Manual entry",
+      source:  "manual",
+      message: "Requesting estimate to repair/replace siding damage caused by woodpeckers. 4-5 pieces ranging 20'-30', approx 1\" x 8.25\". Wants synthetic replacement (fiber cement / James Hardie) to match existing siding color."
+    },
+    {
+      date:    new Date("2026-06-13"),
+      name:    "Kem — Church of Grace",
+      phone:   "618-604-5914",
+      email:   "bidding-nexus.6k@icloud.com",
+      service: "Siding Replacement — Commercial Church",
+      city:    "Cahokia Heights, IL",
+      form:    "Manual entry",
+      source:  "manual",
+      message: "Siding replacement for Church of Grace at 8307 Bluff Rd, Cahokia Heights. White siding. Partial replacement but open to full building if cost is reasonable. Timeline: 1-3 months."
+    }
+  ];
+
+  // Dedup: read existing phone numbers
+  var existing = tab.getDataRange().getValues();
+  var existingPhones = existing.map(function(row) { return String(row[2]).replace(/\D/g,""); });
+
+  var added = 0;
+  manualLeads.forEach(function(lead) {
+    var cleanPhone = lead.phone.replace(/\D/g,"");
+    if (existingPhones.indexOf(cleanPhone) > -1) {
+      Logger.log("Skip duplicate: " + lead.name + " (" + lead.phone + ")");
+      return;
+    }
+    tab.appendRow([
+      lead.date, lead.name, lead.phone, lead.email,
+      lead.service, lead.city,
+      lead.form, "", lead.source, "",
+      "","","","","","","","",
+      Utilities.formatDate(lead.date, Session.getScriptTimeZone(), "M/d/yyyy"),
+      lead.message
+    ]);
+    added++;
+  });
+
+  var msg = "✅ Added " + added + " manual lead(s) to the Leads tab.";
+  Logger.log(msg);
+  try { SpreadsheetApp.getUi().alert(msg); } catch(_) {}
+}
