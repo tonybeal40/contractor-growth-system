@@ -558,3 +558,228 @@ function addManualLeads() {
   Logger.log(msg);
   try { SpreadsheetApp.getUi().alert(msg); } catch(_) {}
 }
+
+// ══════════════════════════════════════════════════════════════════════════════
+// REPLACE ANGI LEADS — clears the Angi Leads tab and loads the canonical list
+// Run: replaceAngiLeads()
+// ══════════════════════════════════════════════════════════════════════════════
+function replaceAngiLeads() {
+  var ss  = getTargetSpreadsheet();
+  var tab = ss.getSheetByName(RECOVERY_CONFIG.angiTab);
+
+  // Wipe and recreate the tab
+  if (tab) ss.deleteSheet(tab);
+  tab = ss.insertSheet(RECOVERY_CONFIG.angiTab);
+
+  var headers = [
+    "Date Received","Name","Phone","Email",
+    "Project / Service","City / Location","Budget","Timeline",
+    "Notes","Angi Lead ID","Source"
+  ];
+  tab.appendRow(headers);
+  tab.setFrozenRows(1);
+  tab.getRange(1,1,1,headers.length)
+     .setFontWeight("bold")
+     .setBackground("#b34700")
+     .setFontColor("#ffffff");
+  tab.setColumnWidth(1, 130);
+  tab.setColumnWidth(2, 160);
+  tab.setColumnWidth(4, 240);
+
+  // [date, name, email]  — name blank where not provided
+  var leads = [
+    ["2026-06-06","","gbuklad@gmail.com"],
+    ["2026-06-04","","dmdeliveryservices1980@yahoo.com"],
+    ["2026-06-03","","rebeccaswanigan@hotmail.com"],
+    ["2026-06-02","","renecynthia1965.ch@gmail.com"],
+    ["2026-06-01","","soleydivine828@icloud.com"],
+    ["2026-06-01","","lesly20091@live.com"],
+    ["2026-05-31","","pzimmerman777@gmail.com"],
+    ["2026-05-31","","pbcansee@charter.net"],
+    ["2026-05-31","","elliottb@swbell.net"],
+    ["2026-05-31","","elegantlilly@ymail.com"],
+    ["2026-05-31","","cbrent393@aol.com"],
+    ["2026-05-30","","billsbillsbliss@aol.com"],
+    ["2026-05-29","","marvin.lampkin@gmail.com"],
+    ["2026-05-29","","chasej6021@gmail.com"],
+    ["2026-05-27","","tpaw@sbcglobal.net"],
+    ["2026-05-27","","jturner4615@gmail.com"],
+    ["2026-05-27","","dhirajsinha4u@gmail.com"],
+    ["2026-05-26","","eddiedavis1403@gmail.com"],
+    ["2026-05-26","","david.klein55@gmail.com"],
+    ["2026-05-25","","fraud_help@usbank.com"],
+    ["2026-05-25","","becky.riggs77@gmail.com"],
+    ["2026-05-06","","tamekachalmers@yahoo.com"],
+    ["2026-05-06","","dwayne.rogers1969@gmail.com"],
+    ["2026-05-04","","sharontowers@yahoo.com"],
+    ["2026-05-04","","kjngrl1965@yahoo.com"],
+    ["2026-05-04","","kelsdapoet@gmail.com"],
+    ["2026-05-04","","christopherlmc99@gmail.com"],
+    ["2026-05-04","","12buffy21@gmail.com"],
+    ["2026-05-02","","sonyawhitlock.1@gmail.com"],
+    ["2026-05-02","","greybeard427@yahoo.com"],
+    ["2026-04-30","","keyrmi@yahoo.com"],
+    ["2026-04-30","","ianmkoller@gmail.com"],
+    ["2026-04-29","","sidmcdaniel@msn.com"],
+    ["2026-04-29","","jmjm1954@yahoo.com"],
+    ["2026-04-28","","yongbingthode@gmx.com"],
+    ["2026-04-28","","marycmcmurry@gmail.com"],
+    ["2026-04-25","","pearlbrown623@gmail.com"],
+    ["2026-04-25","","hound_pup_00@yahoo.com"],
+    ["2026-04-25","","fallins1@yahoo.com"],
+    ["2026-04-25","","cdl.lester@yahoo.com"],
+    ["2026-04-25","","carlabrelje@yahoo.com"],
+    ["2026-04-25","","bettyschubert12@gmail.com"],
+    ["2026-04-21","","patigeegee@yahoo.com"],
+    ["2026-04-20","","marykolda@att.net"],
+    ["2026-04-20","","kolda.jerry@gmail.com"],
+    ["2026-04-18","","mendie11@aol.com"],
+    ["2026-04-16","","dwrobinson2025@gmail.com"],
+    ["2026-04-15","","lajune.grayson@gmail.com"],
+    ["2026-04-14","","tfarrar2006@yahoo.com"],
+    ["2026-04-14","","galongill46@gmail.com"],
+    ["2026-04-10","","litergolf1@yahoo.com"],
+    ["2026-04-09","","robinhamilton2015@gmail.com"],
+    ["2026-04-08","","deborahkannewurf@gmail.com"],
+    ["2026-04-07","","ehilligoss07@outlook.com"],
+    ["2026-04-06","","mctrimble@sbcglobal.net"],
+    ["2026-04-04","","freedawares@sbcglobal.net"],
+    ["2026-04-03","","jeanetteking385@gmail.com"],
+    ["2026-04-03","","breedingbill1@gmail.com"],
+    ["2026-04-01","","rdbrown31560@gmail.com"],
+    ["2026-04-01","","ibashiruddin@gmail.com"],
+    ["2026-03-31","","llicavoli10@gmail.com"],
+    ["2026-03-30","","etrell@sbcglobal.net"],
+    ["2026-03-30","","brittanybilyeu_09@hotmail.com"],
+    ["2026-03-29","","hamzabajwa32@gmail.com"],
+    ["2026-03-29","","carey.edwards2@icloud.com"],
+    ["2026-03-28","","stevegilmor@sbcglobal.net"],
+    ["2026-03-26","","maggiemclure87@yahoo.com"],
+    ["2026-03-26","","christopher.watkins7@gmail.com"],
+    ["2026-03-25","","thomasbenard493@gmail.com"],
+    ["2026-03-25","","steven.varley@yahoo.com"],
+    ["2026-03-25","","ronaldkrafft86@gmail.com"],
+    ["2026-03-25","","hiloktpor1245@exespay.com"],
+    ["2026-03-10","","remurc43@yahoo.com"],
+    ["2026-03-07","","lesajenkins74@gmail.com"],
+    ["2026-03-06","","gdbg@att.net"],
+    ["2026-03-05","","dillon.goodson@gmail.com"],
+    ["2026-03-04","","whitetiger4me@hotmail.com"],
+    ["2026-03-03","","metron99@charter.net"],
+    ["2026-03-03","","homeowner9517@gmail.com"],
+    ["2026-03-03","","bbopp98@aol.com"],
+    ["2026-03-01","","smithfr@stlouis-mo.gov"],
+    ["2026-02-28","","miantras@gmail.com"],
+    ["2026-02-28","","ca.becker42@yahoo.com"],
+    ["2026-02-26","","davids.girl789@gmail.com"],
+    ["2026-02-25","","jbachmann01@gmail.com"],
+    ["2026-02-25","","bobo428113@gmail.com"],
+    ["2026-02-20","","alex200c@yahoo.com"],
+    ["2026-02-19","","coscyrix@hotmail.com"],
+    ["2026-02-18","","tharris1688@gmail.com"],
+    ["2026-02-17","","ricepam58@yahoo.com"],
+    ["2026-02-01","","yatesmark111@yahoo.com"],
+    ["2026-02-01","","donyenykole@gmail.com"],
+    ["2026-01-31","","tori.k8mmie@yahoo.com"],
+    ["2026-01-31","","corey_stanford@yahoo.com"],
+    ["2026-01-30","","vlynne82@icloud.com"],
+    ["2026-01-30","","mooreshawon70@gmail.com"],
+    ["2026-01-30","","ladykitty345@yahoo.com"],
+    ["2026-01-30","","chadlspringer@gmail.com"],
+    ["2026-01-29","","lawrenceshorter1@gmail.com"],
+    ["2026-01-27","","twe8080@gmail.com"],
+    ["2026-01-27","","piappiah@gmail.com"],
+    ["2026-01-26","","housewrightsusan@gmail.com"],
+    ["2026-01-25","","jmpalmer53@gmail.com"],
+    ["2026-01-17","","99imergoot@gmail.com"],
+    ["2026-01-14","","acs_td@ymail.com"],
+    ["2026-01-02","","senorjimi@yahol.com"],
+    ["2026-01-02","","rwdodgeman@gmail.com"],
+    ["2026-01-02","","roessler289@yahoo.com"],
+    ["2025-12-31","","monetevelyna@gmail.com"],
+    ["2025-12-31","","boothemarie65@gmail.com"],
+    ["2025-12-30","","tishafloore@gmail.com"],
+    ["2025-12-30","","tamara2135@att.net"],
+    ["2025-12-30","","s_torpea@hotmail.com"],
+    ["2025-12-29","","wanniesmall4@gmail.com"],
+    ["2025-12-29","","mikearois@gmail.com"],
+    ["2025-12-25","","kate.halet@gmail.com"],
+    ["2025-12-20","","marieguglielmo@rocketmail.com"],
+    ["2025-12-09","","realreed87@gmail.com"],
+    ["2025-12-05","","chris2ferj@aol.com"],
+    ["2025-12-03","","maydaynm@me.com"],
+    ["2025-12-03","","daltonsellingstl@gmail.com"],
+    ["2025-12-02","","pamela.johnson@pompstire.com"],
+    ["2025-12-02","","geegeehip@gmail.com"],
+    ["2025-12-02","","daveloveless@yahoo.com"],
+    ["2025-12-01","","wmatthews545@gmail.com"],
+    ["2025-11-30","","garciatame30@gmail.com"],
+    ["2025-11-30","","banegaskelcy@gmail.com"],
+    ["2025-11-28","","leekuehner@gmail.com"],
+    ["2025-11-26","","raymondsplace41@gmail.com"],
+    ["2025-11-22","","blockychief89@gmail.com"],
+    ["2025-11-21","","lebronmia12@gmail.com"],
+    ["2025-11-20","","boattiger229@duck.com"],
+    ["2025-11-13","","zoegeyman@gmail.com"],
+    ["2025-11-10","","ashley.henson99@gmail.com"],
+    ["2025-11-08","","lydia.dean87@gmail.com"],
+    ["2025-11-07","","arweil181@gmail.com"],
+    ["2025-11-05","","shikerawilliams@yahoo.com"],
+    ["2025-11-05","","myork618@gmail.com"],
+    ["2025-11-03","","seccs@icloud.com"],
+    ["2025-11-03","","kelijah88@icloud.com"],
+    ["2025-11-03","","fredrickhbrown@hotmail.com"],
+    ["2025-11-02","","ticurria@gmail.com"],
+    ["2025-11-01","","bparks2@sbcglobal.net"],
+    ["2025-10-31","","camdanpope@gmail.com"],
+    ["2025-10-29","","tardeyj@gmail.com"],
+    ["2025-10-29","","aubreyrmalone@hotmail.com"],
+    ["2025-10-28","","samuelhilsabeck@gmail.com"],
+    ["2025-10-28","","bbottchen13@gmail.com"],
+    ["2025-10-27","","erin.fahs@gmail.com"],
+    ["2025-10-27","","connie.goodson123@gmail.com"],
+    ["2025-10-27","","calbaradogold@gmail.com"],
+    ["2025-08-12","Luan Meredith","luan@luanmeredith.com"],
+    ["2025-08-10","","cathryn.wilmott@gmail.com"],
+    ["2025-07-28","","2112perkins@gmail.com"],
+    ["2025-07-10","","rockchalkjrs77@yahoo.com"],
+    // No date — Angi list, date unknown
+    ["","","amyroth1487@hotmail.com"],
+    ["","","bettie_roy@yahoo.com"],
+    ["","","billhurst59@hotmail.com"],
+    ["","","ceoliaw@yahoo.com"],
+    ["","","colleen56@gmail.com"],
+    ["","","contact@sold.com"],
+    ["","","diannasimp@yahoo.com"],
+    ["","","dollyvance314@gmail.com"],
+    ["","","dudley1944@gmail.com"],
+    ["","","egreubel37@gmail.com"],
+    ["","","emmns4@gmail.com"],
+    ["","","iluvwaffles1202@aol.com"],
+    ["","","iroc34a@yahoo.com"],
+    ["","","jasmineramjeet@outlook.com"],
+    ["","","julievet1@hotmail.com"],
+    ["","","kathleen.brown524@yahoo.com"],
+    ["","","ladya856@gmail.com"],
+    ["","","linda_schwinn@yahoo.com"],
+    ["","","mikeneville82@gmail.com"],
+    ["","","misty.warren@ymail.com"],
+    ["","","redmaro99@att.net"],
+    ["","","smcgrail@mathesongas.com"],
+    ["","","tb19147@gmail.com"],
+    ["","","tjtwiggs17@yahoo.com"],
+    ["","","wjpmail@yahoo.com"]
+  ];
+
+  // Build rows: [date, name, phone, email, service, city, budget, timeline, notes, id, source]
+  var rows = leads.map(function(l) {
+    return [l[0], l[1], "", l[2], "", "", "", "", "", "", "Angi"];
+  });
+
+  // Batch write — much faster than appendRow loop
+  tab.getRange(2, 1, rows.length, headers.length).setValues(rows);
+
+  var msg = "✅ Angi Leads tab replaced: " + rows.length + " leads loaded.";
+  Logger.log(msg);
+  try { SpreadsheetApp.getUi().alert(msg); } catch(_) {}
+}
