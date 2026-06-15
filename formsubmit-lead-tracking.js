@@ -506,26 +506,13 @@
         return; // no custom endpoint set — let native FormSubmit POST happen
       }
 
-      event.preventDefault();
+      // Fire custom endpoint for Sheet logging only (non-blocking, no redirect)
+      // FormSubmit still handles the actual form POST + email
+      submitToCustomEndpoint(form, snapshot).catch(function () {
+        console.warn("Custom endpoint logging failed — FormSubmit handles email.");
+      });
 
-      var submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.textContent = "Sending…";
-      }
-
-      submitToCustomEndpoint(form, snapshot)
-        .then(function (redirectUrl) {
-          window.location.href = redirectUrl;
-        })
-        .catch(function () {
-          // Custom endpoint failed — fall back to native FormSubmit POST
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.textContent = submitBtn.getAttribute("data-original-text") || "Submit";
-          }
-          form.submit();
-        });
+      // Always let FormSubmit POST proceed normally (handles email to Bill)
     });
   }
 

@@ -59,20 +59,10 @@ function doPost(e) {
     }
 
     var isReview = isReviewSubmission(data);
-    var toEmail  = isReview ? CONFIG.reviewEmail : CONFIG.leadEmail;
-    var ccEmail  = isReview ? CONFIG.leadEmail   : CONFIG.ownerEmail;
-
     var subject  = buildSubject(data, isReview);
-    var body     = buildEmailBody(data);
 
-    // Send email
-    GmailApp.sendEmail(toEmail, subject, body, {
-      cc: ccEmail,
-      replyTo: data["email"] || data["_replyto"] || "",
-      name: "All-Pro Form Handler"
-    });
-
-    // Log to Sheet (non-fatal — email already sent)
+    // FormSubmit handles the email — Apps Script is Sheet logging only.
+    // Log to Sheet (non-fatal)
     try { logToSheet(data, subject); } catch(sheetErr) {
       console.warn("Sheet log failed (non-fatal):", sheetErr);
     }
