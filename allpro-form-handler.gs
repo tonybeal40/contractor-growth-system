@@ -104,7 +104,7 @@ function isReviewSubmission(data) {
 }
 
 function buildSubject(data, isReview) {
-  var prefix  = isReview ? "⭐ New Review" : "🔔 New Lead";
+  var prefix  = isReview ? "⭐ New Review" : "🚨 NEW LEAD";
   var name    = data["name"] || data["full_name"] || "Unknown";
   var service = data["service"] || data["project"] || "";
   var city    = data["city"] || "";
