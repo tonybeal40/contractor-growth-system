@@ -127,8 +127,7 @@ function recoverGmailLeads() {
 
   var summary = "✅ Recovery complete: " + newCount + " new leads imported, " + skipCount + " already processed.";
   Logger.log(summary);
-  SpreadsheetApp.getUi && SpreadsheetApp.getUi().alert(summary);
-  // Note: getUi() throws when run from script editor — that's harmless, ignore it
+  try { SpreadsheetApp.getUi().alert(summary); } catch(e) { /* not in UI context — ok */ }
   return summary;
 }
 
