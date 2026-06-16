@@ -138,6 +138,33 @@ function recoverGmailLeads() {
 function parseFormSubmitEmail(body, subject, replyTo) {
   if (!body) return null;
 
+  // Strip FormSubmit promotional footer before parsing
+  // Footer starts at "Sent by FormSubmit", "sponsor", or devrolabs references
+  var footerMarkers = [
+    "Sent by FormSubmit",
+    "devrolabs.com",
+    "formsubmit.co/sponsor",
+    "Get web development services",
+    "formsubmit team",
+    "web development services"
+  ];
+  var bodyClean = body;
+  for (var fm = 0; fm < footerMarkers.length; fm++) {
+    var fmIdx = bodyClean.toLowerCase().indexOf(footerMarkers[fm].toLowerCase());
+    if (fmIdx > 50) { // only strip if not at very start (50 char buffer)
+      bodyClean = bodyClean.substring(0, fmIdx);
+      break;
+    }
+  }
+  // Also strip lines that look like HTML/URL noise
+  bodyClean = bodyClean.split(/\r?\n/).filter(function(l) {
+    var t = l.trim().toLowerCase();
+    return t.indexOf("devrolabs") === -1
+        && t.indexOf("[image:") === -1
+        && t.indexOf("https://formsubmit.co/sponsor") === -1
+        && t.indexOf("*formsubmit") === -1;
+  }).join("\n");
+
   var data = {};
 
   // Customer email comes from Reply-To header, not the body field
@@ -146,8 +173,8 @@ function parseFormSubmitEmail(body, subject, replyTo) {
     if (emailInReplyTo) data.email = emailInReplyTo[0];
   }
 
-  // Collect all raw "key: value" lines from body
-  var lines = body.split(/\r?\n/);
+  // Collect all raw "key: value" lines from bodyClean
+  var lines = bodyClean.split(/\r?\n/);
   var rawFields = {};
   var extraLines = [];
 
@@ -203,7 +230,7 @@ function parseFormSubmitEmail(body, subject, replyTo) {
 
   // Phone regex fallback — catches (618) 555-1234 style in body
   if (!data.phone) {
-    var phoneMatch = body.match(/\(?\d{3}\)?[\s.\-]\d{3}[\s.\-]\d{4}/);
+    var phoneMatch = bodyClean.match(/\(?\d{3}\)?[\s.\-]\d{3}[\s.\-]\d{4}/);
     if (phoneMatch) data.phone = phoneMatch[0];
   }
 
