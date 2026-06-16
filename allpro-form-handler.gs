@@ -24,6 +24,7 @@ var INTERNAL_EMAILS = [
 ];
 
 function isInternalOrTest(data) {
+  if (!data) return true; // null data — skip
   // Block internal email addresses
   var email = String(data["email"] || data.email || "").trim().toLowerCase();
   for (var i = 0; i < INTERNAL_EMAILS.length; i++) {

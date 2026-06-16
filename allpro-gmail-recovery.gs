@@ -30,6 +30,7 @@ var RECOVERY_INTERNAL_EMAILS = [
 ];
 
 function isRecoveryInternalOrTest(data, subject) {
+  if (!data) return true; // null parse result — skip
   // Block internal email addresses
   var email = String(data.email || "").trim().toLowerCase();
   for (var i = 0; i < RECOVERY_INTERNAL_EMAILS.length; i++) {
