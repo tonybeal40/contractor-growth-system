@@ -16,8 +16,31 @@
  *  6. Push to GitHub — done.
  */
 
-// ── Config ────────────────────────────────────────────────────────────────────
-var CONFIG = {
+// ── Internal / test emails — never log these ─────────────────────────────────
+var INTERNAL_EMAILS = [
+  "tonybeal40@gmail.com",
+  "williamosessionallpro@gmail.com",
+  "allprometroeast@gmail.com"
+];
+
+function isInternalOrTest(data) {
+  // Block internal email addresses
+  var email = String(data["email"] || data.email || "").trim().toLowerCase();
+  for (var i = 0; i < INTERNAL_EMAILS.length; i++) {
+    if (email === INTERNAL_EMAILS[i]) return true;
+  }
+  // Block test/dummy submissions
+  var name = String(data["name"] || data.name || "").trim().toLowerCase();
+  var formName = String(data["form_name"] || data.form_name || "").trim().toLowerCase();
+  if (/^test/.test(name) || /^test/.test(formName)) return true;
+  if (name === "seo health check" || formName === "seo health check") return true;
+  // Block rows with no real contact info at all
+  var phone = String(data["phone"] || data.phone || "").replace(/\D/g, "");
+  var hasContact = (email && email.indexOf("@") > -1 && INTERNAL_EMAILS.indexOf(email) === -1)
+                || (phone.length >= 10)
+                || (name.length > 1);
+  return !hasContact;
+}
   leadEmail:   "williamosessionallpro@gmail.com",  // Bill gets every lead
   ownerEmail:  "tonybeal40@gmail.com",             // Tony gets a copy
   sheetName:   "All-Pro Leads",                    // Google Sheet tab name
@@ -56,6 +79,12 @@ function doPost(e) {
       if (combined.indexOf(blacklist[i]) > -1) {
         return jsonResponse({ ok: true, note: "blacklisted" }, headers);
       }
+    }
+
+    // Skip internal emails and test submissions
+    if (isInternalOrTest(data)) {
+      Logger.log("Skipping internal/test submission: " + JSON.stringify(data).substring(0, 200));
+      return jsonResponse({ ok: true, note: "internal" }, headers);
     }
 
     var isReview = isReviewSubmission(data);

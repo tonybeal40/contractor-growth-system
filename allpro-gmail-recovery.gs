@@ -22,6 +22,32 @@
  *  5. Open the Google Sheet to see results
  */
 
+// ── Internal / test emails — never log these to the sheet ────────────────────
+var RECOVERY_INTERNAL_EMAILS = [
+  "tonybeal40@gmail.com",
+  "williamosessionallpro@gmail.com",
+  "allprometroeast@gmail.com"
+];
+
+function isRecoveryInternalOrTest(data, subject) {
+  // Block internal email addresses
+  var email = String(data.email || "").trim().toLowerCase();
+  for (var i = 0; i < RECOVERY_INTERNAL_EMAILS.length; i++) {
+    if (email === RECOVERY_INTERNAL_EMAILS[i]) return true;
+  }
+  // Block test/dummy by name
+  var name = String(data.name || "").trim().toLowerCase();
+  if (/^test/.test(name)) return true;
+  // Block SEO health check and other system subjects
+  var subj = String(subject || "").toLowerCase();
+  if (subj.indexOf("seo health check") > -1 || subj.indexOf("test lead") > -1) return true;
+  // Must have at least a real name or phone — drop pure junk
+  var phone = String(data.phone || "").replace(/\D/g, "");
+  var hasContact = (name.length > 1) || (phone.length >= 10)
+                || (email && email.indexOf("@") > -1 && RECOVERY_INTERNAL_EMAILS.indexOf(email) === -1);
+  return !hasContact;
+}
+
 // ── Config ────────────────────────────────────────────────────────────────────
 var RECOVERY_CONFIG = {
   sheetName:       "All-Pro Leads",       // Must match CONFIG.sheetName
@@ -69,6 +95,12 @@ function recoverGmailLeads() {
 
       var data    = parseFormSubmitEmail(body, subject, replyTo);
       if (!data) continue;
+
+      // Skip internal emails and test submissions — real leads only
+      if (isRecoveryInternalOrTest(data, subject)) {
+        Logger.log("Skipping internal/test: " + subject + " | email: " + (data.email || "none"));
+        continue;
+      }
 
       sheet.appendRow([
         date,
