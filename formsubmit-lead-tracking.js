@@ -271,7 +271,7 @@
   function applyRouting(form, formName) {
     if (isReviewForm(formName)) {
       form.action = routing.reviewInbox;
-      ensureHiddenField(form, "_cc", uniqueEmails([routing.leadInboxEmail]).join(","));
+      removeNamedField(form, "_cc");
       return;
     }
 
