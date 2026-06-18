@@ -159,7 +159,19 @@
       <a href="sitemap.xml">Sitemap</a>
     </div>
   </footer>
-  <script src="formsubmit-lead-tracking.js?v=20260618a" defer></script>
+  <script>
+    (function () {
+      const reviewForm = document.querySelector('form[action*="formsubmit.co/tonybeal40@gmail.com"]');
+      if (!reviewForm) {
+        return;
+      }
+      reviewForm.action = "https://formsubmit.co/tonybeal40@gmail.com";
+      const ccField = reviewForm.querySelector('[name="_cc"]');
+      if (ccField) {
+        ccField.remove();
+      }
+    }());
+  </script>
 </body>
 </html>
 
