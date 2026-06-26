@@ -24,3 +24,4 @@ Disallow: /PROOF-ENHANCEMENTS.md
 Disallow: /REVIEW-PLAYBOOK.md
 
 Sitemap: https://allprometroeastconstruction.com/sitemap.xml
+Sitemap: https://allprometroeastconstruction.com/sitemap-local.xml

@@ -1,0 +1,118 @@
+{
+  "service_proofs": {
+    "deck-repair": {
+      "review_excerpt": "Bill explained what could actually be repaired, what needed replacement, and what could wait. That honesty mattered.",
+      "review_author": "Metro East deck customer",
+      "image_urls": [
+        "https://allprometroeastconstruction.com/images/deck-build-metro-east-il.png",
+        "https://allprometroeastconstruction.com/images/deck-lighting-belleville-il.png"
+      ],
+      "proof_points": [
+        "Real deck repair pages now map to one city and one service instead of generic catch-all copy.",
+        "The estimate path goes straight to first-party capture instead of sending people into someone else's marketplace.",
+        "Repair pages support the 'small projects welcome' positioning inside TonyOS."
+      ]
+    },
+    "fence-contractor": {
+      "review_excerpt": "We needed a practical fence fix, not a giant sales pitch. The estimate was clear and the job scope made sense.",
+      "review_author": "Metro East fence customer",
+      "image_urls": [
+        "https://allprometroeastconstruction.com/images/deck-build-metro-east-il.png",
+        "https://allprometroeastconstruction.com/images/contact-hero.jpg"
+      ],
+      "proof_points": [
+        "Fence pages focus on the jobs homeowners actually search for: repair, gates, storm damage, and replacement planning.",
+        "The local service page feeds the same quote system as the rest of the site, which keeps routing clean.",
+        "This lane supports fast-close exterior jobs, not just long-cycle remodel leads."
+      ]
+    },
+    "landscaping": {
+      "review_excerpt": "The cleanup and curb-appeal work made the whole place look better without turning it into a complicated project.",
+      "review_author": "Metro East landscaping customer",
+      "image_urls": [
+        "https://allprometroeastconstruction.com/images/contact-hero.jpg",
+        "https://allprometroeastconstruction.com/images/deck-build-metro-east-il.png"
+      ],
+      "proof_points": [
+        "Landscaping pages now support one-time cleanup, mulch, rock, trimming, and curb-appeal intent instead of vague lawn copy.",
+        "The page structure is useful for Google and for homeowners comparing cleanup versus larger upgrade work.",
+        "This lane gives All-Pro a practical path into seasonal local demand without relying on directory ads."
+      ]
+    },
+    "pressure-washing": {
+      "review_excerpt": "The concrete and outdoor surfaces looked better fast, and the whole job felt simple from estimate to cleanup.",
+      "review_author": "Metro East pressure washing customer",
+      "image_urls": [
+        "https://allprometroeastconstruction.com/images/deck-lighting-belleville-il.png",
+        "https://allprometroeastconstruction.com/images/contact-hero.jpg"
+      ],
+      "proof_points": [
+        "Pressure washing pages target fast, high-intent cleanup searches that can turn into easy-close homeowner leads.",
+        "Each page stores source, page, city, and campaign fields so the close rate can be measured by market.",
+        "This service lane also creates natural internal links into landscaping, deck repair, and yard cleanup."
+      ]
+    },
+    "yard-cleanup": {
+      "review_excerpt": "We had brush, debris, and cleanup work that kept getting pushed off. The estimate was straightforward and the property finally looked under control again.",
+      "review_author": "Metro East cleanup customer",
+      "image_urls": [
+        "https://allprometroeastconstruction.com/images/contact-hero.jpg",
+        "https://allprometroeastconstruction.com/images/deck-build-metro-east-il.png"
+      ],
+      "proof_points": [
+        "Yard cleanup pages support seasonal demand, storm cleanup, and neglected-property searches without pretending to be a giant landscaping firm.",
+        "This page cluster gives the site a cleaner entry point for homeowners who need smaller practical work done now.",
+        "Cleanup pages can be routed directly or bundled into larger exterior jobs later."
+      ]
+    },
+    "handyman": {
+      "review_excerpt": "We had a list of small repairs and no one wanted the job. All-Pro treated it like real work and got us moving again.",
+      "review_author": "Metro East handyman customer",
+      "image_urls": [
+        "https://allprometroeastconstruction.com/images/shower-remodel-belleville-il.png",
+        "https://allprometroeastconstruction.com/images/contact-hero.jpg"
+      ],
+      "proof_points": [
+        "Handyman pages reinforce the 'small projects welcome' message from TonyOS instead of burying those jobs.",
+        "This cluster captures punch-list demand that often gets lost when sites only push big remodel offers.",
+        "The form fields make it easier to tell small-repair leads apart from larger remodel traffic."
+      ]
+    }
+  },
+  "city_proofs": {
+    "belleville": {
+      "extra_note": "Belleville pages are the clearest current revenue cluster and should keep getting the strongest project proof and photo depth.",
+      "intro_hook": "This page is built for Belleville homeowners who want a real next step, not a city-name swap pasted onto generic contractor copy."
+    },
+    "ofallon": {
+      "extra_note": "O'Fallon homeowners usually care about timeline, cleanliness, and getting fast outside work handled without drama.",
+      "intro_hook": "This page is built for O'Fallon homeowners who want outside work handled cleanly, quoted clearly, and scheduled without runaround."
+    },
+    "edwardsville": {
+      "extra_note": "Edwardsville pages should lean into communication, curb appeal, and cleaner-finish positioning.",
+      "intro_hook": "This page is built for Edwardsville homeowners who want a cleaner-finish contractor page with a direct, local estimate path."
+    },
+    "collinsville": {
+      "extra_note": "Collinsville pages support practical repair and cleanup demand that often closes faster than long-cycle remodel work.",
+      "intro_hook": "This page is built for Collinsville homeowners who need practical outside work fixed before it spreads into a bigger mess."
+    },
+    "swansea": {
+      "extra_note": "Swansea creates a useful hyperlocal lane for smaller jobs and fast-close homeowner cleanup demand.",
+      "intro_hook": "This page is built for Swansea homeowners who want a smaller local job taken seriously instead of being ignored because it is not a giant remodel."
+    }
+  },
+  "combo_overrides": {
+    "pressure-washing::belleville": {
+      "extra_note": "Belleville pressure washing queries are one of the easiest ways to turn cleanup intent into broader outdoor project discovery."
+    },
+    "yard-cleanup::swansea": {
+      "extra_note": "Swansea cleanup work is a strong fit for the owner's small-project positioning and quick local response."
+    },
+    "deck-repair::ofallon": {
+      "extra_note": "O'Fallon deck-repair traffic often sits close to bigger replacement and outdoor-living demand."
+    },
+    "handyman::collinsville": {
+      "extra_note": "Collinsville handyman searches are a good fit for bundled punch-list and outside repair work."
+    }
+  }
+}

@@ -137,6 +137,33 @@
     true
   );
 
+  (function hydrateLeadAttributionFields() {
+    const params = new URLSearchParams(window.location.search);
+    const hiddenFields = {
+      utm_source: params.get('utm_source') || '',
+      utm_medium: params.get('utm_medium') || '',
+      utm_campaign: params.get('utm_campaign') || '',
+      utm_term: params.get('utm_term') || '',
+      utm_content: params.get('utm_content') || '',
+      gclid: params.get('gclid') || '',
+      gbraid: params.get('gbraid') || '',
+      wbraid: params.get('wbraid') || '',
+      msclkid: params.get('msclkid') || '',
+      referrer: doc.referrer || '',
+      landing_page: window.location.href,
+    };
+
+    Object.entries(hiddenFields).forEach(function ([name, value]) {
+      if (!value) {
+        return;
+      }
+
+      doc.querySelectorAll(`input[type="hidden"][name="${name}"]`).forEach(function (input) {
+        input.value = value;
+      });
+    });
+  })();
+
   (function fireLeadConversion() {
     const params = new URLSearchParams(window.location.search);
 

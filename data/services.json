@@ -1,0 +1,176 @@
+[
+  {
+    "slug": "deck-repair",
+    "service": "Deck Repair",
+    "service_type": "Deck Repair",
+    "description": "deck board replacement, stair repair, railing repair, soft spot repairs, structural checks, and safer outdoor living repairs",
+    "summary": "We fix the deck problems that make homeowners stop using the space: soft boards, shaky railings, tired stairs, and repair-or-replace decisions.",
+    "cta_label": "Request a deck repair estimate",
+    "bullets": [
+      "Deck board replacement",
+      "Stair and railing repair",
+      "Soft spot and rot checks",
+      "Repair-versus-replace guidance",
+      "Free written estimate before work begins"
+    ],
+    "faq": [
+      {
+        "q": "Can you repair part of a deck instead of replacing the whole thing?",
+        "a": "Yes. If the frame is solid, All-Pro can replace damaged boards, stairs, railings, and unsafe sections without rebuilding the entire deck."
+      },
+      {
+        "q": "Do you repair railings and stairs?",
+        "a": "Yes. Loose railings, weak stairs, soft spots, and worn deck sections are common repair calls."
+      },
+      {
+        "q": "Do you offer free deck repair estimates?",
+        "a": "Yes. Call 618-581-0676 and Bill can schedule a free written estimate."
+      }
+    ]
+  },
+  {
+    "slug": "fence-contractor",
+    "service": "Fence Contractor",
+    "service_type": "Fence Contractor",
+    "description": "wood fence repair, vinyl fence installation, chain link fence repair, gate repair, and residential fencing",
+    "summary": "We handle the fence jobs homeowners actually need help with: storm damage, leaning posts, gate problems, privacy fixes, and replacement planning.",
+    "cta_label": "Request a fence estimate",
+    "bullets": [
+      "Wood fence repair",
+      "Vinyl fence installation",
+      "Chain link fence repair",
+      "Gate repair and post replacement",
+      "Written estimate before scheduling"
+    ],
+    "faq": [
+      {
+        "q": "Do you repair fence gates?",
+        "a": "Yes. All-Pro can repair leaning gates, damaged posts, loose sections, and storm-damaged fencing."
+      },
+      {
+        "q": "Can you handle small fence repairs?",
+        "a": "Yes. Small jobs are welcome, including gate fixes, post replacement, and partial fence repairs."
+      },
+      {
+        "q": "Can you quote new fence installation too?",
+        "a": "Yes. We can quote both repair work and full replacement depending on the condition and the homeowner's goal."
+      }
+    ]
+  },
+  {
+    "slug": "landscaping",
+    "service": "Landscaping",
+    "service_type": "Landscaping",
+    "description": "yard cleanup, mulch, rock, trimming, bed edging, brush removal, plantings, and curb appeal improvements",
+    "summary": "We help homeowners reset the outside of the property so it looks maintained again without overcomplicating the project.",
+    "cta_label": "Request a landscaping estimate",
+    "bullets": [
+      "Yard cleanup",
+      "Mulch and decorative rock installation",
+      "Bed edging and trimming",
+      "Brush removal and curb appeal resets",
+      "Owner-led estimate before scheduling"
+    ],
+    "faq": [
+      {
+        "q": "Do you handle one-time yard cleanups?",
+        "a": "Yes. All-Pro handles one-time cleanups, overgrowth cleanup, brush removal, trimming, and seasonal yard projects."
+      },
+      {
+        "q": "Do you install mulch and decorative rock?",
+        "a": "Yes. All-Pro can install mulch, rock, edging, and clean up existing landscape beds."
+      },
+      {
+        "q": "Can landscaping be bundled with pressure washing or cleanup work?",
+        "a": "Yes. A lot of curb-appeal jobs combine landscaping, cleanup, and exterior washing into one clearer project plan."
+      }
+    ]
+  },
+  {
+    "slug": "pressure-washing",
+    "service": "Pressure Washing",
+    "service_type": "Pressure Washing",
+    "description": "driveway washing, patio cleaning, sidewalk cleaning, deck washing, fence washing, and exterior surface cleanup",
+    "summary": "We clean the outside surfaces that make the property look older than it is: dirty concrete, stained patios, weathered fences, and slick walkways.",
+    "cta_label": "Request a pressure washing estimate",
+    "bullets": [
+      "Driveway washing",
+      "Patio and sidewalk cleaning",
+      "Deck and fence washing",
+      "Exterior surface refresh work",
+      "Free estimate before the cleaning starts"
+    ],
+    "faq": [
+      {
+        "q": "What surfaces can you pressure wash?",
+        "a": "All-Pro can pressure wash driveways, patios, sidewalks, decks, fences, siding, and other exterior surfaces."
+      },
+      {
+        "q": "Do you offer pressure washing with other services?",
+        "a": "Yes. Pressure washing can be combined with landscaping, deck repair, fence repair, and exterior cleanup projects."
+      },
+      {
+        "q": "Is this just for big jobs?",
+        "a": "No. Many calls are simple driveway, patio, and exterior cleanup jobs that homeowners want done fast and clean."
+      }
+    ]
+  },
+  {
+    "slug": "yard-cleanup",
+    "service": "Yard Cleanup",
+    "service_type": "Yard Cleanup",
+    "description": "brush cleanup, storm cleanup, bed cleanup, hauling, trimming, and property refresh work",
+    "summary": "We help homeowners get control back over overgrown yards, storm mess, neglected beds, and outside cleanup that keeps getting pushed off.",
+    "cta_label": "Request a yard cleanup estimate",
+    "bullets": [
+      "Brush and overgrowth cleanup",
+      "Storm debris hauling",
+      "Planting bed cleanup and reshaping",
+      "Seasonal yard reset work",
+      "Written estimate before scheduling"
+    ],
+    "faq": [
+      {
+        "q": "Do you handle overgrown yards?",
+        "a": "Yes. We help with brush, bed cleanup, trimming, debris, and yard areas that have gotten away from the homeowner."
+      },
+      {
+        "q": "Can you clean up after storms?",
+        "a": "Yes. Storm cleanup and debris removal are common calls, especially when the yard needs to be made usable again quickly."
+      },
+      {
+        "q": "How do I get an estimate?",
+        "a": "Call 618-581-0676 or use the online quote form and Bill will follow up with a written next-step estimate."
+      }
+    ]
+  },
+  {
+    "slug": "handyman",
+    "service": "Handyman",
+    "service_type": "Handyman",
+    "description": "small home repairs, exterior fixes, trim repairs, hauling, cleanup, and general home improvement help",
+    "summary": "We handle the smaller repair list that still matters: outside fixes, punch-list work, trim repairs, cleanup, and odd jobs homeowners need finished.",
+    "cta_label": "Request a handyman estimate",
+    "bullets": [
+      "Small home repairs",
+      "Exterior fixes and trim work",
+      "Punch-list project help",
+      "Hauling and cleanup support",
+      "Written estimate before scheduling"
+    ],
+    "faq": [
+      {
+        "q": "Do you take small handyman jobs?",
+        "a": "Yes. All-Pro welcomes small jobs, including exterior repairs, cleanup, trim fixes, hauling, and general repair work."
+      },
+      {
+        "q": "Can I give you a list of repairs?",
+        "a": "Yes. Send the list, and Bill can review it and give practical options for getting the work done."
+      },
+      {
+        "q": "Is this a good fit if I have several little projects?",
+        "a": "Yes. Bundling several small repairs into one visit is often the smartest way to get the list knocked out."
+      }
+    ]
+  }
+]

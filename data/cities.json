@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "belleville",
+    "city": "Belleville",
+    "state": "IL",
+    "market": "Metro East",
+    "county": "St. Clair County",
+    "postal_codes": ["62220", "62221", "62223", "62226"],
+    "nearby": ["Swansea", "Shiloh", "O'Fallon", "Fairview Heights"],
+    "local_notes": "Belleville homeowners often deal with older decks, mature trees, aging patios, fencing repairs, landscaping cleanup, and exterior projects that need practical, budget-aware solutions.",
+    "intro_hook": "Belleville homeowners usually call when something outside the house has slipped from annoying to urgent and they want a local contractor who will actually answer.",
+    "neighborhoods": ["West Belleville", "Downtown Belleville", "East End", "Signal Hill"]
+  },
+  {
+    "slug": "ofallon",
+    "city": "O'Fallon",
+    "state": "IL",
+    "market": "Metro East",
+    "county": "St. Clair County",
+    "postal_codes": ["62269"],
+    "nearby": ["Shiloh", "Swansea", "Scott AFB", "Fairview Heights"],
+    "local_notes": "O'Fallon has newer subdivisions, growing neighborhoods, and many homeowners looking for deck repair, fencing, pressure washing, patios, and clean curb appeal.",
+    "intro_hook": "O'Fallon jobs are usually about speed, curb appeal, and getting the work done cleanly without dragging the project across the whole season.",
+    "neighborhoods": ["Augustine", "Meadowbrook", "Shiloh Valley", "Scott AFB area"]
+  },
+  {
+    "slug": "edwardsville",
+    "city": "Edwardsville",
+    "state": "IL",
+    "market": "Metro East",
+    "county": "Madison County",
+    "postal_codes": ["62025"],
+    "nearby": ["Glen Carbon", "Maryville", "Troy", "Collinsville"],
+    "local_notes": "Edwardsville homeowners often care about curb appeal, outdoor living spaces, drainage, patios, fencing, and clean project communication.",
+    "intro_hook": "Edwardsville homeowners usually want a cleaner finish, stronger communication, and work that fits both established neighborhoods and newer builds.",
+    "neighborhoods": ["Leclaire", "Downtown Edwardsville", "Holiday Shores", "North Edwardsville"]
+  },
+  {
+    "slug": "collinsville",
+    "city": "Collinsville",
+    "state": "IL",
+    "market": "Metro East",
+    "county": "Madison County",
+    "postal_codes": ["62234"],
+    "nearby": ["Maryville", "Fairview Heights", "Caseyville", "Glen Carbon"],
+    "local_notes": "Collinsville homes often need deck repairs, concrete fixes, fence repairs, yard cleanup, drainage cleanup, and pressure washing after heavy Midwest weather.",
+    "intro_hook": "Collinsville calls usually come from homeowners who want practical repairs and cleanup handled fast before small issues spread.",
+    "neighborhoods": ["Downtown Collinsville", "Keebler Oaks", "Meadow Heights", "Caseyville corridor"]
+  },
+  {
+    "slug": "swansea",
+    "city": "Swansea",
+    "state": "IL",
+    "market": "Metro East",
+    "county": "St. Clair County",
+    "postal_codes": ["62226"],
+    "nearby": ["Belleville", "Shiloh", "Fairview Heights", "O'Fallon"],
+    "local_notes": "Swansea homeowners often need small exterior repairs, landscaping, fence work, pressure washing, and seasonal cleanup without hiring a huge company.",
+    "intro_hook": "Swansea projects are often the kind big contractors ignore: practical outside work, cleanup, repairs, and fast homeowner fixes that still need to be done right.",
+    "neighborhoods": ["Clinton Hills", "South Belt West", "Wolf Branch area", "North Illinois corridor"]
+  }
+]
