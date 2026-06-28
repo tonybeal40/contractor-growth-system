@@ -22,6 +22,7 @@ Disallow: /GBP-AND-ADS.md
 Disallow: /NEXT-PAGE-PLAN.md
 Disallow: /PROOF-ENHANCEMENTS.md
 Disallow: /REVIEW-PLAYBOOK.md
+Disallow: /ALL_PRO_SEO_PRO_PLAYBOOK.md
 
 Sitemap: https://allprometroeastconstruction.com/sitemap.xml
 Sitemap: https://allprometroeastconstruction.com/sitemap-local.xml
