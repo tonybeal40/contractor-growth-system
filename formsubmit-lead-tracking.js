@@ -272,6 +272,7 @@
     if (isReviewForm(formName)) {
       form.action = routing.reviewInbox;
       removeNamedField(form, "_cc");
+      ensureHiddenField(form, "_subject", formName + " - All-Pro Construction");
       return;
     }
 
@@ -283,6 +284,7 @@
 
     form.action = routing.leadInbox;
     ensureHiddenField(form, "_cc", uniqueEmails(ccList).join(","));
+    ensureHiddenField(form, "_subject", "New All-Pro Lead: " + formName);
   }
 
   function applyReplyTo(form) {
@@ -479,7 +481,8 @@
       fetch(CUSTOM_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        keepalive: true
       })
         .then(function (res) {
           if (!res.ok) { reject(new Error("Custom endpoint HTTP " + res.status)); return; }
