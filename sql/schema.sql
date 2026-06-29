@@ -14,6 +14,7 @@ create table if not exists pages (
 
 create table if not exists leads (
   id bigserial primary key,
+  vertical text,
   source text not null,
   source_lead_id text,
   created_at timestamptz not null default now(),
@@ -27,6 +28,14 @@ create table if not exists leads (
   email text,
   details text,
   status text not null default 'new',
+  assigned_to text,
+  follow_up_at timestamptz,
+  estimate_scheduled boolean not null default false,
+  estimate_sent boolean not null default false,
+  booked boolean not null default false,
+  sold_to_partner boolean not null default false,
+  partner_name text,
+  lost_reason text,
   owner_user_id bigint,
   first_touch_source text,
   first_touch_medium text,

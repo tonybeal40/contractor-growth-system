@@ -1,0 +1,68 @@
+{
+  "markets": [
+    "Belleville",
+    "O'Fallon",
+    "Edwardsville",
+    "Collinsville",
+    "Swansea",
+    "Fairview Heights",
+    "Shiloh",
+    "Glen Carbon",
+    "Maryville",
+    "Troy"
+  ],
+  "categories": [
+    "Decks",
+    "Fencing",
+    "Landscaping",
+    "Pressure Washing",
+    "Handyman",
+    "Concrete",
+    "Patios",
+    "Bathroom Remodeling",
+    "Kitchen Remodeling",
+    "Outdoor Living"
+  ],
+  "providers": [
+    {
+      "name": "All-Pro Construction & Landscape",
+      "status": "Verified local pro",
+      "primary": true,
+      "phone": "618-581-0676",
+      "url": "index.html",
+      "quoteUrl": "get-quote.html",
+      "reviewsUrl": "reviews.html",
+      "proofUrl": "jobs-completed-metro-east.html",
+      "yearsInBusiness": "23+",
+      "rating": "4.7",
+      "reviewCount": "40+",
+      "badges": ["Owner on every job", "Written estimates", "Small jobs welcome"],
+      "cities": ["Belleville", "O'Fallon", "Edwardsville", "Collinsville", "Swansea", "Fairview Heights", "Shiloh"],
+      "categories": ["Decks", "Fencing", "Landscaping", "Pressure Washing", "Handyman", "Concrete", "Patios", "Bathroom Remodeling", "Kitchen Remodeling", "Outdoor Living"],
+      "summary": "Local construction and landscape company serving Metro East homeowners with decks, fencing, landscaping, patios, concrete, remodeling, pressure washing, handyman work, and outdoor projects.",
+      "bestFor": "Homeowners who want a direct local contractor path with owner-led estimates and proof-backed service pages."
+    }
+  ],
+  "networkLanes": [
+    {
+      "category": "Roofing",
+      "status": "Partner lane opening",
+      "note": "Collect homeowner demand first, then add a verified local roofing partner."
+    },
+    {
+      "category": "HVAC",
+      "status": "Partner lane opening",
+      "note": "A future overflow lane for heating, cooling, and emergency service requests."
+    },
+    {
+      "category": "Plumbing",
+      "status": "Partner lane opening",
+      "note": "A future partner lane for repair, fixture, and small plumbing work."
+    },
+    {
+      "category": "Electrical",
+      "status": "Partner lane opening",
+      "note": "A future partner lane for licensed electrical service requests."
+    }
+  ]
+}

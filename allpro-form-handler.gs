@@ -42,6 +42,7 @@ function isInternalOrTest(data) {
                 || (name.length > 1);
   return !hasContact;
 }
+var CONFIG = {
   leadEmail:   "williamosessionallpro@gmail.com",  // Bill gets every lead
   ownerEmail:  "tonybeal40@gmail.com",             // Tony gets a copy
   sheetName:   "All-Pro Leads",                    // Google Sheet tab name
@@ -249,10 +250,10 @@ function logToSheet(data, subject) {
 
   sheet.appendRow([
     new Date(),
-    data["name"]                 || "",
+    data["name"] || data["full_name"] || data["customer_name"] || "",
     data["phone"]                || "",
     data["email"]                || "",
-    data["service"] || data["project"] || "",
+    data["service"] || data["service_needed"] || data["project"] || data["main_service"] || "",
     data["city"]                 || "",
     data["form_name"]            || data["page_path"] || "",
     data["page_url"]             || "",
@@ -267,7 +268,7 @@ function logToSheet(data, subject) {
     data["fbclid"]               || "",
     data["lead_session_id"]      || "",
     data["submission_time_local"]|| "",
-    (data["message"] || data["details"] || data["review"] || "").substring(0, 500)
+    (data["message"] || data["details"] || data["project_details"] || data["proof_links"] || data["review"] || "").substring(0, 500)
   ]);
 }
 

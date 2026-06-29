@@ -24,3 +24,21 @@
 
 /formsubmit-lead-tracking.js
   Cache-Control: public, max-age=604800
+
+/.firecrawl/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+/bill-docs-k7m2v9/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+/demo-template/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+/lawnmex/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+/outputs/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+/output/*
+  X-Robots-Tag: noindex, nofollow, noarchive

@@ -24,5 +24,13 @@ Disallow: /PROOF-ENHANCEMENTS.md
 Disallow: /REVIEW-PLAYBOOK.md
 Disallow: /ALL_PRO_SEO_PRO_PLAYBOOK.md
 
+# Internal research, generated output, client demos, and support files
+Disallow: /.firecrawl/
+Disallow: /bill-docs-k7m2v9/
+Disallow: /demo-template/
+Disallow: /lawnmex/
+Disallow: /output/
+Disallow: /outputs/
+
 Sitemap: https://allprometroeastconstruction.com/sitemap.xml
 Sitemap: https://allprometroeastconstruction.com/sitemap-local.xml
