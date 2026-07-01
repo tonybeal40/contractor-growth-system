@@ -579,3 +579,215 @@ footer a,
     white-space: nowrap;
   }
 }
+
+@media (max-width: 760px) {
+  .hub-nav {
+    position: sticky !important;
+  }
+
+  .hub-nav-inner {
+    padding: 10px 14px !important;
+    gap: 10px !important;
+    align-items: center !important;
+  }
+
+  .hub-brand {
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    gap: 8px !important;
+  }
+
+  .hub-brand img {
+    width: 40px !important;
+    height: 40px !important;
+    flex: 0 0 40px !important;
+  }
+
+  .hub-brand strong {
+    font-size: .92rem !important;
+    line-height: 1.05 !important;
+    white-space: normal !important;
+  }
+
+  .hub-brand small {
+    display: none !important;
+  }
+
+  .hub-nav-links {
+    flex: 0 0 auto !important;
+    gap: 8px !important;
+    justify-content: flex-end !important;
+  }
+
+  .hub-nav-links a:not(.hub-call):not([href="get-quote.html"]) {
+    display: none !important;
+  }
+
+  .hub-nav-links a[href="get-quote.html"],
+  .hub-call {
+    min-height: 40px !important;
+    border-radius: 9px !important;
+    padding: 9px 10px !important;
+    font-size: .78rem !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .hub-nav-links a[href="get-quote.html"] {
+    background: #ffffff !important;
+    border: 1px solid #cfd8d2 !important;
+    color: var(--ap-green) !important;
+    box-shadow: none !important;
+  }
+
+  .hub-hero {
+    padding: 28px 14px 24px !important;
+    background:
+      linear-gradient(180deg, rgba(247, 243, 234, .98), rgba(247, 243, 234, .94)),
+      url("/images/deck-build-metro-east-il.png") center / cover no-repeat !important;
+  }
+
+  .hub-hero-inner {
+    gap: 16px !important;
+  }
+
+  .hub-badge {
+    max-width: 100% !important;
+    white-space: normal !important;
+    border-radius: 9px !important;
+  }
+
+  .hub-hero h1 {
+    font-size: 2rem !important;
+    line-height: 1.08 !important;
+    margin-bottom: .75rem !important;
+  }
+
+  .hub-sub {
+    font-size: .98rem !important;
+    line-height: 1.55 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .hub-points {
+    gap: 9px !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .hub-point,
+  .hub-route-card,
+  .hub-step,
+  .hub-compare-box,
+  .hub-mini,
+  .hub-list div {
+    border-radius: 10px !important;
+    padding: 13px !important;
+  }
+
+  .hub-cta-row {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .hub-cta-primary,
+  .hub-cta-secondary,
+  .hub-submit {
+    width: 100% !important;
+    min-height: 46px !important;
+    border-radius: 10px !important;
+    padding: 12px 14px !important;
+    text-align: center !important;
+  }
+
+  .hub-section {
+    padding: 18px 14px 34px !important;
+  }
+
+  .hub-card,
+  .hub-sidecard {
+    border-radius: 12px !important;
+    padding: 18px !important;
+  }
+
+  .hub-card h2 {
+    font-size: 1.28rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .hub-lead,
+  .hub-sidecard p,
+  .hub-route-card p,
+  .hub-step span,
+  .hub-compare-box p,
+  .hub-mini p,
+  .hub-list span {
+    font-size: .92rem !important;
+    line-height: 1.55 !important;
+  }
+
+  .hub-inline-links {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .hub-inline-links a {
+    width: 100% !important;
+    justify-content: center !important;
+    border-radius: 10px !important;
+    text-align: center !important;
+  }
+
+  .hub-field input,
+  .hub-field select,
+  .hub-field textarea {
+    min-height: 46px !important;
+    border-radius: 10px !important;
+    font-size: 16px !important;
+  }
+
+  .hub-check {
+    align-items: flex-start !important;
+  }
+
+  .hub-footer {
+    padding: 22px 14px !important;
+    text-align: left !important;
+    line-height: 1.6 !important;
+  }
+
+  .bill-list-page #ap-float,
+  .bill-list-page #ap-float-dismiss {
+    display: none !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .hub-nav-inner {
+    padding-inline: 10px !important;
+  }
+
+  .hub-brand img {
+    width: 34px !important;
+    height: 34px !important;
+    flex-basis: 34px !important;
+  }
+
+  .hub-brand strong {
+    font-size: .82rem !important;
+  }
+
+  .hub-nav-links {
+    gap: 6px !important;
+  }
+
+  .hub-nav-links a[href="get-quote.html"],
+  .hub-call {
+    padding-inline: 8px !important;
+    font-size: .72rem !important;
+  }
+
+  .hub-hero h1 {
+    font-size: 1.75rem !important;
+  }
+}
