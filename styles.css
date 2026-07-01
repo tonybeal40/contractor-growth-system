@@ -663,7 +663,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .author-meta { font-size: .75rem; color: var(--gray3); margin-top: .1rem; }
 
 /* ── AREAS ───────────────────────────────────────────────── */
-.areas { padding: 8rem 0; background: var(--white); }
+.areas { padding: 8rem 0; background: var(--white); scroll-margin-top: calc(var(--nav-h) + 18px); }
 .areas .section-tag { background: rgba(200,16,46,.08); border-color: rgba(200,16,46,.2); }
 .areas .section-header h2 { color: var(--black); }
 .areas .section-header p { color: #555; }
@@ -692,7 +692,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
   border-radius: 100px; padding: .4rem 1rem;
   font-size: .8rem; font-weight: 600; color: var(--gray2);
   transition: border-color .2s, color .2s, background .2s;
-  cursor: default;
+  cursor: pointer;
 }
 .area-pill:hover {
   border-color: rgba(200,16,46,.4); color: var(--white);
@@ -995,7 +995,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
     justify-content: center;
     gap: .4rem;
     padding: 1rem .5rem;
-    font-size: 1rem;
+    font-size: .92rem;
     font-weight: 800;
     text-decoration: none;
     line-height: 1.2;
@@ -1003,6 +1003,10 @@ button { font-family: inherit; cursor: pointer; border: none; }
   .sticky-call a:first-child {
     background: #111;
     color: #fff;
+  }
+  .sticky-call a:nth-child(2) {
+    background: #f7f3ea;
+    color: #2f5d50;
   }
   .sticky-call a:last-child {
     background: var(--red);
@@ -3208,14 +3212,14 @@ body.home-page {
 .home-page .process { order: 5; }
 .home-page .why { order: 6; }
 .home-page .testimonials { order: 7; }
-.home-page .cta-band { order: 8; }
+.home-page .areas { order: 8; }
+.home-page .cta-band { order: 9; }
 
 .home-page .trust-bar,
 .home-page .pricing-anchors,
 .home-page .money-pages,
 .home-page .decision-engine,
 .home-page .fast-track,
-.home-page .areas,
 .home-page .service-area-map,
 .home-page .lead,
 .home-page main > section[style*="background:#141414"] {
@@ -3292,6 +3296,92 @@ body.home-page {
   background: var(--deep-green) !important;
   color: #ffffff !important;
   border: 0 !important;
+}
+
+.home-page .areas {
+  display: block !important;
+  padding: clamp(3.2rem, 7vw, 5.4rem) 0 !important;
+  background: #ffffff !important;
+  color: var(--charcoal) !important;
+  border-top: 1px solid #e4ddd0;
+}
+
+.home-page .areas .section-tag {
+  background: #eef6ef !important;
+  border-color: #cdded1 !important;
+  color: var(--deep-green) !important;
+}
+
+.home-page .areas-map-wrap {
+  background: #f7f3ea !important;
+  border: 1px solid #e4ddd0 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 12px 30px rgba(31,41,51,.08);
+}
+
+.home-page .areas-center {
+  border-right-color: #d8d0c2 !important;
+}
+
+.home-page .areas-center .big,
+.home-page .areas-center .city {
+  color: var(--deep-green) !important;
+}
+
+.home-page .areas-center .big-label,
+.home-page .areas-center .city-sub {
+  color: #5f6b66 !important;
+}
+
+.home-page .area-pill {
+  background: #ffffff !important;
+  border-color: #d8d0c2 !important;
+  color: var(--deep-green) !important;
+}
+
+.home-page .area-pill:hover,
+.home-page .area-pill:focus-visible {
+  background: var(--deep-green) !important;
+  border-color: var(--deep-green) !important;
+  color: #ffffff !important;
+}
+
+@media (max-width: 520px) {
+  .home-page .why-inner,
+  .home-page .why-content,
+  .home-page .why-list,
+  .home-page .why-item {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .home-page .why-inner {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 1.5rem !important;
+  }
+
+  .home-page .why-visual {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .home-page .why-visual .metric-card:first-child {
+    grid-column: auto !important;
+  }
+
+  .home-page .why-item {
+    padding: 1rem !important;
+    gap: .8rem !important;
+  }
+
+  .home-page .why-item-icon {
+    width: 38px !important;
+    height: 38px !important;
+  }
+
+  .home-page .why-item-text {
+    min-width: 0 !important;
+  }
 }
 
 .home-page .footer {
