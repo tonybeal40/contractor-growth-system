@@ -40,6 +40,11 @@ body:not(.home-page) a {
   color: var(--ap-green);
 }
 
+.bill-list-page #ap-float,
+.bill-list-page #ap-float-dismiss {
+  display: none !important;
+}
+
 .nav,
 .qnav,
 .mini-nav,
@@ -756,9 +761,63 @@ footer a,
     line-height: 1.6 !important;
   }
 
-  .bill-list-page #ap-float,
-  .bill-list-page #ap-float-dismiss {
+  .net-nav {
+    position: sticky !important;
+  }
+
+  .net-nav-inner {
+    padding: 10px 14px !important;
+    gap: 10px !important;
+    align-items: center !important;
+    flex-direction: row !important;
+  }
+
+  .net-brand {
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    gap: 8px !important;
+  }
+
+  .net-brand img {
+    width: 40px !important;
+    height: 40px !important;
+    flex: 0 0 40px !important;
+  }
+
+  .net-brand strong {
+    font-size: .9rem !important;
+    line-height: 1.05 !important;
+  }
+
+  .net-brand small {
     display: none !important;
+  }
+
+  .net-links {
+    flex: 0 0 auto !important;
+    gap: 8px !important;
+    justify-content: flex-end !important;
+  }
+
+  .net-links a:not(.net-call):not([href="bill-s-list-contractor-listing.html"]) {
+    display: none !important;
+  }
+
+  .net-links a[href="bill-s-list-contractor-listing.html"],
+  .net-call {
+    min-height: 40px !important;
+    border-radius: 9px !important;
+    padding: 9px 10px !important;
+    font-size: .78rem !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .net-links a[href="bill-s-list-contractor-listing.html"] {
+    background: #ffffff !important;
+    border: 1px solid #cfd8d2 !important;
+    color: var(--ap-green) !important;
+    box-shadow: none !important;
   }
 }
 
@@ -782,7 +841,9 @@ footer a,
   }
 
   .hub-nav-links a[href="get-quote.html"],
-  .hub-call {
+  .hub-call,
+  .net-links a[href="bill-s-list-contractor-listing.html"],
+  .net-call {
     padding-inline: 8px !important;
     font-size: .72rem !important;
   }
