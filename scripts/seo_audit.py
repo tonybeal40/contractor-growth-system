@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import posixpath
 import re
 import sys
 import xml.etree.ElementTree as ET
@@ -102,14 +103,17 @@ def sitemap_urls(root: Path) -> set[str]:
     return urls
 
 
-def extract_internal_links(html: str) -> list[str]:
+def extract_internal_links(html: str, base_path: str) -> list[str]:
     links: list[str] = []
+    base_dir = posixpath.dirname(base_path)
     for match in re.finditer(r"""href=["']([^"']+)["']""", html, re.I):
         href = match.group(1).split("#", 1)[0].strip()
         if not href or href.startswith(("mailto:", "tel:", "javascript:")):
             continue
         local = strip_domain(href)
         if local and Path(local).suffix in CRAWLABLE_EXTENSIONS:
+            if not href.startswith("/") and not urlparse(href).netloc:
+                local = posixpath.normpath(posixpath.join(base_dir, local))
             links.append(local.replace("\\", "/"))
     return links
 
@@ -164,7 +168,7 @@ def audit(root: Path) -> tuple[list[PageAudit], dict[str, object]]:
     for page in pages:
         rel = page.relative_to(root).as_posix()
         html = read_text(page)
-        links = extract_internal_links(html)
+        links = extract_internal_links(html, rel)
         outbound[rel] = links
         for link in links:
             inbound[link] += 1
@@ -176,6 +180,7 @@ def audit(root: Path) -> tuple[list[PageAudit], dict[str, object]]:
         canonical = match_one(
             r"""<link\s+rel=["']canonical["']\s+href=["'](.*?)["']""", html
         )
+        sitemap_key = strip_domain(canonical) if canonical else rel
         h1_count = len(re.findall(r"<h1\b", html, re.I))
         jsonld_blocks, jsonld_errors = validate_jsonld(html)
         image_count = len(re.findall(r"<img\b", html, re.I))
@@ -186,6 +191,7 @@ def audit(root: Path) -> tuple[list[PageAudit], dict[str, object]]:
             "title": title,
             "description": description,
             "canonical": canonical,
+            "sitemap_key": sitemap_key,
             "h1_count": h1_count,
             "jsonld_blocks": jsonld_blocks,
             "jsonld_errors": jsonld_errors,
@@ -223,7 +229,8 @@ def audit(root: Path) -> tuple[list[PageAudit], dict[str, object]]:
             issues.append("missing_jsonld")
         if indexable and int(data["jsonld_errors"]) > 0:
             issues.append("invalid_jsonld")
-        if indexable and rel not in sitemap:
+        sitemap_key = str(data["sitemap_key"])
+        if indexable and sitemap_key not in sitemap:
             issues.append("missing_sitemap")
         if indexable and data["broken_internal_links"]:
             issues.append("broken_internal_links")
@@ -250,7 +257,7 @@ def audit(root: Path) -> tuple[list[PageAudit], dict[str, object]]:
                 internal_links=int(data["internal_links"]),
                 broken_internal_links=list(data["broken_internal_links"]),
                 inlinks=inbound[rel],
-                in_sitemap=rel in sitemap,
+                in_sitemap=sitemap_key in sitemap,
                 noindex=noindex,
                 private=private,
                 score=score,
