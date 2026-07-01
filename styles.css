@@ -1609,6 +1609,305 @@ button { font-family: inherit; cursor: pointer; border: none; }
   }
 }
 
+/* ── Warm local contractor brand refresh ─────────────────── */
+:root {
+  --red:       #c96a26;
+  --red-dark:  #a94f16;
+  --red-light: #e38a3e;
+  --red-glow:  rgba(201,106,38,0.18);
+  --red-soft:  rgba(201,106,38,0.10);
+
+  --black:  #0f211b;
+  --dark:   #123226;
+  --dark2:  #173d2f;
+  --dark3:  #eef3ed;
+  --dark4:  #d9e3dc;
+
+  --offwhite: #f7f3ea;
+  --gray1:    #1e2d26;
+  --gray2:    #4c5d55;
+  --gray3:    #6f7f77;
+  --gray4:    #cbd6cf;
+
+  --radius-sm: 7px;
+  --radius:    10px;
+  --radius-lg: 14px;
+
+  --shadow-sm:  0 2px 12px rgba(15,33,27,.10);
+  --shadow:     0 10px 28px rgba(15,33,27,.12);
+  --shadow-lg:  0 18px 50px rgba(15,33,27,.16);
+  --glow-red:   0 0 34px rgba(201,106,38,.18);
+}
+
+body {
+  background: #f7f3ea;
+  color: #18251f;
+}
+
+.nav,
+.nav.scrolled {
+  background: rgba(255, 255, 255, .96);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 1px 0 rgba(15, 33, 27, .08), 0 10px 30px rgba(15, 33, 27, .08);
+}
+.nav-logo-link,
+.nav-links a,
+.nav-phone {
+  color: #173d2f;
+}
+.nav-logo span {
+  color: #173d2f;
+}
+.nav-logo small,
+.nav-phone {
+  color: #66766e;
+}
+.nav-phone strong {
+  color: #173d2f;
+}
+.nav-links a:hover {
+  color: #c96a26;
+}
+.nav-cta,
+.btn-red,
+.btn-primary,
+.hero-card-cta .btn {
+  background: #c96a26 !important;
+  color: #ffffff !important;
+  box-shadow: 0 10px 24px rgba(201, 106, 38, .24) !important;
+}
+.nav-cta:hover,
+.btn-red:hover,
+.btn-primary:hover {
+  background: #a94f16 !important;
+  box-shadow: 0 14px 32px rgba(201, 106, 38, .32) !important;
+}
+
+.hero {
+  min-height: auto;
+  background:
+    linear-gradient(90deg, rgba(247,243,234,.98) 0%, rgba(247,243,234,.90) 48%, rgba(247,243,234,.58) 100%),
+    url("images/deck-build-metro-east-il.png") center right / cover no-repeat;
+  color: #14231d;
+  padding: calc(var(--nav-h) + 3.25rem) 0 3.5rem;
+}
+.hero-bg-gradient,
+.hero-bg-gradient-2,
+.hero-bg-grid,
+.hero-bg-line,
+.hero-bg-num {
+  display: none;
+}
+.hero-inner {
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+.hero-badge,
+.section-tag,
+.eyebrow {
+  background: #fff8ef;
+  border: 1px solid rgba(201,106,38,.24);
+  color: #a94f16;
+}
+.hero-badge-dot,
+.eyebrow::before {
+  background: #c96a26;
+  box-shadow: none;
+}
+.hero-heading {
+  color: #14231d;
+  font-size: clamp(2.35rem, 5vw, 4.15rem);
+  line-height: 1.04;
+  max-width: 760px;
+}
+.hero-heading em {
+  color: #173d2f;
+  background: none;
+  -webkit-text-fill-color: currentColor;
+}
+.hero-sub {
+  color: #43564d;
+  max-width: 680px;
+}
+.hero-proof {
+  gap: .75rem;
+}
+.hero-proof-item,
+.hero-card,
+.metric-card,
+.why-item,
+.testimonial-card,
+.service-card,
+.highlight-box,
+.money-page-card,
+.decision-card,
+.sidebar-card,
+.lead-form-card {
+  background: rgba(255,255,255,.94);
+  border: 1px solid #e4ddd0;
+  box-shadow: 0 12px 32px rgba(15,33,27,.10);
+  color: #17251f;
+}
+.hero-proof-item {
+  border-radius: 10px;
+  padding: .55rem .75rem;
+}
+.hero-proof-icon,
+.check,
+.lead-phone-icon {
+  background: #eef6ef;
+  border-color: #cdded1;
+  color: #173d2f;
+}
+.hero-proof-text strong,
+.service-checklist li,
+.hero-card-title,
+.metric-card h3,
+.why-item-text h4,
+.testimonial-card strong,
+.money-page-card strong,
+.decision-card strong {
+  color: #17251f;
+}
+.hero-proof-text span,
+.hero-card-cta p,
+.service-card p,
+.why-item-text p,
+.testimonial-card p,
+.money-page-card span,
+.decision-card p {
+  color: #53665d;
+}
+.hero-card::before,
+.lead-form-card::before,
+.service-card::before,
+.process::before,
+.testimonials::after {
+  background: linear-gradient(90deg, #173d2f, #c96a26);
+}
+.service-checklist li {
+  border-bottom-color: #e8e0d4;
+}
+
+.trust-bar {
+  background: #173d2f;
+}
+.services,
+.areas,
+.highlights-section,
+.content-section,
+.contact-page .contact-page-section {
+  background: #f7f3ea;
+}
+.services-grid,
+.testimonials-grid,
+.money-pages-grid,
+.decision-grid,
+.highlights-grid {
+  gap: 1rem;
+}
+.services .section-header h2,
+.areas .section-header h2,
+.section-header h2,
+.content-body h2,
+.content-body h3,
+.highlights-section .photo-section-header,
+.map-section-heading {
+  color: #14231d;
+}
+.services .section-header p,
+.areas .section-header p,
+.section-header p,
+.content-body p,
+.content-body ul li,
+.map-section-sub {
+  color: #52645b;
+}
+.process,
+.why,
+.testimonials,
+.money-pages,
+.decision-engine,
+.service-area-map {
+  background: #f7f3ea;
+  border-color: #e4ddd0;
+}
+.process-step h3,
+.decision-engine .section-header h2 {
+  color: #14231d;
+}
+.process-step p,
+.decision-engine .section-header p {
+  color: #52645b;
+}
+.process-num {
+  background: #173d2f;
+  box-shadow: 0 0 0 6px rgba(23,61,47,.10);
+}
+.metric-card:first-child {
+  background: #fff8ef;
+  border-color: rgba(201,106,38,.25);
+}
+.metric-big span,
+.highlight-stat,
+.money-page-links a,
+.decision-links a::after,
+.sidebar-phone a {
+  color: #c96a26;
+}
+.decision-links a {
+  color: #173d2f;
+  background: #fffdf8;
+  border-color: #e4ddd0;
+}
+.decision-links a:hover {
+  background: #fff8ef;
+  border-color: rgba(201,106,38,.35);
+}
+.btn-outline {
+  background: #ffffff;
+  color: #173d2f;
+  border-color: #d8ded9;
+  box-shadow: 0 8px 20px rgba(15,33,27,.08);
+}
+.btn-outline:hover,
+.btn-white:hover {
+  border-color: #c96a26;
+  color: #a94f16;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: #ffffff;
+  border-color: #d8ded9;
+  color: #17251f;
+}
+.form-group label {
+  color: #384941;
+}
+.form-group select option {
+  background: #ffffff;
+  color: #17251f;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #8b9891;
+}
+
+.footer {
+  background: #10241d;
+  border-top-color: rgba(255,255,255,.08);
+}
+
+@media (max-width: 900px) {
+  .hero {
+    background:
+      linear-gradient(180deg, rgba(247,243,234,.97) 0%, rgba(247,243,234,.93) 100%),
+      url("images/deck-build-metro-east-il.png") center / cover no-repeat;
+  }
+}
+
 /* === Service Area Map Section === */
 .service-area-map {
   background: var(--dark2);
@@ -1765,3 +2064,212 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .nearby-links{display:flex;flex-wrap:wrap;gap:.4rem .6rem;justify-content:center}
 .nearby-links a{display:inline-block;padding:.3rem .75rem;background:#fff;border:1px solid #ddd;border-radius:20px;color:#c8102e;font-size:.82rem;font-weight:700;text-decoration:none;transition:background .15s,border-color .15s}
 .nearby-links a:hover{background:#c8102e;color:#fff;border-color:#c8102e}
+
+/* ── Final brand refresh overrides: keep late page styles aligned ── */
+.hero.hero-with-bg {
+  background:
+    linear-gradient(90deg, rgba(247,243,234,.98) 0%, rgba(247,243,234,.94) 48%, rgba(247,243,234,.74) 100%),
+    url("/images/deck-build-metro-east-il.png") center right / cover no-repeat !important;
+}
+.hero-with-bg::before {
+  background: linear-gradient(90deg, rgba(247,243,234,.92) 0%, rgba(247,243,234,.74) 58%, rgba(247,243,234,.30) 100%);
+}
+.hero-with-bg .hero-inner {
+  position: relative;
+  z-index: 2;
+}
+.hero-with-bg .hero-heading,
+.hero-with-bg .hero-sub,
+.hero-with-bg .hero-proof-text strong,
+.hero-with-bg .hero-proof-text span {
+  text-shadow: none;
+}
+.contact-page .service-hero {
+  background: linear-gradient(180deg, #ffffff 0%, #f7f3ea 100%);
+}
+.contact-page .service-hero-grid {
+  padding-top: 1rem;
+}
+.contact-page .hero-points {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1.25rem 0 0;
+  padding: 0;
+}
+.contact-page .hero-points li {
+  list-style: none;
+  padding: .55rem .75rem;
+  border-radius: 999px;
+}
+.contact-page .service-hero-card {
+  padding: clamp(1.1rem, 3vw, 1.6rem);
+  align-self: stretch;
+}
+.contact-quote-card {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: .85rem;
+  background:
+    linear-gradient(135deg, rgba(23,61,47,.94), rgba(23,61,47,.84)),
+    url("/images/deck-build-metro-east-il.png") center / cover;
+  border-radius: 12px;
+  padding: clamp(1.35rem, 4vw, 2rem);
+  color: #ffffff;
+}
+.contact-quote-label {
+  color: #f5c28f;
+  font-size: .75rem;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.contact-quote-card h2 {
+  color: #ffffff;
+  font-size: clamp(1.65rem, 3vw, 2.2rem);
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+.contact-quote-card p {
+  color: rgba(255,255,255,.82);
+}
+.contact-quote-actions {
+  display: grid;
+  gap: .75rem;
+  margin-top: .35rem;
+}
+.contact-quote-actions .btn {
+  width: 100%;
+  justify-content: center;
+}
+.proof-page,
+.proof-hero,
+.proof-hero-city,
+.proof-section,
+.before-after-callout {
+  background: #f7f3ea;
+  color: #14231d;
+  border-color: #e4ddd0;
+}
+.proof-hero h1,
+.proof-hero p,
+.proof-section-head h2,
+.proof-two-col h2,
+.before-after-callout h2 {
+  color: #14231d;
+}
+.proof-hero p,
+.proof-card p,
+.proof-light .proof-card p,
+.proof-trust-panel p,
+.before-after-callout>div>p {
+  color: #52645b;
+}
+.proof-card,
+.proof-quote-card,
+.proof-trust-panel,
+.ba-card {
+  background: #ffffff;
+  border-color: #e4ddd0;
+  box-shadow: 0 12px 32px rgba(15,33,27,.10);
+}
+.proof-card span,
+.nearby-links a {
+  color: #c96a26;
+}
+.proof-quote-card strong,
+.proof-trust-panel h2,
+.ba-card-title {
+  color: #14231d;
+}
+.proof-list li,
+.ba-card-desc {
+  background: #fffdf8;
+  border-color: #e4ddd0;
+  color: #52645b;
+}
+.nearby-links a:hover {
+  background: #173d2f;
+  border-color: #173d2f;
+}
+
+body:has(.ld-hero),
+body:has(.pi-hero) {
+  background: #f7f3ea !important;
+  color: #14231d !important;
+}
+.ld-hero,
+.pi-hero {
+  background:
+    linear-gradient(90deg, rgba(247,243,234,.98) 0%, rgba(247,243,234,.92) 54%, rgba(247,243,234,.72) 100%),
+    url("/images/deck-build-metro-east-il.png") center right / cover no-repeat !important;
+  color: #14231d !important;
+}
+.ld-hero h1,
+.pi-hero h1 {
+  color: #14231d !important;
+}
+.ld-sub,
+.pi-sub,
+.ld-hero p,
+.pi-hero p {
+  color: #43564d !important;
+}
+.ld-eyebrow,
+.pi-eyebrow {
+  background: #fff8ef !important;
+  border-color: rgba(201,106,38,.26) !important;
+  color: #a94f16 !important;
+}
+.ld-card,
+.ld-form-card,
+.pi-card,
+.pi-form-card {
+  background: #ffffff !important;
+  border-color: #e4ddd0 !important;
+  color: #17251f !important;
+  box-shadow: 0 12px 32px rgba(15,33,27,.10) !important;
+}
+.ld-card h2,
+.ld-form-card h2,
+.pi-card h2,
+.pi-form-card h2 {
+  color: #14231d !important;
+}
+.ld-card p,
+.ld-card li,
+.ld-form-card p,
+.pi-card p,
+.pi-card li,
+.pi-form-card p {
+  color: #52645b !important;
+}
+.ld-btn-primary,
+.pi-btn-primary {
+  background: #c96a26 !important;
+  color: #ffffff !important;
+  box-shadow: 0 10px 24px rgba(201,106,38,.24) !important;
+}
+.ld-btn-secondary,
+.pi-btn-secondary {
+  background: #ffffff !important;
+  border-color: #d8ded9 !important;
+  color: #173d2f !important;
+}
+.ld-section,
+.pi-section {
+  background: #f7f3ea !important;
+  border-color: #e4ddd0 !important;
+}
+.ld-form input,
+.ld-form select,
+.ld-form textarea,
+.pi-form input,
+.pi-form select,
+.pi-form textarea {
+  background: #ffffff !important;
+  border-color: #d8ded9 !important;
+  color: #17251f !important;
+}
