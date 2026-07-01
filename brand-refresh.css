@@ -1,0 +1,491 @@
+/* All-Pro final brand pass: loaded last so older inline templates inherit the premium system. */
+:root {
+  --ap-charcoal: #1F2933;
+  --ap-cream: #F7F3EA;
+  --ap-green: #2F5D50;
+  --ap-copper: #C96A26;
+  --ap-copper-dark: #A94F16;
+  --ap-ink: #14231d;
+  --ap-muted: #52645b;
+  --ap-line: #e4ddd0;
+  --ap-card: #ffffff;
+  --fb-green: #2F5D50;
+  --fb-green-dark: #24493f;
+  --fb-green-light: #F7F3EA;
+  --fb-bg: #F7F3EA;
+  --fb-border: #e4ddd0;
+  --fb-text: #1F2933;
+  --fb-text-mid: #52645b;
+  --fb-text-light: #607267;
+  --li-green: #2F5D50;
+  --li-green-dark: #24493f;
+  --li-green-light: #F7F3EA;
+  --li-bg: #F7F3EA;
+  --li-border: #e4ddd0;
+  --li-text: #1F2933;
+  --li-text-mid: #52645b;
+  --li-text-light: #607267;
+}
+
+html {
+  background: var(--ap-cream);
+}
+
+body:not(.home-page) {
+  background: var(--ap-cream) !important;
+  color: var(--ap-charcoal) !important;
+}
+
+body:not(.home-page) a {
+  color: var(--ap-green);
+}
+
+.nav,
+.qnav,
+.mini-nav,
+.nd-nav,
+.fb-nav,
+.li-nav,
+.hub-nav,
+header:not(.nav) {
+  background: rgba(255, 255, 255, .96) !important;
+  border-bottom: 1px solid var(--ap-line) !important;
+  box-shadow: 0 6px 22px rgba(31, 41, 51, .06) !important;
+  color: var(--ap-green) !important;
+}
+
+.nav a,
+.qnav a,
+.mini-nav a,
+.nd-nav a,
+.fb-nav a,
+.li-nav a,
+.hub-nav a,
+.qnav-logo,
+.qnav-logo-text strong,
+.qnav-logo-text small,
+.mini-brand,
+.nd-nav-logo,
+.nd-nav-logo-text strong,
+.nd-nav-logo-text small,
+.fb-nav-logo,
+.fb-nav-logo-text strong,
+.fb-nav-logo-text small,
+.li-nav-logo,
+.li-nav-logo-text strong,
+.li-nav-logo-text small,
+.hub-brand,
+.hub-brand strong,
+.hub-brand small {
+  color: var(--ap-green) !important;
+}
+
+.home-page .nav-cta,
+.nav-cta,
+.qnav-phone,
+.qcta-call,
+.qsubmit,
+.mini-home-btn,
+.submit-btn,
+.ld-btn-primary,
+.ld-submit,
+.nd-nav-cta,
+.nd-btn-primary,
+.nd-btn-green,
+.nd-btn-submit,
+.fb-nav-cta,
+.fb-btn-submit,
+.li-nav-cta,
+.li-btn-submit,
+.hub-call,
+.hub-cta-primary,
+.hub-submit,
+button[type="submit"],
+input[type="submit"],
+.btn-primary,
+.btn-red {
+  background: var(--ap-copper) !important;
+  border-color: var(--ap-copper) !important;
+  color: #ffffff !important;
+  box-shadow: 0 12px 26px rgba(201, 106, 38, .18) !important;
+}
+
+.qcta-text,
+.ld-btn-secondary,
+.nd-btn-outline-white,
+.fb-btn-outline-white,
+.li-btn-outline-white,
+.hub-cta-secondary,
+.btn-secondary,
+.btn-outline {
+  background: #ffffff !important;
+  border-color: #cfd8d2 !important;
+  color: var(--ap-green) !important;
+}
+
+.qhero,
+.ld-hero,
+.nd-hero,
+.fb-hero,
+.li-hero,
+.hub-hero,
+body:not(.home-page) .hero {
+  background:
+    linear-gradient(90deg, rgba(247, 243, 234, .99), rgba(247, 243, 234, .9)),
+    url("/images/deck-build-metro-east-il.png") center right / cover no-repeat !important;
+  border-bottom: 1px solid var(--ap-line) !important;
+  color: var(--ap-ink) !important;
+}
+
+.qhero h1,
+.ld-hero h1,
+.nd-hero h1,
+.fb-hero h1,
+.li-hero h1,
+.hub-hero h1,
+body:not(.home-page) .hero h1,
+.hero-card h1,
+.page-hero h1,
+.service-hero h1 {
+  color: var(--ap-charcoal) !important;
+  letter-spacing: 0 !important;
+}
+
+.qhero h1 span,
+.ld-hero h1 span,
+.nd-hero h1 span,
+.fb-hero h1 span,
+.li-hero h1 span,
+.hub-hero h1 span,
+.page-hero h1 span,
+.service-hero h1 span {
+  color: var(--ap-copper-dark) !important;
+}
+
+.qhero-sub,
+.qcta-sub,
+.qdivider,
+.ld-sub,
+.ld-card p,
+.ld-card li,
+.ld-note,
+.nd-hero-sub,
+.nd-section-sub,
+.fb-hero-sub,
+.fb-section-sub,
+.li-hero-sub,
+.li-section-sub,
+.hub-sub,
+.hub-lead,
+.hero-card p,
+.subtext,
+.small,
+.helper {
+  color: var(--ap-muted) !important;
+}
+
+.qhero-badge,
+.ld-eyebrow,
+.nd-hero-badge,
+.nd-section-label,
+.fb-hero-badge,
+.fb-section-label,
+.li-hero-badge,
+.li-section-label,
+.eyebrow,
+.hub-badge {
+  background: #fff8ef !important;
+  border: 1px solid rgba(201, 106, 38, .28) !important;
+  color: var(--ap-copper-dark) !important;
+}
+
+.qsection,
+.qproof,
+.qlocal,
+.ld-main,
+.nd-section,
+.nd-section-white,
+.nd-section-gray,
+.fb-section,
+.fb-section-white,
+.fb-section-gray,
+.fb-section-green,
+.li-section,
+.li-section-white,
+.li-section-gray,
+.li-section-green,
+.content-section,
+.proof-section,
+.highlights-section,
+.page-hero,
+.service-hero,
+.cta {
+  background: var(--ap-cream) !important;
+  color: var(--ap-charcoal) !important;
+  border-color: var(--ap-line) !important;
+}
+
+.qform-card,
+.qrev,
+.qtrust-pill,
+.qcity,
+.ld-card,
+.ld-form-card,
+.ld-proof-box,
+.nd-service-card,
+.nd-form-card,
+.nd-worker-card,
+.fb-service-card,
+.fb-form-card,
+.fb-worker-card,
+.fb-review-card,
+.fb-area-tag,
+.li-service-card,
+.li-form-card,
+.li-worker-card,
+.li-review-card,
+.li-area-tag,
+.hero-card,
+.card,
+.estimate-box,
+.content-block,
+.sidebar-card,
+.service-card,
+.proof-card,
+.highlight-box,
+.metric-card,
+.testimonial-card,
+.hub-card,
+.hub-sidecard,
+.hub-mini,
+.hub-point {
+  background: var(--ap-card) !important;
+  border: 1px solid var(--ap-line) !important;
+  color: var(--ap-charcoal) !important;
+  box-shadow: 0 12px 30px rgba(31, 41, 51, .08) !important;
+}
+
+.qform-card h2,
+.qproof h3,
+.qlocal h3,
+.ld-card h2,
+.ld-card h3,
+.nd-section-title,
+.nd-service-name,
+.nd-worker-card h3,
+.fb-section-title,
+.fb-service-name,
+.fb-worker-card h3,
+.li-section-title,
+.li-service-name,
+.li-worker-card h3,
+.section-title,
+.card h2,
+.card h3,
+.content-block h2,
+.content-block h3,
+.sidebar-card h3,
+.hub-card h2,
+.hub-sidecard h2,
+.hub-mini strong {
+  color: var(--ap-charcoal) !important;
+}
+
+.qg label,
+.ld-field label,
+.field label,
+.nd-form label,
+.fb-form label,
+.li-form label,
+.hub-field label {
+  color: #384941 !important;
+}
+
+.qg input,
+.qg select,
+.qg textarea,
+.ld-field input,
+.ld-field select,
+.ld-field textarea,
+.field input,
+.field select,
+.field textarea,
+.nd-form input,
+.nd-form select,
+.nd-form textarea,
+.fb-form input,
+.fb-form select,
+.fb-form textarea,
+.li-form input,
+.li-form select,
+.li-form textarea,
+.hub-field input,
+.hub-field select,
+.hub-field textarea {
+  background: #ffffff !important;
+  border-color: #cfd8d2 !important;
+  color: var(--ap-ink) !important;
+}
+
+.project-btn.active {
+  background: var(--ap-green) !important;
+  border-color: var(--ap-green) !important;
+  color: #ffffff !important;
+}
+
+.project-btn,
+.check-item,
+.range-list li,
+.ld-bullets li,
+.nd-trust,
+.nd-trust-inner,
+.fb-trust,
+.fb-trust-inner,
+.li-trust,
+.li-trust-inner,
+.fb-why-grid li,
+.li-why-grid li {
+  background: #ffffff !important;
+  border-color: var(--ap-line) !important;
+  color: var(--ap-charcoal) !important;
+}
+
+.nd-final-cta,
+.fb-final,
+.li-final,
+.nd-footer,
+.nd-sticky,
+.fb-footer,
+.fb-sticky,
+.li-footer,
+.li-sticky,
+.qfooter,
+.ld-footer,
+footer,
+.footer {
+  background: var(--ap-charcoal) !important;
+  color: rgba(255, 255, 255, .78) !important;
+}
+
+.nd-final-cta h2,
+.nd-final-cta p,
+.fb-final h2,
+.fb-final p,
+.li-final h2,
+.li-final p,
+.nd-footer,
+.nd-footer p,
+.nd-footer strong,
+.fb-footer,
+.fb-footer p,
+.fb-footer strong,
+.li-footer,
+.li-footer p,
+.li-footer strong,
+.qfooter,
+.qfooter p,
+.ld-footer,
+.ld-footer p,
+footer,
+footer p,
+footer strong,
+.footer,
+.footer p,
+.footer li {
+  color: rgba(255, 255, 255, .78) !important;
+}
+
+.nd-footer a,
+.fb-footer a,
+.li-footer a,
+.qfooter a,
+.ld-footer a,
+footer a,
+.footer a {
+  color: #f7c08b !important;
+}
+
+.fb-btn-primary,
+.fb-btn-green,
+.li-btn-primary,
+.li-btn-green,
+.nd-sticky-call,
+.fb-sticky-call,
+.li-sticky-call,
+#ap-float .ap-call {
+  background: var(--ap-green) !important;
+  border-color: var(--ap-green) !important;
+  color: #ffffff !important;
+}
+
+.nd-sticky-form,
+.fb-sticky-form,
+.li-sticky-form,
+#ap-float .ap-quote {
+  background: var(--ap-copper) !important;
+  border-color: var(--ap-copper) !important;
+  color: #ffffff !important;
+}
+
+.nd-sticky,
+.fb-sticky,
+.li-sticky {
+  box-shadow: 0 -10px 26px rgba(31, 41, 51, .18) !important;
+}
+
+#ap-float {
+  gap: 10px !important;
+}
+
+#ap-float a {
+  box-shadow: 0 12px 26px rgba(31, 41, 51, .22) !important;
+}
+
+#ap-float-dismiss {
+  background: rgba(31, 41, 51, .78) !important;
+  color: rgba(255, 255, 255, .78) !important;
+}
+
+@media (max-width: 760px) {
+  .guide-body,
+  .content-main,
+  .content-block {
+    max-width: 100% !important;
+    overflow-wrap: anywhere;
+  }
+
+  .cost-table {
+    display: block !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .cost-table th,
+  .cost-table td {
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 700px) {
+  .qnav,
+  .mini-nav,
+  .nd-nav,
+  .fb-nav,
+  .li-nav {
+    position: sticky !important;
+  }
+
+  .qnav-phone,
+  .mini-home-btn,
+  .nd-nav-cta,
+  .nd-nav-phone,
+  .fb-nav-cta,
+  .fb-nav-phone,
+  .li-nav-cta,
+  .li-nav-phone {
+    min-height: 42px;
+    white-space: nowrap;
+  }
+}
