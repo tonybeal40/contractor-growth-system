@@ -13,9 +13,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="canonical" href="https://allprometroeastconstruction.com/metro-east-pro-network.html">
   <title>Metro East Pro Network | Belleville &amp; O'Fallon Contractor Directory</title>
-  <meta name="description" content="Find and request local Metro East contractors by city and project type. Start with All-Pro for Belleville, O'Fallon, Edwardsville, decks, remodeling, landscaping, fencing, concrete, and small jobs.">
+  <meta name="description" content="Metro East Pro Network is a local contractor directory and project-match desk for Belleville, O&#39;Fallon, Edwardsville, Collinsville, decks, remodeling, landscaping, fencing, concrete, patios, and small jobs.">
   <meta property="og:title" content="Metro East Pro Network">
-  <meta property="og:description" content="A local contractor directory and project-match desk for Metro East homeowners.">
+  <meta property="og:description" content="A local contractor directory and project-match desk for Metro East homeowners comparing decks, remodeling, landscaping, concrete, fencing, patios, and small jobs.">
   <meta property="og:url" content="https://allprometroeastconstruction.com/metro-east-pro-network.html">
   <meta property="og:type" content="website">
   <link rel="icon" type="image/png" href="/images/branding/logo-square.png">
@@ -82,12 +82,26 @@
     .net-lane{background:rgba(255,255,255,.035);border:1px dashed rgba(255,255,255,.18);border-radius:16px;padding:16px}
     .net-lane strong{display:block;color:#fff;margin-bottom:.35rem}
     .net-lane span{display:block;color:var(--net-muted);font-size:.88rem;line-height:1.55}
+    .net-engine-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+    .net-engine-card{background:linear-gradient(180deg,var(--net-panel),var(--net-panel-2));border:1px solid var(--net-border);border-radius:18px;padding:18px}
+    .net-engine-card b{display:grid;place-items:center;width:30px;height:30px;border-radius:999px;background:var(--net-accent);color:#fff;margin-bottom:.75rem}
+    .net-engine-card strong{display:block;color:#fff;margin-bottom:.35rem}
+    .net-engine-card span{display:block;color:var(--net-muted);font-size:.88rem;line-height:1.55}
+    .net-link-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .net-link-card{background:rgba(255,255,255,.035);border:1px solid var(--net-border);border-radius:16px;padding:16px}
+    .net-link-card h3{font-size:1rem;font-weight:900;margin-bottom:.45rem;color:#fff}
+    .net-link-card p{color:var(--net-muted);font-size:.88rem;line-height:1.55;margin-bottom:.7rem}
+    .net-link-card a{font-weight:900;color:#ff9dad}
+    .net-proof-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+    .net-proof{background:#0d1420;border:1px solid var(--net-border);border-radius:16px;padding:16px}
+    .net-proof strong{display:block;color:#fff;margin-bottom:.35rem}
+    .net-proof span{display:block;color:var(--net-muted);font-size:.88rem;line-height:1.55}
     .net-form-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.8fr);gap:18px}
     .net-form{display:grid;gap:12px}
     .net-disclosure{background:rgba(245,184,75,.08);border:1px solid rgba(245,184,75,.25);border-radius:16px;padding:16px;color:#ffe5aa;font-size:.9rem;line-height:1.65}
     .net-footer{border-top:1px solid var(--net-border);padding:24px 0 42px;color:#7e90aa;font-size:.84rem}
     .net-footer a{color:#abc8ff}
-    @media (max-width:960px){.net-hero-grid,.net-form-grid{grid-template-columns:1fr}.net-grid,.net-lanes{grid-template-columns:1fr 1fr}}
+    @media (max-width:960px){.net-hero-grid,.net-form-grid{grid-template-columns:1fr}.net-grid,.net-lanes,.net-engine-grid,.net-link-grid,.net-proof-row{grid-template-columns:1fr 1fr}}
     @media (max-width:640px){
       .net-shell{padding:0 20px}
       .net-nav-inner,.net-section-head{align-items:start;flex-direction:column}
@@ -97,7 +111,7 @@
       .net-hero{padding:48px 0 28px}
       .net-hero h1{max-width:320px;font-size:1.62rem;line-height:1.13;overflow-wrap:normal}
       .net-hero p{max-width:320px;font-size:.94rem}
-      .net-field-grid,.net-grid,.net-lanes{grid-template-columns:1fr}
+      .net-field-grid,.net-grid,.net-lanes,.net-engine-grid,.net-link-grid,.net-proof-row{grid-template-columns:1fr}
       .net-card-actions a,.net-btn{width:100%}
     }
     :root{--net-bg:#f7f3ea;--net-panel:#ffffff;--net-panel-2:#fffdf8;--net-text:#14231d;--net-muted:#52645b;--net-border:#e4ddd0;--net-accent:#c96a26;--net-green:#173d2f;--net-gold:#c96a26}
@@ -111,6 +125,10 @@
     .net-hero h1,.net-search h2,.net-section h2,.net-card h3,.net-card h2,.net-lane strong{color:#14231d}
     .net-hero h1 span{color:#a94f16}
     .net-search,.net-card,.net-lane,.net-stat{background:#ffffff;border-color:#e4ddd0;box-shadow:0 12px 30px rgba(15,33,27,.07)}
+    .net-engine-card,.net-link-card,.net-proof{background:#ffffff;border-color:#e4ddd0;box-shadow:0 12px 30px rgba(15,33,27,.07)}
+    .net-engine-card strong,.net-link-card h3,.net-proof strong{color:#14231d}
+    .net-engine-card span,.net-link-card p,.net-proof span{color:#52645b}
+    .net-link-card a{color:#a94f16}
     .net-field label{color:#384941}
     .net-field select,.net-field input,.net-field textarea{background:#ffffff;border-color:#cfd8d2;color:#17251f}
     .net-btn-primary,.net-red{background:#c96a26;color:#fff}
@@ -146,6 +164,29 @@
     }
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"Is Metro East Pro Network the same as Angi, Thumbtack, or Nextdoor?",
+        "acceptedAnswer":{"@type":"Answer","text":"No. It is an owned local contractor directory and project-match desk built for Metro East homeowners. It starts with All-Pro as the verified contractor lane and may add real partner contractors over time."}
+      },
+      {
+        "@type":"Question",
+        "name":"Who receives a homeowner request today?",
+        "acceptedAnswer":{"@type":"Answer","text":"All-Pro is currently the primary verified contractor lane. Future partner routing should be clearly disclosed and based on the homeowner request, service area, and project fit."}
+      },
+      {
+        "@type":"Question",
+        "name":"What projects can homeowners request?",
+        "acceptedAnswer":{"@type":"Answer","text":"Homeowners can request help for decks, patios, remodeling, landscaping, fencing, concrete, pressure washing, handyman work, yard cleanup, and other home service projects across Metro East Illinois."}
+      }
+    ]
+  }
+  </script>
 <link rel="stylesheet" href="/brand-refresh.css?v=20260701a">
 </head>
 <body>
@@ -173,7 +214,7 @@
         <div>
           <div class="net-badge">Angi-style local engine v1</div>
           <h1>Find Metro East pros without handing your project to a black box.</h1>
-          <p>This is the marketplace layer: searchable services, city filters, verified proof, quote capture, and a clean path for partner contractors. All-Pro is the first verified pro while the network grows.</p>
+          <p>This is the marketplace layer: searchable services, city filters, verified proof, quote capture, and a clean path for future partner contractors. All-Pro is the first verified pro while the network grows into a local lead engine for Belleville, O'Fallon, Edwardsville, Collinsville, Swansea, and nearby towns.</p>
           <div class="net-actions">
             <a class="net-btn net-btn-primary" href="#request">Request matched help</a>
             <a class="net-btn net-btn-secondary" href="#pros">Browse current pros</a>
@@ -200,6 +241,21 @@
       </div>
     </section>
 
+    <section class="net-shell net-section">
+      <div class="net-section-head">
+        <div>
+          <h2>What Homeowners Can Do Here</h2>
+          <p>This is the owned version of the local contractor marketplace idea: helpful search, honest routing, real proof, and first-party lead capture instead of sending every visitor into another platform.</p>
+        </div>
+      </div>
+      <div class="net-engine-grid">
+        <div class="net-engine-card"><b>1</b><strong>Search by city and project</strong><span>Start with decks, patios, remodeling, landscaping, fencing, concrete, handyman, pressure washing, and small jobs.</span></div>
+        <div class="net-engine-card"><b>2</b><strong>See the verified lane</strong><span>All-Pro is the current proof-backed contractor lane with reviews, completed work, and direct quote pages.</span></div>
+        <div class="net-engine-card"><b>3</b><strong>Request matched help</strong><span>Use the form when the project needs sorting by urgency, budget, city, or service fit.</span></div>
+        <div class="net-engine-card"><b>4</b><strong>Open future partner lanes</strong><span>Repeated requests reveal where roofing, HVAC, plumbing, electrical, and other verified partners may belong later.</span></div>
+      </div>
+    </section>
+
     <section class="net-shell net-section" id="pros">
       <div class="net-section-head">
         <div>
@@ -209,6 +265,37 @@
         <a class="net-btn net-btn-secondary" href="reviews.html">See All-Pro reviews</a>
       </div>
       <div class="net-grid" id="providerGrid"></div>
+    </section>
+
+    <section class="net-shell net-section">
+      <div class="net-section-head">
+        <div>
+          <h2>High-Intent Service Lanes</h2>
+          <p>These are the pages we want homeowners and answer engines to connect with the network. They are useful service routes first, SEO assets second.</p>
+        </div>
+      </div>
+      <div class="net-link-grid">
+        <article class="net-link-card"><h3>Decks and repairs</h3><p>Repair, rebuild, railing, stairs, soft boards, and outdoor living upgrades.</p><a href="deck-repair-ofallon-il.html">Deck repair in O'Fallon</a></article>
+        <article class="net-link-card"><h3>Bathroom remodels</h3><p>Showers, flooring, fixtures, layout help, water damage, and written remodel estimates.</p><a href="bathroom-remodel-belleville-il.html">Bathroom remodel in Belleville</a></article>
+        <article class="net-link-card"><h3>Kitchen remodels</h3><p>Cabinet repair, flooring, finishes, functional upgrades, and project planning.</p><a href="kitchen-remodel-belleville-il.html">Kitchen remodel in Belleville</a></article>
+        <article class="net-link-card"><h3>Landscaping and cleanup</h3><p>Mulch, rock, curb appeal, overgrown beds, yard cleanup, and exterior refreshes.</p><a href="landscape-cleanup-ofallon-il.html">Landscape cleanup in O'Fallon</a></article>
+        <article class="net-link-card"><h3>Fencing</h3><p>Fence repair, leaning posts, privacy fencing, storm damage, and gates.</p><a href="fence-contractor-ofallon-il.html">Fence contractor in O'Fallon</a></article>
+        <article class="net-link-card"><h3>Concrete and patios</h3><p>Patio planning, drainage problems, small concrete work, and outdoor project coordination.</p><a href="concrete-patio-drainage-problem-belleville-il.html">Concrete patio drainage help</a></article>
+      </div>
+    </section>
+
+    <section class="net-shell net-section">
+      <div class="net-section-head">
+        <div>
+          <h2>Proof Signals This Network Should Show</h2>
+          <p>The difference between a trustworthy local network and a thin directory is proof. These are the signals each listing or lane needs before it earns visibility.</p>
+        </div>
+      </div>
+      <div class="net-proof-row">
+        <div class="net-proof"><strong>Completed local work</strong><span>Photos, city, service, short job summary, and a clear route to the estimate form.</span></div>
+        <div class="net-proof"><strong>Review consistency</strong><span>Google, Angi, Nextdoor, HomeAdvisor, and first-party review pages should match the same business identity.</span></div>
+        <div class="net-proof"><strong>Service-area clarity</strong><span>Every pro or partner lane should show what cities they actually serve and what jobs they want.</span></div>
+      </div>
     </section>
 
     <section class="net-shell net-section">
@@ -306,7 +393,7 @@
   <script>
     const network = {
       markets: ["Belleville","O'Fallon","Edwardsville","Collinsville","Swansea","Fairview Heights","Shiloh","Glen Carbon","Maryville","Troy"],
-      categories: ["Decks","Fencing","Landscaping","Pressure Washing","Handyman","Concrete","Patios","Bathroom Remodeling","Kitchen Remodeling","Outdoor Living"],
+      categories: ["Decks","Fencing","Landscaping","Pressure Washing","Handyman","Concrete","Patios","Bathroom Remodeling","Kitchen Remodeling","Outdoor Living","Yard Cleanup","Mulch & Rock"],
       providers: [{
         name: "All-Pro Construction & Landscape",
         status: "Verified local pro",
@@ -320,8 +407,8 @@
         rating: "4.7",
         reviewCount: "40+",
         badges: ["Owner on every job","Written estimates","Small jobs welcome"],
-        cities: ["Belleville","O'Fallon","Edwardsville","Collinsville","Swansea","Fairview Heights","Shiloh"],
-        categories: ["Decks","Fencing","Landscaping","Pressure Washing","Handyman","Concrete","Patios","Bathroom Remodeling","Kitchen Remodeling","Outdoor Living"],
+        cities: ["Belleville","O'Fallon","Edwardsville","Collinsville","Swansea","Fairview Heights","Shiloh","Glen Carbon","Maryville","Troy"],
+        categories: ["Decks","Fencing","Landscaping","Pressure Washing","Handyman","Concrete","Patios","Bathroom Remodeling","Kitchen Remodeling","Outdoor Living","Yard Cleanup","Mulch & Rock"],
         summary: "Local construction and landscape company serving Metro East homeowners with decks, fencing, landscaping, patios, concrete, remodeling, pressure washing, handyman work, and outdoor projects.",
         bestFor: "Homeowners who want a direct local contractor path with owner-led estimates and proof-backed service pages."
       }],
@@ -353,7 +440,7 @@
           <div class="net-stat"><strong>${provider.reviewCount}</strong><span>reviews</span></div>
           <div class="net-stat"><strong>${provider.yearsInBusiness}</strong><span>years</span></div>
         </div>
-        <p><strong style="color:#fff">Best for:</strong> ${provider.bestFor}</p>
+        <p><strong style="color:var(--net-green)">Best for:</strong> ${provider.bestFor}</p>
         <div class="net-tags">${provider.badges.map((badge) => `<span class="net-tag">${badge}</span>`).join("")}</div>
         <div class="net-card-actions">
           <a class="net-red" href="${provider.quoteUrl}">Request Quote</a>

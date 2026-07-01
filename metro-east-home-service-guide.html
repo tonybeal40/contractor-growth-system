@@ -12,10 +12,10 @@
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="canonical" href="https://allprometroeastconstruction.com/metro-east-home-service-guide.html">
-  <title>Metro East Home Service Guide | Start Here</title>
-  <meta name="description" content="Metro East Home Service Guide for Belleville, O&#39;Fallon, Edwardsville, and nearby homeowners comparing decks, remodels, fencing, concrete, landscaping, and small repairs.">
-  <meta property="og:title" content="Metro East Home Service Guide | Start Here">
-  <meta property="og:description" content="Metro East Home Service Guide for Belleville, O&#39;Fallon, Edwardsville, and nearby homeowners comparing decks, remodels, fencing, concrete, landscaping, and small repairs.">
+  <title>Metro East Home Service Guide | Compare Contractors Before You Hire</title>
+  <meta name="description" content="Metro East Home Service Guide helps Belleville, O&#39;Fallon, Edwardsville, Collinsville, and nearby homeowners compare decks, remodels, fencing, concrete, landscaping, patios, and small repairs before hiring.">
+  <meta property="og:title" content="Metro East Home Service Guide | Compare Contractors Before You Hire">
+  <meta property="og:description" content="Compare Metro East decks, remodels, fencing, concrete, landscaping, patios, and small repairs before you hire or request a project match.">
   <meta property="og:url" content="https://allprometroeastconstruction.com/metro-east-home-service-guide.html">
   <meta property="og:type" content="website">
   <link rel="icon" type="image/png" href="/images/branding/logo-square.png">
@@ -26,6 +26,15 @@
     :root{--guide-bg:#0b1118;--guide-card:#141c27;--guide-card-2:#1a2432;--guide-text:#eef4ff;--guide-muted:#a5b6ce;--guide-border:rgba(255,255,255,.08);--guide-accent:#c8102e}
     body{background:var(--guide-bg);color:var(--guide-text)}
     .guide-shell{max-width:1160px;margin:0 auto;padding:0 24px}
+    .guide-nav{position:sticky;top:0;z-index:50;background:rgba(11,17,24,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--guide-border)}
+    .guide-nav-inner{max-width:1160px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .guide-brand{display:flex;align-items:center;gap:12px;color:#fff}
+    .guide-brand img{width:46px;height:46px;object-fit:contain}
+    .guide-brand strong{display:block;font-weight:900}
+    .guide-brand small{display:block;color:var(--guide-muted);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+    .guide-nav-links{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+    .guide-nav-links a{color:var(--guide-muted);font-size:.88rem;font-weight:900}
+    .guide-nav-call{background:#16a34a;color:#fff!important;padding:.68rem .95rem;border-radius:999px}
     .guide-top{padding:72px 0 32px;background:radial-gradient(circle at top right, rgba(200,16,46,.16), transparent 35%)}
     .guide-badge{display:inline-block;background:rgba(200,16,46,.12);border:1px solid rgba(200,16,46,.35);color:#ff98a8;padding:.35rem .85rem;border-radius:999px;font-size:.74rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
     .guide-top h1{font-size:clamp(2.2rem,4vw,3.5rem);line-height:1.04;font-weight:900;max-width:900px;margin-bottom:1rem}
@@ -47,9 +56,40 @@
     .guide-list-item{background:rgba(255,255,255,.03);border:1px solid var(--guide-border);border-radius:18px;padding:18px}
     .guide-list-item strong{display:block;margin-bottom:.4rem}
     .guide-list-item span{color:var(--guide-muted);line-height:1.65;font-size:.92rem}
+    .guide-answer-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:1.4rem}
+    .guide-answer{background:linear-gradient(180deg,var(--guide-card) 0%,var(--guide-card-2) 100%);border:1px solid var(--guide-border);border-radius:18px;padding:20px}
+    .guide-answer small{display:inline-flex;background:rgba(255,255,255,.05);border:1px solid var(--guide-border);border-radius:999px;padding:.26rem .62rem;color:#ff98a8;font-size:.68rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.7rem}
+    .guide-answer h3{font-size:1.05rem;font-weight:900;margin-bottom:.45rem}
+    .guide-answer p{font-size:.92rem;line-height:1.65;margin-bottom:.8rem}
+    .guide-answer a{font-weight:900;color:#ff92a2}
+    .guide-city-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:1rem}
+    .guide-city-grid a{display:flex;justify-content:center;text-align:center;background:rgba(255,255,255,.035);border:1px solid var(--guide-border);border-radius:999px;padding:.64rem .75rem;color:#dbe7fb;font-weight:900;font-size:.84rem}
+    .guide-callout{margin-top:1.4rem;background:linear-gradient(135deg,rgba(200,16,46,.16),rgba(255,255,255,.03));border:1px solid rgba(200,16,46,.28);border-radius:20px;padding:22px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .guide-callout strong{display:block;font-size:1.25rem;margin-bottom:.3rem}
+    .guide-callout span{display:block;color:var(--guide-muted);line-height:1.6}
     .guide-footer{border-top:1px solid var(--guide-border);padding:22px 0 40px;color:#8092ad;font-size:.84rem}
     .guide-footer a{color:#a4c0ff}
-    @media (max-width:920px){.guide-grid,.guide-list{grid-template-columns:1fr}}
+    @media (max-width:920px){.guide-grid,.guide-list,.guide-answer-grid{grid-template-columns:1fr}.guide-city-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.guide-nav-inner{align-items:start;flex-direction:column}}
+    :root{--guide-bg:#f7f3ea;--guide-card:#ffffff;--guide-card-2:#fffdf8;--guide-text:#14231d;--guide-muted:#52645b;--guide-border:#e4ddd0;--guide-accent:#c96a26}
+    body{background:#f7f3ea;color:#14231d}
+    .guide-nav{background:rgba(255,255,255,.96);border-bottom:1px solid #e4ddd0;box-shadow:0 6px 22px rgba(15,33,27,.06)}
+    .guide-brand,.guide-brand strong,.guide-nav-links a{color:#173d2f}
+    .guide-brand small{color:#607267}
+    .guide-nav-call{background:#c96a26;color:#fff!important}
+    .guide-top{background:linear-gradient(90deg,rgba(247,243,234,.99),rgba(247,243,234,.9)),url("/images/deck-build-metro-east-il.png") center right/cover no-repeat}
+    .guide-badge,.guide-answer small{background:#fff8ef;border-color:rgba(201,106,38,.28);color:#a94f16}
+    .guide-primary{background:#c96a26;color:#fff}
+    .guide-secondary{background:#fff;border-color:#d8ded9;color:#173d2f}
+    .guide-card,.guide-list-item,.guide-answer,.guide-city-grid a{background:#ffffff;border-color:#e4ddd0;box-shadow:0 12px 30px rgba(15,33,27,.07)}
+    .guide-top h1,.guide-card h2,.guide-section h2,.guide-list-item strong,.guide-answer h3,.guide-callout strong{color:#14231d}
+    .guide-top p,.guide-card p,.guide-section p,.guide-list-item span,.guide-answer p,.guide-callout span{color:#52645b}
+    .guide-card ul{color:#1f2933}
+    .guide-card a,.guide-answer a,.guide-footer a{color:#a94f16}
+    .guide-city-grid a{color:#173d2f}
+    .guide-callout{background:#10241d;border-color:#10241d;color:#fff}
+    .guide-callout strong{color:#fff}
+    .guide-callout span{color:rgba(255,255,255,.74)}
+    .guide-footer{border-top:1px solid #e4ddd0;color:#52645b}
   </style>
   <script type="application/ld+json">
   {
@@ -60,18 +100,103 @@
     "description":"Homeowner planning, comparison, and project-match guide for Metro East Illinois home services."
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"Where should a Metro East homeowner start before hiring a contractor?",
+        "acceptedAnswer":{"@type":"Answer","text":"Start with the service and city that match the project, then compare scope, timeline, proof, reviews, and whether the contractor gives a written estimate."}
+      },
+      {
+        "@type":"Question",
+        "name":"What projects does the guide cover?",
+        "acceptedAnswer":{"@type":"Answer","text":"The guide covers decks, bathrooms, kitchens, patios, fencing, concrete, landscaping, pressure washing, yard cleanup, handyman work, and outdoor living projects across Metro East Illinois."}
+      },
+      {
+        "@type":"Question",
+        "name":"How does this connect to the Contractor Match desk?",
+        "acceptedAnswer":{"@type":"Answer","text":"If a homeowner is not sure which page or service fits, the Contractor Match desk collects city, project type, budget, urgency, and quote intent so the request can be routed to the best next step."}
+      }
+    ]
+  }
+  </script>
 <link rel="stylesheet" href="/brand-refresh.css?v=20260701a">
 </head>
 <body>
+  <nav class="guide-nav">
+    <div class="guide-nav-inner">
+      <a href="index.html" class="guide-brand">
+        <img src="/images/branding/logo-web-sm.png" alt="All-Pro Construction logo">
+        <div>
+          <strong>Metro East Home Service Guide</strong>
+          <small>Compare before you hire</small>
+        </div>
+      </a>
+      <div class="guide-nav-links">
+        <a href="metro-east-contractor-match.html">Project Match</a>
+        <a href="metro-east-pro-network.html">Pro Network</a>
+        <a href="jobs-completed-metro-east.html">Completed Jobs</a>
+        <a href="get-quote.html">Free Estimate</a>
+        <a href="tel:6185810676" class="guide-nav-call">Call Bill</a>
+      </div>
+    </div>
+  </nav>
+
   <main class="guide-shell">
     <section class="guide-top">
       <div class="guide-badge">Homeowner planning layer</div>
       <h1>Metro East Home Service Guide</h1>
-      <p>This is the public guide layer behind the contractor network move. It helps homeowners understand the job, compare next steps, and start in the right place before they talk to a contractor, request quotes, or get routed into the project match desk.</p>
+      <p>Compare the project, city, cost drivers, proof signals, and next steps before you hire. This is the research layer behind the Contractor Match desk and Pro Network for Belleville, O'Fallon, Edwardsville, Collinsville, Swansea, Glen Carbon, Maryville, Shiloh, and the Metro East.</p>
       <div class="guide-actions">
         <a href="metro-east-contractor-match.html" class="guide-primary">Start a Project Match</a>
         <a href="metro-east-pro-network.html" class="guide-secondary">Browse the Pro Network</a>
         <a href="how-metro-east-project-match-works.html" class="guide-secondary">How the system works</a>
+      </div>
+    </section>
+
+    <section class="guide-section">
+      <h2>Start With the Question Homeowners Actually Ask</h2>
+      <p>Google, Bing, and AI answer engines respond better when a page answers the homeowner's real problem instead of repeating keywords. These routes connect the guide, service pages, city pages, and match desk.</p>
+      <div class="guide-answer-grid">
+        <article class="guide-answer">
+          <small>Unsafe deck</small>
+          <h3>Should I repair or replace my deck?</h3>
+          <p>Use this when boards are soft, stairs feel loose, rails move, or the deck is aging out.</p>
+          <a href="deck-repair-vs-replace-guide.html">Read the deck guide</a>
+        </article>
+        <article class="guide-answer">
+          <small>Remodel planning</small>
+          <h3>What affects bathroom remodel cost?</h3>
+          <p>Scope, water damage, shower size, tile, fixtures, flooring, and finish quality all change the estimate.</p>
+          <a href="bathroom-remodel-belleville-il.html">Start with bathroom remodeling</a>
+        </article>
+        <article class="guide-answer">
+          <small>Outdoor work</small>
+          <h3>Who handles patios, landscaping, and drainage?</h3>
+          <p>Outdoor jobs often overlap. The match desk helps sort patio, concrete, drainage, yard, and landscape work.</p>
+          <a href="patio-contractor-metro-east.html">Compare patio help</a>
+        </article>
+        <article class="guide-answer">
+          <small>Small jobs</small>
+          <h3>Can I bundle handyman repairs?</h3>
+          <p>Yes. Drywall, trim, small concrete, pressure washing, fence repairs, and punch lists can often be grouped.</p>
+          <a href="handyman-projects-metro-east.html">See handyman projects</a>
+        </article>
+        <article class="guide-answer">
+          <small>Curb appeal</small>
+          <h3>What should I fix before selling?</h3>
+          <p>Yard cleanup, mulch, pressure washing, damaged fence sections, and small exterior repairs can make the first showing cleaner.</p>
+          <a href="yard-cleanup-before-selling-house-belleville-il.html">Plan curb appeal work</a>
+        </article>
+        <article class="guide-answer">
+          <small>Hiring safely</small>
+          <h3>How do I avoid a bad contractor?</h3>
+          <p>Ask for proof, reviews, written scope, clear contact information, project photos, and realistic timing.</p>
+          <a href="how-to-avoid-bad-contractor.html">Read the hiring guide</a>
+        </article>
       </div>
     </section>
 
@@ -132,6 +257,30 @@
         <div class="guide-list-item"><strong>Pressure Washing</strong><span><a href="pressure-washing-belleville-il.html">Belleville</a> · <a href="pressure-washing-ofallon-il.html">O'Fallon</a> · <a href="pressure-washing-edwardsville-il.html">Edwardsville</a> · <a href="pressure-washing-collinsville-il.html">Collinsville</a> · <a href="pressure-washing-swansea-il.html">Swansea</a></span></div>
         <div class="guide-list-item"><strong>Yard Cleanup</strong><span><a href="yard-cleanup-belleville-il.html">Belleville</a> · <a href="yard-cleanup-ofallon-il.html">O'Fallon</a> · <a href="yard-cleanup-edwardsville-il.html">Edwardsville</a> · <a href="yard-cleanup-collinsville-il.html">Collinsville</a> · <a href="yard-cleanup-swansea-il.html">Swansea</a></span></div>
         <div class="guide-list-item"><strong>Handyman</strong><span><a href="handyman-belleville-il.html">Belleville</a> · <a href="handyman-ofallon-il.html">O'Fallon</a> · <a href="handyman-edwardsville-il.html">Edwardsville</a> · <a href="handyman-collinsville-il.html">Collinsville</a> · <a href="handyman-swansea-il.html">Swansea</a></span></div>
+      </div>
+    </section>
+
+    <section class="guide-section">
+      <h2>Metro East City Starts</h2>
+      <p>These city pages keep the local map clear for homeowners and search engines. Each city should connect to the most useful service pages, proof pages, reviews, and the match desk.</p>
+      <div class="guide-city-grid">
+        <a href="belleville-il.html">Belleville</a>
+        <a href="ofallon-il.html">O'Fallon</a>
+        <a href="edwardsville-il.html">Edwardsville</a>
+        <a href="collinsville-il.html">Collinsville</a>
+        <a href="glen-carbon-il.html">Glen Carbon</a>
+        <a href="swansea-il.html">Swansea</a>
+        <a href="maryville-il.html">Maryville</a>
+        <a href="fairview-heights-il.html">Fairview Heights</a>
+        <a href="shiloh-il.html">Shiloh</a>
+        <a href="granite-city-il.html">Granite City</a>
+      </div>
+      <div class="guide-callout">
+        <div>
+          <strong>Not sure which page fits?</strong>
+          <span>Use the match desk. It captures the homeowner's city, project type, budget, timeline, and whether photos are ready.</span>
+        </div>
+        <a href="metro-east-contractor-match.html" class="guide-primary">Start a Project Match</a>
       </div>
     </section>
 
