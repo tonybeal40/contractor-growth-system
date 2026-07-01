@@ -1236,7 +1236,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
 /* === Work Photo Grid (Real Job Photos) === */
 .work-photo-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.5rem;
   margin-top: 1rem;
 }
@@ -1310,11 +1310,6 @@ button { font-family: inherit; cursor: pointer; border: none; }
 @media (min-width: 769px) and (max-width: 1024px) {
   .work-photo-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-  .work-photo-card:last-child {
-    grid-column: span 2;
-    max-width: 500px;
-    margin: 0 auto;
   }
 }
 
