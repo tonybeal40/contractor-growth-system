@@ -3209,10 +3209,10 @@ body.home-page {
 .home-page .home-hero { order: 1; }
 .home-page .home-service-lanes { order: 3; }
 .home-page .photo-section { order: 4; }
-.home-page .process { order: 5; }
-.home-page .why { order: 6; }
-.home-page .testimonials { order: 7; }
-.home-page .areas { order: 8; }
+.home-page .areas { order: 5; }
+.home-page .process { order: 6; }
+.home-page .why { order: 7; }
+.home-page .testimonials { order: 8; }
 .home-page .cta-band { order: 9; }
 
 .home-page .trust-bar,
