@@ -14,10 +14,10 @@
     reviewInbox: "https://formsubmit.co/tonybeal40@gmail.com",
     ownerCopy: "tonybeal40@gmail.com",
     smsCopies: [
-      "6185810676@tmomail.net",
-      "6185810676@txt.att.net",
-      "6185810676@vtext.com",
-      "6185810676@email.uscc.net"
+      "6182925320@tmomail.net",
+      "6182925320@txt.att.net",
+      "6182925320@vtext.com",
+      "6182925320@email.uscc.net"
     ],
     blacklist: "viagra,casino,payday loan,crypto investment,seo service"
   };
@@ -265,7 +265,7 @@
   }
 
   function wantsSmsCopies(formName) {
-    return /contact page|get-quote page/i.test(formName) || /contact\.html$|get-quote\.html$/i.test(window.location.pathname);
+    return !isReviewForm(formName);
   }
 
   function applyRouting(form, formName) {
