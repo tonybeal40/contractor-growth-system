@@ -2273,3 +2273,288 @@ body:has(.pi-hero) {
   border-color: #d8ded9 !important;
   color: #17251f !important;
 }
+
+/* ── Sitewide readability and image polish ───────────────── */
+a.btn,
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-red,
+.btn-outline,
+.header-cta,
+.sidebar-btn,
+.form-submit,
+button[type="submit"],
+input[type="submit"],
+.ld-btn,
+.pi-btn {
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.15;
+  font-weight: 900;
+  text-shadow: none;
+  white-space: normal;
+}
+.btn-primary,
+.btn-red,
+button[type="submit"],
+input[type="submit"],
+.header-cta,
+.ld-btn-primary,
+.pi-btn-primary {
+  background: #c96a26 !important;
+  color: #ffffff !important;
+  border: 1px solid #b95d1d !important;
+}
+.btn-secondary,
+.btn-outline,
+.ld-btn-secondary,
+.pi-btn-secondary {
+  background: #ffffff !important;
+  color: #173d2f !important;
+  border: 1px solid #cfd8d2 !important;
+}
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible,
+.btn-red:focus-visible,
+.btn-outline:focus-visible,
+.header-cta:focus-visible,
+button[type="submit"]:focus-visible,
+input[type="submit"]:focus-visible,
+a:focus-visible {
+  outline: 3px solid rgba(201,106,38,.38);
+  outline-offset: 3px;
+}
+
+.service-hero-card,
+.hero-card,
+.proof-card,
+.ld-card,
+.pi-card,
+.content-block,
+.sidebar-card,
+.cta-box,
+.estimate-banner,
+.section-head {
+  color: #17251f;
+}
+.service-hero-card img,
+.proof-card img,
+.work-photo-card img,
+.photo-card img,
+.ld-card img,
+.pi-card img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  background: linear-gradient(135deg, #eef3ed, #f7f3ea);
+  border-radius: 10px;
+}
+.service-hero-card:has(img),
+.proof-card:has(img),
+.ld-card:has(img),
+.pi-card:has(img) {
+  overflow: hidden;
+}
+
+header:not(.nav),
+.header-inner {
+  background: #ffffff;
+  color: #173d2f;
+}
+header:not(.nav) a,
+.header-inner a {
+  color: #173d2f;
+  font-weight: 800;
+}
+header:not(.nav) .header-cta,
+.header-inner .header-cta {
+  color: #ffffff !important;
+}
+.brand h1,
+.brand-name,
+.brand span {
+  color: #173d2f;
+}
+
+.brand-name {
+  display: block;
+  font-size: clamp(1.35rem, 2.6vw, 1.85rem);
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.section-head,
+.cta,
+.estimate-banner {
+  background: #f7f3ea;
+  color: #17251f;
+}
+.section-head h2,
+.cta h2,
+.estimate-banner strong {
+  color: #14231d;
+}
+.section-head p,
+.cta p,
+.estimate-banner p {
+  color: #52645b;
+}
+
+.content-block input,
+.content-block select,
+.content-block textarea,
+form input,
+form select,
+form textarea {
+  min-height: 44px;
+  background: #ffffff;
+  color: #17251f;
+  border: 1px solid #cfd8d2;
+  border-radius: 8px;
+}
+form textarea {
+  min-height: 110px;
+}
+form input::placeholder,
+form textarea::placeholder {
+  color: #718177;
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .hero-actions,
+  .hero-cta,
+  .ld-actions,
+  .pi-actions,
+  .proof-actions {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: .75rem !important;
+  }
+  .btn,
+  .ld-btn,
+  .pi-btn {
+    width: 100%;
+  }
+}
+
+/* ── Final pass: readable CTAs and balanced page flow ───────── */
+.hero-actions .btn,
+.hero-cta .btn,
+.service-hero .btn,
+.cta-box .btn,
+.estimate-banner .btn,
+.section-head .btn {
+  width: auto;
+  max-width: 360px;
+  min-width: 180px;
+}
+
+.content-block button[type="submit"],
+.content-block input[type="submit"],
+form .form-submit,
+form .sidebar-btn {
+  width: 100%;
+  max-width: 420px;
+}
+
+.section-head form.content-block {
+  max-width: 760px;
+  margin: 1.25rem auto 0;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  background: #ffffff;
+  border: 1px solid #e4ddd0;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(15,33,27,.08);
+}
+
+.header-inner .header-cta,
+header:not(.nav) .header-cta {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: .55rem 1rem;
+  border-radius: 8px;
+}
+
+.service-hero {
+  background: linear-gradient(180deg, #ffffff 0%, #f7f3ea 100%);
+  padding: clamp(2.25rem, 6vw, 4.5rem) 0;
+}
+
+.service-hero-grid {
+  gap: clamp(1.25rem, 4vw, 3rem);
+  align-items: center;
+}
+
+.service-hero-copy h1 {
+  max-width: 760px;
+}
+
+.service-hero-copy p {
+  max-width: 680px;
+  color: #43564d;
+}
+
+.money-pages {
+  padding-block: clamp(3rem, 7vw, 5rem);
+}
+
+.money-pages-grid {
+  align-items: stretch;
+}
+
+.money-page-card {
+  min-height: 150px;
+}
+
+@media (max-width: 760px) {
+  .hero.hero-with-bg {
+    background:
+      linear-gradient(180deg, rgba(247,243,234,.99) 0%, rgba(247,243,234,.96) 100%),
+      url("/images/deck-build-metro-east-il.png") center / cover no-repeat !important;
+  }
+
+  .hero-with-bg .hero-inner {
+    display: block;
+    padding-inline: clamp(1.25rem, 6vw, 2rem);
+  }
+
+  .hero-heading {
+    font-size: clamp(2.25rem, 11vw, 3.4rem) !important;
+    line-height: 1.06 !important;
+    max-width: 12ch;
+  }
+
+  .hero-sub {
+    max-width: 34rem;
+    font-size: 1rem;
+  }
+
+  .hero-actions .btn,
+  .hero-cta .btn,
+  .service-hero .btn,
+  .cta-box .btn,
+  .estimate-banner .btn,
+  .section-head .btn {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+  }
+
+  .hero-actions .call-now {
+    display: none;
+  }
+
+  .service-hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .service-hero-card img {
+    aspect-ratio: 4 / 3;
+  }
+}

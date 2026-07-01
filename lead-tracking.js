@@ -196,6 +196,7 @@
     // Skip on the get-quote page itself (it already has the form front-and-center)
     const skip = ['/get-quote.html', '/thank-you.html', '/contact.html'];
     if (skip.some(function(p){ return window.location.pathname.endsWith(p); })) return;
+    if (doc.querySelector('.sticky-call, .nd-sticky, .fb-sticky, .li-sticky')) return;
 
     const style = doc.createElement('style');
     style.textContent = [
