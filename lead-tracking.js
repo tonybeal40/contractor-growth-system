@@ -1,5 +1,5 @@
 (function () {
-  const measurementId = 'G-35DEM1MGDT';
+  const measurementIds = ['G-35DEM1MGDT', 'GT-WPQ8Z726'];
   const clarityId = 'weti9tqt5q';
   const doc = document;
 
@@ -33,15 +33,27 @@
   }
 
   appendAsyncScript(
-    `https://www.googletagmanager.com/gtag/js?id=${measurementId}`,
+    `https://www.googletagmanager.com/gtag/js?id=${measurementIds[0]}`,
     'googletagmanager.com/gtag/js'
   );
 
-  if (!window.__allProGtagConfigured) {
-    window.gtag('js', new Date());
-    window.gtag('config', measurementId);
-    window.__allProGtagConfigured = true;
+  function dataLayerHas(command, id) {
+    return ensureDataLayer().some(function (item) {
+      return item && item[0] === command && (!id || item[1] === id);
+    });
   }
+
+  if (!dataLayerHas('js')) {
+    window.gtag('js', new Date());
+  }
+
+  window.__allProGtagConfiguredIds = window.__allProGtagConfiguredIds || {};
+  measurementIds.forEach(function (id) {
+    if (!window.__allProGtagConfiguredIds[id] && !dataLayerHas('config', id)) {
+      window.gtag('config', id);
+      window.__allProGtagConfiguredIds[id] = true;
+    }
+  });
 
   if (!window.clarity && !hasScriptMatch(`clarity.ms/tag/${clarityId}`)) {
     window.clarity =
@@ -193,10 +205,11 @@
 
   // ── Floating Call/Quote Button ──────────────────────────────────────────────
   (function injectFloatingCTA() {
-    // Skip on the get-quote page itself (it already has the form front-and-center)
+    // Skip pages where a form or sticky CTA is already the primary conversion path.
     const skip = ['/get-quote.html', '/thank-you.html', '/contact.html'];
     if (skip.some(function(p){ return window.location.pathname.endsWith(p); })) return;
     if (doc.querySelector('.sticky-call, .nd-sticky, .fb-sticky, .li-sticky')) return;
+    if (doc.querySelector('form[action*="formsubmit.co"]')) return;
 
     const style = doc.createElement('style');
     style.textContent = [

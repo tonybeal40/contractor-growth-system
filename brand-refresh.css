@@ -340,6 +340,52 @@ body:not(.home-page) .hero h1,
   color: var(--ap-ink) !important;
 }
 
+a[href^="mailto:"],
+a[href^="http"],
+.card,
+.content-block,
+.sidebar-card,
+.service-card,
+.testimonial-card,
+.hub-card,
+.hub-sidecard,
+.nd-service-card,
+.fb-service-card,
+.li-service-card {
+  overflow-wrap: anywhere;
+}
+
+form[action*="formsubmit.co"] {
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+form[action*="formsubmit.co"] input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
+form[action*="formsubmit.co"] select,
+form[action*="formsubmit.co"] textarea {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  min-height: 46px !important;
+  font-size: 16px !important;
+}
+
+form[action*="formsubmit.co"] textarea {
+  min-height: 118px !important;
+}
+
+form[action*="formsubmit.co"] button[type="submit"],
+form[action*="formsubmit.co"] input[type="submit"] {
+  width: 100%;
+  min-height: 46px;
+  white-space: normal;
+}
+
+.ld-form-card .ld-form-row {
+  grid-template-columns: 1fr !important;
+}
+
 .project-btn.active {
   background: var(--ap-green) !important;
   border-color: var(--ap-green) !important;
@@ -560,6 +606,64 @@ footer a,
 
   .decision-grid {
     grid-template-columns: 1fr !important;
+  }
+
+  .content-section,
+  .page-section,
+  .service-section,
+  .qsection,
+  .ld-main,
+  .ld-section,
+  .nd-section,
+  .fb-section,
+  .li-section,
+  .hub-section {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .content-inner,
+  .ld-shell,
+  .qwrap,
+  .nd-shell,
+  .fb-shell,
+  .li-shell,
+  .hub-shell {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .sidebar-card,
+  .lead-form-card,
+  .ld-form-card,
+  .qform-card,
+  .nd-form-card,
+  .fb-form-card,
+  .li-form-card,
+  .hub-card,
+  .hub-sidecard {
+    padding: 18px !important;
+  }
+
+  form[action*="formsubmit.co"] .form-row,
+  form[action*="formsubmit.co"] .field-row,
+  form[action*="formsubmit.co"] .lead-row,
+  form[action*="formsubmit.co"] .quote-row,
+  form[action*="formsubmit.co"] .form-grid,
+  form[action*="formsubmit.co"] .lead-form-grid,
+  form[action*="formsubmit.co"] .estimate-grid,
+  form[action*="formsubmit.co"] [style*="grid-template-columns"] {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  form[action*="formsubmit.co"] label,
+  form[action*="formsubmit.co"] p,
+  form[action*="formsubmit.co"] small {
+    overflow-wrap: anywhere;
   }
 }
 
