@@ -68,6 +68,27 @@
     doc.head.appendChild(script);
   }
 
+  (function loadMicrosoftUetIfConfigured() {
+    const meta = doc.querySelector('meta[name="ms-uet-id"]');
+    const uetId = window.ALLPRO_MS_UET_ID || (meta && meta.getAttribute('content'));
+
+    if (!uetId || hasScriptMatch('bat.bing.com/bat.js')) {
+      return;
+    }
+
+    window.uetq = window.uetq || [];
+    const script = doc.createElement('script');
+    script.async = true;
+    script.src = 'https://bat.bing.com/bat.js';
+    script.onload = function () {
+      if (typeof window.UET === 'function') {
+        window.uetq = new window.UET({ ti: String(uetId), enableAutoSpaTracking: true });
+        window.uetq.push('pageLoad');
+      }
+    };
+    doc.head.appendChild(script);
+  })();
+
   function cleanText(value) {
     return (value || '').replace(/\s+/g, ' ').trim().slice(0, 120);
   }
@@ -201,6 +222,14 @@
       value: 1,
       currency: 'USD',
     });
+
+    if (window.uetq) {
+      window.uetq.push('event', 'generate_lead', {
+        revenue_value: 1,
+        currency: 'USD',
+        form_name: formName,
+      });
+    }
   })();
 
   // ── Floating Call/Quote Button ──────────────────────────────────────────────
