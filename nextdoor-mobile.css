@@ -16,6 +16,9 @@
 
 html {
   scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -24,6 +27,9 @@ body {
   font-family: Manrope, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: var(--ink);
   background: var(--bg);
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 a {
@@ -33,6 +39,17 @@ a {
 
 img {
   display: block;
+  max-width: 100%;
+}
+
+main,
+section,
+header,
+footer,
+form,
+label,
+div,
+p {
   max-width: 100%;
 }
 
@@ -138,8 +155,10 @@ h1 {
   margin-bottom: 0;
   max-width: 740px;
   font-size: clamp(2.15rem, 8vw, 4.45rem);
-  line-height: 1.02;
+  line-height: 1.1;
   letter-spacing: 0;
+  overflow-wrap: anywhere;
+  padding-bottom: 0.04em;
 }
 
 .hero-text {
@@ -320,6 +339,7 @@ h1 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
   padding: 18px;
+  overflow: hidden;
 }
 
 .success-message {
@@ -345,16 +365,78 @@ h1 {
   font-weight: 900;
 }
 
+.estimate-form .consent-row {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  color: var(--ink);
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
 .estimate-form input,
 .estimate-form select,
 .estimate-form textarea {
   width: 100%;
+  max-width: 100%;
   min-height: 48px;
   border: 1.5px solid #cbd5d0;
   border-radius: 10px;
   padding: 11px 12px;
   color: var(--ink);
   background: #fff;
+}
+
+.estimate-form input[type="checkbox"] {
+  flex: 0 0 20px;
+  width: 20px !important;
+  min-width: 20px;
+  max-width: 20px;
+  height: 20px;
+  min-height: 20px;
+  margin-top: 2px !important;
+  padding: 0;
+  accent-color: var(--green);
+}
+
+.estimate-form > div,
+.estimate-form > p {
+  grid-column: 1 / -1;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.estimate-form > div label {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.estimate-form > div label span {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.estimate-form [data-lead-legal-note="true"] {
+  color: var(--muted);
+  font-size: 0.82rem !important;
+  overflow-wrap: anywhere;
+}
+
+.legal-note {
+  margin: -2px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.legal-note a {
+  color: var(--green-dark);
+  font-weight: 900;
 }
 
 .estimate-form textarea {
