@@ -838,7 +838,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
   top: -10px;
   width: clamp(160px, 20vw, 260px);
   aspect-ratio: 1 / 1;
-  background: url("/images/branding/logo-web.png") center / contain no-repeat;
+  background: url("/images/branding/logo-nav.webp") center / contain no-repeat;
   opacity: .12;
   filter: grayscale(.1) drop-shadow(0 6px 14px rgba(0,0,0,.25));
   pointer-events: none;
@@ -1095,7 +1095,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
 /* Hero Background Image */
 .hero-with-bg {
   position: relative;
-  background-image: url("/images/deck-build-metro-east-il.png");
+  background-image: url("/images/deck-build-metro-east-il.webp");
   background-size: cover !important;
   background-position: center center !important;
   background-attachment: scroll !important;
@@ -1704,7 +1704,7 @@ body {
   min-height: auto;
   background:
     linear-gradient(90deg, rgba(247,243,234,.98) 0%, rgba(247,243,234,.90) 48%, rgba(247,243,234,.58) 100%),
-    url("images/deck-build-metro-east-il.png") center right / cover no-repeat;
+    url("images/deck-build-metro-east-il.webp") center right / cover no-repeat;
   color: #14231d;
   padding: calc(var(--nav-h) + 3.25rem) 0 3.5rem;
 }
@@ -1921,7 +1921,7 @@ body {
   .hero {
     background:
       linear-gradient(180deg, rgba(247,243,234,.97) 0%, rgba(247,243,234,.93) 100%),
-      url("images/deck-build-metro-east-il.png") center / cover no-repeat;
+      url("images/deck-build-metro-east-il.webp") center / cover no-repeat;
   }
 }
 
@@ -2086,7 +2086,7 @@ body {
 .hero.hero-with-bg {
   background:
     linear-gradient(90deg, rgba(247,243,234,.98) 0%, rgba(247,243,234,.94) 48%, rgba(247,243,234,.74) 100%),
-    url("/images/deck-build-metro-east-il.png") center right / cover no-repeat !important;
+    url("/images/deck-build-metro-east-il.webp") center right / cover no-repeat !important;
 }
 .hero-with-bg::before {
   background: linear-gradient(90deg, rgba(247,243,234,.92) 0%, rgba(247,243,234,.74) 58%, rgba(247,243,234,.30) 100%);
@@ -2131,7 +2131,7 @@ body {
   gap: .85rem;
   background:
     linear-gradient(135deg, rgba(23,61,47,.94), rgba(23,61,47,.84)),
-    url("/images/deck-build-metro-east-il.png") center / cover;
+    url("/images/deck-build-metro-east-il.webp") center / cover;
   border-radius: 12px;
   padding: clamp(1.35rem, 4vw, 2rem);
   color: #ffffff;
@@ -2221,7 +2221,7 @@ body:has(.pi-hero) {
 .pi-hero {
   background:
     linear-gradient(90deg, rgba(247,243,234,.98) 0%, rgba(247,243,234,.92) 54%, rgba(247,243,234,.72) 100%),
-    url("/images/deck-build-metro-east-il.png") center right / cover no-repeat !important;
+    url("/images/deck-build-metro-east-il.webp") center right / cover no-repeat !important;
   color: #14231d !important;
 }
 .ld-hero h1,
@@ -2533,7 +2533,7 @@ header:not(.nav) .header-cta {
   .hero.hero-with-bg {
     background:
       linear-gradient(180deg, rgba(247,243,234,.99) 0%, rgba(247,243,234,.96) 100%),
-      url("/images/deck-build-metro-east-il.png") center / cover no-repeat !important;
+      url("/images/deck-build-metro-east-il.webp") center / cover no-repeat !important;
   }
 
   .hero-with-bg .hero-inner {
@@ -2595,7 +2595,7 @@ body.home-page {
 .home-hero {
   background:
     linear-gradient(90deg, rgba(247,243,234,.99) 0%, rgba(247,243,234,.95) 48%, rgba(247,243,234,.82) 100%),
-    url("/images/deck-build-metro-east-il.png") center right / cover no-repeat;
+    url("/images/deck-build-metro-east-il.webp") center right / cover no-repeat;
   padding: calc(var(--nav-h) + 2.2rem) 0 0;
   color: #14231d;
   overflow: hidden;

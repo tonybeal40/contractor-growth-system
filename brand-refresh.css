@@ -145,7 +145,7 @@ input[type="submit"],
 body:not(.home-page) .hero {
   background:
     linear-gradient(90deg, rgba(247, 243, 234, .99), rgba(247, 243, 234, .9)),
-    url("/images/deck-build-metro-east-il.png") center right / cover no-repeat !important;
+    url("/images/deck-build-metro-east-il.webp") center right / cover no-repeat !important;
   border-bottom: 1px solid var(--ap-line) !important;
   color: var(--ap-ink) !important;
 }
@@ -162,6 +162,9 @@ body:not(.home-page) .hero h1,
 .service-hero h1 {
   color: var(--ap-charcoal) !important;
   letter-spacing: 0 !important;
+  line-height: 1.12 !important;
+  overflow-wrap: anywhere;
+  padding-bottom: .04em;
 }
 
 .qhero h1 span,
@@ -753,7 +756,7 @@ footer a,
     padding: 28px 14px 24px !important;
     background:
       linear-gradient(180deg, rgba(247, 243, 234, .98), rgba(247, 243, 234, .94)),
-      url("/images/deck-build-metro-east-il.png") center / cover no-repeat !important;
+      url("/images/deck-build-metro-east-il.webp") center / cover no-repeat !important;
   }
 
   .hub-hero-inner {
