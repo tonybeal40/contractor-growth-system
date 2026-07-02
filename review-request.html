@@ -59,8 +59,68 @@
   }
   </script>
   <link rel="stylesheet" href="/brand-refresh.css?v=20260701a">
+  <style>
+    .review-page .service-hero { padding: clamp(2.5rem, 5vw, 5rem) 0; }
+    .review-page .service-hero-grid { grid-template-columns: minmax(0, 1fr); }
+    .review-page .service-hero-copy { max-width: 860px; }
+    .review-page .review-primary-card {
+      background: #fff;
+      border: 1px solid rgba(47, 93, 80, .18);
+      border-radius: 8px;
+      box-shadow: 0 18px 45px rgba(31, 41, 51, .08);
+      padding: clamp(1.25rem, 3vw, 2rem);
+      margin-top: 1.5rem;
+    }
+    .review-page .review-primary-card h2 { margin-top: 0; color: #2F5D50; }
+    .review-page .review-steps { counter-reset: review-step; display: grid; gap: .8rem; margin: 1.2rem 0; }
+    .review-page .review-step {
+      counter-increment: review-step;
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: .8rem;
+      align-items: start;
+      background: #F7F3EA;
+      border: 1px solid rgba(201, 106, 38, .18);
+      border-radius: 8px;
+      padding: .9rem;
+    }
+    .review-page .review-step::before {
+      content: counter(review-step);
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #2F5D50;
+      color: #fff;
+      font-weight: 800;
+    }
+    .review-page .review-example {
+      background: #fff;
+      border: 1px solid rgba(31, 41, 51, .12);
+      border-radius: 8px;
+      padding: 1rem;
+      color: #1F2933;
+    }
+    .review-page .review-example p { margin: 0; }
+    .review-page .review-short-link {
+      display: inline-flex;
+      align-items: center;
+      background: #F7F3EA;
+      border: 1px solid rgba(47, 93, 80, .18);
+      border-radius: 999px;
+      color: #2F5D50;
+      font-weight: 800;
+      padding: .55rem .85rem;
+      margin-top: .8rem;
+    }
+    @media (max-width: 720px) {
+      .review-page .hero-actions .btn { width: 100%; justify-content: center; }
+      .review-page .review-step { grid-template-columns: 36px 1fr; }
+    }
+  </style>
 </head>
-<body>
+<body class="review-page">
   <header>
     <div class="header-inner">
       <div class="brand">
@@ -80,58 +140,71 @@
     <section class="service-hero">
       <div class="service-hero-grid container">
         <div class="service-hero-copy">
-          <span class="eyebrow">Customer Review</span>
-          <h1>Thanks for trusting All-Pro with your Metro East project.</h1>
-          <p>If the job was done right, a quick review helps local homeowners in Belleville, O'Fallon, Edwardsville, Collinsville, Swansea, Shiloh, and the Metro East know who they can call next.</p>
+          <span class="eyebrow">All-Pro Customer Review</span>
+          <h1>Leave a quick review for All-Pro Construction.</h1>
+          <p>Thank you for trusting All-Pro with your project. A short, honest review helps local homeowners in Belleville, O'Fallon, Edwardsville, Collinsville, Swansea, Shiloh, and Metro East IL know who they can call.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=All-Pro+Landscape+Construction+1115+Priscilla+Ct+New+Athens+IL+62264" target="_blank" rel="noreferrer">Open Google Profile</a>
-            <a class="btn btn-secondary" href="https://www.angi.com/companylist/us/il/new-athens/all-pro-construction-and-landscape-reviews-6233409.htm" target="_blank" rel="noreferrer">Open Angi</a>
-            <a class="btn btn-secondary" href="https://www.homeadvisor.com/rated.all-proconstructionlandscape.158798635.html" target="_blank" rel="noreferrer">Open HomeAdvisor</a>
-            <a class="btn btn-outline" href="tel:6185810676">Call 618-581-0676</a>
+            <a class="btn btn-primary" href="https://search.google.com/local/writereview?placeid=ChIJKzqCfZ8idogRP03O0_iO2U8" target="_blank" rel="noreferrer">Leave a Google Review</a>
+            <a class="btn btn-secondary" href="#private-feedback">Send Website Testimonial</a>
+            <a class="btn btn-outline" href="tel:6185810676">Call Bill</a>
           </div>
+          <span class="review-short-link">Easy link: allprometroeastconstruction.com/review.html</span>
         </div>
       </div>
     </section>
 
     <section class="service-content">
       <div class="container">
-        <article class="content-block">
-          <h2>Best places to leave a review</h2>
-          <p>Google is usually the most helpful for local search. Angi, HomeAdvisor, and Nextdoor also help homeowners compare proof before asking for an estimate.</p>
-          <div class="decision-grid">
-            <div>
-              <h3>Google</h3>
-              <p>Best for local map visibility and homeowners searching "contractor near me" or "deck builder Belleville IL."</p>
-              <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=All-Pro+Landscape+Construction+1115+Priscilla+Ct+New+Athens+IL+62264" target="_blank" rel="noreferrer">Open Google</a>
+        <article class="review-primary-card">
+          <h2>Fastest way to help</h2>
+          <div class="review-steps">
+            <div class="review-step">
+              <div>
+                <strong>Tap the Google button.</strong>
+                <p>Google reviews help local homeowners find All-Pro when they search for contractors, decks, remodels, landscaping, fencing, patios, concrete, and small jobs.</p>
+              </div>
             </div>
-            <div>
-              <h3>Angi</h3>
-              <p>Good for homeowners who compare contractors, project categories, and review history before calling.</p>
-              <a class="btn btn-secondary" href="https://www.angi.com/companylist/us/il/new-athens/all-pro-construction-and-landscape-reviews-6233409.htm" target="_blank" rel="noreferrer">Open Angi</a>
+            <div class="review-step">
+              <div>
+                <strong>Choose a star rating.</strong>
+                <p>If the work was done right, a 5-star review with a few real details is the most helpful.</p>
+              </div>
             </div>
-            <div>
-              <h3>HomeAdvisor</h3>
-              <p>Useful proof for homeowners who want a second review source before requesting a written estimate.</p>
-              <a class="btn btn-secondary" href="https://www.homeadvisor.com/rated.all-proconstructionlandscape.158798635.html" target="_blank" rel="noreferrer">Open HomeAdvisor</a>
+            <div class="review-step">
+              <div>
+                <strong>Mention the city and project.</strong>
+                <p>Examples: bathroom remodel in Belleville, deck repair in O'Fallon, landscaping in Edwardsville, patio work in Collinsville, or small repair in Swansea.</p>
+              </div>
             </div>
+          </div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://search.google.com/local/writereview?placeid=ChIJKzqCfZ8idogRP03O0_iO2U8" target="_blank" rel="noreferrer">Start Google Review</a>
+            <a class="btn btn-secondary" href="https://www.angi.com/companylist/us/il/new-athens/all-pro-construction-and-landscape-reviews-6233409.htm" target="_blank" rel="noreferrer">Review on Angi</a>
+            <a class="btn btn-secondary" href="https://www.homeadvisor.com/rated.all-proconstructionlandscape.158798635.html" target="_blank" rel="noreferrer">Review on HomeAdvisor</a>
           </div>
         </article>
 
         <article class="content-block">
-          <h2>What to mention</h2>
-          <p>A helpful review is honest, specific, and written in your own words. Mention the city, project type, communication, cleanup, estimate clarity, and the final result.</p>
-          <ul>
-            <li>Project type: deck, bathroom, kitchen, patio, fencing, landscaping, concrete, pressure washing, or small home repair.</li>
-            <li>City or area: Belleville, O'Fallon, Edwardsville, Collinsville, Swansea, Shiloh, Glen Carbon, Maryville, or Metro East IL.</li>
-            <li>What helped most: owner communication, written estimate, clean jobsite, schedule, workmanship, or final walkthrough.</li>
-          </ul>
+          <h2>Need ideas for what to write?</h2>
+          <p>Use your own words. Short is fine. Specific is best.</p>
+          <div class="decision-grid">
+            <div class="review-example">
+              <p>All-Pro helped with our deck project in Belleville. Bill communicated clearly, gave a written estimate, and the crew kept the jobsite clean.</p>
+            </div>
+            <div class="review-example">
+              <p>We hired All-Pro for a bathroom remodel in O'Fallon. The work was done carefully, questions were answered, and the final walkthrough was helpful.</p>
+            </div>
+            <div class="review-example">
+              <p>All-Pro handled landscaping and outdoor work at our Metro East home. They showed up, explained the options, and the finished project looks great.</p>
+            </div>
+          </div>
         </article>
 
-        <article class="content-block">
-          <h2>Want to send private feedback first?</h2>
-          <p>If something still needs attention, send it here first so Bill can review it directly.</p>
-          <form action="https://formsubmit.co/williamosessionallpro@gmail.com" method="post" data-form="Review Request Feedback">
-            <input type="hidden" name="_subject" value="New All-Pro Review Feedback">
+        <article class="content-block" id="private-feedback">
+          <h2>Prefer to send a website testimonial?</h2>
+          <p>If you do not use Google, you can send All-Pro a testimonial here. If something still needs attention, use this same form and Bill can review it directly.</p>
+          <form action="https://formsubmit.co/williamosessionallpro@gmail.com" method="post" data-form="Review Request Testimonial">
+            <input type="hidden" name="_subject" value="New All-Pro Review/Testimonial">
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_cc" value="tonybeal40@gmail.com,6182925320@tmomail.net,6182925320@txt.att.net,6182925320@vtext.com,6182925320@email.uscc.net">
@@ -157,8 +230,12 @@
               <input type="text" name="city" placeholder="City">
             </div>
             <input type="text" name="project_type" placeholder="Project type">
-            <textarea name="details" rows="5" placeholder="Tell us what went well or what still needs attention."></textarea>
-            <button type="submit" class="btn btn-primary">Send Feedback to All-Pro</button>
+            <textarea name="details" rows="5" placeholder="Tell us about your project, what went well, and the city where the work was done."></textarea>
+            <label style="display:flex;gap:.55rem;align-items:flex-start;margin:1rem 0;color:#1F2933;font-weight:700;">
+              <input type="checkbox" name="permission_to_share_on_site" value="yes" style="width:auto;margin-top:.25rem;">
+              All-Pro may use this testimonial on the website or marketing materials.
+            </label>
+            <button type="submit" class="btn btn-primary">Send Testimonial to All-Pro</button>
           </form>
         </article>
       </div>
