@@ -461,7 +461,7 @@
     });
   }
 
-  // ── Dual-submit: try custom endpoint first, fall back to FormSubmit ─────────
+  // ── Dual-submit: log to the Sheet endpoint, then let FormSubmit email ───────
   function collectFormData(form) {
     const data = {};
     const fd = new FormData(form);
@@ -471,31 +471,64 @@
     return data;
   }
 
-  function submitToCustomEndpoint(form, snapshot) {
-    return new Promise(function (resolve, reject) {
-      ensureLeadDisclosures(form, getFormName(form));
-      populateTracking(form, snapshot);
-      const data = collectFormData(form);
-      const nextUrl = data["_next"] || (siteOrigin + "/thank-you.html?src=form");
+  function encodeForEndpoint(data) {
+    const params = new URLSearchParams();
+    Object.keys(data).forEach(function (key) {
+      if (data[key] !== undefined && data[key] !== null) {
+        params.append(key, String(data[key]));
+      }
+    });
+    return params;
+  }
 
-      fetch(CUSTOM_ENDPOINT, {
+  function submitToCustomEndpoint(form, snapshot) {
+    ensureLeadDisclosures(form, getFormName(form));
+    populateTracking(form, snapshot);
+    const data = collectFormData(form);
+    const nextUrl = data["_next"] || (siteOrigin + "/thank-you.html?src=form");
+    const body = encodeForEndpoint(data);
+
+    if (typeof fetch === "function") {
+      return fetch(CUSTOM_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        mode: "no-cors",
+        credentials: "omit",
+        body: body,
         keepalive: true
-      })
-        .then(function (res) {
-          if (!res.ok) { reject(new Error("Custom endpoint HTTP " + res.status)); return; }
-          return res.json();
-        })
-        .then(function (json) {
-          if (json && json.ok) {
-            resolve(json.redirect || nextUrl);
-          } else {
-            reject(new Error("Custom endpoint returned ok=false"));
-          }
-        })
-        .catch(reject);
+      }).then(function () {
+        return nextUrl;
+      });
+    }
+
+    if (navigator.sendBeacon && navigator.sendBeacon(CUSTOM_ENDPOINT, body)) {
+      return Promise.resolve(nextUrl);
+    }
+
+    return Promise.reject(new Error("No supported Sheet logging transport"));
+  }
+
+  function setSubmitState(form, isSending) {
+    const submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
+    if (!submitBtn) {
+      return;
+    }
+    submitBtn.disabled = isSending;
+    if (submitBtn.textContent) {
+      submitBtn.textContent = isSending ? "Sending..." : (submitBtn.getAttribute("data-original-text") || submitBtn.textContent);
+    }
+  }
+
+  function nativeSubmit(form) {
+    if (HTMLFormElement.prototype.submit) {
+      HTMLFormElement.prototype.submit.call(form);
+      return;
+    }
+    form.submit();
+  }
+
+  function shortTimeout(ms) {
+    return new Promise(function (resolve) {
+      setTimeout(resolve, ms);
     });
   }
 
@@ -505,17 +538,27 @@
       populateTracking(form, snapshot);
       trackSubmit(snapshot, getFormName(form));
 
-      if (!CUSTOM_ENDPOINT) {
+      if (!CUSTOM_ENDPOINT || form.dataset.allproNativeSubmit === "true") {
         return; // no custom endpoint set — let native FormSubmit POST happen
       }
 
-      // Fire custom endpoint for Sheet logging only (non-blocking, no redirect)
-      // FormSubmit still handles the actual form POST + email
-      submitToCustomEndpoint(form, snapshot).catch(function () {
-        console.warn("Custom endpoint logging failed — FormSubmit handles email.");
-      });
+      event.preventDefault();
+      if (form.dataset.allproSubmitting === "true") {
+        return;
+      }
 
-      // Always let FormSubmit POST proceed normally (handles email to Bill)
+      form.dataset.allproSubmitting = "true";
+      setSubmitState(form, true);
+
+      Promise.race([
+        submitToCustomEndpoint(form, snapshot).catch(function () {
+          console.warn("Custom endpoint logging failed; continuing to FormSubmit.");
+        }),
+        shortTimeout(1600)
+      ]).finally(function () {
+        form.dataset.allproNativeSubmit = "true";
+        nativeSubmit(form);
+      });
     });
   }
 

@@ -110,9 +110,13 @@ function doPost(e) {
 
 function parsePayload(e) {
   if (!e) return {};
-  // Try JSON body first (fetch from JS), then form-encoded POST
-  if (e.postData && e.postData.type === "application/json") {
-    try { return JSON.parse(e.postData.contents); } catch(_) {}
+  // Try JSON body first, then regular form-encoded POST fields.
+  if (e.postData && e.postData.contents) {
+    var raw = String(e.postData.contents || "");
+    var type = String(e.postData.type || "").toLowerCase();
+    if (type.indexOf("application/json") > -1 || raw.trim().charAt(0) === "{") {
+      try { return JSON.parse(raw); } catch(_) {}
+    }
   }
   var params = e.parameter || {};
   return params;
@@ -234,41 +238,35 @@ function logToSheet(data, subject) {
   if (!sheet) {
     sheet = ss.insertSheet("Leads");
     sheet.appendRow([
-      "Timestamp", "Name", "Phone", "Email", "Service", "City",
-      "Form Name", "Page URL", "Lead Source", "First Touch Source",
-      "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term",
-      "Referrer", "Google Ad (gclid)", "FB Ad (fbclid)",
-      "Session ID", "Submitted At", "Message"
+      "Timestamp", "Subject", "Name", "Phone", "Email", "Service", "City",
+      "Message", "Page URL", "Lead Source", "First Touch", "UTM Source",
+      "UTM Campaign", "Session ID", "Form Name"
     ]);
     sheet.setFrozenRows(1);
     // Bold header row
-    sheet.getRange(1, 1, 1, 20).setFontWeight("bold");
+    sheet.getRange(1, 1, 1, 15).setFontWeight("bold");
     sheet.setColumnWidth(1, 160);  // Timestamp
-    sheet.setColumnWidth(8, 280);  // Page URL
-    sheet.setColumnWidth(20, 400); // Message
+    sheet.setColumnWidth(2, 320);  // Subject
+    sheet.setColumnWidth(8, 400);  // Message
+    sheet.setColumnWidth(9, 280);  // Page URL
   }
 
   sheet.appendRow([
     new Date(),
+    subject || "",
     data["name"] || data["full_name"] || data["customer_name"] || "",
     data["phone"]                || "",
     data["email"]                || "",
     data["service"] || data["service_needed"] || data["project"] || data["main_service"] || "",
     data["city"]                 || "",
-    data["form_name"]            || data["page_path"] || "",
+    (data["message"] || data["details"] || data["project_details"] || data["proof_links"] || data["review"] || "").substring(0, 500),
     data["page_url"]             || "",
     data["lead_source"]          || "direct",
     data["first_touch_source"]   || "",
     data["utm_source"]           || "",
-    data["utm_medium"]           || "",
     data["utm_campaign"]         || "",
-    data["utm_term"]             || "",
-    data["referrer"]             || "",
-    data["gclid"]                || "",
-    data["fbclid"]               || "",
     data["lead_session_id"]      || "",
-    data["submission_time_local"]|| "",
-    (data["message"] || data["details"] || data["project_details"] || data["proof_links"] || data["review"] || "").substring(0, 500)
+    data["form_name"]            || data["page_path"] || ""
   ]);
 }
 
