@@ -471,52 +471,22 @@
     return data;
   }
 
-  function postToEndpointFrame(data) {
-    return new Promise(function (resolve) {
-      const stamp = String(Date.now()) + "-" + Math.random().toString(36).slice(2);
-      const frameName = "allpro-lead-log-" + stamp;
-      const iframe = document.createElement("iframe");
-      const logForm = document.createElement("form");
-      let finished = false;
-
-      function finish() {
-        if (finished) {
-          return;
-        }
-        finished = true;
-        resolve();
-        setTimeout(function () {
-          if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
-          if (logForm.parentNode) logForm.parentNode.removeChild(logForm);
-        }, 500);
+  function encodeForEndpoint(data) {
+    const params = new URLSearchParams();
+    Object.keys(data).forEach(function (key) {
+      if (data[key] !== undefined && data[key] !== null) {
+        params.append(key, String(data[key]));
       }
+    });
+    return params;
+  }
 
-      iframe.name = frameName;
-      iframe.style.display = "none";
-      iframe.setAttribute("aria-hidden", "true");
-      iframe.addEventListener("load", finish);
-
-      logForm.method = "POST";
-      logForm.action = CUSTOM_ENDPOINT;
-      logForm.target = frameName;
-      logForm.style.display = "none";
-      logForm.acceptCharset = "UTF-8";
-
-      document.body.appendChild(iframe);
-      document.body.appendChild(logForm);
-
-      Object.keys(data).forEach(function (key) {
-        if (data[key] !== undefined && data[key] !== null) {
-          const input = document.createElement("input");
-          input.type = "hidden";
-          input.name = key;
-          input.value = String(data[key]);
-          logForm.appendChild(input);
-        }
-      });
-
-      logForm.submit();
-      setTimeout(finish, 5200);
+  function postToEndpoint(data) {
+    return fetch(CUSTOM_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+      body: encodeForEndpoint(data).toString(),
+      keepalive: true
     });
   }
 
@@ -525,7 +495,7 @@
     populateTracking(form, snapshot);
     const data = collectFormData(form);
     const nextUrl = data["_next"] || (siteOrigin + "/thank-you.html?src=form");
-    return postToEndpointFrame(data).then(function () {
+    return postToEndpoint(data).then(function () {
       return nextUrl;
     });
   }
