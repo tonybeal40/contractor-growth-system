@@ -471,14 +471,53 @@
     return data;
   }
 
-  function encodeForEndpoint(data) {
-    const params = new URLSearchParams();
-    Object.keys(data).forEach(function (key) {
-      if (data[key] !== undefined && data[key] !== null) {
-        params.append(key, String(data[key]));
+  function postToEndpointFrame(data) {
+    return new Promise(function (resolve) {
+      const stamp = String(Date.now()) + "-" + Math.random().toString(36).slice(2);
+      const frameName = "allpro-lead-log-" + stamp;
+      const iframe = document.createElement("iframe");
+      const logForm = document.createElement("form");
+      let finished = false;
+
+      function finish() {
+        if (finished) {
+          return;
+        }
+        finished = true;
+        resolve();
+        setTimeout(function () {
+          if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+          if (logForm.parentNode) logForm.parentNode.removeChild(logForm);
+        }, 500);
       }
+
+      iframe.name = frameName;
+      iframe.style.display = "none";
+      iframe.setAttribute("aria-hidden", "true");
+      iframe.addEventListener("load", finish);
+
+      logForm.method = "POST";
+      logForm.action = CUSTOM_ENDPOINT;
+      logForm.target = frameName;
+      logForm.style.display = "none";
+      logForm.acceptCharset = "UTF-8";
+
+      document.body.appendChild(iframe);
+      document.body.appendChild(logForm);
+
+      Object.keys(data).forEach(function (key) {
+        if (data[key] !== undefined && data[key] !== null) {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = key;
+          input.value = String(data[key]);
+          logForm.appendChild(input);
+        }
+      });
+
+      logForm.submit();
+      setTimeout(finish, 1700);
     });
-    return params;
   }
 
   function submitToCustomEndpoint(form, snapshot) {
@@ -486,25 +525,9 @@
     populateTracking(form, snapshot);
     const data = collectFormData(form);
     const nextUrl = data["_next"] || (siteOrigin + "/thank-you.html?src=form");
-    const body = encodeForEndpoint(data);
-
-    if (typeof fetch === "function") {
-      return fetch(CUSTOM_ENDPOINT, {
-        method: "POST",
-        mode: "no-cors",
-        credentials: "omit",
-        body: body,
-        keepalive: true
-      }).then(function () {
-        return nextUrl;
-      });
-    }
-
-    if (navigator.sendBeacon && navigator.sendBeacon(CUSTOM_ENDPOINT, body)) {
-      return Promise.resolve(nextUrl);
-    }
-
-    return Promise.reject(new Error("No supported Sheet logging transport"));
+    return postToEndpointFrame(data).then(function () {
+      return nextUrl;
+    });
   }
 
   function setSubmitState(form, isSending) {
