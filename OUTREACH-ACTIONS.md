@@ -9,7 +9,7 @@
 ### Google Business Profile (GBP)
 - Post weekly updates (photo + keyword) featuring the latest deck/patio/fence. Link each post to the most relevant service page or blog.  
 - Add the “24-hour estimate” offer to the highlights and include updated photos every 2 weeks.  
-- Request Google reviews immediately after job completion (use QR/short link pointing to `reviews.html`), reply to every new review, and tag each review in your CRM.
+- Request Google reviews immediately after job completion (use QR/short link pointing to `review.html`), reply to every new review, and tag each review in your CRM.
 
 ### Paid Boost / Paid Search
 1. Launch a small Budget campaign (Meta/Instagram or Google Search) targeting:

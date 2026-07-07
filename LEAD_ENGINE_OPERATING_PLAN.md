@@ -1,19 +1,19 @@
 # All-Pro Lead Engine Operating Plan
 
-Last updated: 2026-07-01
+Last updated: 2026-07-07
 
 This is the working checklist for All-Pro Metro East Construction, Bill's List Metro East, Codex, OpenClaw, and Wild Bill.
 
 ## Current Technical Baseline
 
 - Main site deploys from GitHub Pages through Cloudflare.
-- Public sitemap contains 643 indexable URLs.
+- Public sitemap contains 644 indexable URLs.
 - Internal SEO audit is clean at 100.0 average with zero issue counts.
 - Rendered crawl passed mobile and desktop checks with zero status, overflow, H1, alt, phone, form, and long-word issues.
 - Google Analytics tag: `G-35DEM1MGDT`
 - Secondary Google tag: `GT-WPQ8Z726`
 - Microsoft Clarity tag: `weti9tqt5q`
-- IndexNow key is present for Bing indexing.
+- IndexNow key is present for Bing indexing and can be used after important page changes.
 - FormSubmit routes public forms to William, Tony Gmail copy, and Tony SMS gateway copies.
 - Google Apps Script endpoint responds with `{"ok":true,"service":"All-Pro Form Handler"}`.
 
@@ -36,7 +36,7 @@ This is the working checklist for All-Pro Metro East Construction, Bill's List M
    - Confirm name, phone, website, service area, categories, and hours.
    - Add fresh project photos weekly.
    - Add posts for decks, bathrooms, kitchens, landscaping, fencing, concrete, patios, and small jobs.
-   - Ask recent customers for reviews using `review-request.html`.
+   - Ask recent customers for reviews using `review.html` or `review-request.html`.
 
 4. Citation cleanup.
    - Confirm consistent name/phone/site on Google, Bing Places, Apple Maps, Yelp, Facebook, LinkedIn, Nextdoor, Angi, HomeAdvisor, Houzz, Thumbtack, BBB, and local chamber/directories.
@@ -54,7 +54,7 @@ This is the working checklist for All-Pro Metro East Construction, Bill's List M
   - repeat for O'Fallon and Edwardsville.
 - Add one Google Business Profile post.
 - Ask for three reviews after completed jobs.
-- Check Search Console and Bing Webmaster Tools for indexing issues.
+- Check Search Console and Bing Webmaster Tools for indexing issues, sitemap warnings, and stale search snippets.
 - Run `python scripts/seo_audit.py` before publishing site changes.
 
 ## Bill's List Metro East
