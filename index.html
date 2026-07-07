@@ -2,14 +2,25 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-35DEM1MGDT"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-35DEM1MGDT');
-  gtag('config', 'GT-WPQ8Z726');
+  (function(){
+    function loadGoogleTags(){
+      var script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-35DEM1MGDT';
+      document.head.appendChild(script);
+      gtag('js', new Date());
+      gtag('config', 'G-35DEM1MGDT');
+      gtag('config', 'GT-WPQ8Z726');
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadGoogleTags, { timeout: 2500 });
+    } else {
+      setTimeout(loadGoogleTags, 1800);
+    }
+  })();
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="canonical" href="https://allprometroeastconstruction.com/">
@@ -30,10 +41,6 @@
 <title>All-Pro Metro East Construction | Remodels, Decks &amp; Landscaping</title>
 <meta name="description" content="All-Pro helps Belleville, O&#x27;Fallon, Edwardsville, and Metro East IL homeowners with remodels, decks, landscaping, concrete, fencing, patios, and small jobs.">
 <meta name="keywords" content="Belleville IL contractor, O'Fallon IL contractor, deck builder Belleville IL, bathroom remodel Belleville IL, kitchen remodel Belleville IL, landscaping Belleville IL, Metro East construction, fencing Belleville IL, concrete Belleville IL">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800;900&display=optional" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800;900&display=optional" rel="stylesheet"></noscript>
 <link rel="icon" type="image/png" href="/images/branding/logo-square.png">
 <link rel="shortcut icon" href="/images/branding/logo-square.png">
 <link rel="apple-touch-icon" href="/images/branding/logo-square.png">
@@ -43,7 +50,7 @@
 <link rel="dns-prefetch" href="https://formsubmit.co">
 <link rel="dns-prefetch" href="https://unpkg.com">
 <link rel="preconnect" href="https://formsubmit.co" crossorigin>
-<link rel="stylesheet" href="styles.css?v=20260702a">
+<link rel="stylesheet" href="styles.css?v=20260707a">
 <style>
 /* ── Revenue Engine Additions ── */
 .pricing-anchors{background:linear-gradient(135deg,#1a1a1a 0%,#2a1a1a 100%);border-top:3px solid #c8102e;border-bottom:3px solid #c8102e;padding:1.25rem 1.5rem;text-align:center}
@@ -262,7 +269,22 @@
 </script>
 <link rel="stylesheet" href="/brand-refresh.css?v=20260701a">
 <!-- Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","weti9tqt5q");</script>
+<script>
+  (function(){
+    function loadClarity(){
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window,document,"clarity","script","weti9tqt5q");
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadClarity, { timeout: 3500 });
+    } else {
+      setTimeout(loadClarity, 2500);
+    }
+  })();
+</script>
 </head>
 <body class="home-page"><!-- NAV -->
 <nav class="nav" id="nav">

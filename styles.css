@@ -3124,7 +3124,12 @@ body.home-page {
   }
 
   .home-hero {
+    background: linear-gradient(180deg, rgba(247,243,234,.99) 0%, rgba(247,243,234,.96) 100%);
     padding-top: calc(var(--nav-h) + 1.2rem);
+  }
+
+  .home-hero-media {
+    display: none;
   }
 
   .home-hero h1 {
@@ -3211,6 +3216,15 @@ body.home-page {
 .home-page main {
   display: flex;
   flex-direction: column;
+}
+
+.home-page {
+  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.home-page main > section:not(.home-hero) {
+  content-visibility: auto;
+  contain-intrinsic-size: 760px;
 }
 
 .home-page .home-hero { order: 1; }
