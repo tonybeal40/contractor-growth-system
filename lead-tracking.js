@@ -2,6 +2,7 @@
   const measurementIds = ['G-35DEM1MGDT', 'GT-WPQ8Z726'];
   const clarityId = 'weti9tqt5q';
   const doc = document;
+  const delayAnalytics = window.ALLPRO_DELAY_ANALYTICS === true;
 
   function ensureDataLayer() {
     window.dataLayer = window.dataLayer || [];
@@ -32,10 +33,12 @@
     doc.head.appendChild(script);
   }
 
-  appendAsyncScript(
-    `https://www.googletagmanager.com/gtag/js?id=${measurementIds[0]}`,
-    'googletagmanager.com/gtag/js'
-  );
+  if (!delayAnalytics) {
+    appendAsyncScript(
+      `https://www.googletagmanager.com/gtag/js?id=${measurementIds[0]}`,
+      'googletagmanager.com/gtag/js'
+    );
+  }
 
   function dataLayerHas(command, id) {
     return ensureDataLayer().some(function (item) {
@@ -43,19 +46,19 @@
     });
   }
 
-  if (!dataLayerHas('js')) {
+  if (!delayAnalytics && !dataLayerHas('js')) {
     window.gtag('js', new Date());
   }
 
   window.__allProGtagConfiguredIds = window.__allProGtagConfiguredIds || {};
   measurementIds.forEach(function (id) {
-    if (!window.__allProGtagConfiguredIds[id] && !dataLayerHas('config', id)) {
+    if (!delayAnalytics && !window.__allProGtagConfiguredIds[id] && !dataLayerHas('config', id)) {
       window.gtag('config', id);
       window.__allProGtagConfiguredIds[id] = true;
     }
   });
 
-  if (!window.clarity && !hasScriptMatch(`clarity.ms/tag/${clarityId}`)) {
+  if (!delayAnalytics && !window.clarity && !hasScriptMatch(`clarity.ms/tag/${clarityId}`)) {
     window.clarity =
       window.clarity ||
       function () {
