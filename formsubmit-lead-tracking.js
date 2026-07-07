@@ -516,7 +516,7 @@
       });
 
       logForm.submit();
-      setTimeout(finish, 1700);
+      setTimeout(finish, 5200);
     });
   }
 
@@ -577,7 +577,7 @@
         submitToCustomEndpoint(form, snapshot).catch(function () {
           console.warn("Custom endpoint logging failed; continuing to FormSubmit.");
         }),
-        shortTimeout(1600)
+        shortTimeout(6000)
       ]).finally(function () {
         form.dataset.allproNativeSubmit = "true";
         nativeSubmit(form);
