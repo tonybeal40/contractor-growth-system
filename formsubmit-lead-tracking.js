@@ -473,9 +473,23 @@
 
   function encodeForEndpoint(data) {
     const params = new URLSearchParams();
+    const skipKeys = {
+      "_blacklist": true,
+      "_captcha": true,
+      "_cc": true,
+      "_next": true,
+      "_subject": true,
+      "_template": true
+    };
     Object.keys(data).forEach(function (key) {
+      if (skipKeys[key]) {
+        return;
+      }
       if (data[key] !== undefined && data[key] !== null) {
-        params.append(key, String(data[key]));
+        const value = String(data[key]).trim();
+        if (value || key === "_honey") {
+          params.append(key, value);
+        }
       }
     });
     return params;
@@ -547,7 +561,7 @@
         submitToCustomEndpoint(form, snapshot).catch(function () {
           console.warn("Custom endpoint logging failed; continuing to FormSubmit.");
         }),
-        shortTimeout(6000)
+        shortTimeout(11000)
       ]).finally(function () {
         form.dataset.allproNativeSubmit = "true";
         nativeSubmit(form);
