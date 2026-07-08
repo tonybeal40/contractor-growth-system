@@ -26,6 +26,19 @@ This is the working checklist for All-Pro Metro East Construction, Bill's List M
 
 The next phase is not more random pages. It is a weekly loop that turns the site, Google Business Profile, reviews, photos, and follow-up speed into a lead engine.
 
+### CRM Decision: Keep Google Sheet First
+
+Formspree + Notion is useful as a simple visual CRM, but it should not replace the current tested flow yet. The current production path already captures leads through FormSubmit, email/text alerts, and the All-Pro Google Sheet.
+
+Use this order:
+
+1. Keep FormSubmit + Google Sheet as the primary source of truth.
+2. Use the Sheet daily for fast follow-up and recovery.
+3. Add Notion later as a secondary board only if lead volume grows enough that New -> Contacted -> Qualified -> Won/Lost tracking is needed.
+4. Do not switch form providers until another full end-to-end test proves email, text, sheet/CRM capture, and thank-you routing.
+
+If Notion is added later, send copies of the same lead fields into Notion: name, phone, email, city, service, source page, timestamp, status, notes, and follow-up date.
+
 Daily:
 - Check Gmail for `New All-Pro Lead` messages.
 - Check `All-Pro Leads` -> `Leads` for website form rows.
