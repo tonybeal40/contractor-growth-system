@@ -16,16 +16,42 @@ This is the working checklist for All-Pro Metro East Construction, Bill's List M
 - IndexNow key is present for Bing indexing and can be used after important page changes.
 - FormSubmit routes public forms to William, Tony Gmail copy, and Tony SMS gateway copies.
 - Google Apps Script endpoint responds with `{"ok":true,"service":"All-Pro Form Handler"}`.
+- Live contact form proof completed on 2026-07-07:
+  - Google Sheet row captured in `All-Pro Leads` -> `Leads`.
+  - FormSubmit email received in Gmail.
+  - Bill is primary recipient, Tony is copied, and 618-292-5320 carrier gateway addresses are copied.
+  - Thank-you redirect works.
+
+## Phase 2 Lead Growth System
+
+The next phase is not more random pages. It is a weekly loop that turns the site, Google Business Profile, reviews, photos, and follow-up speed into a lead engine.
+
+Daily:
+- Check Gmail for `New All-Pro Lead` messages.
+- Check `All-Pro Leads` -> `Leads` for website form rows.
+- Call or text every new lead as fast as possible.
+- Mark lead status: new, contacted, estimate set, won, lost, spam, or vendor pitch.
+- Save any useful project photos or before/after notes for future proof sections.
+
+Weekly:
+- Add one real project photo set to the site or Google Business Profile.
+- Ask at least three happy customers for a review using `review.html` or `review-request.html`.
+- Improve one money page with project proof, FAQs, or a clearer CTA.
+- Submit changed URLs through IndexNow.
+- Check Search Console and Bing Webmaster Tools for indexing and snippet issues.
+
+Monthly:
+- Review which pages produced calls/forms.
+- Pick the next service/city pair to strengthen.
+- Add one homeowner guide that answers a real search question.
+- Add one contractor partner target list for Bill's List / Wild Bill outreach.
 
 ## Highest Priority Account Tasks
 
-1. Run one real test lead from the live website.
-   - Page: `https://allprometroeastconstruction.com/contact.html`
-   - Use a clear subject/details like `CODEX TEST LEAD - safe to delete`.
-   - Confirm William Gmail receives it.
-   - Confirm Tony Gmail receives it.
-   - Confirm Tony phone receives the SMS gateway alert at `618-292-5320`.
-   - Confirm the Google Sheet/App Script log captures the row.
+1. Redeploy the cleaned-up Apps Script when ready.
+   - The current live script captures rows.
+   - The repo copy aligns the intended column order better.
+   - Redeploy from `allpro-form-handler.gs` when you are ready to clean up future Sheet columns.
 
 2. Add Microsoft Ads UET once the tag ID is available.
    - Needed from Microsoft Ads: UET tag ID.
