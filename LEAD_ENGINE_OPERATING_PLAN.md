@@ -1,6 +1,6 @@
 # All-Pro Lead Engine Operating Plan
 
-Last updated: 2026-07-07
+Last updated: 2026-07-08
 
 This is the working checklist for All-Pro Metro East Construction, Bill's List Metro East, Codex, OpenClaw, and Wild Bill.
 
@@ -25,6 +25,10 @@ This is the working checklist for All-Pro Metro East Construction, Bill's List M
 ## Phase 2 Lead Growth System
 
 The next phase is not more random pages. It is a weekly loop that turns the site, Google Business Profile, reviews, photos, and follow-up speed into a lead engine.
+
+Current execution pack:
+
+- `NEXT_PHASE_7_DAY_LEAD_ACTION_PACK_2026-07-08.md`
 
 ### CRM Decision: Keep Google Sheet First
 
