@@ -406,6 +406,12 @@ h1 {
   font-weight: 900;
 }
 
+.estimate-form .optional-label {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
 .estimate-form .consent-row {
   display: grid;
   grid-template-columns: 20px minmax(0, 1fr);
