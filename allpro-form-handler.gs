@@ -50,8 +50,8 @@ function isInternalOrTest(data) {
   return !hasContact;
 }
 var CONFIG = {
-  leadEmail:   "williamosessionallpro@gmail.com",  // Bill gets every lead
-  ownerEmail:  "tonybeal40@gmail.com",             // Tony gets a copy
+  leadEmail:   "tonybeal40@gmail.com",             // Tony gets every lead
+  ownerEmail:  "tonybeal40@gmail.com",             // Tony owner copy; deduped at send time
   smsEmails:   [
     "6182925320@tmomail.net",
     "6182925320@txt.att.net",
@@ -254,18 +254,37 @@ function sendLeadNotification(data, subject, isReview) {
   var body = buildEmailBody(data);
   var replyTo = data["email"] || data["replyto"] || "";
   var to = isReview ? CONFIG.reviewEmail : CONFIG.leadEmail;
-  var cc = isReview
-    ? CONFIG.ownerEmail
-    : [CONFIG.ownerEmail].concat(CONFIG.smsEmails || []).join(",");
-
-  MailApp.sendEmail({
+  var cc = uniqueEmailCsv(isReview
+    ? [CONFIG.ownerEmail]
+    : [CONFIG.ownerEmail].concat(CONFIG.smsEmails || []), to);
+  var options = {
     to: to,
-    cc: cc,
-    replyTo: replyTo,
     subject: subject,
     body: body,
     name: "All-Pro Lead Handler"
-  });
+  };
+  if (cc) options.cc = cc;
+  if (replyTo) options.replyTo = replyTo;
+  MailApp.sendEmail(options);
+}
+
+function uniqueEmailCsv(values, excludeCsv) {
+  var seen = {};
+  var output = [];
+  var exclude = String(excludeCsv || "").toLowerCase().split(",");
+  for (var e = 0; e < exclude.length; e++) {
+    var excluded = exclude[e].trim();
+    if (excluded) seen[excluded] = true;
+  }
+  for (var i = 0; i < values.length; i++) {
+    var email = String(values[i] || "").trim();
+    var key = email.toLowerCase();
+    if (email && key.indexOf("@") > -1 && !seen[key]) {
+      seen[key] = true;
+      output.push(email);
+    }
+  }
+  return output.join(",");
 }
 
 function buildThankYouUrl(data) {

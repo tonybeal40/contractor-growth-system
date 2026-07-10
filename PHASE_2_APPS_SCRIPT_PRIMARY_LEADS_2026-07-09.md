@@ -2,7 +2,7 @@
 
 Date: 2026-07-09
 
-Objective: make the Google Apps Script endpoint the primary lead engine for All-Pro forms. The endpoint should log leads to the Google Sheet and send Bill/Tony/SMS notifications. FormSubmit stays active until this is proven.
+Objective: make the Google Apps Script endpoint the primary lead engine for All-Pro forms. The endpoint should log leads to the Google Sheet and send Tony email/SMS notifications. FormSubmit stays active until this is proven.
 
 ## Current Verification
 
@@ -37,8 +37,7 @@ The deployed Apps Script is still the older Sheet-only version or does not have 
 7. Approve permissions for Sheets and Mail.
 8. Confirm:
    - a self-test row appears in `Leads`
-   - Bill receives email
-   - Tony receives Gmail copy
+   - Tony receives the lead email
    - Tony receives at least one SMS gateway alert
 9. Go to Deploy -> Manage deployments.
 10. Edit the existing web app deployment.

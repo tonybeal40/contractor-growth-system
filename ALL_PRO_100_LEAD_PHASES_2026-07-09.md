@@ -17,7 +17,7 @@ Completed:
 - Added optional email and website/profile fields to `metro-east-pro-network.html`.
 - Confirmed every public FormSubmit form now has an email field.
 - Confirmed the live Nextdoor test logs to the Sheet.
-- Patched `allpro-form-handler.gs` so Apps Script can send Bill/Tony/SMS notifications itself after redeploy.
+- Patched `allpro-form-handler.gs` so Apps Script can send Tony email/SMS notifications itself after redeploy.
 
 Phase 1 next actions:
 
@@ -39,7 +39,6 @@ Target structure:
 Website form
   -> Apps Script endpoint
   -> Google Sheet
-  -> Bill email
   -> Tony email
   -> Tony SMS gateway alerts
   -> thank-you page
