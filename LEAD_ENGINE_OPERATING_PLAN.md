@@ -29,6 +29,7 @@ The next phase is not more random pages. It is a weekly loop that turns the site
 Current execution pack:
 
 - `NEXT_PHASE_7_DAY_LEAD_ACTION_PACK_2026-07-08.md`
+- `ALL_PRO_100_LEAD_PHASES_2026-07-09.md`
 
 ### CRM Decision: Keep Google Sheet First
 
