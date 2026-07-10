@@ -30,6 +30,7 @@ Current execution pack:
 
 - `NEXT_PHASE_7_DAY_LEAD_ACTION_PACK_2026-07-08.md`
 - `ALL_PRO_100_LEAD_PHASES_2026-07-09.md`
+- `PHASE_2_APPS_SCRIPT_PRIMARY_LEADS_2026-07-09.md`
 
 ### CRM Decision: Keep Google Sheet First
 

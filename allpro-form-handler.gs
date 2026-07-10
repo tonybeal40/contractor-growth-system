@@ -14,6 +14,13 @@
  *  4. Copy the Web App URL (looks like https://script.google.com/macros/s/XXXX/exec)
  *  5. Open formsubmit-lead-tracking.js and paste the URL into CUSTOM_ENDPOINT
  *  6. Push to GitHub — done.
+ *
+ * PHASE 2 DEPLOY:
+ *  1. Paste this full file into the existing All-Pro Apps Script project.
+ *  2. Run phase2SelfTest once and approve permissions.
+ *  3. Deploy → Manage deployments → Edit existing web app → New version.
+ *  4. Keep the same Web App URL.
+ *  5. Test a live form and confirm Sheet + email/SMS before changing forms.
  */
 
 // ── Internal / test emails — never log these ─────────────────────────────────
@@ -62,6 +69,29 @@ function doGet() {
   return ContentService
     .createTextOutput(JSON.stringify({ ok: true, service: "All-Pro Form Handler" }))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+function phase2SelfTest() {
+  var data = {
+    name: "Phase 2 Apps Script Self Test",
+    phone: "618-292-5320",
+    email: "tonybeal40+phase2selftest@gmail.com",
+    city: "Belleville",
+    service: "Phase 2 Lead Engine Verification",
+    message: "PHASE 2 APPS SCRIPT SELF TEST SAFE TO DELETE - verifies Apps Script email, SMS copy, and Sheet logging.",
+    form_name: "Phase 2 Apps Script Self Test",
+    form_slug: "phase-2-apps-script-self-test",
+    page_url: "https://allprometroeastconstruction.com/phase-2-apps-script-self-test",
+    page_path: "/phase-2-apps-script-self-test",
+    lead_source: "apps-script-self-test",
+    first_touch_source: "apps-script-self-test",
+    lead_session_id: "lead-phase2-self-test-" + new Date().getTime(),
+    submission_time_local: new Date().toLocaleString()
+  };
+  var subject = buildSubject(data, false);
+  sendLeadNotification(data, subject, false);
+  logToSheet(data, subject);
+  return { ok: true, subject: subject };
 }
 
 // ── Main handler ──────────────────────────────────────────────────────────────

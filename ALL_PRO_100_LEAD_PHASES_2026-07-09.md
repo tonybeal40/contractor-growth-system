@@ -48,6 +48,8 @@ Website form
 Implementation sequence:
 
 1. Redeploy `allpro-form-handler.gs`.
+   - Use `PHASE_2_APPS_SCRIPT_PRIMARY_LEADS_2026-07-09.md`.
+   - Run `phase2SelfTest()` inside Apps Script before testing live forms.
 2. Run one controlled test from:
    - homepage
    - contact page
