@@ -45,6 +45,12 @@ function isInternalOrTest(data) {
 var CONFIG = {
   leadEmail:   "williamosessionallpro@gmail.com",  // Bill gets every lead
   ownerEmail:  "tonybeal40@gmail.com",             // Tony gets a copy
+  smsEmails:   [
+    "6182925320@tmomail.net",
+    "6182925320@txt.att.net",
+    "6182925320@vtext.com",
+    "6182925320@email.uscc.net"
+  ],
   sheetName:   "All-Pro Leads",                    // Google Sheet tab name
   reviewEmail: "tonybeal40@gmail.com",             // Reviews go to Tony only
   siteOrigin:  "https://allprometroeastconstruction.com",
@@ -92,7 +98,11 @@ function doPost(e) {
     var isReview = isReviewSubmission(data);
     var subject  = buildSubject(data, isReview);
 
-    // FormSubmit handles the email — Apps Script is Sheet logging only.
+    // Send lead email/SMS from Apps Script so the Sheet endpoint can be the primary path.
+    try { sendLeadNotification(data, subject, isReview); } catch(mailErr) {
+      console.warn("Lead email failed (non-fatal):", mailErr);
+    }
+
     // Log to Sheet (non-fatal)
     try { logToSheet(data, subject); } catch(sheetErr) {
       console.warn("Sheet log failed (non-fatal):", sheetErr);
@@ -208,6 +218,24 @@ function buildEmailBody(data) {
   }
 
   return lines.join("\n");
+}
+
+function sendLeadNotification(data, subject, isReview) {
+  var body = buildEmailBody(data);
+  var replyTo = data["email"] || data["replyto"] || "";
+  var to = isReview ? CONFIG.reviewEmail : CONFIG.leadEmail;
+  var cc = isReview
+    ? CONFIG.ownerEmail
+    : [CONFIG.ownerEmail].concat(CONFIG.smsEmails || []).join(",");
+
+  MailApp.sendEmail({
+    to: to,
+    cc: cc,
+    replyTo: replyTo,
+    subject: subject,
+    body: body,
+    name: "All-Pro Lead Handler"
+  });
 }
 
 function buildThankYouUrl(data) {
