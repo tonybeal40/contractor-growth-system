@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
@@ -32,3 +34,8 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Notify IndexNow about changed pages
+        run: >-
+          python scripts/submit_indexnow.py
+          --base "${{ github.event.before }}"
+          --head "${{ github.sha }}"

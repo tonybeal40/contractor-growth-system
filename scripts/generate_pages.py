@@ -127,8 +127,10 @@ def build_jsonld(service: Service, city: City, proof: dict[str, Any], url: str) 
         },
         "address": {
             "@type": "PostalAddress",
-            "addressLocality": city.city,
-            "addressRegion": city.state,
+            "streetAddress": "1115 Priscilla Ct",
+            "addressLocality": "New Athens",
+            "addressRegion": "IL",
+            "postalCode": "62264",
             "addressCountry": "US",
         },
         "image": proof["image_urls"][:3],

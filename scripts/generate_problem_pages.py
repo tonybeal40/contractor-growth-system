@@ -50,8 +50,10 @@ def jsonld(page: dict[str, Any]) -> str:
                 "areaServed": {"@type": "City", "name": f"{page['city']}, {page['state']}"},
                 "address": {
                     "@type": "PostalAddress",
-                    "addressLocality": page["city"],
-                    "addressRegion": page["state"],
+                    "streetAddress": "1115 Priscilla Ct",
+                    "addressLocality": "New Athens",
+                    "addressRegion": "IL",
+                    "postalCode": "62264",
                     "addressCountry": "US",
                 },
                 "image": f"{SITE}/all-pro-og-image.png",

@@ -1,6 +1,10 @@
 User-agent: *
 Allow: /
 
+# Allow OpenAI's search crawler to surface and cite public pages in ChatGPT.
+User-agent: OAI-SearchBot
+Allow: /
+
 # Private client preview pages — do not index
 Disallow: /lawnmex-outreach-preview-m3t7k4.html
 Disallow: /lawnmex-discovery-questions-m3t7k4.html
