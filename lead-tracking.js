@@ -108,6 +108,39 @@
     });
   }
 
+  (function trackAiReferralLanding() {
+    if (!doc.referrer) {
+      return;
+    }
+
+    let hostname = '';
+
+    try {
+      hostname = new URL(doc.referrer).hostname.replace(/^www\./, '');
+    } catch (error) {
+      return;
+    }
+
+    const sources = [
+      ['chatgpt.com', 'chatgpt'],
+      ['openai.com', 'chatgpt'],
+      ['perplexity.ai', 'perplexity'],
+      ['copilot.microsoft.com', 'copilot'],
+      ['gemini.google.com', 'gemini'],
+      ['claude.ai', 'claude'],
+    ];
+    const match = sources.find(function (entry) {
+      return hostname === entry[0] || hostname.endsWith(`.${entry[0]}`);
+    });
+
+    if (match) {
+      track('ai_referral_landing', {
+        ai_source: match[1],
+        referral_host: hostname,
+      });
+    }
+  })();
+
   doc.addEventListener(
     'click',
     function (event) {

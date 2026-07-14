@@ -1,11 +1,8 @@
 User-agent: *
+Content-Signal: search=yes,ai-input=yes,ai-train=no,use=reference
 Allow: /
 
-# Allow OpenAI's search crawler to surface and cite public pages in ChatGPT.
-User-agent: OAI-SearchBot
-Allow: /
-
-# Private client preview pages — do not index
+# Private client preview pages - do not index
 Disallow: /lawnmex-outreach-preview-m3t7k4.html
 Disallow: /lawnmex-discovery-questions-m3t7k4.html
 Disallow: /lawnmex-pricing-m3t7k4.html
@@ -29,6 +26,39 @@ Disallow: /REVIEW-PLAYBOOK.md
 Disallow: /ALL_PRO_SEO_PRO_PLAYBOOK.md
 
 # Internal research, generated output, client demos, and support files
+Disallow: /.firecrawl/
+Disallow: /bill-docs-k7m2v9/
+Disallow: /demo-template/
+Disallow: /lawnmex/
+Disallow: /output/
+Disallow: /outputs/
+
+# Explicitly allow OpenAI Search to cite public pages while retaining the
+# same exclusions for private and internal paths.
+User-agent: OAI-SearchBot
+Content-Signal: search=yes,ai-input=yes,ai-train=no,use=reference
+Allow: /
+Disallow: /lawnmex-outreach-preview-m3t7k4.html
+Disallow: /lawnmex-discovery-questions-m3t7k4.html
+Disallow: /lawnmex-pricing-m3t7k4.html
+Disallow: /lawnmex-news-kmov-jan2026.html
+Disallow: /lawnmex-news-kmov-nov2022.html
+Disallow: /lawnmex-news-kmov-winter-2022.html
+Disallow: /allpro-crm-private-a9k3r7.html
+Disallow: /allpro-email-outreach-private-r4h8.html
+Disallow: /allpro-outreach-preview-b4s8w2.html
+Disallow: /unsubscribe-allpro-r4h8.html
+Disallow: /branding-kit.html
+Disallow: /review-card.html
+Disallow: /change-order-bj-floor.html
+Disallow: /marketing-dashboard.html
+Disallow: /linkedin-growth-system.html
+Disallow: /OUTREACH-ACTIONS.md
+Disallow: /GBP-AND-ADS.md
+Disallow: /NEXT-PAGE-PLAN.md
+Disallow: /PROOF-ENHANCEMENTS.md
+Disallow: /REVIEW-PLAYBOOK.md
+Disallow: /ALL_PRO_SEO_PRO_PLAYBOOK.md
 Disallow: /.firecrawl/
 Disallow: /bill-docs-k7m2v9/
 Disallow: /demo-template/

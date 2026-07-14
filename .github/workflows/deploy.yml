@@ -22,9 +22,13 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
+      - name: Validate SEO and priority lead pages
+        run: |
+          python scripts/seo_audit.py --fail-under 95
+          python scripts/validate_priority_lead_pages.py
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

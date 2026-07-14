@@ -13,12 +13,9 @@
     leadInboxEmail: "williamosessionallpro@gmail.com",
     reviewInbox: "https://formsubmit.co/tonybeal40@gmail.com",
     ownerCopy: "tonybeal40@gmail.com",
-    smsCopies: [
-      "6182925320@tmomail.net",
-      "6182925320@txt.att.net",
-      "6182925320@vtext.com",
-      "6182925320@email.uscc.net"
-    ],
+    // Carrier email-to-text gateways are no longer reliable. Keep lead email
+    // delivery clean until a real SMS provider is connected.
+    smsCopies: [],
     blacklist: "viagra,casino,payday loan,crypto investment,seo service"
   };
   const storageKeys = {
@@ -86,6 +83,26 @@
 
     if (!referrerHost) {
       return { source: "direct", detail: "" };
+    }
+
+    if (/chatgpt\.com$|openai\.com$/.test(referrerHost)) {
+      return { source: "chatgpt-ai", detail: referrerHost };
+    }
+
+    if (/perplexity\.ai$/.test(referrerHost)) {
+      return { source: "perplexity-ai", detail: referrerHost };
+    }
+
+    if (/copilot\.microsoft\.com$/.test(referrerHost)) {
+      return { source: "copilot-ai", detail: referrerHost };
+    }
+
+    if (/gemini\.google\.com$/.test(referrerHost)) {
+      return { source: "gemini-ai", detail: referrerHost };
+    }
+
+    if (/claude\.ai$/.test(referrerHost)) {
+      return { source: "claude-ai", detail: referrerHost };
     }
 
     if (/google\./.test(referrerHost)) {
