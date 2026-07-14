@@ -8,6 +8,7 @@
 }
 
 .remodel-lead-page {
+  --font-sans: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--remodel-cream);
   color: var(--remodel-charcoal);
   color-scheme: light;
@@ -108,7 +109,7 @@
 .remodel-lead-page .remodel-hero-actions .btn-primary {
   border: 1px solid var(--remodel-copper);
   background: var(--remodel-copper) !important;
-  color: #fff !important;
+  color: #111 !important;
 }
 
 .remodel-lead-page .remodel-hero-actions .btn-call {
@@ -350,7 +351,7 @@
   border: 1px solid var(--remodel-copper);
   border-radius: 4px;
   background: var(--remodel-copper);
-  color: #fff;
+  color: #111 !important;
   cursor: pointer;
   font-weight: 800;
 }
@@ -361,6 +362,33 @@
   color: #657169 !important;
   font-size: .76rem !important;
   line-height: 1.5 !important;
+}
+
+.remodel-lead-page .remodel-form-legal a,
+.remodel-lead-page .sidebar-card > p > a {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  padding-block: 4px;
+}
+
+.remodel-lead-page .content-body > .btn-primary {
+  background: var(--remodel-copper) !important;
+  color: #111 !important;
+}
+
+.remodel-lead-page .footer .nav-logo span,
+.remodel-lead-page .footer .nav-logo a {
+  color: #fff !important;
+}
+
+.remodel-lead-page .footer .nav-logo small {
+  color: #d8e2dd !important;
+}
+
+.remodel-lead-page .footer .social-nextdoor span {
+  color: #111 !important;
+  font-size: 10px !important;
 }
 
 .remodel-lead-page .sidebar-card ul {

@@ -16,6 +16,9 @@ PAGES = (
     "kitchen-remodel-ofallon-il.html",
     "bathroom-remodel-ofallon-il.html",
 )
+FORM_ACTION = "https://formsubmit.co/williamosessionallpro@gmail.com"
+ANALYTICS_LOADER = "analytics-loader.js?v=20260714a"
+REMODEL_STYLESHEET = "remodel-lead-pages.css?v=20260714b"
 
 
 def value(pattern: str, html: str) -> str:
@@ -35,8 +38,8 @@ def check_page(filename: str) -> list[str]:
         errors.append(f"description length is {len(description)}")
     if len(re.findall(r"<h1\b", html, re.IGNORECASE)) != 1:
         errors.append("must contain exactly one H1")
-    if 'action="https://formsubmit.co/' not in html:
-        errors.append("missing FormSubmit action")
+    if f'action="{FORM_ACTION}"' not in html:
+        errors.append("missing the approved FormSubmit action")
     if not re.search(r"<form\b[^>]*\bmethod=\"post\"", html, re.IGNORECASE):
         errors.append("lead form must use POST")
     if not re.search(r"<form\b[^>]*\bdata-form=\"[^\"]+\"", html, re.IGNORECASE):
@@ -46,8 +49,16 @@ def check_page(filename: str) -> list[str]:
             errors.append(f"missing {field} field")
     if "formsubmit-lead-tracking.js" not in html:
         errors.append("missing shared form tracking script")
-    if "remodel-lead-pages.css" not in html:
-        errors.append("missing shared remodel stylesheet")
+    if REMODEL_STYLESHEET not in html:
+        errors.append("missing current shared remodel stylesheet")
+    if ANALYTICS_LOADER not in html:
+        errors.append("missing deferred analytics loader")
+    if "googletagmanager.com/gtag/js" in html or "clarity.ms/tag/" in html:
+        errors.append("contains a render-blocking vendor analytics loader")
+    if "fonts.googleapis.com" in html:
+        errors.append("contains a render-blocking Google Fonts request")
+    if html.find(ANALYTICS_LOADER) > html.find("lead-tracking.js?v=20260714a"):
+        errors.append("analytics loader must run before lead tracking")
     if 'href="tel:6185810676"' not in html:
         errors.append("missing primary telephone link")
 
