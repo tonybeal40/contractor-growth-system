@@ -37,6 +37,16 @@
   color: var(--remodel-charcoal);
 }
 
+.remodel-lead-page .nav-social {
+  display: none !important;
+}
+
+.remodel-lead-page .nav .nav-cta {
+  border-color: var(--remodel-copper) !important;
+  background: var(--remodel-copper) !important;
+  color: #111 !important;
+}
+
 .remodel-lead-page .page-hero::before,
 .remodel-lead-page .page-hero-inner::before {
   display: none;

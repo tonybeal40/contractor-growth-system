@@ -18,7 +18,7 @@ PAGES = (
 )
 FORM_ACTION = "https://formsubmit.co/williamosessionallpro@gmail.com"
 ANALYTICS_LOADER = "analytics-loader.js?v=20260714a"
-REMODEL_STYLESHEET = "remodel-lead-pages.css?v=20260714b"
+REMODEL_STYLESHEET = "remodel-lead-pages.css?v=20260714c"
 
 
 def value(pattern: str, html: str) -> str:
@@ -59,6 +59,8 @@ def check_page(filename: str) -> list[str]:
         errors.append("contains a render-blocking Google Fonts request")
     if html.find(ANALYTICS_LOADER) > html.find("lead-tracking.js?v=20260714a"):
         errors.append("analytics loader must run before lead tracking")
+    if html.count("<svg") != html.count("</svg>"):
+        errors.append("contains unbalanced SVG markup")
     if 'href="tel:6185810676"' not in html:
         errors.append("missing primary telephone link")
 
