@@ -20,6 +20,8 @@ npx wrangler login
 npx wrangler deploy
 ```
 
+On Windows, `deploy-cloudflare.cmd` runs the login and production deployment in one guided window.
+
 Production route:
 
 ```text
