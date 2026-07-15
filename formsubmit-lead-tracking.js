@@ -22,6 +22,7 @@
     sessionId: "allpro_lead_session_id",
     firstTouch: "allpro_first_touch"
   };
+  const initializedForms = new WeakSet();
 
   function safeStorage() {
     try {
@@ -586,13 +587,53 @@
     });
   }
 
-  function init() {
-    const forms = document.querySelectorAll(formSelector);
-
-    if (!forms.length) {
+  function registerForm(form, snapshot) {
+    if (!form || initializedForms.has(form)) {
       return;
     }
 
+    initializedForms.add(form);
+    form.setAttribute("data-allpro-lead-form-ready", "true");
+
+    var submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
+    if (submitBtn && submitBtn.textContent) {
+      submitBtn.setAttribute("data-original-text", submitBtn.textContent.trim());
+    }
+    ensureLeadDisclosures(form, getFormName(form));
+    populateTracking(form, snapshot);
+    interceptForm(form, snapshot);
+  }
+
+  function watchForForms(snapshot) {
+    if (typeof MutationObserver !== "function") {
+      return;
+    }
+
+    const observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (!node || node.nodeType !== 1) {
+            return;
+          }
+
+          if (node.matches && node.matches(formSelector)) {
+            registerForm(node, snapshot);
+          }
+
+          if (node.querySelectorAll) {
+            node.querySelectorAll(formSelector).forEach(function (form) {
+              registerForm(form, snapshot);
+            });
+          }
+        });
+      });
+    });
+
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+  }
+
+  function init() {
+    const forms = document.querySelectorAll(formSelector);
     const storage = safeStorage();
     const params = readQueryParams();
     const currentSource = deriveSource(params, document.referrer || "");
@@ -606,14 +647,9 @@
     };
 
     forms.forEach(function (form) {
-      var submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
-      if (submitBtn && submitBtn.textContent) {
-        submitBtn.setAttribute("data-original-text", submitBtn.textContent.trim());
-      }
-      ensureLeadDisclosures(form, getFormName(form));
-      populateTracking(form, snapshot);
-      interceptForm(form, snapshot);
+      registerForm(form, snapshot);
     });
+    watchForForms(snapshot);
   }
 
   if (document.readyState === "loading") {

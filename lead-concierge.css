@@ -1,0 +1,451 @@
+:root {
+  --alc-charcoal: #1f2933;
+  --alc-cream: #f7f3ea;
+  --alc-green: #2f5d50;
+  --alc-copper: #c96a26;
+  --alc-white: #ffffff;
+  --alc-border: #d7d9d3;
+  --alc-muted: #5f6b66;
+  --alc-danger: #a83a2a;
+}
+
+.alc-launcher {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 9996;
+  min-height: 50px;
+  max-width: min(280px, calc(100vw - 32px));
+  border: 1px solid #254a40;
+  border-radius: 6px;
+  padding: 12px 18px;
+  background: var(--alc-green);
+  color: var(--alc-white);
+  box-shadow: 0 10px 28px rgba(31, 41, 51, 0.24);
+  font: 800 16px/1.2 Arial, Helvetica, sans-serif;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+
+.alc-launcher:hover,
+.alc-launcher:focus-visible {
+  background: #254a40;
+}
+
+.alc-launcher:focus-visible,
+.alc-dialog button:focus-visible,
+.alc-dialog input:focus-visible,
+.alc-dialog select:focus-visible,
+.alc-dialog textarea:focus-visible {
+  outline: 3px solid #f2b27d;
+  outline-offset: 2px;
+}
+
+.alc-backdrop[hidden] {
+  display: none;
+}
+
+.alc-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(20, 27, 32, 0.72);
+}
+
+.alc-dialog {
+  width: min(640px, 100%);
+  max-height: calc(100dvh - 40px);
+  overflow: auto;
+  border: 1px solid #bfc4bd;
+  border-radius: 8px;
+  background: var(--alc-cream);
+  color: var(--alc-charcoal);
+  box-shadow: 0 22px 65px rgba(9, 17, 22, 0.34);
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 0;
+}
+
+.alc-dialog *,
+.alc-dialog *::before,
+.alc-dialog *::after {
+  box-sizing: border-box;
+}
+
+.alc-dialog-header {
+  position: relative;
+  padding: 22px 64px 16px 24px;
+  border-bottom: 1px solid var(--alc-border);
+  background: var(--alc-white);
+}
+
+.alc-eyebrow {
+  margin: 0 0 6px;
+  color: var(--alc-green);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.alc-dialog-title {
+  margin: 0;
+  color: var(--alc-charcoal);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 28px;
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+.alc-status {
+  margin: 8px 0 0;
+  color: var(--alc-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.alc-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid var(--alc-border);
+  border-radius: 50%;
+  background: var(--alc-white);
+  color: var(--alc-charcoal);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.alc-progress {
+  height: 5px;
+  background: #e0e3dc;
+}
+
+.alc-progress-bar {
+  display: block;
+  width: 16.666%;
+  height: 100%;
+  background: var(--alc-copper);
+  transition: width 180ms ease;
+}
+
+.alc-form {
+  margin: 0;
+  padding: 0;
+}
+
+.alc-step {
+  min-height: 328px;
+  margin: 0;
+  padding: 24px;
+  border: 0;
+}
+
+.alc-step[hidden] {
+  display: none;
+}
+
+.alc-step legend {
+  width: 100%;
+  margin: 0 0 8px;
+  padding: 0;
+  color: var(--alc-charcoal);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: 0;
+}
+
+.alc-step-copy {
+  margin: 0 0 18px;
+  color: var(--alc-muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.alc-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.alc-choice {
+  position: relative;
+  min-width: 0;
+}
+
+.alc-choice input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.alc-choice span {
+  display: flex;
+  min-height: 54px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid #bfc6bf;
+  border-radius: 6px;
+  background: var(--alc-white);
+  color: var(--alc-charcoal);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
+.alc-choice input:checked + span {
+  border-color: var(--alc-green);
+  background: #e8f0ec;
+  box-shadow: inset 0 0 0 1px var(--alc-green);
+  color: #173c32;
+}
+
+.alc-choice input:focus-visible + span {
+  outline: 3px solid #f2b27d;
+  outline-offset: 2px;
+}
+
+.alc-field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.alc-field {
+  min-width: 0;
+}
+
+.alc-field-full {
+  grid-column: 1 / -1;
+}
+
+.alc-field label,
+.alc-question-label {
+  display: block;
+  margin: 0 0 6px;
+  color: var(--alc-charcoal);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.alc-field input,
+.alc-field select,
+.alc-field textarea,
+.alc-question-answer {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid #aeb7b0;
+  border-radius: 5px;
+  padding: 11px 12px;
+  background: var(--alc-white);
+  color: var(--alc-charcoal);
+  font: 16px/1.4 Arial, Helvetica, sans-serif;
+  letter-spacing: 0;
+}
+
+.alc-field textarea,
+.alc-question-answer {
+  min-height: 118px;
+  resize: vertical;
+}
+
+.alc-ai-question {
+  margin: 0 0 16px;
+  padding: 16px;
+  border-left: 4px solid var(--alc-copper);
+  background: var(--alc-white);
+  color: var(--alc-charcoal);
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.alc-summary {
+  margin: 0 0 18px;
+  padding: 16px;
+  border: 1px solid var(--alc-border);
+  border-radius: 6px;
+  background: var(--alc-white);
+}
+
+.alc-summary strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--alc-green);
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.alc-summary p {
+  margin: 0;
+  color: var(--alc-charcoal);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.alc-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 12px 0;
+  color: var(--alc-charcoal);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.alc-consent input {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+.alc-legal {
+  margin: 12px 0 0;
+  color: var(--alc-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.alc-legal a {
+  color: var(--alc-green);
+  font-weight: 800;
+}
+
+.alc-actions {
+  display: flex;
+  min-height: 70px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 24px;
+  border-top: 1px solid var(--alc-border);
+  background: var(--alc-white);
+}
+
+.alc-button {
+  min-height: 46px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 10px 18px;
+  font: 800 15px/1.2 Arial, Helvetica, sans-serif;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+
+.alc-button-primary {
+  margin-left: auto;
+  border-color: #a75118;
+  background: var(--alc-copper);
+  color: var(--alc-white);
+}
+
+.alc-button-primary:hover {
+  background: #aa531d;
+}
+
+.alc-button-secondary {
+  border-color: #9fa9a2;
+  background: var(--alc-white);
+  color: var(--alc-green);
+}
+
+.alc-button[disabled] {
+  cursor: wait;
+  opacity: 0.68;
+}
+
+.alc-error {
+  min-height: 20px;
+  margin: 0;
+  color: var(--alc-danger);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+body.alc-dialog-open {
+  overflow: hidden;
+}
+
+@media (max-width: 720px) {
+  .alc-launcher {
+    position: static;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    min-height: 46px;
+    max-width: none;
+    margin: 0;
+    padding: 10px 14px;
+    box-shadow: none;
+    font-size: 14px;
+  }
+
+  .alc-backdrop {
+    align-items: end;
+    padding: 8px 8px calc(72px + env(safe-area-inset-bottom));
+  }
+
+  .alc-dialog {
+    max-height: calc(100dvh - 88px - env(safe-area-inset-bottom));
+  }
+
+  .alc-dialog-header {
+    padding: 18px 56px 14px 18px;
+  }
+
+  .alc-dialog-title {
+    font-size: 24px;
+  }
+
+  .alc-close {
+    top: 12px;
+    right: 12px;
+  }
+
+  .alc-step {
+    min-height: 0;
+    padding: 20px 18px;
+  }
+
+  .alc-step legend {
+    font-size: 21px;
+  }
+
+  .alc-choice-grid,
+  .alc-field-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .alc-actions {
+    position: sticky;
+    bottom: 0;
+    min-height: 64px;
+    padding: 10px 18px;
+  }
+
+  .alc-button {
+    min-width: 104px;
+    padding: 10px 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alc-progress-bar {
+    transition: none;
+  }
+}

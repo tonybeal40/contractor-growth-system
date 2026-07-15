@@ -29,6 +29,7 @@ jobs:
         run: |
           python scripts/seo_audit.py --fail-under 95
           python scripts/validate_priority_lead_pages.py
+          node --test workers/lead-concierge/test/*.test.js
       - name: Setup Pages
         uses: actions/configure-pages@v6
       - name: Upload artifact

@@ -1,0 +1,28 @@
+{
+  "name": "allpro-lead-concierge",
+  "main": "src/index.js",
+  "compatibility_date": "2026-07-14",
+  "workers_dev": true,
+  "observability": {
+    "enabled": true
+  },
+  "routes": [
+    {
+      "pattern": "allprometroeastconstruction.com/api/lead-concierge*",
+      "zone_name": "allprometroeastconstruction.com"
+    }
+  ],
+  "ai": {
+    "binding": "AI"
+  },
+  "ratelimits": [
+    {
+      "name": "AI_RATE_LIMITER",
+      "namespace_id": "2026071401",
+      "simple": {
+        "limit": 12,
+        "period": 60
+      }
+    }
+  ]
+}

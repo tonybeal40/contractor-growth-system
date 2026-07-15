@@ -18,7 +18,13 @@ PAGES = (
 )
 FORM_ACTION = "https://formsubmit.co/williamosessionallpro@gmail.com"
 ANALYTICS_LOADER = "analytics-loader.js?v=20260714a"
-REMODEL_STYLESHEET = "remodel-lead-pages.css?v=20260714c"
+REMODEL_STYLESHEET = "remodel-lead-pages.css?v=20260714d"
+CONCIERGE_LOADER = "lead-concierge-loader.js?v=20260714a"
+CURRENT_FORM_ROUTER = "formsubmit-lead-tracking.js?v=20260714b"
+ACCEPTED_FORM_ROUTER = re.compile(
+    r"formsubmit-lead-tracking\.js\?v=20260714[ab]",
+    re.IGNORECASE,
+)
 
 
 def value(pattern: str, html: str) -> str:
@@ -47,10 +53,14 @@ def check_page(filename: str) -> list[str]:
     for field in ("full_name", "phone", "email", "estimate_contact_consent"):
         if not re.search(rf'\bname="{field}"', html, re.IGNORECASE):
             errors.append(f"missing {field} field")
-    if "formsubmit-lead-tracking.js" not in html:
-        errors.append("missing shared form tracking script")
+    if CURRENT_FORM_ROUTER not in html:
+        errors.append("missing current shared form tracking script")
     if REMODEL_STYLESHEET not in html:
         errors.append("missing current shared remodel stylesheet")
+    if CONCIERGE_LOADER not in html:
+        errors.append("missing lazy project concierge loader")
+    if "lead-concierge.css" in html:
+        errors.append("loads the full concierge stylesheet before interaction")
     if ANALYTICS_LOADER not in html:
         errors.append("missing deferred analytics loader")
     if "googletagmanager.com/gtag/js" in html or "clarity.ms/tag/" in html:
@@ -94,8 +104,8 @@ def check_all_form_routes() -> list[str]:
 
         if any(gateway in html for gateway in retired_gateways):
             errors.append(f"{path.name}: contains a retired carrier gateway")
-        if "formsubmit-lead-tracking.js?v=20260714a" not in html:
-            errors.append(f"{path.name}: does not load the current form router")
+        if not ACCEPTED_FORM_ROUTER.search(html):
+            errors.append(f"{path.name}: does not load an approved form router")
 
     return errors
 
