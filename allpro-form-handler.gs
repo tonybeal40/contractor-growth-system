@@ -308,23 +308,33 @@ function sendLeadNotification(data, subject, isReview) {
 /**
  * Script Properties required for Twilio SMS:
  *   TWILIO_ACCOUNT_SID
- *   TWILIO_AUTH_TOKEN
+ *   TWILIO_API_KEY_SID          (restricted key with Messages: Create)
+ *   TWILIO_API_KEY_SECRET
  *   TWILIO_FROM_NUMBER          (E.164, such as +16185551234)
  * Optional:
  *   SMS_ALERT_TO                (defaults to CONFIG.smsAlertTo)
+ *   TWILIO_AUTH_TOKEN           (legacy fallback when no API key is configured)
  *
  * Keep credentials in Apps Script Project Settings, never in this file.
  */
 function smsSetupStatus() {
   var props = PropertiesService.getScriptProperties();
-  var required = ["TWILIO_ACCOUNT_SID", "TWILIO_AUTH_TOKEN", "TWILIO_FROM_NUMBER"];
+  var accountSid = String(props.getProperty("TWILIO_ACCOUNT_SID") || "").trim();
+  var apiKeySid = String(props.getProperty("TWILIO_API_KEY_SID") || "").trim();
+  var apiKeySecret = String(props.getProperty("TWILIO_API_KEY_SECRET") || "").trim();
+  var authToken = String(props.getProperty("TWILIO_AUTH_TOKEN") || "").trim();
+  var from = normalizeE164(props.getProperty("TWILIO_FROM_NUMBER"));
+  var hasApiKey = Boolean(apiKeySid && apiKeySecret);
   var missing = [];
-  for (var i = 0; i < required.length; i++) {
-    if (!String(props.getProperty(required[i]) || "").trim()) missing.push(required[i]);
+  if (!accountSid) missing.push("TWILIO_ACCOUNT_SID");
+  if (!hasApiKey && !authToken) {
+    missing.push("TWILIO_API_KEY_SID + TWILIO_API_KEY_SECRET (or TWILIO_AUTH_TOKEN)");
   }
+  if (!from) missing.push("TWILIO_FROM_NUMBER");
   return {
     configured: missing.length === 0,
     missing: missing,
+    authMode: hasApiKey ? "restricted-api-key" : (authToken ? "auth-token" : "none"),
     alertTo: normalizeE164(props.getProperty("SMS_ALERT_TO") || CONFIG.smsAlertTo)
   };
 }
@@ -338,7 +348,11 @@ function sendSmsAlert(data) {
 
   var props = PropertiesService.getScriptProperties();
   var accountSid = String(props.getProperty("TWILIO_ACCOUNT_SID") || "").trim();
+  var apiKeySid = String(props.getProperty("TWILIO_API_KEY_SID") || "").trim();
+  var apiKeySecret = String(props.getProperty("TWILIO_API_KEY_SECRET") || "").trim();
   var authToken = String(props.getProperty("TWILIO_AUTH_TOKEN") || "").trim();
+  var authUser = apiKeySid && apiKeySecret ? apiKeySid : accountSid;
+  var authPassword = apiKeySid && apiKeySecret ? apiKeySecret : authToken;
   var from = normalizeE164(props.getProperty("TWILIO_FROM_NUMBER"));
   var to = status.alertTo;
   if (!from || !to) throw new Error("Twilio From and SMS alert To numbers must use E.164 format.");
@@ -353,7 +367,7 @@ function sendSmsAlert(data) {
       Body: buildSmsBody(data)
     },
     headers: {
-      Authorization: "Basic " + Utilities.base64Encode(accountSid + ":" + authToken)
+      Authorization: "Basic " + Utilities.base64Encode(authUser + ":" + authPassword)
     },
     muteHttpExceptions: true
   });
@@ -366,7 +380,13 @@ function sendSmsAlert(data) {
     throw new Error("Twilio SMS failed (HTTP " + code + "): " +
       String(parsed.message || raw || "Unknown Twilio error").substring(0, 300));
   }
-  return { sent: true, configured: true, sid: parsed.sid || "", status: parsed.status || "queued" };
+  return {
+    sent: true,
+    configured: true,
+    authMode: status.authMode,
+    sid: parsed.sid || "",
+    status: parsed.status || "queued"
+  };
 }
 
 function buildSmsBody(data) {

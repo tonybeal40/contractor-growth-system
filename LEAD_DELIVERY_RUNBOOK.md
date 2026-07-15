@@ -39,11 +39,12 @@ Store these values in Apps Script Project Settings. Never put them in GitHub or 
 | Property | Value |
 | --- | --- |
 | `TWILIO_ACCOUNT_SID` | Account SID beginning with `AC` |
-| `TWILIO_AUTH_TOKEN` | Twilio Auth Token |
+| `TWILIO_API_KEY_SID` | Restricted API Key SID beginning with `SK` |
+| `TWILIO_API_KEY_SECRET` | One-time secret for the restricted key; never place it in source control |
 | `TWILIO_FROM_NUMBER` | Twilio SMS-capable number in E.164 format, such as `+16185551234` |
 | `SMS_ALERT_TO` | `+16182925320` |
 
-Twilio trial accounts can send only to verified recipient numbers. The Twilio sender must be SMS-capable and belong to the same account.
+The restricted key needs only `twilio/messaging/messages/create`. `TWILIO_AUTH_TOKEN` remains supported as a legacy fallback, but the restricted API key is preferred. Twilio trial accounts can send only to verified recipient numbers. The Twilio sender must be SMS-capable and belong to the same account.
 
 ## Controlled Public Test
 

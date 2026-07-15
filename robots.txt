@@ -33,6 +33,14 @@ Disallow: /lawnmex/
 Disallow: /output/
 Disallow: /outputs/
 
+# Keep model-training crawlers out without blocking search or user-requested
+# retrieval. Search/assistant crawlers are allowed in the next group.
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: Google-Extended
+Content-Signal: search=no,ai-input=no,ai-train=no,use=none
+Disallow: /
+
 # Explicitly allow search and user-directed AI fetchers to cite public pages
 # while retaining the same exclusions for private and internal paths.
 User-agent: OAI-SearchBot
