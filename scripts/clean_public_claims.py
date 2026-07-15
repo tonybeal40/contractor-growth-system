@@ -24,6 +24,58 @@ SCRIPT_RE = re.compile(
 
 EXACT_REPLACEMENTS = (
     (
+        "<strong>Estimate within 24 hours</strong>",
+        "<strong>Request a written estimate</strong>",
+    ),
+    (
+        "<strong>We respond within 24 hours</strong>",
+        "<strong>Prompt local follow-up</strong>",
+    ),
+    (
+        "<strong>Concrete quote within 24 hours</strong>",
+        "<strong>Request a concrete estimate</strong>",
+    ),
+    (
+        "<strong>Request now · Responding within 24 hours</strong>",
+        "<strong>Request now · Direct local follow-up</strong>",
+    ),
+    (
+        "Share your Edwardsville deck idea and we will follow up within 24 hours.",
+        "Share your Edwardsville deck idea and we will follow up about availability and next steps.",
+    ),
+    (
+        "Drop us a note and we will reply within 24 hours with ideas and pricing.",
+        "Drop us a note and we will follow up about ideas, scope, and the estimate process.",
+    ),
+    (
+        "Bill responds personally &mdash; usually same day.",
+        "The All-Pro team follows up directly about availability and the next step.",
+    ),
+    (
+        "Bill responds personally — usually same day.",
+        "The All-Pro team follows up directly about availability and the next step.",
+    ),
+    (
+        "Bill will personally follow up &mdash; usually same day.",
+        "The All-Pro team will follow up directly about availability and the next step.",
+    ),
+    (
+        "Tell us about your project and we'll be in touch within 24 hours.",
+        "Tell us about your project and we'll follow up about the next step.",
+    ),
+    (
+        "Call or submit a request and we'll confirm a time within 24 hours.",
+        "Call or submit a request and we'll follow up about scheduling.",
+    ),
+    (
+        "Call or fill out the form. We'll get back to you within 24 hours.",
+        "Call or fill out the form. We'll follow up about availability and the next step.",
+    ),
+    (
+        "Send us the project details and we’ll be back within 24 hours with scheduling and pricing.",
+        "Send us the project details and we’ll follow up about scheduling and the estimate process.",
+    ),
+    (
         ". serving Metro East since 2002",
         ". Serving Metro East since 2002",
     ),

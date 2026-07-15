@@ -36,6 +36,7 @@ TEXT_RULES = (
     ("lowercase sentence start", re.compile(r"\. serving Metro East since 2002")),
     ("old start year", re.compile(r"\b(?:since|founded|established)(?:\s+in)?\s+2001\b", re.I)),
     ("stale 23-year claim", re.compile(r"\b23(?:\+\s*years|[- ]year(?:s)?)\b", re.I)),
+    ("fixed response-time promise", re.compile(r"\b(?:within 24 hours|usually same day)\b", re.I)),
     ("fixed service radius", re.compile(r"\b(?:50|60)[ -]mile\b", re.I)),
     (
         "owner-every-job claim",
@@ -210,6 +211,7 @@ def audit_generator(path: Path) -> list[Finding]:
         ("old generator permit promise", r"(?:All-Pro|We)\s+(?:handles?|pulls|manages?)\s+(?:all\s+|any needed\s+|the\s+)?(?:necessary\s+)?permits?|Permits and inspections handled by All-Pro"),
         ("old generator hyphenated experience claim", r"\b23-year\b"),
         ("old generator radius", r"\b(?:50|60)[ -]mile\b"),
+        ("old generator response promise", r"\b(?:within 24 hours|usually same day)\b"),
         ("old generator licensing claim", r"licensed.{0,25}insured|insured.{0,25}licensed"),
     )
     for rule, pattern in rules:
