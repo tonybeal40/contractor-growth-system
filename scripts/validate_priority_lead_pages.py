@@ -18,6 +18,7 @@ PAGES = (
 )
 FORM_ACTION = "https://formsubmit.co/williamosessionallpro@gmail.com"
 ANALYTICS_LOADER = "analytics-loader.js?v=20260714a"
+LEAD_TRACKING_LOADER = "lead-tracking.js?v=20260715d"
 REMODEL_STYLESHEET = "remodel-lead-pages.css?v=20260714d"
 CONCIERGE_LOADER = "lead-concierge-loader.js?v=20260715a"
 CURRENT_FORM_ROUTER = "formsubmit-lead-tracking.js?v=20260715c"
@@ -63,11 +64,13 @@ def check_page(filename: str) -> list[str]:
         errors.append("loads the full concierge stylesheet before interaction")
     if ANALYTICS_LOADER not in html:
         errors.append("missing deferred analytics loader")
+    if LEAD_TRACKING_LOADER not in html:
+        errors.append("missing current lead tracking loader")
     if "googletagmanager.com/gtag/js" in html or "clarity.ms/tag/" in html:
         errors.append("contains a render-blocking vendor analytics loader")
     if "fonts.googleapis.com" in html:
         errors.append("contains a render-blocking Google Fonts request")
-    if html.find(ANALYTICS_LOADER) > html.find("lead-tracking.js?v=20260714a"):
+    if html.find(ANALYTICS_LOADER) > html.find(LEAD_TRACKING_LOADER):
         errors.append("analytics loader must run before lead tracking")
     if html.count("<svg") != html.count("</svg>"):
         errors.append("contains unbalanced SVG markup")

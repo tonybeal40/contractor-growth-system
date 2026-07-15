@@ -1,5 +1,5 @@
-Set-Location "C:\Users\tonyb\contractor-growth-system-work"
-$baseDir = "C:\Users\tonyb\contractor-growth-system-work"
+$baseDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+Set-Location $baseDir
 
 # Extract nav and footer from the template
 $tpl = Get-Content "$baseDir\deck-builder-freeburg-il.html" -Raw
@@ -65,10 +65,9 @@ function MkPage($p) {
   "url": "https://allprometroeastconstruction.com/",
   "telephone": "+1-618-581-0676",
   "logo": "https://allprometroeastconstruction.com/images/branding/logo-square.png",
-  "foundingDate": "2001",
-  "address": {"@type":"PostalAddress","addressLocality":"Belleville","addressRegion":"IL","postalCode":"62220","addressCountry":"US"},
-  "areaServed": {"@type":"City","name":"$($p.av)"},
-  "aggregateRating": {"@type":"AggregateRating","ratingValue":"4.7","reviewCount":"40","bestRating":"5"}
+  "foundingDate": "2002",
+  "address": {"@type":"PostalAddress","streetAddress":"1115 Priscilla Ct","addressLocality":"New Athens","addressRegion":"IL","postalCode":"62264","addressCountry":"US"},
+  "areaServed": {"@type":"City","name":"$($p.av)"}
 }
 </script>
 <script type="application/ld+json">
@@ -90,7 +89,7 @@ function MkPage($p) {
 <body>
 $navHtml
 
-<section class="page-hero" style="padding:3rem 0 2rem;">
+<section class="page-hero legacy-page-hero">
   <div class="container">
     <div class="hero-badge">$($p.hb)</div>
     <h1>$($p.h1)</h1>
@@ -100,10 +99,10 @@ $navHtml
       <a href="/contact.html" class="btn-secondary">Free Estimate &#x2192;</a>
     </div>
     <div class="hero-trust">
-      <span>&#11088; 4.7 Stars &middot; 40 Reviews</span>
-      <span>&#10003; Licensed &amp; Insured IL</span>
-      <span>&#10003; 23 Years Metro East</span>
-      <span>&#10003; Owner on Every Job</span>
+      <span>Public Reviews &middot; Angi/HomeAdvisor</span>
+      <span>Documentation Available on Request</span>
+      <span>Serving Metro East Since 2002</span>
+      <span>Direct Local Contact</span>
     </div>
   </div>
 </section>
@@ -121,10 +120,10 @@ $($p.sl)
 
       <h3>Why $($p.cn) Homeowners Choose All-Pro</h3>
       <ul>
-        <li><strong>23+ years in Metro East</strong> — we know $($p.cn) soil, codes, and climate.</li>
-        <li><strong>Owner on every job</strong> — Bill Sessions personally manages every project.</li>
-        <li><strong>No subcontractors</strong> — our own crew from start to finish.</li>
-        <li><strong>Licensed &amp; insured in Illinois</strong> — full liability and workers comp.</li>
+        <li><strong>Serving Metro East since 2002</strong> — local experience for $($p.cn) projects.</li>
+        <li><strong>Direct local contact</strong> — call Bill Session to discuss the project scope.</li>
+        <li><strong>Coordinated project scope</strong> — ask which trade partners are included.</li>
+        <li><strong>Documentation on request</strong> — verify current insurance and applicable trade licensing before work begins.</li>
         <li><strong>Free written estimates</strong> — no pressure, no surprises.</li>
       </ul>
 
@@ -133,14 +132,14 @@ $($p.sl)
 
     <div class="sidebar-card">
       <h3>Free Estimate in $($p.cn)</h3>
-      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">Call or request online — Bill personally responds with a written estimate.</p>
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">Call or request online. A written estimate follows a review of the project scope.</p>
       <p style="color:var(--light);font-size:0.9rem;">&#128222; <a href="tel:6185810676" style="color:var(--red);font-weight:700;">618-581-0676</a></p>
       <a href="/contact.html" class="btn-primary">Request Estimate &#x2192;</a>
       <ul style="list-style:none;margin-top:1.5rem;">
-        <li style="color:var(--muted);font-size:0.85rem;padding:0.4rem 0;border-bottom:1px solid var(--dark3);">&#10003; Licensed &amp; Insured in Illinois</li>
-        <li style="color:var(--muted);font-size:0.85rem;padding:0.4rem 0;border-bottom:1px solid var(--dark3);">&#10003; 4.7 Stars &middot; 40 Reviews</li>
-        <li style="color:var(--muted);font-size:0.85rem;padding:0.4rem 0;border-bottom:1px solid var(--dark3);">&#10003; 23 Years Metro East</li>
-        <li style="color:var(--muted);font-size:0.85rem;padding:0.4rem 0;border-bottom:1px solid var(--dark3);">&#10003; Owner on Every Job</li>
+        <li style="color:var(--muted);font-size:0.85rem;padding:0.4rem 0;border-bottom:1px solid var(--dark3);">Documentation Available on Request</li>
+        <li style="color:var(--muted);font-size:0.85rem;padding:0.4rem 0;border-bottom:1px solid var(--dark3);">Public Reviews &middot; Angi/HomeAdvisor</li>
+        <li style="color:var(--muted);font-size:0.85rem;padding:0.4rem 0;border-bottom:1px solid var(--dark3);">Serving Metro East Since 2002</li>
+        <li style="color:var(--muted);font-size:0.85rem;padding:0.4rem 0;border-bottom:1px solid var(--dark3);">Direct Local Contact</li>
         <li style="color:var(--muted);font-size:0.85rem;padding:0.4rem 0;">&#10003; Free Written Estimates</li>
       </ul>
       <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--dark3);">
@@ -184,7 +183,7 @@ $SL_REMODEL = @"
         <li>Whole-home remodels and room additions</li>
         <li>Flooring, drywall, and trim work</li>
         <li>Structural modifications and open-concept conversions</li>
-        <li>All trades coordinated and managed in-house</li>
+        <li>Trade responsibilities identified in the written scope</li>
 "@
 
 $SL_DECK = @"
@@ -229,7 +228,7 @@ $SL_SUNROOM = @"
         <li>Custom windows, framing, and rooflines</li>
         <li>Electrical and HVAC rough-in coordination</li>
         <li>Foundation and structural work included</li>
-        <li>Permits and inspections handled by All-Pro</li>
+        <li>Permit responsibilities identified in the written scope</li>
 "@
 
 $SL_BATH = @"
@@ -294,16 +293,16 @@ $pages = @(
 @{
   fn='landscaping-alton-il.html'
   ti='Landscaping Contractor Alton IL | All-Pro Construction'
-  md='All-Pro provides full-service landscaping in Alton, IL — bed design, plantings, mulch, grading, and complete yard transformations. Licensed, insured, free estimates. Call 618-581-0676.'
+  md='All-Pro provides landscaping in Alton, IL — bed design, plantings, mulch, grading, and yard transformations. Serving Metro East since 2002. Call 618-581-0676.'
   h1='Landscaping in Alton, IL'
   hb='Serving Alton &amp; Madison County'
-  hs='Full-service landscaping in Alton and Madison County — bed design, plantings, mulch, grading, and complete yard transformations. Free estimates, owner on every job.'
+  hs='Landscaping in Alton and Madison County — bed design, plantings, mulch, grading, and yard transformations. Free estimates and direct local contact.'
   av='Alton, IL'
   bsn='Landscaping'
   bsu='https://allprometroeastconstruction.com/landscaping.html'
   bcl='Landscaping Alton, IL'
   h2='Landscaping in Alton, IL'
-  cp='All-Pro Construction &amp; Landscape has transformed yards throughout Alton and Madison County for over 23 years. From the historic riverfront neighborhoods and the bluff-top properties of Upper Alton to newer subdivisions along the Route 140 corridor, Alton homeowners trust us for complete landscape makeovers. We understand the drainage challenges unique to Alton terrain and know which plantings thrive in this part of the Metro East. Whether you need new beds, grading, sod, or a full property overhaul, our crew handles every detail.'
+  cp='All-Pro Construction &amp; Landscape has served Metro East since 2002. Alton properties range from historic riverfront neighborhoods and bluff-top homes to newer subdivisions along the Route 140 corridor. Project planning considers drainage, access, existing beds, and plant selections suited to the property. Call to discuss new beds, grading, sod, mulch, or a broader yard update.'
   sl=$SL_LANDSCAPE
   ct='Get Your Free Landscaping Estimate in Alton &#x2192;'
   cn='Alton'
@@ -311,9 +310,9 @@ $pages = @(
   ss='landscaping'
   fq=@(
     @{Q='How much does landscaping cost in Alton, IL?'; A='Landscaping projects in Alton range from about $500 for basic mulching and bed refresh to $5,000+ for full yard transformations with new beds, plantings, and grading. Call All-Pro at 618-581-0676 for a free written estimate.'},
-    @{Q='What does All-Pro landscaping include in Alton?'; A='We handle bed design, plant installation, mulch, rock, yard grading, drainage, sod, and edging for Alton homeowners. Full service from design to final cleanup — one crew, no subs.'},
+    @{Q='What does All-Pro landscaping include in Alton?'; A='Potential scopes include bed design, plant installation, mulch, rock, yard grading, drainage, sod, and edging. The written estimate identifies the approved work, cleanup, and any trade partners involved.'},
     @{Q='What time of year is best for landscaping in Alton?'; A='Spring through fall is ideal in Alton, IL. Spring works best for new plantings and bed installations; fall is great for cleanup, overseeding, and mulch prep. We work nearly year-round on suitable projects.'},
-    @{Q='Does All-Pro serve Alton, IL for landscaping?'; A='Yes — All-Pro serves all of Alton and Madison County. We have 23+ years serving the Metro East region including Alton, Godfrey, Bethalto, and Wood River. Call 618-581-0676.'}
+    @{Q='Does All-Pro serve Alton, IL for landscaping?'; A='All-Pro accepts landscaping requests in Alton and surrounding Madison County communities. Call 618-581-0676 to confirm availability for your address and scope.'}
   )
 },
 
@@ -321,10 +320,10 @@ $pages = @(
 @{
   fn='remodeling-alton-il.html'
   ti='Remodeling Contractor Alton IL | All-Pro Construction'
-  md='All-Pro manages complete home remodels in Alton, IL — basement, bath, kitchen, and whole-home renovations. Licensed, insured, no subs. Free estimates. Call 618-581-0676.'
+  md='All-Pro handles home remodel requests in Alton, IL — basement, bath, kitchen, and whole-home renovations. Written estimates. Call 618-581-0676.'
   h1='Home Remodeling in Alton, IL'
   hb='Serving Alton &amp; Madison County'
-  hs='Complete home remodeling in Alton and Madison County — basement, bath, kitchen, and whole-home renovations. We manage every trade. Owner on every job.'
+  hs='Home remodeling in Alton and Madison County — basement, bath, kitchen, and broader renovations. The written scope identifies trade responsibilities.'
   av='Alton, IL'
   bsn='Remodeling'
   bsu='https://allprometroeastconstruction.com/remodeling.html'
@@ -339,8 +338,8 @@ $pages = @(
   fq=@(
     @{Q='How much does a home remodel cost in Alton, IL?'; A='Remodeling costs in Alton vary by scope. Bathroom remodels run $8,000-$25,000+; kitchen remodels $10,000-$50,000+; basement finishes $15,000-$40,000+. All-Pro provides detailed written estimates before any work begins.'},
     @{Q='How long does a remodeling project take in Alton?'; A='Most remodeling projects in Alton take 2-8 weeks depending on scope and complexity. We set a realistic schedule upfront and update you throughout the project.'},
-    @{Q='Does All-Pro pull permits for remodeling in Alton?'; A='Yes. All-Pro handles all necessary permits for structural, plumbing, and electrical work in Alton, IL. We manage the inspection process from start to finish — no stress for you.'},
-    @{Q='What trades does All-Pro manage for Alton remodeling projects?'; A='We self-perform framing, demo, tile, flooring, and cabinet work. We coordinate licensed plumbers and electricians as needed. One company to call — no parade of independent subs.'}
+    @{Q='Who handles permits for remodeling in Alton?'; A='Permit and inspection requirements vary by scope and jurisdiction. The written estimate should identify who is responsible for each permit, inspection, and licensed trade requirement.'},
+    @{Q='What trades may be involved in an Alton remodeling project?'; A='The approved scope should identify framing, demolition, tile, flooring, cabinet work, and any licensed plumbing or electrical trade requirements. Ask who is responsible for each part before work begins.'}
   )
 },
 
@@ -348,16 +347,16 @@ $pages = @(
 @{
   fn='landscaping-freeburg-il.html'
   ti='Landscaping Contractor Freeburg IL | All-Pro Construction'
-  md='All-Pro provides full-service landscaping in Freeburg, IL — bed design, plantings, mulch, grading, and yard transformations. St. Clair County licensed and insured. Free estimates. Call 618-581-0676.'
+  md='All-Pro provides landscaping in Freeburg, IL — bed design, plantings, mulch, grading, and yard transformations. Serving Metro East since 2002. Call 618-581-0676.'
   h1='Landscaping in Freeburg, IL'
   hb='Serving Freeburg &amp; St. Clair County'
-  hs='Full-service landscaping in Freeburg and St. Clair County — bed design, plantings, mulch, grading, and complete yard transformations. Free estimates, owner on every job.'
+  hs='Landscaping in Freeburg and St. Clair County — bed design, plantings, mulch, grading, and yard transformations. Free estimates and direct local contact.'
   av='Freeburg, IL'
   bsn='Landscaping'
   bsu='https://allprometroeastconstruction.com/landscaping.html'
   bcl='Landscaping Freeburg, IL'
   h2='Landscaping in Freeburg, IL'
-  cp='All-Pro Construction &amp; Landscape has served Freeburg and St. Clair County homeowners for over 23 years. Freeburg properties tend toward larger lots with mature trees and more open yard space — ideal for ambitious landscape overhauls. We handle full bed redesigns, privacy plantings along fence lines, grading projects to address drainage, and mulch or rock installations on any scale. Our crew knows the soil conditions and micro-climates of this part of St. Clair County and brings that local knowledge to every job in Freeburg.'
+  cp='All-Pro Construction &amp; Landscape has served Metro East since 2002. Freeburg properties often include larger lots, mature trees, and open yard space. Project planning considers bed layouts, privacy plantings, drainage, grading, and mulch or rock selections. Call to confirm availability and discuss the conditions at your property.'
   sl=$SL_LANDSCAPE
   ct='Get Your Free Landscaping Estimate in Freeburg &#x2192;'
   cn='Freeburg'
@@ -367,7 +366,7 @@ $pages = @(
     @{Q='How much does landscaping cost in Freeburg, IL?'; A='Landscaping in Freeburg runs about $500 for basic mulching to $5,000+ for full yard transformations with new beds and plantings. Larger Freeburg lots may run higher. Call All-Pro at 618-581-0676 for a free estimate.'},
     @{Q='What does All-Pro landscaping include in Freeburg?'; A='We cover bed design and installation, plant selection, mulch, decorative rock, yard grading, drainage fixes, sod, and edging. Full-service from design to final cleanup for Freeburg homeowners.'},
     @{Q='What season is best for landscaping in Freeburg, IL?'; A='Spring and fall are ideal in Freeburg. Spring is perfect for new plantings and bed installs; fall works well for cleanup, overseeding, and mulch prep. We work nearly year-round on the right projects.'},
-    @{Q='Does All-Pro serve Freeburg for landscaping?'; A='Yes — All-Pro serves all of Freeburg and St. Clair County. We have been serving this area for 23+ years. Call 618-581-0676 to schedule your free estimate.'}
+    @{Q='Does All-Pro serve Freeburg for landscaping?'; A='All-Pro accepts landscaping requests in Freeburg and surrounding St. Clair County communities. Call 618-581-0676 to confirm availability for your address and scope.'}
   )
 },
 
@@ -375,10 +374,10 @@ $pages = @(
 @{
   fn='remodeling-freeburg-il.html'
   ti='Remodeling Contractor Freeburg IL | All-Pro Construction'
-  md='All-Pro manages complete home remodels in Freeburg, IL — basement, bath, kitchen, and whole-home renovations. St. Clair County licensed and insured. Free estimates. Call 618-581-0676.'
+  md='All-Pro handles home remodel requests in Freeburg, IL — basement, bath, kitchen, and whole-home renovations. Written estimates. Call 618-581-0676.'
   h1='Home Remodeling in Freeburg, IL'
   hb='Serving Freeburg &amp; St. Clair County'
-  hs='Complete home remodeling in Freeburg and St. Clair County — basement, bath, kitchen, and whole-home renovations. We manage every trade. Owner on every job.'
+  hs='Home remodeling in Freeburg and St. Clair County — basement, bath, kitchen, and broader renovations. The written scope identifies trade responsibilities.'
   av='Freeburg, IL'
   bsn='Remodeling'
   bsu='https://allprometroeastconstruction.com/remodeling.html'
@@ -393,8 +392,8 @@ $pages = @(
   fq=@(
     @{Q='How much does a home remodel cost in Freeburg, IL?'; A='Remodeling costs in Freeburg vary: bathroom remodels $8,000-$25,000+; kitchen remodels $10,000-$50,000+; basement finishes $15,000-$40,000+. We provide detailed written estimates before work begins.'},
     @{Q='How long does a remodeling project take in Freeburg?'; A='Most Freeburg remodeling projects run 2-8 weeks depending on scope. We set a realistic schedule before work starts and stick to it.'},
-    @{Q='Does All-Pro pull permits for remodeling in Freeburg?'; A='Yes. All-Pro handles all permits for structural, plumbing, and electrical work in Freeburg. We manage inspections from start to finish — no headaches for you.'},
-    @{Q='What trades does All-Pro coordinate for Freeburg remodels?'; A='We self-perform framing, demo, tile, flooring, and cabinet work. We coordinate licensed plumbers and electricians as needed. One call handles the whole project.'}
+    @{Q='Who handles permits for remodeling in Freeburg?'; A='Permit and inspection requirements vary by scope and jurisdiction. The written estimate should identify who is responsible for each permit, inspection, and licensed trade requirement.'},
+    @{Q='What trades may be involved in a Freeburg remodel?'; A='The approved scope should identify framing, demolition, tile, flooring, cabinet work, and any licensed plumbing or electrical trade requirements. Ask who is responsible for each part before work begins.'}
   )
 },
 
@@ -402,16 +401,16 @@ $pages = @(
 @{
   fn='deck-builder-caseyville-il.html'
   ti='Deck Builder Caseyville IL | All-Pro Construction'
-  md='All-Pro builds custom decks in Caseyville, IL — wood, composite, multi-level, and covered decks. St. Clair County licensed and insured. Free estimates. Call 618-581-0676.'
+  md='All-Pro builds custom decks in Caseyville, IL — wood, composite, multi-level, and covered decks. Serving Metro East since 2002. Call 618-581-0676.'
   h1='Deck Builder in Caseyville, IL'
   hb='Serving Caseyville &amp; St. Clair County'
-  hs='Custom deck construction in Caseyville and St. Clair County — wood, composite, multi-level, and covered decks. Free estimates, owner on every job.'
+  hs='Custom deck construction in Caseyville and St. Clair County — wood, composite, multi-level, and covered decks. Free estimates and direct local contact.'
   av='Caseyville, IL'
   bsn='Decks'
   bsu='https://allprometroeastconstruction.com/decks.html'
   bcl='Decks Caseyville, IL'
   h2='Custom Deck Construction in Caseyville, IL'
-  cp='All-Pro Construction &amp; Landscape has built custom decks across Caseyville and St. Clair County for over 23 years. Caseyville sits at a convenient crossroads near I-255, I-55, and I-64 — making it one of the fastest-growing communities in Metro East. As Caseyville homeowners invest in their properties, outdoor living additions like custom decks add serious value and usability. We build with pressure-treated lumber, composite decking (Trex, TimberTech), and hardwood options, and every deck is designed to meet Illinois building code with a full workmanship warranty.'
+  cp='All-Pro Construction &amp; Landscape has served Metro East since 2002. Caseyville homes include a mix of established neighborhoods and newer properties near I-255, I-55, and I-64. Deck planning can include pressure-treated lumber, composite products, elevation, stairs, rails, access, and permit requirements. The written estimate identifies the approved scope, materials, and responsibilities.'
   sl=$SL_DECK
   ct='Get Your Free Deck Estimate in Caseyville &#x2192;'
   cn='Caseyville'
@@ -419,7 +418,7 @@ $pages = @(
   ss='deck-builder'
   fq=@(
     @{Q='How much does a deck cost in Caseyville, IL?'; A='Pressure-treated decks in Caseyville typically start around $15-$25 per sq ft. Composite decks run $30-$60+ per sq ft. Call All-Pro at 618-581-0676 for a free written quote with no pressure.'},
-    @{Q='Do I need a permit for a deck in Caseyville, IL?'; A='Most decks over 30 inches above grade require a permit in Illinois. All-Pro pulls all permits in Caseyville and manages the inspection process — no hassle for you.'},
+    @{Q='Do I need a permit for a deck in Caseyville, IL?'; A='Deck permit requirements vary by height, attachment, size, and jurisdiction. Confirm current Caseyville requirements and identify permit and inspection responsibilities in the written scope.'},
     @{Q='How long does deck construction take in Caseyville?'; A='A typical residential deck in Caseyville takes 3-7 days depending on size and complexity. We give you a precise build schedule before work starts.'},
     @{Q='Does All-Pro build covered decks and pergolas in Caseyville?'; A='Yes — we build covered decks, screened porches, and pergola-covered outdoor rooms in Caseyville. Ask about adding a roof or screen system to your deck project.'}
   )
@@ -429,7 +428,7 @@ $pages = @(
 @{
   fn='fence-company-caseyville-il.html'
   ti='Fence Company Caseyville IL | All-Pro Construction'
-  md='All-Pro installs wood, vinyl, chain link, and aluminum fencing in Caseyville, IL. St. Clair County licensed and insured. Free estimates. Call 618-581-0676.'
+  md='All-Pro installs wood, vinyl, chain link, and aluminum fencing in Caseyville, IL. Serving Metro East since 2002. Call 618-581-0676.'
   h1='Fence Installation in Caseyville, IL'
   hb='Serving Caseyville &amp; St. Clair County'
   hs='Professional fence installation in Caseyville and St. Clair County — wood, vinyl, chain link, and aluminum. Residential and commercial. Free estimates.'
@@ -438,7 +437,7 @@ $pages = @(
   bsu='https://allprometroeastconstruction.com/fencing.html'
   bcl='Fencing Caseyville, IL'
   h2='Fence Installation in Caseyville, IL'
-  cp='All-Pro Construction &amp; Landscape installs fencing throughout Caseyville and St. Clair County. Whether you need a wood privacy fence for a backyard near the Caseyville Road corridor, a vinyl fence for a low-maintenance option, chain link for a commercial property, or aluminum ornamental fencing to frame a front yard, we do it all. Our fencing crews handle residential and commercial projects of any size, and we manage permit requirements so you do not have to navigate city hall alone.'
+  cp='All-Pro Construction &amp; Landscape accepts fencing requests throughout Caseyville and St. Clair County. Potential scopes include wood privacy fencing, low-maintenance vinyl, chain link, and ornamental aluminum. The written estimate should identify materials, layout, utility-locate steps, and permit responsibilities for the property and jurisdiction.'
   sl=$SL_FENCE
   ct='Get Your Free Fence Estimate in Caseyville &#x2192;'
   cn='Caseyville'
@@ -446,9 +445,9 @@ $pages = @(
   ss='fence-company'
   fq=@(
     @{Q='How much does fence installation cost in Caseyville, IL?'; A='Fence installation in Caseyville typically runs $2,500-$12,000+ depending on material, style, and linear footage. Wood and chain link tend to be most affordable; vinyl and aluminum run higher. Call for a free estimate.'},
-    @{Q='Do I need a permit for a fence in Caseyville?'; A='Permit requirements vary in Caseyville. All-Pro checks local requirements and handles any needed permits and inspections — one less thing for you to worry about.'},
+    @{Q='Do I need a permit for a fence in Caseyville?'; A='Permit and setback requirements vary by location, height, and fence type. Confirm current Caseyville requirements and identify permit responsibilities in the written scope.'},
     @{Q='What fence materials does All-Pro install in Caseyville?'; A='We install wood (privacy, picket, split-rail), vinyl (privacy and semi-privacy), chain link (galvanized and vinyl-coated), and aluminum ornamental fencing in Caseyville.'},
-    @{Q='Does All-Pro serve Caseyville for fencing?'; A='Yes — All-Pro serves all of Caseyville and St. Clair County. Licensed and insured in Illinois with 23 years in Metro East. Call 618-581-0676.'}
+    @{Q='Does All-Pro serve Caseyville for fencing?'; A='All-Pro accepts fencing requests in Caseyville and surrounding St. Clair County communities. Call 618-581-0676 to confirm availability and request current documentation for the approved scope.'}
   )
 },
 
@@ -456,10 +455,10 @@ $pages = @(
 @{
   fn='landscaping-caseyville-il.html'
   ti='Landscaping Contractor Caseyville IL | All-Pro Construction'
-  md='All-Pro provides full-service landscaping in Caseyville, IL — bed design, plantings, mulch, grading, and yard transformations. St. Clair County licensed and insured. Free estimates. Call 618-581-0676.'
+  md='All-Pro provides landscaping in Caseyville, IL — bed design, plantings, mulch, grading, and yard transformations. Serving Metro East since 2002. Call 618-581-0676.'
   h1='Landscaping in Caseyville, IL'
   hb='Serving Caseyville &amp; St. Clair County'
-  hs='Full-service landscaping in Caseyville and St. Clair County — bed design, plantings, mulch, grading, and complete yard transformations. Free estimates, owner on every job.'
+  hs='Landscaping in Caseyville and St. Clair County — bed design, plantings, mulch, grading, and yard transformations. Free estimates and direct local contact.'
   av='Caseyville, IL'
   bsn='Landscaping'
   bsu='https://allprometroeastconstruction.com/landscaping.html'
@@ -475,7 +474,7 @@ $pages = @(
     @{Q='How much does landscaping cost in Caseyville, IL?'; A='Landscaping in Caseyville ranges from about $500 for basic mulching and bed refresh to $5,000+ for full yard transformations. Call All-Pro at 618-581-0676 for a free written estimate.'},
     @{Q='What does All-Pro landscaping include in Caseyville?'; A='We handle bed design, plant installation, mulch, decorative rock, yard grading, drainage improvements, sod installation, and edging. Full service from design to cleanup.'},
     @{Q='What season is best for landscaping in Caseyville, IL?'; A='Spring through fall is prime season in Caseyville. Spring for new plantings; fall for cleanup and mulch prep. We work nearly year-round depending on the project type.'},
-    @{Q='Does All-Pro serve Caseyville for landscaping?'; A='Yes — All-Pro serves all of Caseyville and St. Clair County. We have 23+ years in Metro East. Call 618-581-0676 to schedule your free estimate.'}
+    @{Q='Does All-Pro serve Caseyville for landscaping?'; A='All-Pro accepts landscaping requests in Caseyville and surrounding St. Clair County communities. Call 618-581-0676 to confirm availability for your address and scope.'}
   )
 },
 
@@ -500,7 +499,7 @@ $pages = @(
   ss='concrete'
   fq=@(
     @{Q='How much does concrete work cost in Caseyville, IL?'; A='Basic concrete in Caseyville runs $4-$8 per sq ft for standard flatwork. Stamped or decorative concrete runs $8-$15+ per sq ft. Driveways typically total $3,000-$8,000+. Call for a free estimate.'},
-    @{Q='Do concrete projects in Caseyville require permits?'; A='Footings, foundations, and structural concrete typically require permits in Caseyville. All-Pro handles all permits and inspections — no extra work for you.'},
+    @{Q='Do concrete projects in Caseyville require permits?'; A='Permit requirements depend on the concrete scope and jurisdiction. Confirm current Caseyville requirements and identify permit and inspection responsibilities in the written estimate.'},
     @{Q='How long does a concrete project take in Caseyville?'; A='Most residential concrete projects in Caseyville take 2-5 days including prep, pour, and finishing. Cure time varies. We give you a clear schedule before work starts.'},
     @{Q='How does All-Pro handle Illinois freeze-thaw for concrete in Caseyville?'; A='We use proper mix designs with fiber reinforcement, adequate slab thickness, and correctly spaced control joints. This is essential for concrete longevity in Caseyville and St. Clair County winters.'}
   )
@@ -510,16 +509,16 @@ $pages = @(
 @{
   fn='patios-caseyville-il.html'
   ti='Patio &amp; Retaining Wall Contractor Caseyville IL | All-Pro Construction'
-  md='All-Pro installs brick, stone, and concrete patios and retaining walls in Caseyville, IL. St. Clair County licensed and insured. Free estimates. Call 618-581-0676.'
+  md='All-Pro installs brick, stone, and concrete patios and retaining walls in Caseyville, IL. Serving Metro East since 2002. Call 618-581-0676.'
   h1='Patios &amp; Retaining Walls in Caseyville, IL'
   hb='Serving Caseyville &amp; St. Clair County'
-  hs='Brick, stone, and concrete patio installation plus retaining walls in Caseyville and St. Clair County. Proper drainage built in. Free estimates, owner on every job.'
+  hs='Brick, stone, and concrete patio installation plus retaining walls in Caseyville and St. Clair County. Drainage is reviewed for the project scope. Free estimates.'
   av='Caseyville, IL'
   bsn='Patios'
   bsu='https://allprometroeastconstruction.com/patios.html'
   bcl='Patios Caseyville, IL'
   h2='Patios &amp; Retaining Walls in Caseyville, IL'
-  cp='All-Pro Construction &amp; Landscape installs patios and retaining walls throughout Caseyville and St. Clair County. A well-built patio extends your living space; a properly engineered retaining wall protects your yard from erosion and drainage issues. We design and build brick paver patios, natural stone and flagstone surfaces, plain and stamped concrete patios, and retaining walls with proper drainage systems built in from the start. Caseyville homeowners benefit from our 23-year track record of outdoor living installations across Metro East.'
+  cp='All-Pro Construction &amp; Landscape accepts patio and retaining-wall requests throughout Caseyville and St. Clair County. Potential scopes include brick pavers, natural stone, flagstone, plain or stamped concrete, and retaining walls. Planning should address base preparation, drainage, access, materials, and permit requirements in the written scope.'
   sl=$SL_PATIOS
   ct='Get Your Free Patio Estimate in Caseyville &#x2192;'
   cn='Caseyville'
@@ -528,7 +527,7 @@ $pages = @(
   fq=@(
     @{Q='How much does a patio cost in Caseyville, IL?'; A='Patio projects in Caseyville typically range from $3,000 for a basic concrete patio to $15,000+ for large brick paver or natural stone installations. Retaining walls add to the total. Call for a free estimate.'},
     @{Q='What patio materials does All-Pro use in Caseyville?'; A='We install brick pavers, concrete pavers, natural flagstone, poured concrete (plain and stamped), and natural stone walls in Caseyville, IL.'},
-    @{Q='Do retaining walls in Caseyville require a permit?'; A='Retaining walls over 4 feet in height typically require a permit. All-Pro handles permit applications and inspections in Caseyville — no extra steps for you.'},
+    @{Q='Do retaining walls in Caseyville require a permit?'; A='Retaining-wall requirements can depend on height, loading, location, and jurisdiction. Confirm current Caseyville rules and identify permit or engineering responsibilities in the written scope.'},
     @{Q='How long does a patio installation take in Caseyville?'; A='Most patio projects in Caseyville take 3-7 days depending on size and material. We provide a project timeline before any work begins.'}
   )
 },
@@ -537,16 +536,16 @@ $pages = @(
 @{
   fn='remodeling-caseyville-il.html'
   ti='Remodeling Contractor Caseyville IL | All-Pro Construction'
-  md='All-Pro manages complete home remodels in Caseyville, IL — basement, bath, kitchen, and whole-home renovations. St. Clair County licensed and insured. Free estimates. Call 618-581-0676.'
+  md='All-Pro handles home remodel requests in Caseyville, IL — basement, bath, kitchen, and whole-home renovations. Written estimates. Call 618-581-0676.'
   h1='Home Remodeling in Caseyville, IL'
   hb='Serving Caseyville &amp; St. Clair County'
-  hs='Complete home remodeling in Caseyville and St. Clair County — basement, bath, kitchen, and whole-home renovations. We manage every trade. Owner on every job.'
+  hs='Home remodeling in Caseyville and St. Clair County — basement, bath, kitchen, and broader renovations. The written scope identifies trade responsibilities.'
   av='Caseyville, IL'
   bsn='Remodeling'
   bsu='https://allprometroeastconstruction.com/remodeling.html'
   bcl='Remodeling Caseyville, IL'
   h2='Home Remodeling in Caseyville, IL'
-  cp='All-Pro Construction &amp; Landscape manages complete home remodeling projects throughout Caseyville and St. Clair County. Caseyville is a growing community with a diverse housing stock — from ranch homes built in the 1970s and 1980s to newer construction near the O Fallon and Collinsville borders. Our remodeling crew handles all of it: basement finishes, bathroom gut-remodels, full kitchen transformations, and structural modifications for open-concept layouts. We self-perform most of the work and coordinate licensed plumbers and electricians — one company managing everything from demolition to final trim.'
+  cp='All-Pro Construction &amp; Landscape accepts home remodeling requests throughout Caseyville and St. Clair County. The local housing stock includes older ranch homes and newer construction near the O Fallon and Collinsville borders. Potential scopes include basement finishes, bathroom remodels, kitchen updates, and structural changes. The written estimate should identify each responsibility and any licensed plumbing or electrical trade work required.'
   sl=$SL_REMODEL
   ct='Get Your Free Remodeling Estimate in Caseyville &#x2192;'
   cn='Caseyville'
@@ -555,8 +554,8 @@ $pages = @(
   fq=@(
     @{Q='How much does a home remodel cost in Caseyville, IL?'; A='Remodeling in Caseyville varies by scope. Bathroom remodels run $8,000-$25,000+; kitchen remodels $10,000-$50,000+; basement finishes $15,000-$40,000+. We provide detailed written estimates before any work begins.'},
     @{Q='How long does a remodeling project take in Caseyville?'; A='Most Caseyville remodeling projects take 2-8 weeks depending on scope. We set a realistic schedule before starting and keep you informed throughout.'},
-    @{Q='Does All-Pro pull permits for remodeling in Caseyville?'; A='Yes. All-Pro handles all permits for structural, plumbing, and electrical work in Caseyville. We manage the inspection process so you do not have to navigate it alone.'},
-    @{Q='What trades does All-Pro manage for Caseyville remodels?'; A='We self-perform framing, demo, tile, flooring, and cabinet work. We coordinate licensed plumbers and electricians as needed. One company manages the entire project.'}
+    @{Q='Who handles permits for remodeling in Caseyville?'; A='Permit and inspection requirements vary by scope and jurisdiction. The written estimate should identify who is responsible for each permit, inspection, and licensed trade requirement.'},
+    @{Q='What trades may be involved in a Caseyville remodel?'; A='The approved scope should identify framing, demolition, tile, flooring, cabinet work, and any licensed plumbing or electrical trade requirements. Ask who is responsible for each part before work begins.'}
   )
 },
 
@@ -567,13 +566,13 @@ $pages = @(
   md='All-Pro builds three-season and four-season sunroom additions in Caseyville, IL. Extend your living space and add home value. Free estimates. Call 618-581-0676.'
   h1='Sunroom Additions in Caseyville, IL'
   hb='Serving Caseyville &amp; St. Clair County'
-  hs='Three-season and four-season sunroom additions in Caseyville and St. Clair County. Extend your living space, add home value. Owner on every job. Free estimates.'
+  hs='Three-season and four-season sunroom addition requests in Caseyville and St. Clair County. Discuss space, access, structure, permits, and trade requirements. Free estimates.'
   av='Caseyville, IL'
   bsn='Sunrooms'
   bsu='https://allprometroeastconstruction.com/sunroom.html'
   bcl='Sunrooms Caseyville, IL'
   h2='Sunroom Additions in Caseyville, IL'
-  cp='All-Pro Construction &amp; Landscape builds sunroom additions throughout Caseyville and St. Clair County. A sunroom is one of the best investments a Caseyville homeowner can make — it extends your usable living space, brings in natural light, and adds measurable value to your home. We build three-season rooms for three seasons of enjoyment and fully insulated four-season rooms designed for year-round use with heating and cooling. Every sunroom addition is permitted, engineered, and built to last by our own crew — no subcontractors, no handoffs.'
+  cp='All-Pro Construction &amp; Landscape accepts sunroom addition requests in Caseyville and St. Clair County. Planning begins with the intended seasonal use, available space, foundation and roof conditions, windows, insulation, and heating or cooling needs. The written scope should identify permit, engineering, and licensed trade requirements before work begins.'
   sl=$SL_SUNROOM
   ct='Get Your Free Sunroom Estimate in Caseyville &#x2192;'
   cn='Caseyville'
@@ -582,7 +581,7 @@ $pages = @(
   fq=@(
     @{Q='How much does a sunroom addition cost in Caseyville, IL?'; A='Sunroom additions in Caseyville typically range from $15,000 for a basic three-season room to $50,000+ for a fully insulated four-season addition. Call All-Pro at 618-581-0676 for a detailed written estimate.'},
     @{Q='What is the difference between a three-season and four-season sunroom?'; A='A three-season sunroom in Caseyville uses standard windows and is comfortable spring through fall. A four-season sunroom is fully insulated with HVAC integration for year-round use — better for Caseyville winters.'},
-    @{Q='Do sunroom additions in Caseyville require a permit?'; A='Yes. Sunroom additions are structural projects that require a building permit in Caseyville. All-Pro handles the permit application and manages all inspections from start to finish.'},
+    @{Q='Do sunroom additions in Caseyville require a permit?'; A='Sunroom requirements depend on the structure, foundation, utilities, and jurisdiction. Confirm current Caseyville permit and engineering requirements and identify responsibilities in the written scope.'},
     @{Q='How long does a sunroom addition take in Caseyville?'; A='Most sunroom additions in Caseyville take 2-4 weeks from groundbreaking to final walkthrough. We provide a detailed schedule before work begins.'}
   )
 },
@@ -591,16 +590,16 @@ $pages = @(
 @{
   fn='bathroom-remodel-caseyville-il.html'
   ti='Bathroom Remodel Caseyville IL | All-Pro Construction'
-  md='All-Pro handles full bathroom remodels in Caseyville, IL — custom tile, walk-in showers, vanities, and fixtures. St. Clair County licensed and insured. Free estimates. Call 618-581-0676.'
+  md='All-Pro handles bathroom remodel requests in Caseyville, IL — custom tile, walk-in showers, vanities, and fixtures. Written estimates. Call 618-581-0676.'
   h1='Bathroom Remodel in Caseyville, IL'
   hb='Serving Caseyville &amp; St. Clair County'
-  hs='Full bathroom remodels in Caseyville and St. Clair County — custom tile, walk-in showers, vanities, and complete gut-remodels. Owner on every job. Free estimates.'
+  hs='Bathroom remodels in Caseyville and St. Clair County — custom tile, walk-in showers, vanities, and complete gut-remodels. Written estimates and direct local contact.'
   av='Caseyville, IL'
   bsn='Bathroom Remodel'
   bsu='https://allprometroeastconstruction.com/bathroom-remodel.html'
   bcl='Bathroom Remodel Caseyville, IL'
   h2='Bathroom Remodel in Caseyville, IL'
-  cp='All-Pro Construction &amp; Landscape handles complete bathroom remodels throughout Caseyville and St. Clair County. Whether you want to convert an outdated tub-shower combo into a custom walk-in shower, replace dated tile throughout, or do a full gut-remodel down to the studs, our crew manages every aspect. We self-perform demo, waterproofing, tile, drywall, vanity installation, and fixture work — coordinating licensed plumbers for any rough-in changes. Caseyville homeowners get a single point of contact from the first estimate to the final walkthrough.'
+  cp='All-Pro Construction &amp; Landscape accepts bathroom remodel requests throughout Caseyville and St. Clair County. Potential scopes include tub-to-shower conversions, custom walk-in showers, tile, drywall, vanities, fixtures, and full gut remodels. The written estimate should identify waterproofing details, selections, responsibilities, and any licensed plumbing trade work required.'
   sl=$SL_BATH
   ct='Get Your Free Bathroom Remodel Estimate in Caseyville &#x2192;'
   cn='Caseyville'
@@ -609,7 +608,7 @@ $pages = @(
   fq=@(
     @{Q='How much does a bathroom remodel cost in Caseyville, IL?'; A='Full bathroom remodels in Caseyville typically run $8,000-$25,000+ depending on size and scope. Basic fixture and tile updates start lower; full gut-remodels with custom tile run higher. Call for a free estimate.'},
     @{Q='How long does a bathroom remodel take in Caseyville?'; A='Most bathroom remodels in Caseyville take 1-3 weeks. Full gut-remodels with custom tile can take toward the higher end. We give you a schedule before work starts and stick to it.'},
-    @{Q='Does All-Pro handle permits for bathroom remodels in Caseyville?'; A='Permits are required when structural or plumbing work is involved. All-Pro determines what is required and handles all permits and inspections for Caseyville bathroom remodels.'},
+    @{Q='Who handles permits for bathroom remodels in Caseyville?'; A='Permit requirements depend on structural, plumbing, electrical, and ventilation work. The written estimate should identify current Caseyville requirements and who is responsible for each item.'},
     @{Q='Can All-Pro convert a tub to a walk-in shower in Caseyville?'; A='Yes — tub-to-shower conversions are one of our most popular Caseyville bathroom projects. We handle demo, new drain work, waterproofing, custom tile, and frameless glass doors.'}
   )
 },
@@ -618,10 +617,10 @@ $pages = @(
 @{
   fn='kitchen-remodel-caseyville-il.html'
   ti='Kitchen Remodel Caseyville IL | All-Pro Construction'
-  md='All-Pro handles full kitchen remodels in Caseyville, IL — cabinets, countertops, open-concept conversions, and islands. St. Clair County licensed and insured. Free estimates. Call 618-581-0676.'
+  md='All-Pro handles kitchen remodel requests in Caseyville, IL — cabinets, countertops, open-concept conversions, and islands. Written estimates. Call 618-581-0676.'
   h1='Kitchen Remodel in Caseyville, IL'
   hb='Serving Caseyville &amp; St. Clair County'
-  hs='Full kitchen remodels in Caseyville and St. Clair County — cabinets, countertops, open-concept conversions, and island additions. Owner on every job. Free estimates.'
+  hs='Kitchen remodels in Caseyville and St. Clair County — cabinets, countertops, open-concept conversions, and island additions. Written estimates and direct local contact.'
   av='Caseyville, IL'
   bsn='Kitchen Remodel'
   bsu='https://allprometroeastconstruction.com/kitchen-remodel.html'
@@ -637,7 +636,7 @@ $pages = @(
     @{Q='How much does a kitchen remodel cost in Caseyville, IL?'; A='Kitchen remodels in Caseyville typically range from $10,000 for basic updates to $50,000+ for full gut-remodels with custom cabinets and high-end countertops. We provide detailed written estimates.'},
     @{Q='How long does a kitchen remodel take in Caseyville?'; A='Most kitchen remodels in Caseyville take 2-6 weeks depending on the scope of work. We set a schedule upfront and keep you updated at every stage.'},
     @{Q='What cabinet options are available for kitchen remodels in Caseyville?'; A='All-Pro installs stock cabinets (fastest lead time), semi-custom cabinets (more options and sizes), and fully custom cabinets (built to your exact specs) for Caseyville kitchen remodels.'},
-    @{Q='Do kitchen remodels in Caseyville require permits?'; A='Structural changes and electrical panel upgrades require permits. All-Pro handles permit applications and inspections for all Caseyville kitchen projects that require them.'}
+    @{Q='Do kitchen remodels in Caseyville require permits?'; A='Permit requirements depend on structural, electrical, plumbing, and ventilation work. Confirm current Caseyville requirements and identify permit and inspection responsibilities in the written scope.'}
   )
 },
 
@@ -672,16 +671,16 @@ $pages = @(
 @{
   fn='tree-service-caseyville-il.html'
   ti='Tree Service Caseyville IL | All-Pro Construction'
-  md='All-Pro provides tree trimming, removal, and stump grinding in Caseyville, IL. Licensed, insured, owner on every job. Free estimates. Call 618-581-0676.'
+  md='All-Pro accepts tree trimming, removal, and stump grinding requests in Caseyville, IL. Confirm availability and project requirements. Call 618-581-0676.'
   h1='Tree Service in Caseyville, IL'
   hb='Serving Caseyville &amp; St. Clair County'
-  hs='Professional tree trimming, removal, and stump grinding in Caseyville and St. Clair County. Storm cleanup. Licensed and insured. Owner on every job. Free estimates.'
+  hs='Tree trimming, removal, stump grinding, and storm cleanup requests in Caseyville and St. Clair County. Request current documentation for the approved scope. Free estimates.'
   av='Caseyville, IL'
   bsn='Tree Service'
   bsu='https://allprometroeastconstruction.com/index.html'
   bcl='Tree Service Caseyville, IL'
   h2='Tree Service in Caseyville, IL'
-  cp='All-Pro Construction &amp; Landscape provides professional tree services throughout Caseyville and St. Clair County. Caseyville properties range from newer lots with young trees to established yards with mature hardwoods that need proper care and occasional removal. Our tree service crew handles trimming, full removal, stump grinding, and storm damage cleanup. Bill Sessions is on site for every Caseyville tree job — we do not send an unsupervised crew to your property and trust for the best. Licensed, insured, and experienced with trees of all sizes.'
+  cp='All-Pro Construction &amp; Landscape accepts tree-service requests in Caseyville and St. Clair County. Local properties range from newer lots with young trees to established yards with mature hardwoods. Potential scopes include trimming, removal, stump grinding, and storm cleanup. Confirm site access, disposal, utility conditions, current insurance information, and any requirements that apply to the approved scope before work begins.'
   sl=$SL_TREE
   ct='Get Your Free Tree Service Estimate in Caseyville &#x2192;'
   cn='Caseyville'
@@ -691,7 +690,7 @@ $pages = @(
     @{Q='How much does tree service cost in Caseyville, IL?'; A='Tree trimming in Caseyville typically runs $200-$800 per tree depending on size and complexity. Full tree removal runs $500-$2,000+ depending on the tree. Call All-Pro at 618-581-0676 for a free estimate.'},
     @{Q='How much does stump grinding cost in Caseyville?'; A='Stump grinding in Caseyville typically runs $75-$400 depending on stump diameter and accessibility. We grind the stump below grade so you can replant or sod over the area.'},
     @{Q='Does All-Pro handle storm damage tree cleanup in Caseyville?'; A='Yes. All-Pro prioritizes storm damage calls in Caseyville and responds quickly after major storms. We remove fallen limbs and trees safely and haul everything away.'},
-    @{Q='Is All-Pro licensed and insured for tree service in Caseyville?'; A='Yes. All-Pro is fully licensed and insured in Illinois for tree service work. We carry full liability and workers compensation coverage for every Caseyville job.'}
+    @{Q='What documentation should I verify for tree service in Caseyville?'; A='Request current insurance information and confirm any permit, utility, equipment, or licensing requirements that apply to the approved tree-service scope before work begins.'}
   )
 },
 
