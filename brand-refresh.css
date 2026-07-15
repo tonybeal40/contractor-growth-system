@@ -114,10 +114,10 @@ button[type="submit"],
 input[type="submit"],
 .btn-primary,
 .btn-red {
-  background: var(--ap-copper) !important;
-  border-color: var(--ap-copper) !important;
+  background: var(--ap-copper-dark) !important;
+  border-color: var(--ap-copper-dark) !important;
   color: #ffffff !important;
-  box-shadow: 0 12px 26px rgba(201, 106, 38, .18) !important;
+  box-shadow: 0 12px 26px rgba(169, 79, 22, .2) !important;
 }
 
 .qcta-text,

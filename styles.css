@@ -3294,8 +3294,26 @@ body.home-page {
 .home-page button[type="submit"],
 .home-page input[type="submit"],
 .home-page .nav-cta {
-  background: var(--copper) !important;
-  border-color: var(--copper) !important;
+  background: var(--red-dark) !important;
+  border-color: var(--red-dark) !important;
+  color: #ffffff !important;
+}
+
+.home-page .bill-cta {
+  background: var(--red-dark) !important;
+  color: #ffffff !important;
+}
+
+.home-page .metric-label {
+  color: #52645b !important;
+}
+
+.home-page .footer-badge {
+  background: #24493f !important;
+  border-color: rgba(255, 255, 255, .24) !important;
+}
+
+.home-page .footer-badge a {
   color: #ffffff !important;
 }
 
