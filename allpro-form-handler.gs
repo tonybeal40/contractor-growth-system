@@ -2,8 +2,8 @@
  * All-Pro Metro East Construction — Custom Form Handler
  * Google Apps Script Web App
  *
- * Receives POST from the website, sends email to Bill + Tony,
- * and logs every lead to a Google Sheet.
+ * Receives POST from the website, sends lead email, logs every lead to a
+ * Google Sheet, and optionally sends a Twilio SMS alert.
  *
  * DEPLOY STEPS (do this once):
  *  1. Go to https://script.google.com → New Project → paste this file
@@ -20,7 +20,9 @@
  *  2. Run phase2SelfTest once and approve permissions.
  *  3. Deploy → Manage deployments → Edit existing web app → New version.
  *  4. Keep the same Web App URL.
- *  5. Test a live form and confirm Sheet + email/SMS before changing forms.
+ *  5. Add Twilio credentials in Project Settings > Script Properties if SMS
+ *     alerts are wanted. See smsSetupStatus() below.
+ *  6. Test a live form and confirm Sheet + email + configured SMS delivery.
  */
 
 // ── Internal / test emails — never log these ─────────────────────────────────
@@ -50,14 +52,9 @@ function isInternalOrTest(data) {
   return !hasContact;
 }
 var CONFIG = {
-  leadEmail:   "tonybeal40@gmail.com",             // Tony gets every lead
-  ownerEmail:  "tonybeal40@gmail.com",             // Tony owner copy; deduped at send time
-  smsEmails:   [
-    "6182925320@tmomail.net",
-    "6182925320@txt.att.net",
-    "6182925320@vtext.com",
-    "6182925320@email.uscc.net"
-  ],
+  leadEmail:   "williamosessionallpro@gmail.com",  // Bill receives the primary lead email
+  ownerEmail:  "tonybeal40@gmail.com",             // Tony receives the operations copy
+  smsAlertTo:  "+16182925320",                    // Private lead alerts only
   sheetName:   "All-Pro Leads",                    // Google Sheet tab name
   reviewEmail: "tonybeal40@gmail.com",             // Reviews go to Tony only
   siteOrigin:  "https://allprometroeastconstruction.com",
@@ -78,7 +75,7 @@ function phase2SelfTest() {
     email: "tonybeal40+phase2selftest@gmail.com",
     city: "Belleville",
     service: "Phase 2 Lead Engine Verification",
-    message: "PHASE 2 APPS SCRIPT SELF TEST SAFE TO DELETE - verifies Apps Script email, SMS copy, and Sheet logging.",
+    message: "PHASE 2 APPS SCRIPT SELF TEST SAFE TO DELETE - verifies Apps Script email, Sheet logging, and configured Twilio SMS.",
     form_name: "Phase 2 Apps Script Self Test",
     form_slug: "phase-2-apps-script-self-test",
     page_url: "https://allprometroeastconstruction.com/phase-2-apps-script-self-test",
@@ -90,8 +87,23 @@ function phase2SelfTest() {
   };
   var subject = buildSubject(data, false);
   sendLeadNotification(data, subject, false);
-  logToSheet(data, subject);
-  return { ok: true, subject: subject };
+  var sms = sendSmsAlert(data);
+  logToSheet(data, subject, {
+    email: { sent: true },
+    sms: sms
+  });
+  return { ok: true, subject: subject, sms: sms };
+}
+
+function deliveryDiagnostics() {
+  return {
+    ok: true,
+    mailQuotaRemaining: MailApp.getRemainingDailyQuota(),
+    sms: smsSetupStatus(),
+    spreadsheetId: "1xcc0xo4UeN3EaZUMNn_qFJ-xgX6ZPg7l7sTMSLsT6GE",
+    leadEmail: CONFIG.leadEmail,
+    copyEmail: CONFIG.ownerEmail
+  };
 }
 
 // ── Main handler ──────────────────────────────────────────────────────────────
@@ -128,17 +140,44 @@ function doPost(e) {
     var isReview = isReviewSubmission(data);
     var subject  = buildSubject(data, isReview);
 
-    // Send lead email/SMS from Apps Script so the Sheet endpoint can be the primary path.
+    var delivery = {
+      email: { sent: false },
+      sms: { sent: false, configured: false },
+      sheet: { logged: false },
+      errors: []
+    };
+
+    // Email, SMS, and Sheet logging are independent so one outage cannot
+    // prevent the other delivery paths from running.
     try { sendLeadNotification(data, subject, isReview); } catch(mailErr) {
       console.warn("Lead email failed (non-fatal):", mailErr);
+      delivery.errors.push("email: " + safeError(mailErr));
+    }
+    if (delivery.errors.length === 0) {
+      delivery.email.sent = true;
+    }
+
+    if (!isReview) {
+      try { delivery.sms = sendSmsAlert(data); } catch(smsErr) {
+        console.warn("Lead SMS failed (non-fatal):", smsErr);
+        delivery.errors.push("sms: " + safeError(smsErr));
+      }
     }
 
     // Log to Sheet (non-fatal)
-    try { logToSheet(data, subject); } catch(sheetErr) {
+    try {
+      logToSheet(data, subject, delivery);
+      delivery.sheet.logged = true;
+    } catch(sheetErr) {
       console.warn("Sheet log failed (non-fatal):", sheetErr);
+      delivery.errors.push("sheet: " + safeError(sheetErr));
     }
 
-    return jsonResponse({ ok: true, redirect: buildThankYouUrl(data) }, headers);
+    return jsonResponse({
+      ok: delivery.email.sent || delivery.sheet.logged,
+      redirect: buildThankYouUrl(data),
+      delivery: delivery
+    }, headers);
 
   } catch (err) {
     console.error("doPost error:", err);
@@ -254,9 +293,7 @@ function sendLeadNotification(data, subject, isReview) {
   var body = buildEmailBody(data);
   var replyTo = data["email"] || data["replyto"] || "";
   var to = isReview ? CONFIG.reviewEmail : CONFIG.leadEmail;
-  var cc = uniqueEmailCsv(isReview
-    ? [CONFIG.ownerEmail]
-    : [CONFIG.ownerEmail].concat(CONFIG.smsEmails || []), to);
+  var cc = uniqueEmailCsv([CONFIG.ownerEmail], to);
   var options = {
     to: to,
     subject: subject,
@@ -266,6 +303,105 @@ function sendLeadNotification(data, subject, isReview) {
   if (cc) options.cc = cc;
   if (replyTo) options.replyTo = replyTo;
   MailApp.sendEmail(options);
+}
+
+/**
+ * Script Properties required for Twilio SMS:
+ *   TWILIO_ACCOUNT_SID
+ *   TWILIO_AUTH_TOKEN
+ *   TWILIO_FROM_NUMBER          (E.164, such as +16185551234)
+ * Optional:
+ *   SMS_ALERT_TO                (defaults to CONFIG.smsAlertTo)
+ *
+ * Keep credentials in Apps Script Project Settings, never in this file.
+ */
+function smsSetupStatus() {
+  var props = PropertiesService.getScriptProperties();
+  var required = ["TWILIO_ACCOUNT_SID", "TWILIO_AUTH_TOKEN", "TWILIO_FROM_NUMBER"];
+  var missing = [];
+  for (var i = 0; i < required.length; i++) {
+    if (!String(props.getProperty(required[i]) || "").trim()) missing.push(required[i]);
+  }
+  return {
+    configured: missing.length === 0,
+    missing: missing,
+    alertTo: normalizeE164(props.getProperty("SMS_ALERT_TO") || CONFIG.smsAlertTo)
+  };
+}
+
+function sendSmsAlert(data) {
+  var status = smsSetupStatus();
+  if (!status.configured) {
+    Logger.log("Twilio SMS not configured. Missing: " + status.missing.join(", "));
+    return { sent: false, configured: false, missing: status.missing };
+  }
+
+  var props = PropertiesService.getScriptProperties();
+  var accountSid = String(props.getProperty("TWILIO_ACCOUNT_SID") || "").trim();
+  var authToken = String(props.getProperty("TWILIO_AUTH_TOKEN") || "").trim();
+  var from = normalizeE164(props.getProperty("TWILIO_FROM_NUMBER"));
+  var to = status.alertTo;
+  if (!from || !to) throw new Error("Twilio From and SMS alert To numbers must use E.164 format.");
+
+  var endpoint = "https://api.twilio.com/2010-04-01/Accounts/" +
+    encodeURIComponent(accountSid) + "/Messages.json";
+  var response = UrlFetchApp.fetch(endpoint, {
+    method: "post",
+    payload: {
+      To: to,
+      From: from,
+      Body: buildSmsBody(data)
+    },
+    headers: {
+      Authorization: "Basic " + Utilities.base64Encode(accountSid + ":" + authToken)
+    },
+    muteHttpExceptions: true
+  });
+
+  var code = response.getResponseCode();
+  var raw = response.getContentText();
+  var parsed = {};
+  try { parsed = JSON.parse(raw); } catch (_) {}
+  if (code < 200 || code >= 300) {
+    throw new Error("Twilio SMS failed (HTTP " + code + "): " +
+      String(parsed.message || raw || "Unknown Twilio error").substring(0, 300));
+  }
+  return { sent: true, configured: true, sid: parsed.sid || "", status: parsed.status || "queued" };
+}
+
+function buildSmsBody(data) {
+  var name = data["name"] || data["full_name"] || "Unknown name";
+  var phone = data["phone"] || "No phone";
+  var service = data["service"] || data["service_needed"] || data["project"] || "Project not selected";
+  var city = data["city"] || "City not entered";
+  var form = data["form_name"] || data["page_path"] || "Website form";
+  return [
+    "NEW ALL-PRO LEAD",
+    name + " | " + phone,
+    service + " | " + city,
+    "Form: " + form
+  ].join("\n").substring(0, 480);
+}
+
+function normalizeE164(value) {
+  var raw = String(value || "").trim();
+  if (!raw) return "";
+  var digits = raw.replace(/\D/g, "");
+  if (digits.length === 10) digits = "1" + digits;
+  return digits.length >= 11 && digits.length <= 15 ? "+" + digits : "";
+}
+
+function sendSmsTest() {
+  var status = smsSetupStatus();
+  if (!status.configured) return { ok: false, sms: status };
+  var result = sendSmsAlert({
+    name: "All-Pro delivery check",
+    phone: "618-292-5320",
+    service: "SMS lead alert test",
+    city: "Belleville",
+    form_name: "Apps Script manual test"
+  });
+  return { ok: result.sent === true, sms: result };
 }
 
 function uniqueEmailCsv(values, excludeCsv) {
@@ -293,7 +429,7 @@ function buildThankYouUrl(data) {
   return CONFIG.thankYouUrl + "&form=" + encodeURIComponent(slug);
 }
 
-function logToSheet(data, subject) {
+function logToSheet(data, subject, delivery) {
   var ss = null;
   // Use the known target spreadsheet ID first
   var TARGET_SHEET_ID = "1xcc0xo4UeN3EaZUMNn_qFJ-xgX6ZPg7l7sTMSLsT6GE";
@@ -328,6 +464,20 @@ function logToSheet(data, subject) {
     sheet.setColumnWidth(9, 280);  // Page URL
   }
 
+  var deliveryHeaders = ["Email Status", "SMS Status", "Delivery Notes"];
+  var deliveryHeaderRange = sheet.getRange(1, 16, 1, deliveryHeaders.length);
+  var currentDeliveryHeaders = deliveryHeaderRange.getValues()[0];
+  if (currentDeliveryHeaders.join("").trim() === "") {
+    deliveryHeaderRange.setValues([deliveryHeaders]).setFontWeight("bold");
+  }
+
+  delivery = delivery || {};
+  var emailStatus = delivery.email && delivery.email.sent ? "sent" : "failed";
+  var smsStatus = "not configured";
+  if (delivery.sms && delivery.sms.sent) smsStatus = "sent";
+  else if (delivery.sms && delivery.sms.configured) smsStatus = "failed";
+  var deliveryNotes = (delivery.errors || []).join(" | ").substring(0, 500);
+
   sheet.appendRow([
     new Date(),
     subject || "",
@@ -343,8 +493,17 @@ function logToSheet(data, subject) {
     data["utm_source"]           || "",
     data["utm_campaign"]         || "",
     data["lead_session_id"]      || "",
-    data["form_name"]            || data["page_path"] || ""
+    data["form_name"]            || data["page_path"] || "",
+    emailStatus,
+    smsStatus,
+    deliveryNotes
   ]);
+}
+
+function safeError(err) {
+  return String(err && err.message ? err.message : err || "unknown error")
+    .replace(/[\r\n]+/g, " ")
+    .substring(0, 240);
 }
 
 function jsonResponse(data, headers, statusCode) {

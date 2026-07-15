@@ -479,7 +479,7 @@
     });
   }
 
-  // ── Dual-submit: log to the Sheet endpoint, then let FormSubmit email ───────
+  // ── Primary delivery: Apps Script handles email + Sheet + optional SMS ─────
   function collectFormData(form) {
     const data = {};
     const fd = new FormData(form);
@@ -519,6 +519,16 @@
       headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
       body: encodeForEndpoint(data).toString(),
       keepalive: true
+    }).then(function (response) {
+      if (!response.ok) {
+        throw new Error("All-Pro form endpoint returned HTTP " + response.status);
+      }
+      return response.json();
+    }).then(function (result) {
+      if (!result || result.ok !== true) {
+        throw new Error("All-Pro form endpoint did not confirm delivery");
+      }
+      return result;
     });
   }
 
@@ -527,8 +537,8 @@
     populateTracking(form, snapshot);
     const data = collectFormData(form);
     const nextUrl = data["_next"] || (siteOrigin + "/thank-you.html?src=form");
-    return postToEndpoint(data).then(function () {
-      return nextUrl;
+    return postToEndpoint(data).then(function (result) {
+      return result.redirect || nextUrl;
     });
   }
 
@@ -552,8 +562,10 @@
   }
 
   function shortTimeout(ms) {
-    return new Promise(function (resolve) {
-      setTimeout(resolve, ms);
+    return new Promise(function (_, reject) {
+      setTimeout(function () {
+        reject(new Error("All-Pro form endpoint timed out"));
+      }, ms);
     });
   }
 
@@ -576,11 +588,12 @@
       setSubmitState(form, true);
 
       Promise.race([
-        submitToCustomEndpoint(form, snapshot).catch(function () {
-          console.warn("Custom endpoint logging failed; continuing to FormSubmit.");
-        }),
+        submitToCustomEndpoint(form, snapshot),
         shortTimeout(11000)
-      ]).finally(function () {
+      ]).then(function (nextUrl) {
+        window.location.assign(nextUrl);
+      }).catch(function (error) {
+        console.error("Primary All-Pro form delivery failed; trying FormSubmit fallback.", error);
         form.dataset.allproNativeSubmit = "true";
         nativeSubmit(form);
       });
