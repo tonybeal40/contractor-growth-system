@@ -119,7 +119,7 @@ def render_problem_page(page: dict[str, Any], related: list[dict[str, Any]]) -> 
   <meta property="og:image" content="{SITE}/all-pro-og-image.png">
   <link rel="stylesheet" href="styles.css">
   <script defer src="lead-tracking.js?v=20260715d"></script>
-  <script defer src="formsubmit-lead-tracking.js?v=20260715c"></script>
+  <script defer src="formsubmit-lead-tracking.js?v=20260715e"></script>
   <script type="application/ld+json">
 {schema}
   </script>
@@ -272,7 +272,7 @@ def render_hub(pages: list[dict[str, Any]]) -> str:
   <meta property="og:image" content="{SITE}/all-pro-og-image.png">
   <link rel="stylesheet" href="styles.css">
   <script defer src="lead-tracking.js?v=20260715d"></script>
-  <script defer src="formsubmit-lead-tracking.js?v=20260715c"></script>
+  <script defer src="formsubmit-lead-tracking.js?v=20260715e"></script>
   <script type="application/ld+json">
 {schema}
   </script>

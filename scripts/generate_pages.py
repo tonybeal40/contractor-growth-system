@@ -228,7 +228,7 @@ def render_page(service: Service, city: City, proof: dict[str, Any]) -> str:
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script defer src="lead-tracking.js?v=20260715d"></script>
-  <script defer src="formsubmit-lead-tracking.js?v=20260715c"></script>
+  <script defer src="formsubmit-lead-tracking.js?v=20260715e"></script>
   <script type="application/ld+json">
 {jsonld}
   </script>

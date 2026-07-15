@@ -207,98 +207,218 @@ function isReviewSubmission(data) {
   return formName.indexOf("review") > -1 || pagePath.indexOf("reviews") > -1;
 }
 
+function pickLeadValue(data, keys, fallback) {
+  for (var i = 0; i < keys.length; i++) {
+    var value = data[keys[i]];
+    if (value !== undefined && value !== null && String(value).trim() !== "") {
+      return String(value).trim();
+    }
+  }
+  return fallback || "";
+}
+
+function escapeEmailHtml(value) {
+  return String(value === undefined || value === null ? "" : value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function multilineEmailHtml(value) {
+  return escapeEmailHtml(value).replace(/\r?\n/g, "<br>");
+}
+
 function buildSubject(data, isReview) {
-  var prefix  = isReview ? "⭐ New Review" : "🚨 NEW LEAD";
-  var name    = data["name"] || data["full_name"] || "Unknown";
-  var service = data["service"] || data["project"] || "";
-  var city    = data["city"] || "";
-  // Show the channel they came from — e.g. "linkedin", "facebook", "google-organic"
-  var source  = data["lead_source"] || data["first_touch_source"] || "";
-  var parts   = [name];
-  if (service) parts.push(service);
-  if (city)    parts.push(city);
-  if (source)  parts.push("via " + source);
-  return prefix + " · " + parts.join(" · ") + " — All-Pro";
+  var prefix  = isReview ? "⭐ NEW ALL-PRO REVIEW" : "🚨 NEW ALL-PRO LEAD";
+  var name    = pickLeadValue(data, ["name", "full_name", "customer_name", "contact_name", "owner_name", "contact_person", "business_name"], "Name not entered");
+  var service = pickLeadValue(data, ["service", "service_needed", "project", "project_type", "job_type", "work_type", "service_category", "main_service"], "Project details");
+  var city    = pickLeadValue(data, ["city", "location", "service_area", "cities_served", "cities_covered"], "Metro East");
+  var phone   = pickLeadValue(data, ["phone", "phone_number", "mobile", "contact_phone", "public_phone", "business_phone"], "");
+  var parts   = [prefix, name, service, city];
+  if (phone) parts.push(phone);
+  return parts.join(" · ");
+}
+
+function normalizedLead(data) {
+  var description = pickLeadValue(data, ["details", "message", "description", "notes", "review", "project_details", "company_fit_notes", "proof_links", "license_insurance_notes"], "");
+  var summary = pickLeadValue(data, ["project_summary"], "");
+  if (!description) description = summary;
+  return {
+    name: pickLeadValue(data, ["name", "full_name", "customer_name", "contact_name", "owner_name", "contact_person", "business_name"], "Name not entered"),
+    company: pickLeadValue(data, ["business_name", "company", "company_name"], ""),
+    phone: pickLeadValue(data, ["phone", "phone_number", "mobile", "contact_phone", "public_phone", "business_phone"], "Not entered"),
+    email: pickLeadValue(data, ["email", "email_address", "replyto", "_replyto", "contact_email", "business_email"], "Not entered"),
+    service: pickLeadValue(data, ["service", "service_needed", "project", "project_type", "job_type", "work_type", "service_category", "main_service"], "Not selected"),
+    city: pickLeadValue(data, ["city", "location", "service_area", "cities_served", "cities_covered"], "Not entered"),
+    address: pickLeadValue(data, ["address", "property_address", "project_address"], ""),
+    website: pickLeadValue(data, ["website", "website_or_profile", "profile_url"], ""),
+    listingInterest: pickLeadValue(data, ["listing_interest"], ""),
+    description: description || "No description entered.",
+    projectSummary: summary,
+    estimateDetails: pickLeadValue(data, ["estimate_details"], ""),
+    budget: pickLeadValue(data, ["budget_range", "budget", "estimated_range"], "Not entered"),
+    timeline: pickLeadValue(data, ["timeline", "preferred_timing"], "Not entered"),
+    contactMethod: pickLeadValue(data, ["best_contact", "contact_method", "preferred_contact"], "Not entered"),
+    quoteIntent: pickLeadValue(data, ["quote_intent"], "Not entered"),
+    photos: pickLeadValue(data, ["photos_ready", "project_photo"], "Not entered"),
+    propertyType: pickLeadValue(data, ["property_type"], "Not entered"),
+    formName: pickLeadValue(data, ["form_name", "form_type", "page_path"], "Unknown form"),
+    pageUrl: pickLeadValue(data, ["page_url", "landing_page"], ""),
+    source: pickLeadValue(data, ["lead_source", "source", "first_touch_source"], "direct"),
+    firstTouch: pickLeadValue(data, ["first_touch_source"], ""),
+    utmSource: pickLeadValue(data, ["utm_source"], ""),
+    utmCampaign: pickLeadValue(data, ["utm_campaign"], ""),
+    referrer: pickLeadValue(data, ["referrer", "first_referrer"], ""),
+    submitted: pickLeadValue(data, ["submission_time_local"], new Date().toLocaleString()),
+    sessionId: pickLeadValue(data, ["lead_session_id"], "n/a"),
+    contactConsent: pickLeadValue(data, ["estimate_contact_consent", "contact_consent", "contractor_contact_consent", "consent"], "Not recorded"),
+    marketingConsent: pickLeadValue(data, ["email_marketing_opt_in"], "No")
+  };
 }
 
 function buildEmailBody(data) {
-  var skip = ["_honey", "_captcha", "_template", "_next", "_subject", "_cc", "_replyto", "_blacklist"];
-  var lines = [];
-
-  // ── 1. WHERE THIS LEAD CAME FROM (top of email — marketing view) ────────────
-  lines.push("=== WHERE THEY CAME FROM ===");
-  var formName    = data["form_name"]          || data["page_path"] || "Unknown form";
-  var pageUrl     = data["page_url"]           || "";
-  var source      = data["lead_source"]        || "direct";
-  var firstTouch  = data["first_touch_source"] || source;
-  var utmSource   = data["utm_source"]         || "";
-  var utmCampaign = data["utm_campaign"]       || "";
-  var utmMedium   = data["utm_medium"]         || "";
-  var utmTerm     = data["utm_term"]           || "";
-  var referrer    = data["referrer"]           || "";
-  var gclid       = data["gclid"]              || "";
-  var fbclid      = data["fbclid"]             || "";
-
-  lines.push("Form: "        + formName);
-  lines.push("Page: "        + pageUrl);
-  lines.push("Source: "      + source);
-  if (firstTouch !== source)
-    lines.push("First touch: " + firstTouch);
-  if (utmSource)   lines.push("UTM source: "   + utmSource);
-  if (utmMedium)   lines.push("UTM medium: "   + utmMedium);
-  if (utmCampaign) lines.push("UTM campaign: " + utmCampaign);
-  if (utmTerm)     lines.push("UTM term: "     + utmTerm);
-  if (referrer)    lines.push("Referrer: "     + referrer);
-  if (gclid)       lines.push("Google ad click (gclid): " + gclid);
-  if (fbclid)      lines.push("Facebook ad click (fbclid): " + fbclid);
-
-  // ── 2. LEAD CONTACT INFO ─────────────────────────────────────────────────────
-  lines.push("\n=== LEAD INFO ===");
-  var contactFields = ["name", "phone", "email", "service", "city", "timeline", "message", "details", "review", "rating"];
-  for (var i = 0; i < contactFields.length; i++) {
-    var k = contactFields[i];
-    if (data[k] && String(data[k]).trim()) {
-      lines.push(titleCase(k) + ": " + data[k]);
-    }
+  var lead = normalizedLead(data);
+  var lines = [
+    "NEW ALL-PRO WEBSITE LEAD",
+    "========================",
+    "",
+    "CONTACT",
+    "Name: " + lead.name,
+    "Company: " + (lead.company || "Not entered"),
+    "Phone: " + lead.phone,
+    "Email: " + lead.email,
+    "Preferred contact: " + lead.contactMethod,
+    "",
+    "PROJECT",
+    "Service: " + lead.service,
+    "City: " + lead.city,
+    "Address: " + (lead.address || "Not entered"),
+    "Website/profile: " + (lead.website || "Not entered"),
+    "Listing interest: " + (lead.listingInterest || "Not entered"),
+    "Budget: " + lead.budget,
+    "Timeline: " + lead.timeline,
+    "Quote intent: " + lead.quoteIntent,
+    "Photos: " + lead.photos,
+    "Property type: " + lead.propertyType,
+    "",
+    "DESCRIPTION",
+    lead.description
+  ];
+  if (lead.projectSummary && lead.projectSummary !== lead.description) {
+    lines.push("", "Project summary: " + lead.projectSummary);
   }
-
-  // ── 3. META ──────────────────────────────────────────────────────────────────
-  lines.push("\n=== META ===");
-  lines.push("Submitted: "   + (data["submission_time_local"] || new Date().toLocaleString()));
-  lines.push("Session ID: "  + (data["lead_session_id"] || "n/a"));
-
-  // ── 4. REMAINING FIELDS ──────────────────────────────────────────────────────
-  var allHandled = skip.concat(contactFields).concat([
-    "form_name","form_slug","page_url","page_path","lead_source","first_touch_source",
-    "first_touch_detail","landing_page","landing_path","referrer","first_referrer",
-    "utm_source","utm_medium","utm_campaign","utm_term","utm_content",
-    "gclid","fbclid","msclkid","lead_session_id","submission_time_local","submission_time_utc",
-    "page_title","estimate_contact_consent","email_marketing_opt_in"
-  ]);
-  var extras = [];
-  Object.keys(data).sort().forEach(function(key) {
-    if (allHandled.indexOf(key) === -1 && data[key] && String(data[key]).trim()) {
-      extras.push(titleCase(key.replace(/_/g, " ")) + ": " + data[key]);
-    }
-  });
-  if (extras.length) {
-    lines.push("\n=== OTHER FIELDS ===");
-    extras.forEach(function(e) { lines.push(e); });
+  if (lead.estimateDetails) {
+    lines.push("Estimate details: " + lead.estimateDetails);
   }
-
+  lines.push(
+    "",
+    "SOURCE & CONSENT",
+    "Form: " + lead.formName,
+    "Source: " + lead.source,
+    "First touch: " + (lead.firstTouch || lead.source),
+    "Page: " + (lead.pageUrl || "Not recorded"),
+    "UTM source: " + (lead.utmSource || "none"),
+    "UTM campaign: " + (lead.utmCampaign || "none"),
+    "Contact consent: " + lead.contactConsent,
+    "Marketing opt-in: " + lead.marketingConsent,
+    "Submitted: " + lead.submitted,
+    "Session ID: " + lead.sessionId
+  );
   return lines.join("\n");
+}
+
+function emailInfoRow(label, value, highlight) {
+  if (!value) return "";
+  var background = highlight ? "#fff7ed" : "#ffffff";
+  return '<tr><td style="width:34%;padding:10px 12px;border-bottom:1px solid #e5e7eb;color:#5f6b66;font-size:13px;font-weight:700;background:' + background + ';">' +
+    escapeEmailHtml(label) + '</td><td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;color:#1f2933;font-size:15px;font-weight:' +
+    (highlight ? "800" : "600") + ';background:' + background + ';">' + multilineEmailHtml(value) + '</td></tr>';
+}
+
+function buildLeadEmailHtml(data, isReview) {
+  var lead = normalizedLead(data);
+  var accent = isReview ? "#b45309" : "#c96a26";
+  var header = isReview ? "NEW CUSTOMER REVIEW" : "NEW WEBSITE LEAD";
+  var phoneDigits = lead.phone.replace(/\D/g, "");
+  var phoneHref = phoneDigits.length >= 10 ? "tel:+" + (phoneDigits.length === 10 ? "1" : "") + phoneDigits : "";
+  var emailHref = lead.email !== "Not entered" ? "mailto:" + encodeURIComponent(lead.email) : "";
+  var actions = [];
+  if (phoneHref) {
+    actions.push('<a href="' + phoneHref + '" style="display:inline-block;margin:4px 8px 4px 0;padding:13px 18px;background:#2f5d50;color:#ffffff;text-decoration:none;border-radius:6px;font-weight:800;font-size:15px;">Call ' + escapeEmailHtml(lead.phone) + '</a>');
+  }
+  if (emailHref) {
+    actions.push('<a href="' + emailHref + '" style="display:inline-block;margin:4px 8px 4px 0;padding:13px 18px;background:#1f2933;color:#ffffff;text-decoration:none;border-radius:6px;font-weight:800;font-size:15px;">Email ' + escapeEmailHtml(lead.name) + '</a>');
+  }
+
+  var projectRows = [
+    emailInfoRow("Company", lead.company, false),
+    emailInfoRow("Service", lead.service, true),
+    emailInfoRow("City", lead.city, true),
+    emailInfoRow("Address", lead.address || "Not entered", false),
+    emailInfoRow("Website / profile", lead.website, false),
+    emailInfoRow("Listing interest", lead.listingInterest, false),
+    emailInfoRow("Budget", lead.budget, false),
+    emailInfoRow("Timeline", lead.timeline, false),
+    emailInfoRow("Quote intent", lead.quoteIntent, false),
+    emailInfoRow("Photos", lead.photos, false),
+    emailInfoRow("Property type", lead.propertyType, false)
+  ].join("");
+
+  var sourceRows = [
+    emailInfoRow("Form", lead.formName, false),
+    emailInfoRow("Lead source", lead.source, false),
+    emailInfoRow("First touch", lead.firstTouch || lead.source, false),
+    emailInfoRow("UTM source", lead.utmSource || "none", false),
+    emailInfoRow("UTM campaign", lead.utmCampaign || "none", false),
+    emailInfoRow("Contact consent", lead.contactConsent, false),
+    emailInfoRow("Marketing opt-in", lead.marketingConsent, false),
+    emailInfoRow("Submitted", lead.submitted, false),
+    emailInfoRow("Session ID", lead.sessionId, false)
+  ].join("");
+
+  return [
+    '<!doctype html><html><body style="margin:0;padding:0;background:#f3f5f4;font-family:Arial,Helvetica,sans-serif;color:#1f2933;">',
+    '<div style="display:none;max-height:0;overflow:hidden;opacity:0;">New All-Pro lead from ' + escapeEmailHtml(lead.name) + ': ' + escapeEmailHtml(lead.service) + ' in ' + escapeEmailHtml(lead.city) + '.</div>',
+    '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f3f5f4;padding:20px 8px;"><tr><td align="center">',
+    '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:680px;background:#ffffff;border:1px solid #dfe5e2;border-radius:8px;overflow:hidden;">',
+    '<tr><td style="padding:20px 24px;background:#1f2933;border-top:7px solid ' + accent + ';">',
+    '<div style="color:#f7f3ea;font-size:12px;font-weight:800;letter-spacing:1.2px;">ALL-PRO CONSTRUCTION &amp; LANDSCAPE</div>',
+    '<div style="margin-top:7px;color:#ffffff;font-size:26px;font-weight:900;">' + header + '</div>',
+    '<div style="margin-top:6px;color:#d8e4df;font-size:15px;">' + escapeEmailHtml(lead.service) + ' in ' + escapeEmailHtml(lead.city) + '</div>',
+    '</td></tr>',
+    '<tr><td style="padding:22px 24px 8px;">',
+    '<div style="font-size:12px;font-weight:800;color:' + accent + ';letter-spacing:1px;">CONTACT THIS LEAD</div>',
+    '<div style="margin:6px 0 2px;font-size:25px;font-weight:900;color:#1f2933;">' + escapeEmailHtml(lead.name) + '</div>',
+    lead.company && lead.company !== lead.name ? '<div style="margin-top:3px;font-size:16px;font-weight:800;color:#44524c;">' + escapeEmailHtml(lead.company) + '</div>' : '',
+    '<div style="font-size:18px;font-weight:800;color:#2f5d50;">' + escapeEmailHtml(lead.phone) + '</div>',
+    '<div style="margin-top:4px;font-size:15px;color:#44524c;">' + escapeEmailHtml(lead.email) + '</div>',
+    '<div style="margin-top:14px;">' + actions.join("") + '</div>',
+    '</td></tr>',
+    '<tr><td style="padding:14px 24px 0;"><div style="font-size:17px;font-weight:900;color:#1f2933;margin-bottom:8px;">Project details</div><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #e5e7eb;border-radius:6px;overflow:hidden;">' + projectRows + '</table></td></tr>',
+    '<tr><td style="padding:20px 24px 0;"><div style="font-size:17px;font-weight:900;color:#1f2933;margin-bottom:8px;">Homeowner description</div><div style="padding:16px;background:#f7f3ea;border-left:5px solid ' + accent + ';font-size:15px;line-height:1.6;color:#26332e;">' + multilineEmailHtml(lead.description) + '</div></td></tr>',
+    lead.projectSummary && lead.projectSummary !== lead.description ? '<tr><td style="padding:14px 24px 0;"><strong>Project summary:</strong><br><span style="line-height:1.5;">' + multilineEmailHtml(lead.projectSummary) + '</span></td></tr>' : '',
+    lead.estimateDetails ? '<tr><td style="padding:14px 24px 0;"><strong>Estimator details:</strong><br><span style="line-height:1.5;">' + multilineEmailHtml(lead.estimateDetails) + '</span></td></tr>' : '',
+    '<tr><td style="padding:20px 24px 0;"><div style="font-size:17px;font-weight:900;color:#1f2933;margin-bottom:8px;">Source and consent</div><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #e5e7eb;border-radius:6px;overflow:hidden;">' + sourceRows + '</table></td></tr>',
+    lead.pageUrl ? '<tr><td style="padding:16px 24px 0;font-size:13px;color:#5f6b66;word-break:break-all;"><strong>Submitted from:</strong> <a href="' + escapeEmailHtml(lead.pageUrl) + '" style="color:#2f5d50;">' + escapeEmailHtml(lead.pageUrl) + '</a></td></tr>' : '',
+    '<tr><td style="padding:22px 24px;background:#f7f3ea;font-size:13px;line-height:1.5;color:#52605a;">This alert was generated by the verified All-Pro website form handler. Replying to this email replies to the homeowner when an email address was provided.</td></tr>',
+    '</table></td></tr></table></body></html>'
+  ].join("");
 }
 
 function sendLeadNotification(data, subject, isReview) {
   var body = buildEmailBody(data);
-  var replyTo = data["email"] || data["replyto"] || "";
+  var htmlBody = buildLeadEmailHtml(data, isReview);
+  var replyTo = pickLeadValue(data, ["email", "email_address", "replyto", "_replyto", "contact_email", "business_email"], "");
   var to = isReview ? CONFIG.reviewEmail : CONFIG.leadEmail;
   var cc = uniqueEmailCsv([CONFIG.ownerEmail], to);
   var options = {
     to: to,
     subject: subject,
     body: body,
-    name: "All-Pro Lead Handler"
+    htmlBody: htmlBody,
+    name: isReview ? "ALL-PRO REVIEW ALERT" : "ALL-PRO NEW LEAD ALERT"
   };
   if (cc) options.cc = cc;
   if (replyTo) options.replyTo = replyTo;
@@ -470,25 +590,26 @@ function logToSheet(data, subject, delivery) {
   var sheet = ss.getSheetByName("Leads");
   if (!sheet) {
     sheet = ss.insertSheet("Leads");
-    sheet.appendRow([
-      "Timestamp", "Subject", "Name", "Phone", "Email", "Service", "City",
-      "Message", "Page URL", "Lead Source", "First Touch", "UTM Source",
-      "UTM Campaign", "Session ID", "Form Name"
-    ]);
     sheet.setFrozenRows(1);
-    // Bold header row
-    sheet.getRange(1, 1, 1, 15).setFontWeight("bold");
-    sheet.setColumnWidth(1, 160);  // Timestamp
-    sheet.setColumnWidth(2, 320);  // Subject
-    sheet.setColumnWidth(8, 400);  // Message
-    sheet.setColumnWidth(9, 280);  // Page URL
   }
 
-  var deliveryHeaders = ["Email Status", "SMS Status", "Delivery Notes"];
-  var deliveryHeaderRange = sheet.getRange(1, 16, 1, deliveryHeaders.length);
-  var currentDeliveryHeaders = deliveryHeaderRange.getValues()[0];
-  if (currentDeliveryHeaders.join("").trim() === "") {
-    deliveryHeaderRange.setValues([deliveryHeaders]).setFontWeight("bold");
+  var headers = [
+    "Timestamp", "Subject", "Name", "Phone", "Email", "Service", "City",
+    "Message", "Page URL", "Lead Source", "First Touch", "UTM Source",
+    "UTM Campaign", "Session ID", "Form Name", "Email Status", "SMS Status",
+    "Delivery Notes", "Address", "Budget", "Timeline", "Preferred Contact",
+    "Quote Intent", "Photos", "Contact Consent", "Marketing Opt-In"
+  ];
+  var headerRange = sheet.getRange(1, 1, 1, headers.length);
+  if (headerRange.getValues()[0].join("|") !== headers.join("|")) {
+    headerRange.setValues([headers]).setFontWeight("bold");
+    sheet.setFrozenRows(1);
+    sheet.setColumnWidth(1, 160);  // Timestamp
+    sheet.setColumnWidth(2, 420);  // Subject
+    sheet.setColumnWidth(8, 520);  // Message
+    sheet.setColumnWidth(9, 300);  // Page URL
+    sheet.setColumnWidth(18, 320); // Delivery notes
+    sheet.setColumnWidth(19, 260); // Address
   }
 
   delivery = delivery || {};
@@ -497,26 +618,44 @@ function logToSheet(data, subject, delivery) {
   if (delivery.sms && delivery.sms.sent) smsStatus = "sent";
   else if (delivery.sms && delivery.sms.configured) smsStatus = "failed";
   var deliveryNotes = (delivery.errors || []).join(" | ").substring(0, 500);
+  var lead = normalizedLead(data);
+  var phone = lead.phone === "Not entered" ? "" : lead.phone;
+  var email = lead.email === "Not entered" ? "" : lead.email;
+  var service = lead.service === "Not selected" ? "" : lead.service;
+  var city = lead.city === "Not entered" ? "" : lead.city;
+  var budget = lead.budget === "Not entered" ? "" : lead.budget;
+  var timeline = lead.timeline === "Not entered" ? "" : lead.timeline;
+  var contactMethod = lead.contactMethod === "Not entered" ? "" : lead.contactMethod;
+  var quoteIntent = lead.quoteIntent === "Not entered" ? "" : lead.quoteIntent;
+  var photos = lead.photos === "Not entered" ? "" : lead.photos;
 
   sheet.appendRow([
     new Date(),
     subject || "",
-    data["name"] || data["full_name"] || data["customer_name"] || "",
-    data["phone"]                || "",
-    data["email"]                || "",
-    data["service"] || data["service_needed"] || data["project"] || data["main_service"] || "",
-    data["city"]                 || "",
-    (data["message"] || data["details"] || data["project_details"] || data["proof_links"] || data["review"] || "").substring(0, 500),
-    data["page_url"]             || "",
-    data["lead_source"]          || "direct",
-    data["first_touch_source"]   || "",
-    data["utm_source"]           || "",
-    data["utm_campaign"]         || "",
-    data["lead_session_id"]      || "",
-    data["form_name"]            || data["page_path"] || "",
+    lead.name === "Name not entered" ? "" : lead.name,
+    phone,
+    email,
+    service,
+    city,
+    lead.description === "No description entered." ? "" : lead.description.substring(0, 5000),
+    lead.pageUrl,
+    lead.source,
+    lead.firstTouch,
+    lead.utmSource,
+    lead.utmCampaign,
+    lead.sessionId === "n/a" ? "" : lead.sessionId,
+    lead.formName === "Unknown form" ? "" : lead.formName,
     emailStatus,
     smsStatus,
-    deliveryNotes
+    deliveryNotes,
+    lead.address,
+    budget,
+    timeline,
+    contactMethod,
+    quoteIntent,
+    photos,
+    lead.contactConsent === "Not recorded" ? "" : lead.contactConsent,
+    lead.marketingConsent
   ]);
 }
 

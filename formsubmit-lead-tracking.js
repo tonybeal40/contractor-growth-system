@@ -388,6 +388,59 @@
     return note;
   }
 
+  function hasProjectDescription(form) {
+    const names = ["details", "message", "description", "notes", "project_summary", "project_details"];
+    return names.some(function (name) {
+      return !!findNamedField(form, name);
+    });
+  }
+
+  function ensureProjectDescriptionField(form, formName) {
+    if (isReviewForm(formName) || findNamedField(form, "business_name") || hasProjectDescription(form)) {
+      return;
+    }
+
+    const submitControl = findSubmitControl(form);
+    if (!submitControl) {
+      return;
+    }
+
+    const wrapper = document.createElement("div");
+    wrapper.setAttribute("data-allpro-project-description", "true");
+    wrapper.style.margin = "12px 0";
+
+    const id = "allpro-project-details-" + Math.random().toString(36).slice(2, 9);
+    const label = document.createElement("label");
+    label.htmlFor = id;
+    label.textContent = "Project Description (optional)";
+    label.style.display = "block";
+    label.style.marginBottom = "6px";
+    label.style.fontSize = "0.92rem";
+    label.style.fontWeight = "700";
+    label.style.color = "inherit";
+
+    const textarea = document.createElement("textarea");
+    textarea.id = id;
+    textarea.name = "details";
+    textarea.rows = 4;
+    textarea.placeholder = "What would you like done? Include size, condition, timing, or anything helpful.";
+    textarea.style.display = "block";
+    textarea.style.width = "100%";
+    textarea.style.boxSizing = "border-box";
+    textarea.style.padding = "12px";
+    textarea.style.border = "1px solid #aeb8b3";
+    textarea.style.borderRadius = "6px";
+    textarea.style.background = "#ffffff";
+    textarea.style.color = "#1f2933";
+    textarea.style.font = "inherit";
+    textarea.style.lineHeight = "1.45";
+    textarea.style.resize = "vertical";
+
+    wrapper.appendChild(label);
+    wrapper.appendChild(textarea);
+    form.insertBefore(wrapper, submitControl);
+  }
+
   function ensureLeadDisclosures(form, formName) {
     if (isReviewForm(formName)) {
       return;
@@ -612,6 +665,7 @@
     if (submitBtn && submitBtn.textContent) {
       submitBtn.setAttribute("data-original-text", submitBtn.textContent.trim());
     }
+    ensureProjectDescriptionField(form, getFormName(form));
     ensureLeadDisclosures(form, getFormName(form));
     populateTracking(form, snapshot);
     interceptForm(form, snapshot);
