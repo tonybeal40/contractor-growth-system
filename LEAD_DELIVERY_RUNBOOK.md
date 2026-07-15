@@ -81,4 +81,4 @@ Email plus Sheet delivery is confirmed. Full email plus Sheet plus SMS delivery 
 
 ## Lead Inventory
 
-`Follow Up Board` is the clean master action list. On July 15, 2026 it was reconciled against FormSubmit messages in Gmail from June 4 onward and contained 11 genuine homeowner/project leads plus one vendor pitch. `Leads` is the automatic handler log, while `Recovered Leads` contains historical recovery output and may include duplicate or incomplete extraction rows.
+`Follow Up Board` is the clean master action list. On July 15, 2026 it was reconciled against FormSubmit messages in Gmail from June 4 onward and contained 12 genuine homeowner/project leads plus one vendor pitch, including the July 15 Christina Sabo bathroom-remodel lead. `Leads` is the automatic handler log, while `Recovered Leads` contains historical recovery output and may include duplicate or incomplete extraction rows.
