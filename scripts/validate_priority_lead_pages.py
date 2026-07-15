@@ -19,7 +19,7 @@ PAGES = (
 FORM_ACTION = "https://formsubmit.co/williamosessionallpro@gmail.com"
 ANALYTICS_LOADER = "analytics-loader.js?v=20260714a"
 REMODEL_STYLESHEET = "remodel-lead-pages.css?v=20260714d"
-CONCIERGE_LOADER = "lead-concierge-loader.js?v=20260714a"
+CONCIERGE_LOADER = "lead-concierge-loader.js?v=20260715a"
 CURRENT_FORM_ROUTER = "formsubmit-lead-tracking.js?v=20260714b"
 ACCEPTED_FORM_ROUTER = re.compile(
     r"formsubmit-lead-tracking\.js\?v=20260714[ab]",
