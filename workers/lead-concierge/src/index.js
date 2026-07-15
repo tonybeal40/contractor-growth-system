@@ -1,5 +1,9 @@
 const MODEL = "@cf/meta/llama-3.1-8b-instruct-fp8-fast";
 const SITE_ORIGIN = "https://allprometroeastconstruction.com";
+const ALLOWED_ORIGINS = new Set([
+  SITE_ORIGIN,
+  "https://www.allprometroeastconstruction.com"
+]);
 const MAX_BODY_BYTES = 12000;
 
 const serviceQuestions = {
@@ -123,7 +127,7 @@ function parseAiResponse(result) {
 }
 
 function isAllowedOrigin(origin) {
-  return origin === SITE_ORIGIN || origin === SITE_ORIGIN + "/";
+  return ALLOWED_ORIGINS.has(origin);
 }
 
 function responseHeaders(origin) {
@@ -135,7 +139,7 @@ function responseHeaders(origin) {
     "Vary": "Origin"
   };
   if (isAllowedOrigin(origin)) {
-    headers["Access-Control-Allow-Origin"] = SITE_ORIGIN;
+    headers["Access-Control-Allow-Origin"] = origin;
     headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS";
     headers["Access-Control-Allow-Headers"] = "Content-Type";
   }

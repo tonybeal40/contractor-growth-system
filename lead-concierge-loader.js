@@ -33,7 +33,7 @@
 
       window.ALLPRO_CONCIERGE_AUTO_OPEN = true;
       const script = document.createElement("script");
-      script.src = "/lead-concierge.js?v=20260714b";
+      script.src = "/lead-concierge.js?v=20260715a";
       script.async = true;
       script.onload = function () {
         button.remove();

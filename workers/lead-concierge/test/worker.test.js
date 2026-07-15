@@ -78,6 +78,16 @@ test("rejects cross-origin requests", async () => {
   assert.equal(response.status, 403);
 });
 
+test("accepts the www site origin and echoes it in CORS", async () => {
+  const wwwOrigin = "https://www.allprometroeastconstruction.com";
+  const response = await worker.fetch(
+    request("/api/lead-concierge", strongLead, wwwOrigin),
+    env({})
+  );
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get("Access-Control-Allow-Origin"), wwwOrigin);
+});
+
 test("returns a usable fallback if Workers AI is unavailable", async () => {
   const response = await worker.fetch(
     request("/api/lead-concierge", strongLead),

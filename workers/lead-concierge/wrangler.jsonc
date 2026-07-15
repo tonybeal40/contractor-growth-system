@@ -8,8 +8,8 @@
   },
   "routes": [
     {
-      "pattern": "allprometroeastconstruction.com/api/lead-concierge*",
-      "zone_name": "allprometroeastconstruction.com"
+      "pattern": "lead-api.allprometroeastconstruction.com",
+      "custom_domain": true
     }
   ],
   "ai": {

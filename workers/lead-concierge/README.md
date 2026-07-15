@@ -22,16 +22,18 @@ npx wrangler deploy
 
 On Windows, `deploy-cloudflare.cmd` runs the login and production deployment in one guided window.
 
-Production route:
+Production endpoint:
 
 ```text
-https://allprometroeastconstruction.com/api/lead-concierge
+https://lead-api.allprometroeastconstruction.com
 ```
 
 Health route:
 
 ```text
-https://allprometroeastconstruction.com/api/lead-concierge/health
+https://lead-api.allprometroeastconstruction.com/health
 ```
+
+The dedicated Cloudflare Custom Domain keeps the API independent of the GitHub Pages origin and avoids route conflicts on the main hostname.
 
 The Worker accepts browser POST requests only from `https://allprometroeastconstruction.com`, caps request size, sanitizes project text, and rate-limits each visitor by Cloudflare IP with a session fallback.

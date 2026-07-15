@@ -1,5 +1,5 @@
 (function () {
-  const endpoint = "/api/lead-concierge";
+  const endpoint = "https://lead-api.allprometroeastconstruction.com";
   const formAction = "https://formsubmit.co/williamosessionallpro@gmail.com";
   const totalSteps = 6;
   const serviceOptions = [
