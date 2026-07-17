@@ -21,9 +21,9 @@ ANALYTICS_LOADER = "analytics-loader.js?v=20260714a"
 LEAD_TRACKING_LOADER = "lead-tracking.js?v=20260715d"
 REMODEL_STYLESHEET = "remodel-lead-pages.css?v=20260714d"
 CONCIERGE_LOADER = "lead-concierge-loader.js?v=20260715a"
-CURRENT_FORM_ROUTER = "formsubmit-lead-tracking.js?v=20260715e"
+CURRENT_FORM_ROUTER = "formsubmit-lead-tracking.js?v=20260717c"
 ACCEPTED_FORM_ROUTER = re.compile(
-    r"formsubmit-lead-tracking\.js\?v=(?:20260715e|20260717a)",
+    r"formsubmit-lead-tracking\.js\?v=(?:20260715e|20260717a|20260717c)",
     re.IGNORECASE,
 )
 

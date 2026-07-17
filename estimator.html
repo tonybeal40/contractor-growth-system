@@ -535,7 +535,7 @@
         <div class="card">
           <h3 class="section-title">Pricing logic</h3>
           <div class="small">
-            These formulas are meant for fast ballparks, not final bids. They're structured to keep Bill from guessing and to filter weak leads before he burns time driving out.
+            These ranges are planning ballparks, not final bids. They help organize the project scope before an on-site review and written estimate.
           </div>
         </div>
       </aside>
@@ -694,7 +694,8 @@
       `
     };
 
-    let currentProject = 'deck';
+    const requestedProject = new URLSearchParams(window.location.search).get('project');
+    let currentProject = Object.prototype.hasOwnProperty.call(fieldTemplates, requestedProject) ? requestedProject : 'deck';
     const projectGrid = document.getElementById('projectGrid');
     const projectFields = document.getElementById('projectFields');
     const estimateValue = document.getElementById('estimateValue');
@@ -895,9 +896,12 @@
       populateHiddenFields();
     });
 
+    document.querySelectorAll('.project-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.project === currentProject);
+    });
     renderFields(currentProject);
     populateHiddenFields();
   </script>
-  <script src="formsubmit-lead-tracking.js?v=20260715e" defer></script>
+  <script src="formsubmit-lead-tracking.js?v=20260717c" defer></script>
 </body>
 </html>

@@ -135,6 +135,7 @@ function doPost(e) {
 
   try {
     var data = parsePayload(e);
+    var projectPhoto = extractProjectPhoto(data);
 
     // Honeypot — discard spam
     if (data["_honey"] && data["_honey"].trim() !== "") {
@@ -168,7 +169,7 @@ function doPost(e) {
 
     // Email, SMS, and Sheet logging are independent so one outage cannot
     // prevent the other delivery paths from running.
-    try { sendLeadNotification(data, subject, isReview); } catch(mailErr) {
+    try { sendLeadNotification(data, subject, isReview, projectPhoto.blob); } catch(mailErr) {
       console.warn("Lead email failed (non-fatal):", mailErr);
       delivery.errors.push("email: " + safeError(mailErr));
     }
@@ -220,6 +221,43 @@ function parsePayload(e) {
   return params;
 }
 
+function extractProjectPhoto(data) {
+  var encoded = String(data["project_photo_base64"] || "").trim();
+  delete data["project_photo_base64"];
+  if (!encoded) return { blob: null };
+
+  var maxBytes = 5 * 1024 * 1024;
+  var mimeType = String(data["project_photo_type"] || "").trim().toLowerCase();
+  var originalName = String(data["project_photo_name"] || data["project_photo"] || "project-photo").trim();
+  var safeName = originalName.replace(/[^a-zA-Z0-9._ -]/g, "_").substring(0, 100) || "project-photo";
+
+  if (mimeType.indexOf("image/") !== 0) {
+    data["project_photo_status"] = "Upload rejected: unsupported image type";
+    return { blob: null };
+  }
+
+  // Base64 is about one-third larger than its decoded file. Reject oversized
+  // payloads before decoding so a bad request cannot consume excess memory.
+  if (encoded.length > Math.ceil(maxBytes * 4 / 3) + 8) {
+    data["project_photo_status"] = "Upload rejected: photo exceeds 5 MB";
+    return { blob: null };
+  }
+
+  try {
+    var bytes = Utilities.base64Decode(encoded);
+    if (bytes.length > maxBytes) {
+      data["project_photo_status"] = "Upload rejected: photo exceeds 5 MB";
+      return { blob: null };
+    }
+    data["project_photo_status"] = "Attached to lead email: " + safeName;
+    return { blob: Utilities.newBlob(bytes, mimeType, safeName) };
+  } catch (photoErr) {
+    data["project_photo_status"] = "Upload could not be decoded";
+    console.warn("Project photo decode failed (non-fatal):", photoErr);
+    return { blob: null };
+  }
+}
+
 function isReviewSubmission(data) {
   var formName = (data["form_name"] || data["_subject"] || "").toLowerCase();
   var pagePath = (data["page_path"] || "").toLowerCase();
@@ -265,6 +303,10 @@ function normalizedLead(data) {
   var route = resolveAffiliateRoute(data);
   var description = pickLeadValue(data, ["details", "message", "description", "notes", "review", "project_details", "company_fit_notes", "proof_links", "license_insurance_notes"], "");
   var summary = pickLeadValue(data, ["project_summary"], "");
+  var photoPlan = pickLeadValue(data, ["photos_ready"], "");
+  var photoStatus = pickLeadValue(data, ["project_photo_status", "project_photo_name", "project_photo"], "");
+  var photos = photoPlan;
+  if (photoStatus) photos += (photos ? "; " : "") + photoStatus;
   if (!description) description = summary;
   return {
     name: pickLeadValue(data, ["name", "full_name", "customer_name", "contact_name", "owner_name", "contact_person", "business_name"], "Name not entered"),
@@ -283,7 +325,7 @@ function normalizedLead(data) {
     timeline: pickLeadValue(data, ["timeline", "preferred_timing"], "Not entered"),
     contactMethod: pickLeadValue(data, ["best_contact", "contact_method", "preferred_contact"], "Not entered"),
     quoteIntent: pickLeadValue(data, ["quote_intent"], "Not entered"),
-    photos: pickLeadValue(data, ["photos_ready", "project_photo"], "Not entered"),
+    photos: photos || "Not entered",
     propertyType: pickLeadValue(data, ["property_type"], "Not entered"),
     formName: pickLeadValue(data, ["form_name", "form_type", "page_path"], "Unknown form"),
     pageUrl: pickLeadValue(data, ["page_url", "landing_page"], ""),
@@ -443,7 +485,7 @@ function buildLeadEmailHtml(data, isReview) {
   ].join("");
 }
 
-function sendLeadNotification(data, subject, isReview) {
+function sendLeadNotification(data, subject, isReview, projectPhotoBlob) {
   var body = buildEmailBody(data);
   var htmlBody = buildLeadEmailHtml(data, isReview);
   var replyTo = pickLeadValue(data, ["email", "email_address", "replyto", "_replyto", "contact_email", "business_email"], "");
@@ -459,6 +501,7 @@ function sendLeadNotification(data, subject, isReview) {
   };
   if (cc) options.cc = cc;
   if (replyTo) options.replyTo = replyTo;
+  if (projectPhotoBlob) options.attachments = [projectPhotoBlob];
   MailApp.sendEmail(options);
 }
 

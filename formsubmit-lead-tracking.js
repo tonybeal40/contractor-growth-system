@@ -6,6 +6,7 @@
   // Set this after deploying allpro-form-handler.gs.
   // Leave empty to use FormSubmit only.
   const CUSTOM_ENDPOINT = "https://script.google.com/macros/s/AKfycbwXlYCGiy_SCFsZE5lnujH3iKeslueXoTQ54DLFdt-UDvP7ldixk12-WG5owCgy9oLMIQ/exec";
+  const MAX_PROJECT_PHOTO_BYTES = 5 * 1024 * 1024;
   // ──────────────────────────────────────────────────────────────────────────
 
   const routing = {
@@ -545,9 +546,68 @@
     const data = {};
     const fd = new FormData(form);
     fd.forEach(function (value, key) {
+      if (typeof File !== "undefined" && value instanceof File) {
+        if (value.name) {
+          data[key] = value.name;
+        }
+        return;
+      }
       data[key] = value;
     });
     return data;
+  }
+
+  function selectedProjectPhoto(form) {
+    const input = form.querySelector('input[type="file"][name="project_photo"]');
+    return input && input.files && input.files.length ? input.files[0] : null;
+  }
+
+  function validateProjectPhoto(form) {
+    const input = form.querySelector('input[type="file"][name="project_photo"]');
+    const file = selectedProjectPhoto(form);
+    if (!input || !file) {
+      return true;
+    }
+
+    input.setCustomValidity("");
+    if (file.type && file.type.indexOf("image/") !== 0) {
+      input.setCustomValidity("Please choose an image file.");
+    } else if (file.size > MAX_PROJECT_PHOTO_BYTES) {
+      input.setCustomValidity("Please choose a photo smaller than 5 MB.");
+    }
+
+    if (!input.checkValidity()) {
+      input.reportValidity();
+      return false;
+    }
+    return true;
+  }
+
+  function addProjectPhotoPayload(form, data) {
+    const file = selectedProjectPhoto(form);
+    if (!file) {
+      return Promise.resolve(data);
+    }
+
+    return new Promise(function (resolve, reject) {
+      const reader = new FileReader();
+      reader.onload = function () {
+        const result = String(reader.result || "");
+        const comma = result.indexOf(",");
+        if (comma < 0) {
+          reject(new Error("The selected project photo could not be read."));
+          return;
+        }
+        data.project_photo_name = file.name || "project-photo";
+        data.project_photo_type = file.type || "application/octet-stream";
+        data.project_photo_base64 = result.substring(comma + 1);
+        resolve(data);
+      };
+      reader.onerror = function () {
+        reject(new Error("The selected project photo could not be read."));
+      };
+      reader.readAsDataURL(file);
+    });
   }
 
   function encodeForEndpoint(data) {
@@ -598,7 +658,9 @@
     populateTracking(form, snapshot);
     const data = collectFormData(form);
     const nextUrl = data["_next"] || (siteOrigin + "/thank-you.html?src=form");
-    return postToEndpoint(data).then(function (result) {
+    return addProjectPhotoPayload(form, data).then(function (payload) {
+      return postToEndpoint(payload);
+    }).then(function (result) {
       return result.redirect || nextUrl;
     });
   }
@@ -635,6 +697,11 @@
       ensureLeadDisclosures(form, getFormName(form));
       populateTracking(form, snapshot);
       trackSubmit(snapshot, getFormName(form));
+
+      if (!validateProjectPhoto(form)) {
+        event.preventDefault();
+        return;
+      }
 
       if (!CUSTOM_ENDPOINT || form.dataset.allproNativeSubmit === "true") {
         return; // no custom endpoint set — let native FormSubmit POST happen

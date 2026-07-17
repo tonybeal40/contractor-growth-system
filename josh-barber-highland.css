@@ -721,6 +721,32 @@ body.josh-page {
   resize: vertical;
 }
 
+.josh-field input[type="file"] {
+  min-height: 52px;
+  padding: 9px;
+  cursor: pointer;
+}
+
+.josh-field input[type="file"]::file-selector-button {
+  margin-right: 12px;
+  border: 0;
+  border-radius: 4px;
+  padding: 9px 12px;
+  background: var(--josh-green);
+  color: var(--josh-white);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.josh-field small {
+  display: block;
+  margin-top: 7px;
+  color: #52605a;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
 .josh-field input:focus,
 .josh-field select:focus,
 .josh-field textarea:focus {
