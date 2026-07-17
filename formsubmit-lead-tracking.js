@@ -13,6 +13,9 @@
     leadInboxEmail: "williamosessionallpro@gmail.com",
     reviewInbox: "https://formsubmit.co/tonybeal40@gmail.com",
     ownerCopy: "tonybeal40@gmail.com",
+    affiliateCopies: {
+      "josh-barber": "JoshBarber23@yahoo.com"
+    },
     // Carrier email-to-text gateways are no longer reliable. Keep lead email
     // delivery clean until a real SMS provider is connected.
     smsCopies: [],
@@ -295,6 +298,11 @@
     }
 
     const ccList = [routing.ownerCopy];
+    const affiliateField = findNamedField(form, "affiliate_id");
+    const affiliateId = affiliateField ? String(affiliateField.value || "").trim().toLowerCase() : "";
+    if (affiliateId && routing.affiliateCopies[affiliateId]) {
+      ccList.push(routing.affiliateCopies[affiliateId]);
+    }
 
     if (wantsSmsCopies(formName)) {
       ccList.push.apply(ccList, routing.smsCopies);

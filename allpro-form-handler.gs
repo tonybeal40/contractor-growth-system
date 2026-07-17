@@ -29,7 +29,8 @@
 var INTERNAL_EMAILS = [
   "tonybeal40@gmail.com",
   "williamosessionallpro@gmail.com",
-  "allprometroeast@gmail.com"
+  "allprometroeast@gmail.com",
+  "joshbarber23@yahoo.com"
 ];
 
 function isInternalOrTest(data) {
@@ -60,6 +61,23 @@ var CONFIG = {
   siteOrigin:  "https://allprometroeastconstruction.com",
   thankYouUrl: "https://allprometroeastconstruction.com/thank-you.html?src=form"
 };
+
+// Affiliate destinations are allowlisted here. Never trust an email address
+// supplied by a browser form as a delivery destination.
+var AFFILIATE_ROUTES = {
+  "josh-barber": {
+    id: "josh-barber",
+    name: "Josh Barber",
+    email: "JoshBarber23@yahoo.com",
+    phone: "618-402-8775",
+    lane: "Highland Area"
+  }
+};
+
+function resolveAffiliateRoute(data) {
+  var id = pickLeadValue(data || {}, ["affiliate_id"], "").toLowerCase();
+  return id && AFFILIATE_ROUTES[id] ? AFFILIATE_ROUTES[id] : null;
+}
 
 // ── CORS pre-flight ───────────────────────────────────────────────────────────
 function doGet() {
@@ -102,7 +120,8 @@ function deliveryDiagnostics() {
     sms: smsSetupStatus(),
     spreadsheetId: "1xcc0xo4UeN3EaZUMNn_qFJ-xgX6ZPg7l7sTMSLsT6GE",
     leadEmail: CONFIG.leadEmail,
-    copyEmail: CONFIG.ownerEmail
+    copyEmail: CONFIG.ownerEmail,
+    affiliateRoutes: Object.keys(AFFILIATE_ROUTES)
   };
 }
 
@@ -231,7 +250,8 @@ function multilineEmailHtml(value) {
 }
 
 function buildSubject(data, isReview) {
-  var prefix  = isReview ? "⭐ NEW ALL-PRO REVIEW" : "🚨 NEW ALL-PRO LEAD";
+  var route   = resolveAffiliateRoute(data);
+  var prefix  = isReview ? "⭐ NEW ALL-PRO REVIEW" : (route ? "🚨 NEW " + route.name.toUpperCase() + " LEAD" : "🚨 NEW ALL-PRO LEAD");
   var name    = pickLeadValue(data, ["name", "full_name", "customer_name", "contact_name", "owner_name", "contact_person", "business_name"], "Name not entered");
   var service = pickLeadValue(data, ["service", "service_needed", "project", "project_type", "job_type", "work_type", "service_category", "main_service"], "Project details");
   var city    = pickLeadValue(data, ["city", "location", "service_area", "cities_served", "cities_covered"], "Metro East");
@@ -242,6 +262,7 @@ function buildSubject(data, isReview) {
 }
 
 function normalizedLead(data) {
+  var route = resolveAffiliateRoute(data);
   var description = pickLeadValue(data, ["details", "message", "description", "notes", "review", "project_details", "company_fit_notes", "proof_links", "license_insurance_notes"], "");
   var summary = pickLeadValue(data, ["project_summary"], "");
   if (!description) description = summary;
@@ -274,7 +295,12 @@ function normalizedLead(data) {
     submitted: pickLeadValue(data, ["submission_time_local"], new Date().toLocaleString()),
     sessionId: pickLeadValue(data, ["lead_session_id"], "n/a"),
     contactConsent: pickLeadValue(data, ["estimate_contact_consent", "contact_consent", "contractor_contact_consent", "consent"], "Not recorded"),
-    marketingConsent: pickLeadValue(data, ["email_marketing_opt_in"], "No")
+    marketingConsent: pickLeadValue(data, ["email_marketing_opt_in"], "No"),
+    salesRep: route ? route.name : "",
+    affiliateId: route ? route.id : "",
+    representativePhone: route ? route.phone : "",
+    representativeEmail: route ? route.email : "",
+    routingLane: route ? route.lane : pickLeadValue(data, ["routing_lane"], "")
   };
 }
 
@@ -285,6 +311,9 @@ function buildEmailBody(data) {
     "========================",
     "",
     "CONTACT",
+    "Assigned representative: " + (lead.salesRep || "All-Pro team"),
+    "Representative phone: " + (lead.representativePhone || "Not assigned"),
+    "Representative email: " + (lead.representativeEmail || "Not assigned"),
     "Name: " + lead.name,
     "Company: " + (lead.company || "Not entered"),
     "Phone: " + lead.phone,
@@ -315,6 +344,8 @@ function buildEmailBody(data) {
   lines.push(
     "",
     "SOURCE & CONSENT",
+    "Routing lane: " + (lead.routingLane || "All-Pro First"),
+    "Affiliate ID: " + (lead.affiliateId || "none"),
     "Form: " + lead.formName,
     "Source: " + lead.source,
     "First touch: " + (lead.firstTouch || lead.source),
@@ -340,7 +371,7 @@ function emailInfoRow(label, value, highlight) {
 function buildLeadEmailHtml(data, isReview) {
   var lead = normalizedLead(data);
   var accent = isReview ? "#b45309" : "#c96a26";
-  var header = isReview ? "NEW CUSTOMER REVIEW" : "NEW WEBSITE LEAD";
+  var header = isReview ? "NEW CUSTOMER REVIEW" : (lead.salesRep ? "NEW " + lead.salesRep.toUpperCase() + " LEAD" : "NEW WEBSITE LEAD");
   var phoneDigits = lead.phone.replace(/\D/g, "");
   var phoneHref = phoneDigits.length >= 10 ? "tel:+" + (phoneDigits.length === 10 ? "1" : "") + phoneDigits : "";
   var emailHref = lead.email !== "Not entered" ? "mailto:" + encodeURIComponent(lead.email) : "";
@@ -353,6 +384,9 @@ function buildLeadEmailHtml(data, isReview) {
   }
 
   var projectRows = [
+    emailInfoRow("Assigned representative", lead.salesRep || "All-Pro team", true),
+    emailInfoRow("Representative phone", lead.representativePhone, false),
+    emailInfoRow("Representative email", lead.representativeEmail, false),
     emailInfoRow("Company", lead.company, false),
     emailInfoRow("Service", lead.service, true),
     emailInfoRow("City", lead.city, true),
@@ -367,6 +401,8 @@ function buildLeadEmailHtml(data, isReview) {
   ].join("");
 
   var sourceRows = [
+    emailInfoRow("Routing lane", lead.routingLane || "All-Pro First", false),
+    emailInfoRow("Affiliate ID", lead.affiliateId || "none", false),
     emailInfoRow("Form", lead.formName, false),
     emailInfoRow("Lead source", lead.source, false),
     emailInfoRow("First touch", lead.firstTouch || lead.source, false),
@@ -411,14 +447,15 @@ function sendLeadNotification(data, subject, isReview) {
   var body = buildEmailBody(data);
   var htmlBody = buildLeadEmailHtml(data, isReview);
   var replyTo = pickLeadValue(data, ["email", "email_address", "replyto", "_replyto", "contact_email", "business_email"], "");
+  var route = resolveAffiliateRoute(data);
   var to = isReview ? CONFIG.reviewEmail : CONFIG.leadEmail;
-  var cc = uniqueEmailCsv([CONFIG.ownerEmail], to);
+  var cc = uniqueEmailCsv([CONFIG.ownerEmail, route ? route.email : ""], to);
   var options = {
     to: to,
     subject: subject,
     body: body,
     htmlBody: htmlBody,
-    name: isReview ? "ALL-PRO REVIEW ALERT" : "ALL-PRO NEW LEAD ALERT"
+    name: isReview ? "ALL-PRO REVIEW ALERT" : (route ? "ALL-PRO " + route.name.toUpperCase() + " LEAD ALERT" : "ALL-PRO NEW LEAD ALERT")
   };
   if (cc) options.cc = cc;
   if (replyTo) options.replyTo = replyTo;
@@ -510,13 +547,14 @@ function sendSmsAlert(data) {
 }
 
 function buildSmsBody(data) {
+  var route = resolveAffiliateRoute(data);
   var name = data["name"] || data["full_name"] || "Unknown name";
   var phone = data["phone"] || "No phone";
   var service = data["service"] || data["service_needed"] || data["project"] || "Project not selected";
   var city = data["city"] || "City not entered";
   var form = data["form_name"] || data["page_path"] || "Website form";
   return [
-    "NEW ALL-PRO LEAD",
+    route ? "NEW ALL-PRO LEAD - " + route.name.toUpperCase() : "NEW ALL-PRO LEAD",
     name + " | " + phone,
     service + " | " + city,
     "Form: " + form
@@ -598,7 +636,8 @@ function logToSheet(data, subject, delivery) {
     "Message", "Page URL", "Lead Source", "First Touch", "UTM Source",
     "UTM Campaign", "Session ID", "Form Name", "Email Status", "SMS Status",
     "Delivery Notes", "Address", "Budget", "Timeline", "Preferred Contact",
-    "Quote Intent", "Photos", "Contact Consent", "Marketing Opt-In"
+    "Quote Intent", "Photos", "Contact Consent", "Marketing Opt-In",
+    "Sales Rep", "Affiliate ID", "Rep Phone", "Rep Email", "Routing Lane"
   ];
   var headerRange = sheet.getRange(1, 1, 1, headers.length);
   if (headerRange.getValues()[0].join("|") !== headers.join("|")) {
@@ -655,7 +694,12 @@ function logToSheet(data, subject, delivery) {
     quoteIntent,
     photos,
     lead.contactConsent === "Not recorded" ? "" : lead.contactConsent,
-    lead.marketingConsent
+    lead.marketingConsent,
+    lead.salesRep,
+    lead.affiliateId,
+    lead.representativePhone,
+    lead.representativeEmail,
+    lead.routingLane
   ]);
 }
 
