@@ -246,26 +246,26 @@ body.josh-page {
   text-align: center;
 }
 
-.josh-button-primary {
+.josh-page .josh-button-primary {
   border-color: var(--josh-copper);
   background: var(--josh-copper);
   color: var(--josh-white);
 }
 
-.josh-button-primary:hover,
-.josh-button-primary:focus-visible {
+.josh-page .josh-button-primary:hover,
+.josh-page .josh-button-primary:focus-visible {
   border-color: var(--josh-copper-dark);
   background: var(--josh-copper-dark);
 }
 
-.josh-button-light {
+.josh-page .josh-button-light {
   border-color: rgba(255, 255, 255, 0.78);
   background: rgba(255, 255, 255, 0.08);
   color: var(--josh-white);
 }
 
-.josh-button-light:hover,
-.josh-button-light:focus-visible {
+.josh-page .josh-button-light:hover,
+.josh-page .josh-button-light:focus-visible {
   background: var(--josh-white);
   color: var(--josh-green-dark);
 }
