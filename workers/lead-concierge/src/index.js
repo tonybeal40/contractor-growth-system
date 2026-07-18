@@ -5,6 +5,12 @@ const ALLOWED_ORIGINS = new Set([
   "https://www.allprometroeastconstruction.com"
 ]);
 const MAX_BODY_BYTES = 12000;
+const WORKER_VERSION = "2026-07-17.1";
+
+const priorityCities = /belleville|o['’]?fallon|ofallon/i;
+const vendorSignals = /(?:website\s*(?:design|redesign|development)|seo\s*(?:service|agency|audit)|digital\s+marketing|lead\s+generation\s+(?:service|agency)|social\s+media\s+marketing|noticed\s+your\s+(?:site|website)|built\s+(?:you|a)\s+(?:new\s+)?(?:site|website)|get\s+you\s+(?:more\s+)?leads)/i;
+const spamSignals = /(?:viagra|casino|payday\s+loan|crypto\s+investment|guest\s+post|backlinks?\s+for\s+sale)/i;
+const partnerSignals = /(?:free\s+listing|contractor\s+partner|join\s+(?:bill|our)|business\s+listing|listing\s+interest|pro\s+network)/i;
 
 const serviceQuestions = {
   "Kitchen remodel": "What matters most in the kitchen: layout, cabinets, counters, flooring, or a complete update?",
@@ -31,8 +37,53 @@ function normalizePayload(input) {
     timeline: sanitizeText(payload.timeline, 80),
     budget_range: sanitizeText(payload.budget_range, 80),
     details: sanitizeText(payload.details, 1200),
-    page_path: sanitizeText(payload.page_path, 180)
+    page_path: sanitizeText(payload.page_path, 180),
+    lead_source: sanitizeText(payload.lead_source, 80),
+    routing_lane: sanitizeText(payload.routing_lane, 80)
   };
+}
+
+function classifyIntent(payload) {
+  const text = [payload.service, payload.details, payload.page_path, payload.routing_lane]
+    .filter(Boolean)
+    .join(" ");
+  if (spamSignals.test(text)) {
+    return { lead_type: "spam", spam_risk: 95, spam_reasons: ["high-confidence spam phrase"] };
+  }
+  if (vendorSignals.test(text)) {
+    return { lead_type: "vendor_sales", spam_risk: 15, spam_reasons: ["vendor sales language"] };
+  }
+  if (partnerSignals.test(text)) {
+    return { lead_type: "contractor_partner", spam_risk: 5, spam_reasons: [] };
+  }
+  return { lead_type: "homeowner_project", spam_risk: 0, spam_reasons: [] };
+}
+
+function inferUrgency(payload) {
+  const text = [payload.timeline, payload.details].join(" ").toLowerCase();
+  if (/emergency|urgent|asap|right away|as soon|water damage|unsafe|leak/.test(text)) return "urgent";
+  if (/this month|0-30|within 30|1-3 month|this season/.test(text)) return "active";
+  return payload.timeline ? "planning" : "unknown";
+}
+
+function findMissingFields(payload) {
+  const missing = [];
+  if (!payload.service) missing.push("service");
+  if (!payload.city) missing.push("city");
+  if (!payload.timeline) missing.push("timeline");
+  if (!payload.budget_range) missing.push("budget");
+  if (!payload.details || payload.details.length < 20) missing.push("project details");
+  return missing;
+}
+
+function fallbackReply(payload) {
+  const service = payload.service || "project";
+  const city = payload.city ? " in " + payload.city : "";
+  return sanitizeText(
+    "Thanks for contacting All-Pro about your " + service.toLowerCase() + city +
+      ". Bill can review the scope and discuss a written estimate. Please reply with photos and the best time to call.",
+    420
+  );
 }
 
 function scoreLead(payload) {
@@ -54,7 +105,7 @@ function scoreLead(payload) {
     reasons.push("service selected");
   }
 
-  if (/belleville|o'fallon|ofallon/.test(city)) {
+  if (priorityCities.test(city)) {
     score += 25;
     reasons.push("priority service city");
   } else if (city) {
@@ -155,11 +206,23 @@ function json(data, status, origin) {
 
 async function runQualification(env, payload) {
   const scoring = scoreLead(payload);
+  const classification = classifyIntent(payload);
+  const missingFields = findMissingFields(payload);
+  const urgency = inferUrgency(payload);
+  if (classification.lead_type !== "homeowner_project") {
+    scoring.score = Math.min(scoring.score, classification.lead_type === "contractor_partner" ? 35 : 10);
+    scoring.priority = "Standard";
+  }
   const fallback = {
     ai: false,
     follow_up_question: fallbackQuestion(payload.service),
     summary: fallbackSummary(payload),
     recommended_next_step: "Review the request and contact the homeowner about a written estimate.",
+    suggested_reply: fallbackReply(payload),
+    urgency,
+    missing_fields: missingFields,
+    routing_lane: classification.lead_type === "homeowner_project" ? "All-Pro First" : "Manual Review",
+    ...classification,
     ...scoring
   };
 
@@ -167,10 +230,11 @@ async function runQualification(env, payload) {
 
   const systemPrompt = [
     "You qualify homeowner project inquiries for All-Pro Construction & Landscape in Metro East Illinois.",
-    "Return JSON only with follow_up_question, summary, and recommended_next_step.",
+    "Return JSON only with follow_up_question, summary, recommended_next_step, and suggested_reply.",
     "Ask exactly one useful missing question, 18 words or fewer.",
     "Summarize the project in 45 words or fewer for a contractor callback.",
     "Do not quote a price, promise availability, claim a permit requirement, or guarantee an outcome.",
+    "The suggested reply must thank the homeowner, mention the project and city when known, request the most useful missing information, and stay under 65 words.",
     "Focus on scope, current condition, decision timing, access, photos, and the homeowner's desired result."
   ].join(" ");
 
@@ -188,12 +252,18 @@ async function runQualification(env, payload) {
     const question = sanitizeText(parsed.follow_up_question, 180);
     const summary = sanitizeText(parsed.summary, 420);
     const nextStep = sanitizeText(parsed.recommended_next_step, 240);
+    const suggestedReply = sanitizeText(parsed.suggested_reply, 420);
 
     return {
       ai: Boolean(question || summary),
       follow_up_question: question || fallback.follow_up_question,
       summary: summary || fallback.summary,
       recommended_next_step: nextStep || fallback.recommended_next_step,
+      suggested_reply: suggestedReply || fallback.suggested_reply,
+      urgency,
+      missing_fields: missingFields,
+      routing_lane: fallback.routing_lane,
+      ...classification,
       ...scoring
     };
   } catch (error) {
@@ -212,7 +282,7 @@ const worker = {
     }
 
     if (request.method === "GET" && /\/health\/?$/.test(url.pathname)) {
-      return json({ ok: true, service: "All-Pro Lead Concierge", ai: true, model: MODEL }, 200, origin);
+      return json({ ok: true, service: "All-Pro Lead Concierge", ai: true, model: MODEL, version: WORKER_VERSION }, 200, origin);
     }
 
     if (request.method !== "POST") {
@@ -259,7 +329,10 @@ const worker = {
 };
 
 export {
+  classifyIntent,
   fallbackQuestion,
+  findMissingFields,
+  inferUrgency,
   normalizePayload,
   parseAiResponse,
   runQualification,

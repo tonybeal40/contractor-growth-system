@@ -13,7 +13,7 @@
       button.className = "alc-loader";
       button.textContent = "Plan My Project";
       button.setAttribute("aria-haspopup", "dialog");
-      const launcherMount = document.querySelector(".home-hero-actions, .remodel-hero-actions") || document.body;
+      const launcherMount = document.querySelector(".home-hero-actions, .remodel-hero-actions, .hero-actions, .ld-actions, .guide-hero-inner, .pi-actions") || document.body;
       launcherMount.appendChild(button);
     }
 
@@ -33,7 +33,7 @@
 
       window.ALLPRO_CONCIERGE_AUTO_OPEN = true;
       const script = document.createElement("script");
-      script.src = "/lead-concierge.js?v=20260715a";
+      script.src = "/lead-concierge.js?v=20260717b";
       script.async = true;
       script.onload = function () {
         button.remove();

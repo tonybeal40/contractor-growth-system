@@ -166,6 +166,11 @@
       follow_up_question: fallbackQuestions[context.service] || fallbackQuestions["Other home project"],
       summary: "",
       recommended_next_step: "Review the request and contact the homeowner about a written estimate.",
+      suggested_reply: "",
+      lead_type: "homeowner_project",
+      spam_risk: 0,
+      urgency: "unknown",
+      missing_fields: [],
       score: 0,
       priority: "Standard",
       reasons: []
@@ -200,7 +205,13 @@
         '<input type="hidden" name="ai_summary" value="">' +
         '<input type="hidden" name="ai_follow_up_question" value="">' +
         '<input type="hidden" name="recommended_next_step" value="">' +
+        '<input type="hidden" name="suggested_reply" value="">' +
         '<input type="hidden" name="qualification_reasons" value="">' +
+        '<input type="hidden" name="lead_type" value="homeowner_project">' +
+        '<input type="hidden" name="spam_risk" value="0">' +
+        '<input type="hidden" name="spam_reasons" value="">' +
+        '<input type="hidden" name="lead_urgency" value="unknown">' +
+        '<input type="hidden" name="missing_fields" value="">' +
         '<fieldset class="alc-step" data-step="0">' +
           '<legend>What would you like help with?</legend>' +
           '<p class="alc-step-copy">Choose the closest project type. You can explain the details in a moment.</p>' +
@@ -257,7 +268,7 @@
       '</form>' +
     '</section>';
 
-    const launcherMount = document.querySelector(".home-hero-actions, .remodel-hero-actions") || document.body;
+    const launcherMount = document.querySelector(".home-hero-actions, .remodel-hero-actions, .hero-actions, .ld-actions, .guide-hero-inner, .pi-actions") || document.body;
     launcherMount.appendChild(launcher);
     document.body.appendChild(backdrop);
 
@@ -339,6 +350,12 @@
         recommended_next_step: result && result.recommended_next_step
           ? String(result.recommended_next_step).slice(0, 240)
           : "Review the request and contact the homeowner about a written estimate.",
+        suggested_reply: result && result.suggested_reply ? String(result.suggested_reply).slice(0, 420) : "",
+        lead_type: result && result.lead_type ? String(result.lead_type) : "homeowner_project",
+        spam_risk: result && Number.isFinite(Number(result.spam_risk)) ? Number(result.spam_risk) : 0,
+        spam_reasons: result && Array.isArray(result.spam_reasons) ? result.spam_reasons : [],
+        urgency: result && result.urgency ? String(result.urgency) : "unknown",
+        missing_fields: result && Array.isArray(result.missing_fields) ? result.missing_fields : [],
         score: result && Number.isFinite(Number(result.score)) ? Number(result.score) : local.score,
         priority: result && result.priority ? String(result.priority) : local.priority,
         reasons: result && Array.isArray(result.reasons) ? result.reasons : local.reasons
@@ -351,7 +368,13 @@
       setHidden("ai_summary", qualification.summary);
       setHidden("ai_follow_up_question", qualification.follow_up_question);
       setHidden("recommended_next_step", qualification.recommended_next_step);
+      setHidden("suggested_reply", qualification.suggested_reply);
       setHidden("qualification_reasons", qualification.reasons.join(", "));
+      setHidden("lead_type", qualification.lead_type);
+      setHidden("spam_risk", qualification.spam_risk);
+      setHidden("spam_reasons", qualification.spam_reasons.join(", "));
+      setHidden("lead_urgency", qualification.urgency);
+      setHidden("missing_fields", qualification.missing_fields.join(", "));
       statusNode.textContent = qualification.ai
         ? "AI-assisted project brief ready."
         : "Guided project brief ready.";

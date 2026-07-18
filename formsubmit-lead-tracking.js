@@ -6,6 +6,7 @@
   // Set this after deploying allpro-form-handler.gs.
   // Leave empty to use FormSubmit only.
   const CUSTOM_ENDPOINT = "https://script.google.com/macros/s/AKfycbwXlYCGiy_SCFsZE5lnujH3iKeslueXoTQ54DLFdt-UDvP7ldixk12-WG5owCgy9oLMIQ/exec";
+  const LEAD_CONCIERGE_ENDPOINT = "https://lead-api.allprometroeastconstruction.com";
   const MAX_PROJECT_PHOTO_BYTES = 5 * 1024 * 1024;
   // ──────────────────────────────────────────────────────────────────────────
 
@@ -557,6 +558,84 @@
     return data;
   }
 
+  function firstPayloadValue(data, names) {
+    for (let i = 0; i < names.length; i += 1) {
+      const value = data[names[i]];
+      if (value !== undefined && value !== null && String(value).trim()) {
+        return String(value).trim();
+      }
+    }
+    return "";
+  }
+
+  function applyEnrichment(form, data, result) {
+    const fields = {
+      qualification_mode: result.ai ? "workers-ai" : "guided-fallback",
+      ai_lead_score: result.score,
+      ai_priority: result.priority,
+      ai_summary: result.summary,
+      ai_follow_up_question: result.follow_up_question,
+      recommended_next_step: result.recommended_next_step,
+      suggested_reply: result.suggested_reply,
+      qualification_reasons: Array.isArray(result.reasons) ? result.reasons.join(", ") : "",
+      lead_type: result.lead_type,
+      spam_risk: result.spam_risk,
+      spam_reasons: Array.isArray(result.spam_reasons) ? result.spam_reasons.join(", ") : "",
+      lead_urgency: result.urgency,
+      missing_fields: Array.isArray(result.missing_fields) ? result.missing_fields.join(", ") : "",
+      routing_lane: data.routing_lane || result.routing_lane
+    };
+
+    Object.keys(fields).forEach(function (name) {
+      const value = fields[name];
+      if (value === undefined || value === null || value === "") return;
+      data[name] = String(value);
+      ensureHiddenField(form, name, String(value));
+    });
+    return data;
+  }
+
+  function enrichLeadPayload(form, data) {
+    if (!LEAD_CONCIERGE_ENDPOINT || data.ai_summary || isReviewForm(getFormName(form))) {
+      return Promise.resolve(data);
+    }
+
+    const project = {
+      session_id: firstPayloadValue(data, ["lead_session_id", "concierge_session_id"]) || createId(),
+      service: firstPayloadValue(data, ["service", "service_needed", "project", "project_type", "job_type"]),
+      city: firstPayloadValue(data, ["city", "location", "service_area"]),
+      timeline: firstPayloadValue(data, ["timeline", "preferred_timing"]),
+      budget_range: firstPayloadValue(data, ["budget_range", "budget"]),
+      details: firstPayloadValue(data, ["details", "message", "description", "project_details", "notes"]),
+      page_path: data.page_path || window.location.pathname,
+      lead_source: data.lead_source || "direct",
+      routing_lane: data.routing_lane || "All-Pro First"
+    };
+
+    if (!project.service || !project.city || !project.details) {
+      return Promise.resolve(data);
+    }
+
+    const request = fetch(LEAD_CONCIERGE_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(project),
+      credentials: "same-origin"
+    }).then(function (response) {
+      if (!response.ok) throw new Error("Lead enrichment unavailable");
+      return response.json();
+    }).then(function (result) {
+      return result && result.ok ? applyEnrichment(form, data, result) : data;
+    }).catch(function () {
+      return data;
+    });
+
+    return Promise.race([
+      request,
+      new Promise(function (resolve) { setTimeout(function () { resolve(data); }, 2800); })
+    ]);
+  }
+
   function selectedProjectPhoto(form) {
     const input = form.querySelector('input[type="file"][name="project_photo"]');
     return input && input.files && input.files.length ? input.files[0] : null;
@@ -658,7 +737,9 @@
     populateTracking(form, snapshot);
     const data = collectFormData(form);
     const nextUrl = data["_next"] || (siteOrigin + "/thank-you.html?src=form");
-    return addProjectPhotoPayload(form, data).then(function (payload) {
+    return enrichLeadPayload(form, data).then(function (enriched) {
+      return addProjectPhotoPayload(form, enriched);
+    }).then(function (payload) {
       return postToEndpoint(payload);
     }).then(function (result) {
       return result.redirect || nextUrl;

@@ -1,6 +1,6 @@
 # All-Pro Lead Delivery Runbook
 
-Last reviewed: July 15, 2026
+Last reviewed: July 17, 2026
 
 ## Delivery Paths
 
@@ -16,23 +16,25 @@ Inside Apps Script, email, SMS, and Sheet logging run independently so one failu
 - Spreadsheet ID: `1xcc0xo4UeN3EaZUMNn_qFJ-xgX6ZPg7l7sTMSLsT6GE`
 - Expected tab: `Leads`
 - Apps Script web app: `https://script.google.com/macros/s/AKfycbwXlYCGiy_SCFsZE5lnujH3iKeslueXoTQ54DLFdt-UDvP7ldixk12-WG5owCgy9oLMIQ/exec`
-- Active deployment: Version 3, deployed July 15, 2026
+- Live health check: responding successfully on July 17, 2026
+- The repository now contains a newer automation build that still requires an Apps Script new-version deployment.
 
 ## Deploy the Current Apps Script
 
-The repository handler now includes a high-visibility HTML lead card while retaining a plain-text fallback. It normalizes different form field names and places name, phone, email, service, city, address, budget, timeline, description, source, consent, submission time, and session ID into consistent sections. The automatic `Leads` log also expands to 26 columns so those same project and consent details remain available in the spreadsheet.
+The repository handler includes a high-visibility HTML lead card while retaining a plain-text fallback. It normalizes different form field names and places contact, project, source, consent, delivery, qualification, and follow-up information into consistent sections. The automatic `Leads` log expands without deleting existing columns.
 
-Version 3 is the currently verified live deployment. Deploy the repository handler as a new version to activate the formatted email card:
+Deploy the repository handler as a new version to activate the July 17 intelligence, Follow Up Board, reminder, review, and scorecard features:
 
 1. Open Apps Script project `1cJ3gn-Ca0cBbaGOlVDMWAzc0ECVyMod-mErpHqpZRw1nmzeApvR3_7P1`.
 2. Replace the editor contents with `allpro-form-handler.gs` from this repository.
 3. Save the project.
 4. Open **Project Settings** and add the Twilio Script Properties listed below.
-5. Run `smsSetupStatus` and approve Google permissions. It must report `configured: true` before an SMS test.
-6. Run `sendSmsTest`. Confirm the message reaches `618-292-5320`.
-7. Run `phase2SelfTest`. Confirm the email, Sheet row, and SMS.
-8. Open **Deploy > Manage deployments**, edit the existing web app, choose **New version**, and deploy without changing its URL.
-9. Submit one controlled public form and confirm both inboxes plus the Sheet row.
+5. Follow `LEAD_ENGINE_AUTOMATION_SETUP_2026-07-17.md` for function order, Search Console scope, and trigger setup.
+6. Run `smsSetupStatus` and approve Google permissions. It must report `configured: true` before an SMS test.
+7. Run `sendSmsTest`. Confirm the message reaches `618-292-5320`.
+8. Run `phase2SelfTest`. Confirm the email, customer confirmation, Sheet row, Follow Up Board row, and configured SMS.
+9. Open **Deploy > Manage deployments**, edit the existing web app, choose **New version**, and deploy without changing its URL.
+10. Submit one controlled public form and confirm both inboxes, the customer confirmation, `Leads`, `Follow Up Board`, and configured SMS.
 
 The new email subject starts with `NEW ALL-PRO LEAD` and includes the homeowner name, service, city, and phone. The HTML version includes one-tap call and email buttons; the plain-text version carries the same core information if an email client blocks HTML.
 
@@ -66,8 +68,10 @@ Confirm these results:
 
 1. Apps Script email reaches Bill's inbox.
 2. Owner copy reaches Tony's inbox.
-3. A new row appears in the `Leads` tab.
-4. Twilio SMS reaches `618-292-5320`.
+3. The transactional confirmation reaches the test address.
+4. A new enriched row appears in the `Leads` tab.
+5. One deduplicated row appears in `Follow Up Board`.
+6. Twilio SMS reaches `618-292-5320` when configured.
 
 ## July 15, 2026 Verification
 

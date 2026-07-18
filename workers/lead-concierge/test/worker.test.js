@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import worker, { normalizePayload, scoreLead } from "../src/index.js";
+import worker, { classifyIntent, findMissingFields, normalizePayload, scoreLead } from "../src/index.js";
 
 const origin = "https://allprometroeastconstruction.com";
 
@@ -53,13 +53,37 @@ test("scores a near-term priority remodel as hot", () => {
   assert.ok(result.reasons.includes("priority service city"));
 });
 
+test("classifies a homeowner project without treating it as spam", () => {
+  const result = classifyIntent(normalizePayload(strongLead));
+  assert.equal(result.lead_type, "homeowner_project");
+  assert.equal(result.spam_risk, 0);
+});
+
+test("separates website sales pitches from homeowner leads", () => {
+  const result = classifyIntent(normalizePayload({
+    ...strongLead,
+    details: "I noticed your website looks old and can redesign it to get you more leads."
+  }));
+  assert.equal(result.lead_type, "vendor_sales");
+  assert.ok(result.spam_risk < 50);
+});
+
+test("reports missing intake fields", () => {
+  assert.deepEqual(findMissingFields(normalizePayload({ service: "Kitchen remodel", city: "Belleville" })), [
+    "timeline",
+    "budget",
+    "project details"
+  ]);
+});
+
 test("returns a model-generated qualification with deterministic score", async () => {
   const response = await worker.fetch(
     request("/api/lead-concierge", strongLead),
     env({
       follow_up_question: "Will the new layout move plumbing or appliance locations?",
       summary: "Belleville homeowner planning a full kitchen remodel with layout and finish updates.",
-      recommended_next_step: "Call to review scope and schedule an on-site estimate."
+      recommended_next_step: "Call to review scope and schedule an on-site estimate.",
+      suggested_reply: "Thanks for reaching out about your Belleville kitchen. Please send photos and a good time to call."
     })
   );
   const body = await response.json();
@@ -68,6 +92,8 @@ test("returns a model-generated qualification with deterministic score", async (
   assert.equal(body.ai, true);
   assert.equal(body.priority, "Hot");
   assert.match(body.follow_up_question, /plumbing/i);
+  assert.match(body.suggested_reply, /Belleville kitchen/i);
+  assert.equal(body.lead_type, "homeowner_project");
 });
 
 test("rejects cross-origin requests", async () => {
