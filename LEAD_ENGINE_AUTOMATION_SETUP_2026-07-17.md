@@ -50,10 +50,16 @@ Expected triggers:
 
 In Apps Script, open **Project Settings** and enable **Show appsscript.json manifest file in editor**.
 
-Merge this scope into the existing `oauthScopes` array; do not replace unrelated manifest fields:
+Use these explicit least-privilege scopes in the manifest. They cover the fixed lead Sheet, MailApp delivery, Twilio/Search Console HTTP calls, trigger management, and read-only Search Console reporting without requesting broad Google Drive access:
 
 ```json
-"https://www.googleapis.com/auth/webmasters.readonly"
+"oauthScopes": [
+  "https://www.googleapis.com/auth/spreadsheets",
+  "https://www.googleapis.com/auth/script.send_mail",
+  "https://www.googleapis.com/auth/script.external_request",
+  "https://www.googleapis.com/auth/script.scriptapp",
+  "https://www.googleapis.com/auth/webmasters.readonly"
+]
 ```
 
 The configured property is:
@@ -125,4 +131,3 @@ Website form
 ```
 
 No AI response is allowed to quote a price, promise availability, make permit claims, or guarantee an outcome. AI failure never blocks form submission.
-

@@ -981,14 +981,12 @@ function buildLeadId(data) {
 
 function getLeadSpreadsheet() {
   var targetId = "1xcc0xo4UeN3EaZUMNn_qFJ-xgX6ZPg7l7sTMSLsT6GE";
-  try { return SpreadsheetApp.openById(targetId); } catch (_) {}
+  try { return SpreadsheetApp.openById(targetId); } catch (openErr) {}
   try {
     var active = SpreadsheetApp.getActiveSpreadsheet();
     if (active) return active;
-  } catch (_) {}
-  var files = DriveApp.getFilesByName(CONFIG.sheetName);
-  if (files.hasNext()) return SpreadsheetApp.open(files.next());
-  return SpreadsheetApp.create(CONFIG.sheetName);
+  } catch (activeErr) {}
+  throw new Error("All-Pro Leads spreadsheet is unavailable for this account.");
 }
 
 function ensureFollowUpBoard() {
