@@ -2610,6 +2610,11 @@ body.home-page {
   padding-bottom: 1.4rem;
 }
 
+.home-hero-copy {
+  min-width: 0;
+  max-width: 100%;
+}
+
 .home-hero-logo {
   width: 78px;
   height: auto;
@@ -2619,7 +2624,9 @@ body.home-page {
 .home-eyebrow {
   display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: .45rem;
+  max-width: 100%;
   background: #fff8ef;
   border: 1px solid rgba(201,106,38,.28);
   border-radius: 999px;
@@ -2630,6 +2637,8 @@ body.home-page {
   text-transform: uppercase;
   padding: .42rem .82rem;
   margin-bottom: .9rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 .home-hero h1 {
@@ -3135,6 +3144,13 @@ body.home-page {
   .home-hero h1 {
     font-size: clamp(2.05rem, 9.5vw, 2.8rem);
     line-height: 1.06;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .home-hero-sub,
+  .home-quick-facts {
+    max-width: 100%;
   }
 
   .home-hero-actions {

@@ -1242,3 +1242,95 @@ body:not(.home-page) main,
     transition-duration: .01ms !important;
   }
 }
+
+/* Compact legacy-page header used by reviews and homeowner guides. */
+header:not(.nav) > .header-inner {
+  width: min(1180px, calc(100% - 40px));
+  min-height: 72px;
+  margin: 0 auto;
+  padding: .7rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 0;
+}
+
+header:not(.nav) .brand {
+  min-width: 0;
+}
+
+header:not(.nav) .brand span {
+  display: block;
+  color: #5f6b66 !important;
+  font-size: .78rem;
+  line-height: 1.35;
+}
+
+header:not(.nav) nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: .45rem 1rem;
+}
+
+header:not(.nav) nav a {
+  padding: .42rem .2rem;
+  font-size: .88rem;
+  line-height: 1.25;
+}
+
+.review-page .service-hero-copy,
+.review-page .review-primary-card,
+.review-page .content-block,
+.review-page .review-step > div {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.review-page .review-short-link {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+@media (max-width: 760px) {
+  header:not(.nav) > .header-inner {
+    width: min(100% - 28px, 1180px);
+    min-height: 0;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: .55rem;
+    padding: .65rem 0;
+  }
+
+  header:not(.nav) nav {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .4rem;
+  }
+
+  header:not(.nav) nav a {
+    min-width: 0;
+    padding: .48rem .55rem;
+    border: 1px solid #e4ddd0;
+    border-radius: 6px;
+    background: #ffffff;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  .review-page .service-hero {
+    padding-top: 1.8rem !important;
+  }
+
+  .review-page .review-short-link {
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    text-align: center;
+  }
+}
