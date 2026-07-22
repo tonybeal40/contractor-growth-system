@@ -99,3 +99,27 @@ test("requires a valid non-internal email and recorded consent for confirmations
   assert.equal(context.hasRecordedConsent("yes"), true);
   assert.equal(context.hasRecordedConsent(""), false);
 });
+
+test("preserves website review rating, authenticity, and publication consent", () => {
+  const data = {
+    full_name: "Taylor Customer",
+    city: "Belleville",
+    project_type: "Bathroom remodel",
+    rating: "5",
+    details: "The project communication and finished shower were excellent.",
+    permission_to_share_on_site: "yes",
+    genuine_customer_confirmation: "yes",
+    review_status: "Pending approval",
+    form_name: "Review Request Testimonial"
+  };
+  context.applyLeadIntelligence(data, true);
+  const lead = context.normalizedLead(data);
+  const html = context.buildLeadEmailHtml(data, true);
+  assert.equal(lead.leadType, "review");
+  assert.equal(lead.reviewRating, "5");
+  assert.equal(lead.reviewPermission, "yes");
+  assert.equal(lead.reviewAuthenticity, "yes");
+  assert.match(html, /Review rating/);
+  assert.match(html, /Permission to publish/);
+  assert.match(html, /Pending approval/);
+});

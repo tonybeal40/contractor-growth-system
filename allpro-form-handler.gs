@@ -554,7 +554,11 @@ function normalizedLead(data) {
     nextStep: pickLeadValue(data, ["recommended_next_step"], ""),
     suggestedReply: pickLeadValue(data, ["suggested_reply"], ""),
     missingFields: pickLeadValue(data, ["missing_fields"], ""),
-    qualificationMode: pickLeadValue(data, ["qualification_mode"], "deterministic")
+    qualificationMode: pickLeadValue(data, ["qualification_mode"], "deterministic"),
+    reviewRating: pickLeadValue(data, ["rating", "review_rating"], ""),
+    reviewPermission: pickLeadValue(data, ["permission_to_share_on_site"], "No"),
+    reviewAuthenticity: pickLeadValue(data, ["genuine_customer_confirmation"], "Not recorded"),
+    reviewStatus: pickLeadValue(data, ["review_status"], "Pending approval")
   };
 }
 
@@ -594,6 +598,14 @@ function buildEmailBody(data) {
   }
   if (lead.estimateDetails) {
     lines.push("Estimate details: " + lead.estimateDetails);
+  }
+  if (lead.leadType === "review") {
+    lines.push(
+      "Review rating: " + (lead.reviewRating || "Not entered") + (lead.reviewRating ? " / 5" : ""),
+      "Permission to publish: " + lead.reviewPermission,
+      "Genuine customer confirmation: " + lead.reviewAuthenticity,
+      "Review status: " + lead.reviewStatus
+    );
   }
   lines.push(
     "",
@@ -656,7 +668,14 @@ function buildLeadEmailHtml(data, isReview) {
     actions.push('<a href="' + emailHref + '" style="display:inline-block;margin:4px 8px 4px 0;padding:13px 18px;background:#1f2933;color:#ffffff;text-decoration:none;border-radius:6px;font-weight:800;font-size:15px;">Email ' + escapeEmailHtml(lead.name) + '</a>');
   }
 
-  var projectRows = [
+  var reviewRows = isReview ? [
+    emailInfoRow("Review rating", lead.reviewRating ? lead.reviewRating + " / 5" : "Not entered", true),
+    emailInfoRow("Permission to publish", lead.reviewPermission, true),
+    emailInfoRow("Genuine customer confirmation", lead.reviewAuthenticity, false),
+    emailInfoRow("Review status", lead.reviewStatus, false)
+  ].join("") : "";
+
+  var projectRows = reviewRows + [
     emailInfoRow("Assigned representative", lead.salesRep || "All-Pro team", true),
     emailInfoRow("Representative phone", lead.representativePhone, false),
     emailInfoRow("Representative email", lead.representativeEmail, false),
@@ -1117,7 +1136,9 @@ function logToSheet(data, subject, delivery) {
     "Sales Rep", "Affiliate ID", "Rep Phone", "Rep Email", "Routing Lane",
     "Lead ID", "Lead Type", "Lead Score", "Priority", "Urgency", "Spam Risk",
     "AI Summary", "Recommended Next Step", "Suggested Reply", "Missing Fields",
-    "Qualification Mode", "Customer Confirmation", "Follow Up Board"
+    "Qualification Mode", "Customer Confirmation", "Follow Up Board",
+    "Review Rating", "Permission to Publish", "Genuine Review Confirmation",
+    "Review Status"
   ];
   var headerRange = sheet.getRange(1, 1, 1, headers.length);
   if (headerRange.getValues()[0].join("|") !== headers.join("|")) {
@@ -1200,7 +1221,11 @@ function logToSheet(data, subject, delivery) {
     lead.missingFields,
     lead.qualificationMode,
     confirmationStatus,
-    boardStatus
+    boardStatus,
+    lead.reviewRating,
+    lead.reviewPermission,
+    lead.reviewAuthenticity,
+    lead.reviewStatus
   ]);
 }
 

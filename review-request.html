@@ -161,8 +161,8 @@
           <h1>Leave a quick review for All-Pro Construction.</h1>
           <p>Thank you for trusting All-Pro with your project. A short, honest review helps local homeowners in Belleville, O'Fallon, Edwardsville, Collinsville, Swansea, Shiloh, and Metro East IL know who they can call.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="https://search.google.com/local/writereview?placeid=ChIJKzqCfZ8idogRP03O0_iO2U8" target="_blank" rel="noreferrer">Leave a Google Review</a>
-            <a class="btn btn-secondary" href="#private-feedback">Send Website Testimonial</a>
+            <a class="btn btn-primary" href="#website-review">Write a Website Review</a>
+            <a class="btn btn-secondary" href="reviews.html">Read Customer Reviews</a>
             <a class="btn btn-outline" href="tel:6185810676">Call Bill</a>
           </div>
           <span class="review-short-link">Easy link: allprometroeastconstruction.com/review</span>
@@ -177,8 +177,8 @@
           <div class="review-steps">
             <div class="review-step">
               <div>
-                <strong>Tap the Google button.</strong>
-                <p>Google reviews help local homeowners find All-Pro when they search for contractors, decks, remodels, landscaping, fencing, patios, concrete, and small jobs.</p>
+                <strong>Complete the website review form.</strong>
+                <p>Your feedback goes directly to All-Pro and can be approved for the customer review section on this website.</p>
               </div>
             </div>
             <div class="review-step">
@@ -195,7 +195,7 @@
             </div>
           </div>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="https://search.google.com/local/writereview?placeid=ChIJKzqCfZ8idogRP03O0_iO2U8" target="_blank" rel="noreferrer">Start Google Review</a>
+            <a class="btn btn-primary" href="#website-review">Write Website Review</a>
             <a class="btn btn-secondary" href="https://www.angi.com/companylist/us/il/new-athens/all-pro-construction-and-landscape-reviews-6233409.htm" target="_blank" rel="noreferrer">Review on Angi</a>
             <a class="btn btn-secondary" href="https://www.homeadvisor.com/rated.all-proconstructionlandscape.158798635.html" target="_blank" rel="noreferrer">Review on HomeAdvisor</a>
           </div>
@@ -217,9 +217,9 @@
           </div>
         </article>
 
-        <article class="content-block" id="private-feedback">
-          <h2>Prefer to send a website testimonial?</h2>
-          <p>If you do not use Google, you can send All-Pro a testimonial here. If something still needs attention, use this same form and Bill can review it directly.</p>
+        <article class="content-block" id="website-review">
+          <h2>Write your All-Pro website review</h2>
+          <p>Share your genuine experience below. Tony reviews each submission before it appears publicly, which protects customers and keeps the website review section accurate.</p>
           <form action="https://formsubmit.co/williamosessionallpro@gmail.com" method="post" data-form="Review Request Testimonial">
             <input type="hidden" name="_subject" value="New All-Pro Review/Testimonial">
             <input type="hidden" name="_captcha" value="false">
@@ -227,6 +227,7 @@
             <input type="hidden" name="_cc" value="tonybeal40@gmail.com">
             <input type="hidden" name="_next" value="https://allprometroeastconstruction.com/thank-you.html?src=form&form=review-request">
             <input type="hidden" name="lead_source" value="Review Request Page">
+            <input type="hidden" name="review_status" value="Pending approval">
             <input type="hidden" name="utm_source">
             <input type="hidden" name="utm_medium">
             <input type="hidden" name="utm_campaign">
@@ -244,15 +245,29 @@
             </div>
             <div class="form-row">
               <input type="email" name="email" placeholder="Email">
-              <input type="text" name="city" placeholder="City">
+              <input type="text" name="city" placeholder="City" required>
             </div>
-            <input type="text" name="project_type" placeholder="Project type">
-            <textarea name="details" rows="5" placeholder="Tell us about your project, what went well, and the city where the work was done."></textarea>
+            <div class="form-row">
+              <select name="rating" required aria-label="Star rating">
+                <option value="">Choose an honest rating</option>
+                <option value="5">5 stars</option>
+                <option value="4">4 stars</option>
+                <option value="3">3 stars</option>
+                <option value="2">2 stars</option>
+                <option value="1">1 star</option>
+              </select>
+              <input type="text" name="project_type" placeholder="Project type" required>
+            </div>
+            <textarea name="details" rows="5" placeholder="Tell us about the work, communication, and finished result." required></textarea>
             <label style="display:flex;gap:.55rem;align-items:flex-start;margin:1rem 0;color:#1F2933;font-weight:700;">
               <input type="checkbox" name="permission_to_share_on_site" value="yes" style="width:auto;margin-top:.25rem;">
-              All-Pro may use this testimonial on the website or marketing materials.
+              All-Pro may publish this review on its website and marketing materials using my first name, last initial, city, project type, rating, and review text.
             </label>
-            <button type="submit" class="btn btn-primary">Send Testimonial to All-Pro</button>
+            <label style="display:flex;gap:.55rem;align-items:flex-start;margin:1rem 0;color:#1F2933;font-weight:700;">
+              <input type="checkbox" name="genuine_customer_confirmation" value="yes" required style="width:auto;margin-top:.25rem;">
+              I confirm this review reflects my genuine experience with All-Pro.
+            </label>
+            <button type="submit" class="btn btn-primary">Submit Website Review</button>
           </form>
         </article>
       </div>
