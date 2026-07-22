@@ -60,7 +60,7 @@ var CONFIG = {
   reviewEmail: "tonybeal40@gmail.com",             // Reviews go to Tony only
   siteOrigin:  "https://allprometroeastconstruction.com",
   thankYouUrl: "https://allprometroeastconstruction.com/thank-you.html?src=form",
-  reviewUrl:   "https://allprometroeastconstruction.com/review.html",
+  reviewUrl:   "https://allprometroeastconstruction.com/review",
   sendCustomerConfirmation: true,
   followUpReminderMinutes: 30
 };
