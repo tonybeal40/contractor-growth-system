@@ -2596,7 +2596,7 @@ body.home-page {
   background:
     linear-gradient(90deg, rgba(247,243,234,.99) 0%, rgba(247,243,234,.95) 48%, rgba(247,243,234,.82) 100%),
     url("/images/deck-build-metro-east-il.webp") center right / cover no-repeat;
-  padding: calc(var(--nav-h) + 2.2rem) 0 0;
+  padding: calc(var(--nav-h) + 1.4rem) 0 0;
   color: #14231d;
   overflow: hidden;
 }
@@ -2606,14 +2606,14 @@ body.home-page {
   grid-template-columns: minmax(0, 1.02fr) minmax(330px, .82fr);
   gap: clamp(1.4rem, 4vw, 3.2rem);
   align-items: center;
-  min-height: clamp(520px, 70vh, 700px);
-  padding-bottom: 1.8rem;
+  min-height: clamp(480px, 62vh, 610px);
+  padding-bottom: 1.4rem;
 }
 
 .home-hero-logo {
-  width: 92px;
+  width: 78px;
   height: auto;
-  margin-bottom: 1rem;
+  margin-bottom: .7rem;
 }
 
 .home-eyebrow {
@@ -2633,21 +2633,21 @@ body.home-page {
 }
 
 .home-hero h1 {
-  max-width: 760px;
+  max-width: 680px;
   color: #14231d;
-  font-size: clamp(2.45rem, 5.4vw, 4.55rem);
-  line-height: 1.01;
+  font-size: clamp(2.35rem, 4vw, 3.65rem);
+  line-height: 1.04;
   letter-spacing: 0;
   font-weight: 900;
-  margin-bottom: 1rem;
+  margin-bottom: .85rem;
 }
 
 .home-hero-sub {
   max-width: 660px;
   color: #43564d;
   font-size: clamp(1rem, 1.55vw, 1.12rem);
-  line-height: 1.72;
-  margin-bottom: 1.25rem;
+  line-height: 1.62;
+  margin-bottom: 1rem;
 }
 
 .home-hero-actions {
@@ -2736,7 +2736,7 @@ body.home-page {
   width: 100%;
   height: 100%;
   min-height: 150px;
-  max-height: 390px;
+  max-height: 330px;
   object-fit: cover;
   border: 1px solid #e4ddd0;
   border-radius: 8px;
@@ -3125,7 +3125,7 @@ body.home-page {
 
   .home-hero {
     background: linear-gradient(180deg, rgba(247,243,234,.99) 0%, rgba(247,243,234,.96) 100%);
-    padding-top: calc(var(--nav-h) + 1.2rem);
+    padding-top: calc(var(--nav-h) + .9rem);
   }
 
   .home-hero-media {
@@ -3133,8 +3133,8 @@ body.home-page {
   }
 
   .home-hero h1 {
-    font-size: clamp(2.25rem, 10.5vw, 3.15rem);
-    line-height: 1.04;
+    font-size: clamp(2.05rem, 9.5vw, 2.8rem);
+    line-height: 1.06;
   }
 
   .home-hero-actions {

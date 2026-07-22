@@ -33,6 +33,7 @@ PRIVATE_PATTERNS = (
     "demo-template/",
     "output/",
     "outputs/",
+    "tmp/",
     "404.html",
     "googled8d60e1c6a2f88ee.html",
 )

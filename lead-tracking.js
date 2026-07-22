@@ -281,8 +281,8 @@
       '#ap-float{position:fixed;bottom:18px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}',
       '#ap-float a{display:inline-flex;align-items:center;gap:7px;padding:13px 18px;border-radius:50px;font-family:Manrope,system-ui,sans-serif;font-weight:800;font-size:.92rem;text-decoration:none;box-shadow:0 4px 18px rgba(0,0,0,.35);transition:transform .15s,box-shadow .15s;white-space:nowrap;}',
       '#ap-float a:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.45);}',
-      '#ap-float .ap-call{background:#16a34a;color:#fff;}',
-      '#ap-float .ap-quote{background:#1a56db;color:#fff;}',
+      '#ap-float .ap-call{background:#2f5d50;color:#fff;}',
+      '#ap-float .ap-quote{background:#a94f16;color:#fff;}',
       '#ap-float-dismiss{position:fixed;bottom:14px;left:12px;z-index:9999;background:rgba(15,23,42,.7);border:none;color:#64748b;font-size:.7rem;cursor:pointer;padding:4px 8px;border-radius:20px;font-family:inherit;}',
       '@media(max-width:480px){#ap-float a{padding:12px 14px;font-size:.85rem;}}'
     ].join('');

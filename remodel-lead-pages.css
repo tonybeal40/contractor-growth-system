@@ -2,7 +2,7 @@
   --remodel-charcoal: #1f2933;
   --remodel-cream: #f7f3ea;
   --remodel-green: #2f5d50;
-  --remodel-copper: #c96a26;
+  --remodel-copper: #a94f16;
   --remodel-border: #ded8cc;
   --remodel-muted: #526174;
 }
@@ -44,7 +44,7 @@
 .remodel-lead-page .nav .nav-cta {
   border-color: var(--remodel-copper) !important;
   background: var(--remodel-copper) !important;
-  color: #111 !important;
+  color: #fff !important;
 }
 
 .remodel-lead-page .page-hero::before,
@@ -119,7 +119,7 @@
 .remodel-lead-page .remodel-hero-actions .btn-primary {
   border: 1px solid var(--remodel-copper);
   background: var(--remodel-copper) !important;
-  color: #111 !important;
+  color: #fff !important;
 }
 
 .remodel-lead-page .remodel-hero-actions .btn-call {
@@ -361,7 +361,7 @@
   border: 1px solid var(--remodel-copper);
   border-radius: 4px;
   background: var(--remodel-copper);
-  color: #111 !important;
+  color: #fff !important;
   cursor: pointer;
   font-weight: 800;
 }
@@ -384,7 +384,7 @@
 
 .remodel-lead-page .content-body > .btn-primary {
   background: var(--remodel-copper) !important;
-  color: #111 !important;
+  color: #fff !important;
 }
 
 .remodel-lead-page .footer .nav-logo span,
@@ -397,7 +397,7 @@
 }
 
 .remodel-lead-page .footer .social-nextdoor span {
-  color: #111 !important;
+  color: #fff !important;
   font-size: 10px !important;
 }
 

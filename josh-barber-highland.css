@@ -3,7 +3,7 @@
   --josh-cream: #f7f3ea;
   --josh-green: #2f5d50;
   --josh-green-dark: #23473d;
-  --josh-copper: #c96a26;
+  --josh-copper: #a94f16;
   --josh-copper-dark: #a95018;
   --josh-ink: #17211d;
   --josh-muted: #5f6b66;
@@ -144,6 +144,10 @@ body.josh-page {
   font-weight: 900;
 }
 
+.josh-page .rep-nav-estimate {
+  color: var(--josh-white);
+}
+
 .rep-nav-estimate:hover,
 .rep-nav-estimate:focus-visible {
   border-color: var(--josh-copper-dark);
@@ -153,11 +157,11 @@ body.josh-page {
 .josh-hero {
   position: relative;
   isolation: isolate;
-  min-height: 690px;
+  min-height: 620px;
   display: grid;
   align-items: center;
   overflow: hidden;
-  background: var(--josh-charcoal);
+  background: var(--josh-cream);
 }
 
 .josh-hero::before {
@@ -166,7 +170,7 @@ body.josh-page {
   z-index: -2;
   content: "";
   background:
-    linear-gradient(90deg, rgba(31, 41, 51, 0.97) 0%, rgba(31, 41, 51, 0.9) 48%, rgba(31, 41, 51, 0.32) 76%, rgba(31, 41, 51, 0.18) 100%),
+    linear-gradient(90deg, rgba(247, 243, 234, 0.99) 0%, rgba(247, 243, 234, 0.95) 50%, rgba(247, 243, 234, 0.66) 77%, rgba(247, 243, 234, 0.28) 100%),
     url("images/deck-build-metro-east-il.webp") center 48% / cover no-repeat;
 }
 
@@ -174,14 +178,14 @@ body.josh-page {
   position: absolute;
   inset: auto 0 0;
   z-index: -1;
-  height: 150px;
+  height: 100px;
   content: "";
-  background: linear-gradient(180deg, rgba(31, 41, 51, 0), rgba(31, 41, 51, 0.86));
+  background: linear-gradient(180deg, rgba(247, 243, 234, 0), rgba(247, 243, 234, 0.9));
 }
 
 .josh-hero-content {
   max-width: 720px;
-  padding: 88px 0 120px;
+  padding: 72px 0 104px;
 }
 
 .josh-kicker {
@@ -189,7 +193,7 @@ body.josh-page {
   align-items: center;
   gap: 12px;
   margin-bottom: 18px;
-  color: #f0c9a7;
+  color: var(--josh-copper-dark);
   font-size: 0.78rem;
   font-weight: 900;
   text-transform: uppercase;
@@ -205,7 +209,7 @@ body.josh-page {
 .josh-hero h1 {
   max-width: 720px;
   margin: 0;
-  color: var(--josh-white);
+  color: var(--josh-charcoal);
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(2.55rem, 5.6vw, 5.25rem);
   font-weight: 700;
@@ -214,13 +218,13 @@ body.josh-page {
 }
 
 .josh-hero h1 span {
-  color: #f2b27d;
+  color: var(--josh-copper-dark);
 }
 
 .josh-hero-lead {
   max-width: 650px;
   margin: 24px 0 0;
-  color: #edf3f0;
+  color: var(--josh-muted);
   font-size: clamp(1rem, 2vw, 1.2rem);
   line-height: 1.65;
 }
@@ -259,9 +263,9 @@ body.josh-page {
 }
 
 .josh-page .josh-button-light {
-  border-color: rgba(255, 255, 255, 0.78);
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--josh-white);
+  border-color: #cfd8d2;
+  background: var(--josh-white);
+  color: var(--josh-green-dark);
 }
 
 .josh-page .josh-button-light:hover,
@@ -275,13 +279,13 @@ body.josh-page {
   flex-wrap: wrap;
   gap: 18px 26px;
   margin-top: 28px;
-  color: #e6eee9;
+  color: var(--josh-green-dark);
   font-size: 0.9rem;
   font-weight: 800;
 }
 
 .josh-contact-line a {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom: 1px solid rgba(47, 93, 80, 0.35);
 }
 
 .rep-card {
@@ -1062,18 +1066,18 @@ body.josh-page {
   }
 
   .josh-hero {
-    min-height: 720px;
+    min-height: 660px;
     align-items: start;
   }
 
   .josh-hero::before {
     background:
-      linear-gradient(180deg, rgba(31, 41, 51, 0.96) 0%, rgba(31, 41, 51, 0.88) 57%, rgba(31, 41, 51, 0.62) 100%),
+      linear-gradient(180deg, rgba(247, 243, 234, 0.99) 0%, rgba(247, 243, 234, 0.96) 58%, rgba(247, 243, 234, 0.82) 100%),
       url("images/deck-build-metro-east-il.webp") 62% center / cover no-repeat;
   }
 
   .josh-hero-content {
-    padding: 56px 0 210px;
+    padding: 48px 0 190px;
   }
 
   .josh-kicker {
@@ -1216,5 +1220,37 @@ body.josh-page {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .josh-button,
+  .josh-service,
+  .josh-step,
+  .josh-area-grid a,
+  .josh-area-grid span {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .josh-button:hover,
+  .josh-service:hover,
+  .josh-step:hover {
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .josh-hero-content,
+  .rep-card {
+    animation: josh-enter 0.52s ease-out both;
+  }
+
+  .rep-card {
+    animation-delay: 0.08s;
+  }
+
+  @keyframes josh-enter {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }

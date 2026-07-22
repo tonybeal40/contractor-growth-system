@@ -103,8 +103,11 @@ header:not(.nav) {
 .li-nav-cta,
 .li-btn-submit,
 .hub-call,
+.hub-nav a.hub-call,
 .hub-cta-primary,
 .hub-submit,
+.how-btn.how-btn-primary,
+.list-btn.list-btn-primary,
 .net-call,
 .net-btn-primary,
 .net-red,
@@ -484,8 +487,25 @@ footer a,
 .fb-sticky-form,
 .li-sticky-form,
 #ap-float .ap-quote {
-  background: var(--ap-copper) !important;
-  border-color: var(--ap-copper) !important;
+  background: var(--ap-copper-dark) !important;
+  border-color: var(--ap-copper-dark) !important;
+  color: #ffffff !important;
+}
+
+.social-icon.social-nextdoor {
+  background: var(--ap-green) !important;
+  border-color: var(--ap-green) !important;
+  color: #ffffff !important;
+}
+
+.social-icon.social-nextdoor span {
+  color: #ffffff !important;
+}
+
+body:not(.home-page) a[href*="nextdoor.com/share/"],
+.home-page a[href*="nextdoor.com/share/"] {
+  background: var(--ap-green) !important;
+  border-color: var(--ap-green) !important;
   color: #ffffff !important;
 }
 
@@ -957,5 +977,268 @@ footer a,
 
   .hub-hero h1 {
     font-size: 1.75rem !important;
+  }
+}
+
+/* 2026-07-21 shared experience pass: consistent guides, resilient mobile, light motion. */
+body:not(.home-page) main,
+.service-hero-copy,
+.content-main,
+.content-body,
+.content-block,
+.guide-hero-inner,
+.guide-body,
+.review-step > div {
+  min-width: 0;
+}
+
+.service-hero-copy h1,
+.page-hero h1,
+.guide-hero h1,
+.content-block h2,
+.content-block h3 {
+  text-wrap: balance;
+}
+
+.service-hero-copy p,
+.page-hero p,
+.guide-body p,
+.guide-body li,
+.content-block p,
+.content-block li {
+  text-wrap: pretty;
+}
+
+.guide-hero {
+  background:
+    linear-gradient(90deg, rgba(247, 243, 234, .99) 0%, rgba(247, 243, 234, .94) 64%, rgba(247, 243, 234, .84) 100%),
+    url("/images/deck-build-metro-east-il.webp") center right / cover no-repeat !important;
+  border-bottom: 1px solid var(--ap-line) !important;
+  color: var(--ap-charcoal) !important;
+  padding: clamp(2.75rem, 6vw, 4.5rem) 0 !important;
+}
+
+.guide-hero-inner {
+  width: min(100% - 32px, 920px) !important;
+  max-width: 920px !important;
+  padding: 0 !important;
+}
+
+.guide-hero .eyebrow {
+  background: #fff8ef !important;
+  border: 1px solid rgba(201, 106, 38, .32) !important;
+  border-radius: 999px !important;
+  color: var(--ap-copper-dark) !important;
+  letter-spacing: .06em !important;
+}
+
+.guide-hero h1 {
+  max-width: 760px;
+  color: var(--ap-charcoal) !important;
+  font-size: clamp(2rem, 4.5vw, 3.25rem) !important;
+  line-height: 1.08 !important;
+}
+
+.guide-hero .sub {
+  max-width: 700px !important;
+  color: var(--ap-muted) !important;
+  line-height: 1.65 !important;
+}
+
+.guide-meta,
+.guide-meta span,
+.guide-meta span strong {
+  color: var(--ap-green) !important;
+}
+
+.guide-body,
+.guide-body[style] {
+  width: min(100% - 32px, 920px) !important;
+  max-width: 920px !important;
+  background: var(--ap-cream) !important;
+  color: var(--ap-charcoal) !important;
+  padding: clamp(2.25rem, 5vw, 3.5rem) 0 !important;
+}
+
+.guide-body h2 {
+  color: var(--ap-charcoal) !important;
+  border-top-color: var(--ap-line) !important;
+  line-height: 1.18 !important;
+}
+
+.guide-body h3,
+.guide-nav ol li a {
+  color: var(--ap-green) !important;
+}
+
+.guide-body p,
+.guide-body ul,
+.guide-body ol,
+.guide-body li {
+  color: #42505d !important;
+}
+
+.guide-body strong {
+  color: var(--ap-charcoal) !important;
+}
+
+.guide-nav,
+.callout-box {
+  background: #ffffff !important;
+  border: 1px solid var(--ap-line) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 12px 28px rgba(31, 41, 51, .06) !important;
+}
+
+.guide-nav p,
+.callout-box p,
+.callout-box strong {
+  color: var(--ap-charcoal) !important;
+}
+
+.callout-box {
+  border-left: 4px solid var(--ap-copper) !important;
+}
+
+.cost-table {
+  background: #ffffff !important;
+  border: 1px solid var(--ap-line) !important;
+  border-radius: 8px !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  overflow: hidden;
+}
+
+.cost-table th {
+  background: var(--ap-green) !important;
+  color: #ffffff !important;
+  border: 0 !important;
+}
+
+.cost-table td,
+.cost-table td strong {
+  background: #ffffff !important;
+  border-bottom-color: var(--ap-line) !important;
+  color: var(--ap-charcoal) !important;
+}
+
+.cost-table tr:nth-child(even) td {
+  background: #fbfaf6 !important;
+}
+
+.cta-inline {
+  background: var(--ap-green) !important;
+  border: 1px solid var(--ap-green) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 16px 36px rgba(31, 41, 51, .12) !important;
+}
+
+.cta-inline h3,
+.cta-inline p,
+.cta-inline strong {
+  color: #ffffff !important;
+}
+
+.review-page .review-short-link {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.review-page .review-field {
+  display: grid;
+  gap: .42rem;
+  min-width: 0;
+}
+
+.review-page .review-field label {
+  color: var(--ap-charcoal);
+  font-size: .84rem;
+  font-weight: 800;
+}
+
+.review-page .review-field-note {
+  color: var(--ap-muted);
+  font-size: .82rem;
+  line-height: 1.5;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-lane-card,
+  .money-page-card,
+  .decision-card,
+  .content-block,
+  .hub-card,
+  .guide-nav,
+  .callout-box {
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+
+  .home-lane-card:hover,
+  .money-page-card:hover,
+  .decision-card:hover,
+  .hub-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(201, 106, 38, .34) !important;
+    box-shadow: 0 18px 38px rgba(31, 41, 51, .12) !important;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .home-hero-copy,
+  .service-hero-copy,
+  .page-hero > .container,
+  .guide-hero-inner,
+  .hub-hero-copy {
+    animation: allpro-enter .52s ease-out both;
+  }
+
+  @keyframes allpro-enter {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+@media (max-width: 760px) {
+  .container,
+  .service-hero-grid,
+  .review-page .container {
+    width: 100%;
+    max-width: 100%;
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .guide-hero-inner,
+  .guide-body,
+  .guide-body[style] {
+    width: min(100% - 28px, 920px) !important;
+  }
+
+  .guide-meta {
+    display: grid !important;
+    gap: .45rem !important;
+  }
+
+  .review-page .review-primary-card,
+  .review-page .content-block {
+    padding: 1rem !important;
+  }
+
+  .review-page input,
+  .review-page select,
+  .review-page textarea {
+    width: 100%;
+    max-width: 100%;
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
   }
 }
