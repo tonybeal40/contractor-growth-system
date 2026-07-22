@@ -287,6 +287,67 @@
     return /review/i.test(formName) || /reviews\.html$/i.test(window.location.pathname);
   }
 
+  function isBusinessInquiryForm(form, formName) {
+    return /worker\s*\/\s*partner|contractor\s*listing|pro\s*network\s*contractor/i.test(formName) ||
+      !!findNamedField(form, "business_name") ||
+      !!findNamedField(form, "contractor_contact_consent") ||
+      (!!findNamedField(form, "company") && !!findNamedField(form, "work_type"));
+  }
+
+  function hasContactConsentField(form) {
+    return [
+      "estimate_contact_consent",
+      "owner_contact_consent",
+      "contact_consent",
+      "contractor_contact_consent"
+    ].some(function (name) {
+      return !!findNamedField(form, name);
+    });
+  }
+
+  function isHomeownerLeadForm(form, formName) {
+    return !isReviewForm(formName) && !isBusinessInquiryForm(form, formName);
+  }
+
+  function findFirstLeadField(form, names) {
+    for (let i = 0; i < names.length; i += 1) {
+      const field = findNamedField(form, names[i]);
+      if (field && field.type !== "hidden") {
+        return field;
+      }
+    }
+    return null;
+  }
+
+  function requireHomeownerLeadDetails(form, formName) {
+    if (!isHomeownerLeadForm(form, formName)) {
+      return;
+    }
+
+    [
+      ["name", "full_name", "customer_name", "contact_name"],
+      ["phone", "phone_number", "mobile", "contact_phone"],
+      ["city", "location"]
+    ].forEach(function (names) {
+      const field = findFirstLeadField(form, names);
+      if (field) {
+        field.required = true;
+      }
+    });
+
+    const description = findFirstLeadField(form, [
+      "details",
+      "message",
+      "description",
+      "notes",
+      "project_summary",
+      "project_details"
+    ]);
+    if (description) {
+      description.required = true;
+    }
+  }
+
   function wantsSmsCopies(formName) {
     return !isReviewForm(formName);
   }
@@ -422,7 +483,7 @@
     const id = "allpro-project-details-" + Math.random().toString(36).slice(2, 9);
     const label = document.createElement("label");
     label.htmlFor = id;
-    label.textContent = "Project Description (optional)";
+    label.textContent = "Project Description";
     label.style.display = "block";
     label.style.marginBottom = "6px";
     label.style.fontSize = "0.92rem";
@@ -433,6 +494,7 @@
     textarea.id = id;
     textarea.name = "details";
     textarea.rows = 4;
+    textarea.required = true;
     textarea.placeholder = "What would you like done? Include size, condition, timing, or anything helpful.";
     textarea.style.display = "block";
     textarea.style.width = "100%";
@@ -463,8 +525,9 @@
     }
 
     const additions = [];
+    const isBusinessInquiry = isBusinessInquiryForm(form, formName);
 
-    if (!findNamedField(form, "estimate_contact_consent")) {
+    if (!isBusinessInquiry && !hasContactConsentField(form)) {
       additions.push(createConsentBlock(
         "estimate_contact_consent",
         true,
@@ -472,7 +535,7 @@
       ));
     }
 
-    if (!findNamedField(form, "email_marketing_opt_in")) {
+    if (!isBusinessInquiry && !findNamedField(form, "email_marketing_opt_in")) {
       additions.push(createConsentBlock(
         "email_marketing_opt_in",
         false,
@@ -822,6 +885,7 @@
       submitBtn.setAttribute("data-original-text", submitBtn.textContent.trim());
     }
     ensureProjectDescriptionField(form, getFormName(form));
+    requireHomeownerLeadDetails(form, getFormName(form));
     ensureLeadDisclosures(form, getFormName(form));
     populateTracking(form, snapshot);
     interceptForm(form, snapshot);

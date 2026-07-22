@@ -228,7 +228,7 @@ def render_page(service: Service, city: City, proof: dict[str, Any]) -> str:
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script defer src="lead-tracking.js?v=20260715d"></script>
-  <script defer src="formsubmit-lead-tracking.js?v=20260715e"></script>
+  <script defer src="formsubmit-lead-tracking.js?v=20260722a"></script>
   <script type="application/ld+json">
 {jsonld}
   </script>
@@ -522,13 +522,14 @@ def render_page(service: Service, city: City, proof: dict[str, Any]) -> str:
 
         <aside class="ld-form-card" id="estimate-form">
           <h2>{escape(service.cta_label)}</h2>
-          <p>This first-party form captures service, city, source, page, and campaign data so the lead can be routed cleanly and followed up fast.</p>
+          <p>Tell us what you need, where the project is located, and when you would like to begin. All-Pro will follow up about the next step.</p>
           <form class="ld-form" action="{escape(FORM_ACTION)}" method="post" data-form="Local-Service-Page">
             <input type="hidden" name="_subject" value="🏗️ NEW LOCAL PAGE LEAD — {escape(service.service)} | {escape(city.city)}, {escape(city.state)}">
-            <input type="hidden" name="_cc" value="tonybeal40@gmail.com,6185810676@tmomail.net,6185810676@txt.att.net,6185810676@vtext.com,6185810676@email.uscc.net">
+            <input type="hidden" name="_cc" value="tonybeal40@gmail.com">
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_next" value="{escape(SITE)}/thank-you.html?src=form&form={escape(service.slug)}-{escape(city.slug)}">
             <input type="hidden" name="_template" value="table">
+            <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
             <input type="hidden" name="lead_source" value="Local Service Page">
             <input type="hidden" name="page_template" value="local-service-page">
             <input type="hidden" name="service_slug" value="{escape(service.slug)}">
@@ -603,8 +604,13 @@ def render_page(service: Service, city: City, proof: dict[str, Any]) -> str:
               <span>I agree to be contacted by phone, text, or email about my estimate request.</span>
             </label>
 
+            <label class="ld-consent">
+              <input type="checkbox" name="email_marketing_opt_in" value="yes">
+              <span>Email me occasional project tips and local offers. I can unsubscribe anytime.</span>
+            </label>
+
             <button class="ld-submit" type="submit">{escape(service.cta_label)}</button>
-            <p class="ld-note">Source tracked · page tracked · first-party form capture · owner-led follow-up</p>
+            <p class="ld-note">Free estimate request · Photos welcome · Local follow-up</p>
           </form>
         </aside>
       </div>

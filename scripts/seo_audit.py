@@ -66,9 +66,9 @@ def read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8", errors="replace")
 
 
-def match_one(pattern: str, text: str) -> str:
+def match_one(pattern: str, text: str, group: int = 1) -> str:
     match = re.search(pattern, text, re.I | re.S)
-    return unescape(match.group(1).strip()) if match else ""
+    return unescape(match.group(group).strip()) if match else ""
 
 
 def strip_domain(href: str) -> str:
@@ -158,7 +158,7 @@ def score_page(page: dict[str, object], issues: list[str]) -> int:
 
 def audit(root: Path) -> tuple[list[PageAudit], dict[str, object]]:
     pages = sorted(root.glob("**/*.html"))
-    pages = [p for p in pages if ".git" not in p.parts]
+    pages = [p for p in pages if ".git" not in p.parts and "_site" not in p.parts]
     existing = {p.relative_to(root).as_posix() for p in pages}
     sitemap = sitemap_urls(root)
 
@@ -176,10 +176,10 @@ def audit(root: Path) -> tuple[list[PageAudit], dict[str, object]]:
 
         title = match_one(r"<title>(.*?)</title>", html)
         description = match_one(
-            r"""<meta\s+name=["']description["']\s+content=["'](.*?)["']""", html
+            r"""<meta\s+name=(["'])description\1\s+content=(["'])(.*?)\2""", html, 3
         )
         canonical = match_one(
-            r"""<link\s+rel=["']canonical["']\s+href=["'](.*?)["']""", html
+            r"""<link\s+rel=(["'])canonical\1\s+href=(["'])(.*?)\2""", html, 3
         )
         sitemap_key = strip_domain(canonical) if canonical else rel
         h1_count = len(re.findall(r"<h1\b", html, re.I))

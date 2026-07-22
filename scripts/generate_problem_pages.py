@@ -36,6 +36,17 @@ def faq_html(items: list[list[str]]) -> str:
     )
 
 
+def project_image(page: dict[str, Any]) -> str:
+    text = f"{page['service']} {page['problem']}".lower()
+    if any(word in text for word in ("bathroom", "shower", "drywall")):
+        return "images/shower-remodel-belleville-il.webp"
+    if any(word in text for word in ("landscape", "yard", "drainage", "pressure washing")):
+        return "images/projects/metro-east-landscape-curb-appeal-wide.avif"
+    if any(word in text for word in ("deck", "fence", "concrete", "handyman")):
+        return "images/deck-build-metro-east-il.webp"
+    return "all-pro-og-image.webp"
+
+
 def jsonld(page: dict[str, Any]) -> str:
     url = f"{SITE}/{page['slug']}.html"
     graph = {
@@ -96,7 +107,7 @@ def jsonld(page: dict[str, Any]) -> str:
 
 def render_problem_page(page: dict[str, Any], related: list[dict[str, Any]]) -> str:
     url = f"{SITE}/{page['slug']}.html"
-    title = f"{page['headline']} | {BUSINESS}"
+    title = f"{page['headline']} | All-Pro"
     desc = page["description"]
     related_links = "\n".join(
         f'              <li><a href="{escape(item["slug"])}.html">{escape(item["headline"])}</a></li>'
@@ -104,6 +115,7 @@ def render_problem_page(page: dict[str, Any], related: list[dict[str, Any]]) -> 
         if item["slug"] != page["slug"]
     )
     schema = jsonld(page)
+    hero_image = project_image(page)
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -118,47 +130,91 @@ def render_problem_page(page: dict[str, Any], related: list[dict[str, Any]]) -> 
   <meta property="og:type" content="website">
   <meta property="og:image" content="{SITE}/all-pro-og-image.png">
   <link rel="stylesheet" href="styles.css">
-  <script defer src="lead-tracking.js?v=20260715d"></script>
-  <script defer src="formsubmit-lead-tracking.js?v=20260715e"></script>
+  <script defer src="analytics-loader.js?v=20260714a"></script>
+  <script defer src="lead-tracking.js?v=20260721b"></script>
+  <script defer src="formsubmit-lead-tracking.js?v=20260722a"></script>
   <script type="application/ld+json">
 {schema}
   </script>
   <style>
-    body {{ margin:0; font-family: Manrope, Segoe UI, Arial, sans-serif; background:#0a0f18; color:#f7fbff; line-height:1.65; }}
-    .pi-wrap {{ max-width:1120px; margin:0 auto; padding:0 24px; }}
-    .pi-hero {{ padding:64px 0 32px; background:linear-gradient(145deg,#08111d,#142033 62%,#0a0f18); border-bottom:1px solid rgba(255,255,255,.08); }}
-    .pi-eyebrow {{ color:#ff8da0; font-weight:900; font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; }}
-    h1 {{ font-size:clamp(2rem,4vw,3.35rem); line-height:1.06; margin:.45rem 0 .8rem; }}
-    .pi-sub {{ color:#b8c8dc; max-width:760px; font-size:1.05rem; }}
+    :root {{ --charcoal:#1f2933; --cream:#f7f3ea; --green:#2f5d50; --copper:#c96a26; --line:#d8ddd9; }}
+    * {{ box-sizing:border-box; }}
+    body {{ margin:0; font-family:Manrope, Segoe UI, Arial, sans-serif; background:var(--cream); color:var(--charcoal); line-height:1.65; }}
+    .pi-wrap {{ width:min(1120px,calc(100% - 40px)); margin:0 auto; }}
+    .pi-site-header {{ min-height:76px; background:#fff; border-bottom:1px solid var(--line); display:flex; align-items:center; position:relative; z-index:5; }}
+    .pi-nav {{ display:flex; align-items:center; justify-content:space-between; gap:24px; }}
+    .pi-brand {{ display:inline-flex; align-items:center; gap:10px; color:var(--green); text-decoration:none; font-weight:900; line-height:1.15; }}
+    .pi-brand img {{ width:52px; height:46px; object-fit:contain; }}
+    .pi-brand small {{ display:block; color:#5f6b66; font-size:.72rem; font-weight:700; }}
+    .pi-nav-links {{ display:flex; align-items:center; gap:22px; }}
+    .pi-nav-links a {{ color:var(--charcoal); text-decoration:none; font-size:.9rem; font-weight:800; }}
+    .pi-nav-links .pi-nav-cta {{ padding:10px 14px; background:var(--copper); color:#fff; border-radius:6px; }}
+    .pi-hero {{ min-height:500px; position:relative; display:flex; align-items:flex-end; overflow:hidden; background:var(--charcoal); }}
+    .pi-hero-media {{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }}
+    .pi-hero-shade {{ position:absolute; inset:0; background:rgba(18,30,26,.74); }}
+    .pi-hero-content {{ position:relative; z-index:1; padding:68px 0 58px; color:#fff; }}
+    .pi-eyebrow {{ color:#f1b27f; font-weight:900; font-size:.78rem; text-transform:uppercase; letter-spacing:0; }}
+    h1 {{ max-width:820px; font-family:Georgia, 'Times New Roman', serif; font-size:3.25rem; line-height:1.04; margin:.5rem 0 1rem; letter-spacing:0; }}
+    .pi-sub {{ color:#f4f5f2; max-width:760px; font-size:1.05rem; }}
     .pi-actions {{ display:flex; flex-wrap:wrap; gap:12px; margin-top:22px; }}
-    .pi-btn {{ display:inline-flex; align-items:center; justify-content:center; padding:13px 18px; border-radius:8px; font-weight:900; text-decoration:none; }}
-    .pi-primary {{ background:#c8102e; color:white; }}
-    .pi-secondary {{ border:1px solid rgba(255,255,255,.16); color:white; background:rgba(255,255,255,.04); }}
-    .pi-main {{ padding:34px 0 68px; }}
+    .pi-btn {{ min-height:48px; display:inline-flex; align-items:center; justify-content:center; padding:12px 18px; border-radius:6px; font-weight:900; text-decoration:none; }}
+    .pi-primary {{ background:var(--copper); color:#fff; }}
+    .pi-secondary {{ border:1px solid #fff; color:#fff; background:rgba(31,41,51,.55); }}
+    .pi-main {{ padding:42px 0 74px; }}
     .pi-grid {{ display:grid; grid-template-columns:minmax(0,1fr) 360px; gap:24px; align-items:start; }}
     .pi-stack {{ display:grid; gap:20px; }}
-    .pi-card {{ background:#121b28; border:1px solid rgba(255,255,255,.09); border-radius:8px; padding:22px; box-shadow:0 18px 44px rgba(0,0,0,.22); }}
-    .pi-card h2 {{ margin:0 0 10px; font-size:1.25rem; }}
-    .pi-card p, .pi-card li {{ color:#c3d1e4; }}
+    .pi-card {{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:24px; box-shadow:0 12px 30px rgba(31,41,51,.08); }}
+    .pi-card h2 {{ margin:0 0 10px; font-family:Georgia, 'Times New Roman', serif; color:var(--green); font-size:1.45rem; letter-spacing:0; }}
+    .pi-card p, .pi-card li {{ color:#45524c; }}
     .pi-card ul {{ padding-left:20px; }}
-    .pi-photo {{ width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,.1); margin:12px 0; }}
-    details {{ padding:13px 0; border-top:1px solid rgba(255,255,255,.08); }}
+    .pi-photo {{ width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:6px; border:1px solid var(--line); margin:12px 0; }}
+    details {{ padding:13px 0; border-top:1px solid var(--line); }}
     summary {{ cursor:pointer; font-weight:900; }}
-    .pi-form input, .pi-form select, .pi-form textarea {{ width:100%; margin:6px 0 12px; padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,.14); background:#0d1420; color:white; }}
+    .pi-form input, .pi-form select, .pi-form textarea {{ width:100%; margin:6px 0 12px; padding:12px; border-radius:6px; border:1px solid #aeb8b3; background:#fff; color:var(--charcoal); font:inherit; }}
     .pi-form textarea {{ min-height:110px; }}
-    .pi-form label {{ font-size:.86rem; color:#dce8f7; font-weight:800; }}
-    .pi-form button {{ width:100%; padding:14px; border:0; border-radius:8px; background:#c8102e; color:white; font-weight:900; }}
-    .pi-note {{ font-size:.9rem; color:#b8c8dc; }}
-    .pi-links a {{ color:#ffffff; text-decoration:underline; text-decoration-color:#c8102e; text-underline-offset:3px; }}
-    @media (max-width:820px) {{ .pi-grid {{ grid-template-columns:1fr; }} .pi-hero {{ padding-top:44px; }} }}
+    .pi-form label {{ font-size:.86rem; color:#33423c; font-weight:800; }}
+    .pi-form .pi-check {{ display:flex; align-items:flex-start; gap:9px; margin:10px 0; line-height:1.45; }}
+    .pi-form .pi-check input {{ width:auto; flex:0 0 auto; margin:4px 0 0; }}
+    .pi-form button {{ width:100%; min-height:48px; padding:13px; border:0; border-radius:6px; background:var(--copper); color:#fff; font-weight:900; font:inherit; }}
+    .pi-note {{ font-size:.9rem; color:#5f6b66; }}
+    .pi-links a {{ color:var(--green); text-decoration:underline; text-decoration-color:var(--copper); text-underline-offset:3px; }}
+    .pi-form-card {{ position:sticky; top:18px; border-top:5px solid var(--copper); }}
+    .pi-footer {{ background:var(--charcoal); color:#dce3df; padding:34px 0 88px; }}
+    .pi-footer-inner {{ display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; }}
+    .pi-footer a {{ color:#fff; }}
+    .pi-mobile-bar {{ display:none; }}
+    @media (max-width:820px) {{
+      .pi-wrap {{ width:min(100% - 28px,1120px); }}
+      .pi-site-header {{ min-height:66px; }}
+      .pi-nav-links a:not(.pi-nav-cta) {{ display:none; }}
+      .pi-brand span {{ font-size:.92rem; }}
+      .pi-brand small {{ font-size:.65rem; }}
+      .pi-hero {{ min-height:430px; }}
+      .pi-hero-content {{ padding:52px 0 44px; }}
+      h1 {{ font-size:2.35rem; overflow-wrap:anywhere; }}
+      .pi-actions {{ display:grid; grid-template-columns:1fr; }}
+      .pi-grid {{ grid-template-columns:1fr; }}
+      .pi-form-card {{ position:static; }}
+      .pi-mobile-bar {{ position:fixed; z-index:20; left:0; right:0; bottom:0; height:62px; display:grid; grid-template-columns:1fr 1fr; background:#fff; border-top:1px solid var(--line); }}
+      .pi-mobile-bar a {{ display:flex; align-items:center; justify-content:center; color:var(--green); text-decoration:none; font-weight:900; }}
+      .pi-mobile-bar a:last-child {{ background:var(--copper); color:#fff; }}
+    }}
   </style>
 </head>
 <body>
+  <header class="pi-site-header">
+    <div class="pi-wrap pi-nav">
+      <a class="pi-brand" href="index.html"><img src="images/branding/logo-web-sm.png" alt="All-Pro Metro East Construction logo" width="52" height="46"><span>All-Pro Construction<small>Metro East, Illinois</small></span></a>
+      <nav class="pi-nav-links" aria-label="Primary navigation"><a href="index.html#services">Services</a><a href="index.html#areas">Areas</a><a href="reviews.html">Reviews</a><a class="pi-nav-cta" href="#estimate">Free Estimate</a></nav>
+    </div>
+  </header>
   <header class="pi-hero">
-    <div class="pi-wrap">
+    <img class="pi-hero-media" src="{escape(hero_image)}" alt="All-Pro project work related to {escape(page['service'].lower())} in Metro East Illinois" width="1200" height="675" fetchpriority="high">
+    <div class="pi-hero-shade" aria-hidden="true"></div>
+    <div class="pi-wrap pi-hero-content">
       <div class="pi-eyebrow">Metro East problem solver | {escape(page["city"])}, {escape(page["state"])}</div>
       <h1>{escape(page["headline"])}</h1>
-      <p class="pi-sub">{escape(page["description"])} If you are not sure whether this is a repair, cleanup, or bigger project, send the details and Bill will route it.</p>
+      <p class="pi-sub">{escape(page["description"])} If you are not sure whether this is a repair, cleanup, or larger project, send the details and the All-Pro team will help with the next step.</p>
       <div class="pi-actions">
         <a class="pi-btn pi-primary" href="#estimate">Request a free estimate</a>
         <a class="pi-btn pi-secondary" href="tel:{PHONE.replace('-', '')}">Call {PHONE}</a>
@@ -170,7 +226,7 @@ def render_problem_page(page: dict[str, Any], related: list[dict[str, Any]]) -> 
       <div class="pi-stack">
         <section class="pi-card">
           <h2>Signs this is the problem</h2>
-          <img class="pi-photo" src="all-pro-og-image.png" alt="All-Pro Construction project work in Metro East Illinois">
+          <img class="pi-photo" src="{escape(hero_image)}" alt="Relevant All-Pro project work for {escape(page['service'].lower())} in Metro East Illinois" loading="lazy" width="800" height="450">
           <ul>
 {list_items(page["symptoms"])}
           </ul>
@@ -180,7 +236,7 @@ def render_problem_page(page: dict[str, Any], related: list[dict[str, Any]]) -> 
           <ul>
 {list_items(page["what_we_do"])}
           </ul>
-          <p class="pi-note">Owner-led estimates, practical repair paths, and local Belleville/O'Fallon focus. No fake scarcity and no mystery quote games.</p>
+          <p class="pi-note">Owner-led estimates, practical repair options, and clear written scope for Metro East homeowners.</p>
         </section>
         <section class="pi-card">
           <h2>Common questions</h2>
@@ -193,23 +249,26 @@ def render_problem_page(page: dict[str, Any], related: list[dict[str, Any]]) -> 
           </ul>
         </section>
       </div>
-      <aside class="pi-card" id="estimate">
+      <aside class="pi-card pi-form-card" id="estimate">
         <h2>Send the details</h2>
         <p class="pi-note">Tell us what is going on. Photos can be texted after the form if needed.</p>
         <form class="pi-form" action="{FORM_ACTION}" method="post" data-form="Problem Intent Page">
+          <input type="hidden" name="_subject" value="NEW ALL-PRO PROJECT REQUEST | {escape(page['service'])} | {escape(page['city'])}">
           <input type="hidden" name="_cc" value="tonybeal40@gmail.com">
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="{escape(SITE)}/thank-you.html?src=form&amp;form={escape(page['slug'])}">
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
           <input type="hidden" name="problem_page" value="{escape(page["slug"])}">
           <input type="hidden" name="service" value="{escape(page["service"])}">
           <label for="name">Name</label>
           <input id="name" name="name" autocomplete="name" required>
           <label for="phone">Phone</label>
           <input id="phone" name="phone" autocomplete="tel" required>
-          <label for="email">Email</label>
+          <label for="email">Email (optional)</label>
           <input id="email" name="email" type="email" autocomplete="email">
           <label for="city">City</label>
-          <input id="city" name="city" value="{escape(page["city"])}">
+          <input id="city" name="city" value="{escape(page["city"])}" required>
           <label for="timeline">Timeline</label>
           <select id="timeline" name="timeline">
             <option value="">Select one</option>
@@ -219,12 +278,16 @@ def render_problem_page(page: dict[str, Any], related: list[dict[str, Any]]) -> 
             <option>Just planning</option>
           </select>
           <label for="details">What happened?</label>
-          <textarea id="details" name="details" placeholder="{escape(page["problem"])}"></textarea>
+          <textarea id="details" name="details" placeholder="{escape(page["problem"])}" required></textarea>
+          <label class="pi-check"><input type="checkbox" name="estimate_contact_consent" value="yes" required> <span>I agree to be contacted by phone, text, or email about my estimate request.</span></label>
+          <label class="pi-check"><input type="checkbox" name="email_marketing_opt_in" value="yes"> <span>Email me occasional project tips and local offers. I can unsubscribe anytime.</span></label>
           <button type="submit">Send request</button>
         </form>
       </aside>
     </div>
   </main>
+  <footer class="pi-footer"><div class="pi-wrap pi-footer-inner"><div><strong>All-Pro Construction &amp; Landscape</strong><br>Serving Metro East since 2002</div><div><a href="tel:{PHONE.replace('-', '')}">{PHONE}</a><br><a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a></div></div></footer>
+  <nav class="pi-mobile-bar" aria-label="Quick actions"><a href="tel:{PHONE.replace('-', '')}">Call Bill</a><a href="#estimate">Free Estimate</a></nav>
 </body>
 </html>
 """
@@ -271,35 +334,66 @@ def render_hub(pages: list[dict[str, Any]]) -> str:
   <meta property="og:type" content="website">
   <meta property="og:image" content="{SITE}/all-pro-og-image.png">
   <link rel="stylesheet" href="styles.css">
-  <script defer src="lead-tracking.js?v=20260715d"></script>
-  <script defer src="formsubmit-lead-tracking.js?v=20260715e"></script>
+  <script defer src="analytics-loader.js?v=20260714a"></script>
+  <script defer src="lead-tracking.js?v=20260721b"></script>
+  <script defer src="formsubmit-lead-tracking.js?v=20260722a"></script>
   <script type="application/ld+json">
 {schema}
   </script>
   <style>
-    body {{ margin:0; font-family:Manrope, Segoe UI, Arial, sans-serif; background:#0a0f18; color:white; line-height:1.65; }}
-    .pi-wrap {{ max-width:1120px; margin:0 auto; padding:0 24px; }}
-    .pi-hero {{ padding:64px 0 32px; background:linear-gradient(145deg,#08111d,#142033 62%,#0a0f18); }}
-    h1 {{ font-size:clamp(2rem,4vw,3.4rem); line-height:1.08; margin:0 0 12px; }}
-    .pi-sub {{ color:#b8c8dc; max-width:760px; }}
-    .pi-grid {{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; padding:30px 0 70px; }}
-    .pi-card {{ background:#121b28; border:1px solid rgba(255,255,255,.09); border-radius:8px; padding:22px; }}
-    .pi-card h2 {{ margin:0 0 8px; font-size:1.15rem; }}
-    .pi-card p {{ color:#c3d1e4; }}
-    .pi-card a {{ color:white; text-decoration:underline; text-decoration-color:#c8102e; text-underline-offset:4px; }}
-    @media (max-width:780px) {{ .pi-grid {{ grid-template-columns:1fr; }} }}
+    :root {{ --charcoal:#1f2933; --cream:#f7f3ea; --green:#2f5d50; --copper:#c96a26; --line:#d8ddd9; }}
+    * {{ box-sizing:border-box; }}
+    body {{ margin:0; font-family:Manrope, Segoe UI, Arial, sans-serif; background:var(--cream); color:var(--charcoal); line-height:1.65; }}
+    .pi-wrap {{ width:min(1120px,calc(100% - 40px)); margin:0 auto; }}
+    .pi-site-header {{ min-height:76px; background:#fff; border-bottom:1px solid var(--line); display:flex; align-items:center; }}
+    .pi-nav {{ display:flex; align-items:center; justify-content:space-between; gap:24px; }}
+    .pi-brand {{ display:inline-flex; align-items:center; gap:10px; color:var(--green); text-decoration:none; font-weight:900; line-height:1.15; }}
+    .pi-brand img {{ width:52px; height:46px; object-fit:contain; }}
+    .pi-brand small {{ display:block; color:#5f6b66; font-size:.72rem; }}
+    .pi-nav-links {{ display:flex; align-items:center; gap:22px; }}
+    .pi-nav-links a {{ color:var(--charcoal); text-decoration:none; font-size:.9rem; font-weight:800; }}
+    .pi-nav-links .pi-nav-cta {{ padding:10px 14px; background:var(--copper); color:#fff; border-radius:6px; }}
+    .pi-hero {{ min-height:410px; position:relative; display:flex; align-items:flex-end; overflow:hidden; background:var(--charcoal); }}
+    .pi-hero img {{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }}
+    .pi-shade {{ position:absolute; inset:0; background:rgba(18,30,26,.76); }}
+    .pi-hero-copy {{ position:relative; z-index:1; padding:64px 0 54px; color:#fff; }}
+    h1 {{ max-width:780px; font:700 3.25rem/1.05 Georgia, 'Times New Roman', serif; letter-spacing:0; margin:0 0 16px; }}
+    .pi-sub {{ color:#f2f5f3; max-width:760px; font-size:1.05rem; }}
+    .pi-grid {{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; padding:38px 0 72px; }}
+    .pi-card {{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:22px; box-shadow:0 12px 30px rgba(31,41,51,.07); }}
+    .pi-card h2 {{ margin:0 0 8px; font:700 1.3rem/1.25 Georgia, 'Times New Roman', serif; letter-spacing:0; }}
+    .pi-card p {{ color:#52605a; }}
+    .pi-card a {{ color:var(--green); text-decoration:underline; text-decoration-color:var(--copper); text-underline-offset:4px; }}
+    .pi-footer {{ background:var(--charcoal); color:#dce3df; padding:34px 0; }}
+    .pi-footer-inner {{ display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; }}
+    .pi-footer a {{ color:#fff; }}
+    @media (max-width:780px) {{
+      .pi-wrap {{ width:min(100% - 28px,1120px); }}
+      .pi-site-header {{ min-height:66px; }}
+      .pi-nav-links a:not(.pi-nav-cta) {{ display:none; }}
+      .pi-brand span {{ font-size:.92rem; }}
+      .pi-brand small {{ font-size:.65rem; }}
+      .pi-hero {{ min-height:360px; }}
+      .pi-hero-copy {{ padding:48px 0 42px; }}
+      h1 {{ font-size:2.35rem; overflow-wrap:anywhere; }}
+      .pi-grid {{ grid-template-columns:1fr; }}
+    }}
   </style>
 </head>
 <body>
+  <header class="pi-site-header"><div class="pi-wrap pi-nav"><a class="pi-brand" href="index.html"><img src="images/branding/logo-web-sm.png" alt="All-Pro Metro East Construction logo" width="52" height="46"><span>All-Pro Construction<small>Metro East, Illinois</small></span></a><nav class="pi-nav-links" aria-label="Primary navigation"><a href="index.html#services">Services</a><a href="index.html#areas">Areas</a><a href="reviews.html">Reviews</a><a class="pi-nav-cta" href="get-quote.html">Free Estimate</a></nav></div></header>
   <header class="pi-hero">
-    <div class="pi-wrap">
+    <img src="images/projects/metro-east-landscape-curb-appeal-wide.avif" alt="Completed Metro East landscape project by All-Pro Construction" width="1400" height="780" fetchpriority="high">
+    <div class="pi-shade" aria-hidden="true"></div>
+    <div class="pi-wrap pi-hero-copy">
       <h1>Metro East Homeowner Problem Solver</h1>
-      <p class="pi-sub">Pages built around the way homeowners actually search: the broken deck board, the leaning fence, the muddy yard, the cleanup before listing, and the small repair list that needs a real contractor.</p>
+      <p class="pi-sub">Start with the problem you can see: a soft deck board, leaning fence, muddy yard, damaged drywall, or repair list. Each guide explains what may be involved and gives you a direct path to a local estimate.</p>
     </div>
   </header>
   <main class="pi-wrap pi-grid">
 {cards}
   </main>
+  <footer class="pi-footer"><div class="pi-wrap pi-footer-inner"><div><strong>All-Pro Construction &amp; Landscape</strong><br>Serving Metro East since 2002</div><div><a href="tel:{PHONE.replace('-', '')}">{PHONE}</a><br><a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a></div></div></footer>
 </body>
 </html>
 """

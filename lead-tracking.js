@@ -171,7 +171,7 @@
         return;
       }
 
-      if (/homeadvisor|angi\.com|houzz\.com|nextdoor\.com|yelp\.com|facebook\.com|linkedin\.com/i.test(link.href)) {
+      if (/houzz\.com|nextdoor\.com|yelp\.com|facebook\.com|linkedin\.com/i.test(link.href)) {
         let hostname = link.href;
 
         try {

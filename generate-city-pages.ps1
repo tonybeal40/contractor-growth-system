@@ -99,7 +99,7 @@ $navHtml
       <a href="/contact.html" class="btn-secondary">Free Estimate &#x2192;</a>
     </div>
     <div class="hero-trust">
-      <span>Public Reviews &middot; Angi/HomeAdvisor</span>
+      <span>Customer Reviews</span>
       <span>Documentation Available on Request</span>
       <span>Serving Metro East Since 2002</span>
       <span>Direct Local Contact</span>
@@ -137,7 +137,7 @@ $($p.sl)
       <a href="/contact.html" class="btn-primary">Request Estimate &#x2192;</a>
       <ul style="list-style:none;margin-top:1.5rem;">
         <li style="color:var(--muted);font-size:0.85rem;padding:0.4rem 0;border-bottom:1px solid var(--dark3);">Documentation Available on Request</li>
-        <li style="color:var(--muted);font-size:0.85rem;padding:0.4rem 0;border-bottom:1px solid var(--dark3);">Public Reviews &middot; Angi/HomeAdvisor</li>
+        <li style="color:var(--muted);font-size:0.85rem;padding:0.4rem 0;border-bottom:1px solid var(--dark3);">Customer Reviews</li>
         <li style="color:var(--muted);font-size:0.85rem;padding:0.4rem 0;border-bottom:1px solid var(--dark3);">Serving Metro East Since 2002</li>
         <li style="color:var(--muted);font-size:0.85rem;padding:0.4rem 0;border-bottom:1px solid var(--dark3);">Direct Local Contact</li>
         <li style="color:var(--muted);font-size:0.85rem;padding:0.4rem 0;">&#10003; Free Written Estimates</li>

@@ -17,15 +17,21 @@ EXCLUDED_PARTS = {
     ".git",
     ".github",
     ".vscode",
+    "_site",
     ".firecrawl",
     "bill-docs-k7m2v9",
+    "data",
     "demo-template",
+    "leads-today",
     "lawnmex",
     "output",
     "outputs",
     "server",
     "scripts",
     "sql",
+    "test",
+    "tmp",
+    "workers",
 }
 
 EXCLUDED_FILES = {
@@ -154,10 +160,25 @@ def write_sitemap(urls: list[str]) -> None:
     tree.write(ROOT / "sitemap.xml", encoding="utf-8", xml_declaration=True)
 
 
+def refresh_local_sitemap() -> int:
+    path = ROOT / "sitemap-local.xml"
+    if not path.exists():
+        return 0
+    ET.register_namespace("", "http://www.sitemaps.org/schemas/sitemap/0.9")
+    tree = ET.parse(path)
+    nodes = tree.findall(".//{http://www.sitemaps.org/schemas/sitemap/0.9}lastmod")
+    for node in nodes:
+        node.text = TODAY
+    ET.indent(tree, space="  ", level=0)
+    tree.write(path, encoding="utf-8", xml_declaration=True)
+    return len(nodes)
+
+
 def main() -> None:
     urls = build_urls()
     write_sitemap(urls)
-    print(f"Wrote sitemap.xml with {len(urls)} URLs")
+    local_urls = refresh_local_sitemap()
+    print(f"Wrote sitemap.xml with {len(urls)} URLs; refreshed {local_urls} local sitemap URLs")
 
 
 if __name__ == "__main__":

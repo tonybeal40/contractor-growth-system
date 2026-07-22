@@ -1,48 +1,24 @@
 User-agent: *
 Content-Signal: search=yes,ai-input=yes,ai-train=no,use=reference
 Allow: /
-
-# Private client preview pages - do not index
-Disallow: /lawnmex-outreach-preview-m3t7k4.html
-Disallow: /lawnmex-discovery-questions-m3t7k4.html
-Disallow: /lawnmex-pricing-m3t7k4.html
-Disallow: /lawnmex-news-kmov-jan2026.html
-Disallow: /lawnmex-news-kmov-nov2022.html
-Disallow: /lawnmex-news-kmov-winter-2022.html
-Disallow: /allpro-crm-private-a9k3r7.html
-Disallow: /allpro-email-outreach-private-r4h8.html
-Disallow: /allpro-outreach-preview-b4s8w2.html
-Disallow: /unsubscribe-allpro-r4h8.html
-Disallow: /branding-kit.html
-Disallow: /review-card.html
-Disallow: /change-order-bj-floor.html
-Disallow: /marketing-dashboard.html
-Disallow: /linkedin-growth-system.html
-Disallow: /OUTREACH-ACTIONS.md
-Disallow: /GBP-AND-ADS.md
-Disallow: /NEXT-PAGE-PLAN.md
-Disallow: /PROOF-ENHANCEMENTS.md
-Disallow: /REVIEW-PLAYBOOK.md
-Disallow: /ALL_PRO_SEO_PRO_PLAYBOOK.md
-
-# Internal research, generated output, client demos, and support files
 Disallow: /.firecrawl/
-Disallow: /bill-docs-k7m2v9/
+Disallow: /data/
 Disallow: /demo-template/
-Disallow: /lawnmex/
 Disallow: /output/
 Disallow: /outputs/
+Disallow: /scripts/
+Disallow: /server/
+Disallow: /sql/
+Disallow: /tmp/
+Disallow: /workers/
 
-# Keep model-training crawlers out without blocking search or user-requested
-# retrieval. Search/assistant crawlers are allowed in the next group.
+# Training-only crawlers are separate from search and user-requested retrieval.
 User-agent: GPTBot
 User-agent: ClaudeBot
-User-agent: Google-Extended
 Content-Signal: search=no,ai-input=no,ai-train=no,use=none
 Disallow: /
 
-# Explicitly allow search and user-directed AI fetchers to cite public pages
-# while retaining the same exclusions for private and internal paths.
+# Search and user-directed assistants may retrieve and cite public pages.
 User-agent: OAI-SearchBot
 User-agent: OAI-AdsBot
 User-agent: ChatGPT-User
@@ -54,33 +30,6 @@ User-agent: Applebot
 User-agent: DuckAssistBot
 Content-Signal: search=yes,ai-input=yes,ai-train=no,use=reference
 Allow: /
-Disallow: /lawnmex-outreach-preview-m3t7k4.html
-Disallow: /lawnmex-discovery-questions-m3t7k4.html
-Disallow: /lawnmex-pricing-m3t7k4.html
-Disallow: /lawnmex-news-kmov-jan2026.html
-Disallow: /lawnmex-news-kmov-nov2022.html
-Disallow: /lawnmex-news-kmov-winter-2022.html
-Disallow: /allpro-crm-private-a9k3r7.html
-Disallow: /allpro-email-outreach-private-r4h8.html
-Disallow: /allpro-outreach-preview-b4s8w2.html
-Disallow: /unsubscribe-allpro-r4h8.html
-Disallow: /branding-kit.html
-Disallow: /review-card.html
-Disallow: /change-order-bj-floor.html
-Disallow: /marketing-dashboard.html
-Disallow: /linkedin-growth-system.html
-Disallow: /OUTREACH-ACTIONS.md
-Disallow: /GBP-AND-ADS.md
-Disallow: /NEXT-PAGE-PLAN.md
-Disallow: /PROOF-ENHANCEMENTS.md
-Disallow: /REVIEW-PLAYBOOK.md
-Disallow: /ALL_PRO_SEO_PRO_PLAYBOOK.md
-Disallow: /.firecrawl/
-Disallow: /bill-docs-k7m2v9/
-Disallow: /demo-template/
-Disallow: /lawnmex/
-Disallow: /output/
-Disallow: /outputs/
 
 Sitemap: https://allprometroeastconstruction.com/sitemap.xml
 Sitemap: https://allprometroeastconstruction.com/sitemap-local.xml

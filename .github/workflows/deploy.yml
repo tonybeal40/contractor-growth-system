@@ -30,12 +30,14 @@ jobs:
           python scripts/seo_audit.py --fail-under 95
           python scripts/validate_priority_lead_pages.py
           node --test workers/lead-concierge/test/*.test.js
+      - name: Build public site artifact
+        run: python scripts/build_public_site.py
       - name: Setup Pages
         uses: actions/configure-pages@v6
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
-          path: '.'
+          path: '_site'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5

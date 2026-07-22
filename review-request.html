@@ -31,7 +31,7 @@
   <link rel="icon" type="image/png" href="/images/branding/logo-square.png">
   <link rel="stylesheet" href="styles.css?v=20260721a">
   <script defer src="lead-tracking.js?v=20260721b"></script>
-  <script defer src="formsubmit-lead-tracking.js?v=20260717f"></script>
+  <script defer src="formsubmit-lead-tracking.js?v=20260722a"></script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -196,7 +196,7 @@
             <div class="review-step">
               <div>
                 <strong>Complete the website review form.</strong>
-                <p>Your feedback goes directly to All-Pro and can be approved for the customer review section on this website.</p>
+                <p>Share what All-Pro worked on and how the project went. Your private contact details are never displayed.</p>
               </div>
             </div>
             <div class="review-step">
@@ -214,8 +214,7 @@
           </div>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#website-review">Write Website Review</a>
-            <a class="btn btn-secondary" href="https://www.angi.com/companylist/us/il/new-athens/all-pro-construction-and-landscape-reviews-6233409.htm" target="_blank" rel="noreferrer">Review on Angi</a>
-            <a class="btn btn-secondary" href="https://www.homeadvisor.com/rated.all-proconstructionlandscape.158798635.html" target="_blank" rel="noreferrer">Review on HomeAdvisor</a>
+            <a class="btn btn-secondary" href="reviews.html">Read Customer Reviews</a>
           </div>
         </article>
 
@@ -237,7 +236,8 @@
 
         <article class="content-block" id="website-review">
           <h2>Write your All-Pro website review</h2>
-          <p>Share your genuine experience below. Tony reviews each submission before it appears publicly, which protects customers and keeps the website review section accurate.</p>
+          <p>Share your genuine experience with All-Pro. Your email and phone stay private, and only the review details you authorize can appear on the website.</p>
+          <p class="review-field-note">All-Pro does not pay for positive reviews or require a positive rating. Honest feedback is welcome.</p>
           <form action="https://formsubmit.co/williamosessionallpro@gmail.com" method="post" data-form="Review Request Testimonial">
             <input type="hidden" name="_subject" value="New All-Pro Review/Testimonial">
             <input type="hidden" name="_captcha" value="false">
@@ -245,7 +245,7 @@
             <input type="hidden" name="_cc" value="tonybeal40@gmail.com">
             <input type="hidden" name="_next" value="https://allprometroeastconstruction.com/thank-you.html?src=form&form=review-request">
             <input type="hidden" name="lead_source" value="Review Request Page">
-            <input type="hidden" name="review_status" value="Pending approval">
+            <input type="hidden" name="review_type" value="Customer website review">
             <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
             <input type="hidden" name="utm_source">
             <input type="hidden" name="utm_medium">
@@ -260,7 +260,7 @@
 
             <div class="form-row">
               <div class="review-field">
-                <label for="review-name">Your name</label>
+                <label for="review-name">Name for your review</label>
                 <input id="review-name" type="text" name="full_name" autocomplete="name" required>
               </div>
               <div class="review-field">
@@ -278,7 +278,7 @@
                 <input id="review-city" type="text" name="city" autocomplete="address-level2" placeholder="Belleville, O'Fallon..." required>
               </div>
             </div>
-            <p class="review-field-note" id="review-email-note">Your email helps verify the project and is never included in the public review.</p>
+            <p class="review-field-note" id="review-email-note">Your email helps confirm the project and is never included in the public review. Only your first name and last initial may be shown if you give permission below.</p>
             <div class="form-row">
               <div class="review-field">
                 <label for="review-rating">Your honest rating</label>
