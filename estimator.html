@@ -245,6 +245,32 @@
       color: var(--text);
     }
 
+    input[type="checkbox"],
+    input[type="radio"] {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      flex: 0 0 20px;
+      margin: 2px 0 0;
+      padding: 0;
+    }
+
+    .consent-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      width: 100%;
+      min-width: 0;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .consent-row span {
+      min-width: 0;
+      overflow-wrap: normal;
+      word-break: normal;
+    }
+
     textarea { min-height: 100px; resize: vertical; }
 
     .check-grid {
@@ -496,14 +522,14 @@
               <textarea id="notes" name="notes" placeholder="Anything Bill should know before calling"></textarea>
             </div>
             <div class="field" style="margin-top:14px;">
-              <label style="display:flex;align-items:flex-start;gap:10px;font-weight:400;line-height:1.6;">
-                <input type="checkbox" name="estimate_contact_consent" value="yes" required style="margin-top:4px;">
+              <label class="consent-row">
+                <input type="checkbox" name="estimate_contact_consent" value="yes" required>
                 <span>I agree to be contacted by phone, text, or email about my estimate request.</span>
               </label>
             </div>
             <div class="field" style="margin-top:10px;">
-              <label style="display:flex;align-items:flex-start;gap:10px;font-weight:400;line-height:1.6;">
-                <input type="checkbox" name="email_marketing_opt_in" value="yes" style="margin-top:4px;">
+              <label class="consent-row">
+                <input type="checkbox" name="email_marketing_opt_in" value="yes">
                 <span>Send me occasional project tips, seasonal reminders, and local deals by email. I can unsubscribe anytime.</span>
               </label>
             </div>
