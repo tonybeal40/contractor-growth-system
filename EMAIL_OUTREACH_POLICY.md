@@ -31,9 +31,11 @@ This is the operating policy for Codex, OpenClaw, Wild Bill, Google Apps Script,
 
 ## Message Standard
 
-- Use the recipient's verified first name. Service interest may guide internal review but is not stated in the recurring availability message.
+- Use the recipient's verified first name. Service interest may guide internal review but is never stated in a customer check-in.
 - Do not guess names, cities, project details, openings, discounts, or completed work.
-- The recurring campaign is a general scheduling-availability note. Do not mention a prior inquiry, unfinished project, or completed job.
+- The approved customer check-in offers help planning a project budget or next steps, a free consultation and estimate, one estimate-form link, and the option to reply with photos.
+- Do not mention what the person previously requested, what Bill may have sold, an unfinished project, or work All-Pro may have completed.
+- Keep the message text-first with one branded estimate link. Do not add flyers, attachments, service lists, or tracking-link clutter.
 - Do not include a review request in the recurring availability campaign.
 - Write as a short note from Bill. Avoid exaggerated claims, fake urgency, and generic AI-style filler.
 - Include the business name, `618-581-0676`, the valid postal address, and a clear unsubscribe link or `reply REMOVE` instruction.

@@ -2586,18 +2586,16 @@ function previewSeasonalCampaign() {
 
 function buildSeasonalMarketingEmail(record, settings, unsubscribeUrl) {
   var firstName = String(record.firstName || "there").trim() || "there";
-  var subject = firstName + ", All-Pro has scheduling availability";
+  var subject = "Planning a project with All-Pro";
   var plain = [
     "Hi " + firstName + ",",
     "",
     "Bill here with All-Pro Construction & Landscape.",
     "",
-    "We currently have room on the schedule for remodeling, decks, fencing, concrete, landscaping, cleanup, and smaller repair projects around the Metro East.",
+    "If you are planning any work and would like help with the budget or next steps, All-Pro offers free project consultations and estimates.",
     "",
-    "If you have something you would like us to look at, reply with a short description or a few photos. We will help you figure out the next step.",
-    "",
-    "Free estimate: " + settings.estimateUrl,
-    "Call or text Bill: " + settings.phone,
+    "You can reply with a few project photos, call or text me at " + settings.phone + ", or use our estimate form:",
+    settings.estimateUrl,
     "",
     "Thanks,",
     "Bill",
@@ -2611,10 +2609,8 @@ function buildSeasonalMarketingEmail(record, settings, unsubscribeUrl) {
   var html = '<!doctype html><html><body style="margin:0;padding:24px;font-family:Arial,Helvetica,sans-serif;color:#1f2933;line-height:1.65;">' +
     '<div style="max-width:620px;"><p>Hi ' + escapeEmailHtml(firstName) + ',</p>' +
     '<p>Bill here with All-Pro Construction &amp; Landscape.</p>' +
-    '<p>We currently have room on the schedule for remodeling, decks, fencing, concrete, landscaping, cleanup, and smaller repair projects around the Metro East.</p>' +
-    '<p>If you have something you would like us to look at, reply with a short description or a few photos. We will help you figure out the next step.</p>' +
-    '<p><a href="' + escapeEmailHtml(settings.estimateUrl) + '">Request a free estimate</a><br>' +
-    'Call or text Bill: <a href="tel:6185810676">' + escapeEmailHtml(settings.phone) + '</a></p>' +
+    '<p>If you are planning any work and would like help with the budget or next steps, All-Pro offers free project consultations and estimates.</p>' +
+    '<p>You can reply with a few project photos, call or text me at <a href="tel:6185810676">' + escapeEmailHtml(settings.phone) + '</a>, or <a href="' + escapeEmailHtml(settings.estimateUrl) + '">use our estimate form</a>.</p>' +
     '<p>Thanks,<br>Bill<br>All-Pro Construction &amp; Landscape</p>' +
     '<p style="font-size:12px;color:#52606d;">' + escapeEmailHtml(settings.postalAddress) + '<br>' +
     'This is a promotional email from All-Pro Construction &amp; Landscape. ' +

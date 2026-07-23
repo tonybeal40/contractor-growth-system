@@ -27,7 +27,8 @@ A responsive text-first email is easier to read on a phone and avoids the attach
 ## Operating Rules
 
 - Send one individual message per opted-in address. Never use a visible `To`/`CC` list or a blind mass BCC.
-- Start with 5 messages, inspect delivery and replies, then use 10-25 per day only while complaint and bounce rates remain low.
+- Send no more than six messages per day and leave at least 90 minutes between individually reviewed sends.
+- Keep every customer-facing message generic: offer help planning a budget, a free consultation or estimate, an invitation to reply with project photos, and one branded estimate link. Do not mention the person's former request, what Bill sold, or work All-Pro may have completed.
 - Never enable a row merely because the person requested an estimate in the past.
 - Do not delete unsubscribe rows. `Unsubscribed` is a permanent suppression record that prevents accidental re-import.
 - Honor every opt-out immediately; the code also updates the source `Marketing Opt-In` cell to `No`.

@@ -1,5 +1,11 @@
 # Worklog
 
+## 2026-07-23
+
+- Locked recurring customer outreach to a generic project-budget planning note with free consultations, free estimates, photo replies, and one branded estimate link.
+- Removed service lists and prior-project language from the saved Apps Script marketing email.
+- Updated the outreach policy and setup guides so future customer emails never state what the person requested, what Bill sold, or what work All-Pro completed.
+
 ## 2026-07-11
 
 - Reviewed official guidance for Google AI features, ChatGPT Search, and Microsoft Copilot/Bing AI visibility.

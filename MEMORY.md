@@ -15,6 +15,7 @@
 - Apps Script source is `allpro-form-handler.gs`.
 - The local Apps Script source is configured for Tony, but it must still be pasted into Apps Script and redeployed before it is live.
 - Do not claim email/SMS delivery is verified without a real test row, email, and text.
+- Keep customer check-in emails simple and generic: offer help planning a project budget, a free consultation or estimate, an invitation to reply with photos, and one branded estimate link. Never mention what they previously requested, what Bill sold, or work All-Pro may have completed.
 
 ## SEO
 
