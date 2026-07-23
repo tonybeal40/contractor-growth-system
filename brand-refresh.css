@@ -1163,6 +1163,136 @@ body:not(.home-page) main,
   line-height: 1.5;
 }
 
+.review-verification-panel {
+  border-left: 4px solid var(--ap-green, #2f5d50);
+}
+
+.review-verification-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: .85rem;
+  padding: .5rem .75rem;
+  border: 1px solid rgba(47, 93, 80, .28);
+  border-radius: 999px;
+  background: #edf5f1;
+  color: #23483e;
+  font-size: .82rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.review-verification-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .75rem;
+  margin: 1.15rem 0;
+}
+
+.review-verification-grid > div {
+  display: grid;
+  gap: .35rem;
+  min-width: 0;
+  padding: .9rem;
+  border: 1px solid rgba(31, 41, 51, .12);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.review-verification-grid strong {
+  color: var(--ap-green, #2f5d50);
+}
+
+.review-verification-grid span,
+.review-verification-note {
+  color: var(--ap-muted, #5f6b66);
+  line-height: 1.55;
+}
+
+.review-hub .service-hero,
+.review-policy-page .service-hero {
+  min-height: 0 !important;
+  padding: clamp(2.75rem, 6vw, 4.5rem) 0 !important;
+}
+
+.review-hub .service-hero-grid,
+.review-policy-page .service-hero-grid {
+  grid-template-columns: minmax(0, 780px) !important;
+  min-height: 0 !important;
+}
+
+.review-hub .service-content,
+.review-policy-page .service-content {
+  padding: clamp(2.25rem, 5vw, 4rem) 0;
+  background: #f3efe6;
+}
+
+.review-hub .service-content > .container,
+.review-policy-page .service-content > .container {
+  display: grid;
+  gap: 1rem;
+  width: min(1100px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.review-hub .content-block,
+.review-policy-page .content-block {
+  margin: 0 !important;
+  padding: clamp(1.25rem, 3vw, 2rem) !important;
+  border: 1px solid rgba(31, 41, 51, .11) !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  box-shadow: 0 10px 28px rgba(31, 41, 51, .055) !important;
+}
+
+.review-hub .content-block > :first-child,
+.review-policy-page .content-block > :first-child {
+  margin-top: 0;
+}
+
+.review-hub .content-block > :last-child,
+.review-policy-page .content-block > :last-child {
+  margin-bottom: 0;
+}
+
+.review-hub .review-qr-wrap {
+  align-items: flex-start;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
+}
+
+.review-hub .review-qr-label {
+  margin-top: .6rem;
+}
+
+@media (max-width: 720px) {
+  .review-verification-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .review-verification-badge {
+    white-space: normal;
+  }
+
+  .review-hub .service-hero,
+  .review-policy-page .service-hero {
+    padding: 2rem 0 !important;
+  }
+
+  .review-hub .service-hero-grid,
+  .review-policy-page .service-hero-grid {
+    width: min(100% - 2rem, 1100px) !important;
+  }
+
+  .review-hub .service-content,
+  .review-policy-page .service-content {
+    padding: 1.5rem 0 2.5rem;
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
   .home-lane-card,
   .money-page-card,

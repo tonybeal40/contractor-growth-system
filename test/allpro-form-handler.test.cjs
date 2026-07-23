@@ -117,18 +117,25 @@ test("expands the lead sheet before writing upgraded columns", () => {
   assert.deepEqual(insertions, [[31, 17]]);
 });
 
-test("preserves website review rating, authenticity, and publication consent", () => {
+test("prepares website reviews for project-match verification", () => {
   const data = {
     full_name: "Taylor Customer",
+    email: "taylor@example.com",
     city: "Belleville",
     project_type: "Bathroom remodel",
+    project_address: "123 Example Street",
+    project_completion_month: "2026-06",
+    project_reference: "INV-1042",
     rating: "5",
     details: "The project communication and finished shower were excellent.",
     permission_to_share_on_site: "yes",
     genuine_customer_confirmation: "yes",
-    review_status: "Pending approval",
+    verification_process_acknowledgment: "yes",
+    review_id: "review-forged-browser-value",
+    lead_session_id: "review-test-1",
     form_name: "Review Request Testimonial"
   };
+  context.prepareReviewSubmission(data);
   context.applyLeadIntelligence(data, true);
   const lead = context.normalizedLead(data);
   const html = context.buildLeadEmailHtml(data, true);
@@ -136,7 +143,53 @@ test("preserves website review rating, authenticity, and publication consent", (
   assert.equal(lead.reviewRating, "5");
   assert.equal(lead.reviewPermission, "yes");
   assert.equal(lead.reviewAuthenticity, "yes");
+  assert.equal(lead.reviewAcknowledgment, "yes");
+  assert.equal(lead.reviewStatus, "Pending verification");
+  assert.equal(lead.reviewVerificationStatus, "Pending project match");
+  assert.equal(lead.reviewId, "review-test-1");
+  assert.equal(lead.reviewProjectDate, "2026-06");
+  assert.equal(lead.reviewProjectReference, "INV-1042");
   assert.match(html, /Review rating/);
   assert.match(html, /Permission to publish/);
-  assert.match(html, /Pending approval/);
+  assert.match(html, /Pending verification/);
+  assert.match(html, /Pending project match/);
+  assert.match(html, /Private project address/);
+});
+
+test("logs website reviews to the dedicated pending verification queue", () => {
+  const data = {
+    full_name: "Morgan Homeowner",
+    email: "morgan@example.com",
+    phone: "618-555-0198",
+    city: "O'Fallon",
+    project_type: "Kitchen remodel",
+    project_address: "456 Sample Avenue",
+    project_completion_month: "2026-05",
+    rating: "4",
+    details: "The kitchen project was completed and the communication was clear.",
+    permission_to_share_on_site: "yes",
+    genuine_customer_confirmation: "yes",
+    verification_process_acknowledgment: "yes",
+    lead_session_id: "review-queue-test",
+    form_name: "Review Request Testimonial",
+    page_url: "https://allprometroeastconstruction.com/review-request.html"
+  };
+  context.prepareReviewSubmission(data);
+  context.applyLeadIntelligence(data, true);
+
+  let appended = null;
+  context.ensureReviewQueue = () => ({
+    getLastRow() { return appended ? 2 : 1; },
+    appendRow(values) { appended = values; }
+  });
+
+  const result = context.syncReviewQueue(data);
+  assert.equal(result.logged, true);
+  assert.equal(result.reviewId, "review-queue-test");
+  assert.equal(appended[1], "review-queue-test");
+  assert.equal(appended[2], "Pending verification");
+  assert.equal(appended[3], "Pending project match");
+  assert.equal(appended[9], "456 Sample Avenue");
+  assert.equal(appended[14], "4");
+  assert.equal(appended[16], "yes");
 });

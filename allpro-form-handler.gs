@@ -171,6 +171,7 @@ function doPost(e) {
     }
 
     var isReview = isReviewSubmission(data);
+    if (isReview) prepareReviewSubmission(data);
     applyLeadIntelligence(data, isReview);
     var subject  = buildSubject(data, isReview);
 
@@ -180,6 +181,7 @@ function doPost(e) {
       confirmation: { sent: false, eligible: false },
       sheet: { logged: false },
       followUpBoard: { logged: false },
+      reviewQueue: { logged: false },
       errors: []
     };
 
@@ -212,6 +214,15 @@ function doPost(e) {
     } catch(boardErr) {
       console.warn("Follow Up Board sync failed (non-fatal):", boardErr);
       delivery.errors.push("follow-up-board: " + safeError(boardErr));
+    }
+
+    if (isReview) {
+      try {
+        delivery.reviewQueue = syncReviewQueue(data);
+      } catch(reviewQueueErr) {
+        console.warn("Website Reviews queue sync failed (non-fatal):", reviewQueueErr);
+        delivery.errors.push("review-queue: " + safeError(reviewQueueErr));
+      }
     }
 
     // Log to the durable intake tab after board sync so every delivery status
@@ -304,6 +315,22 @@ function pickLeadValue(data, keys, fallback) {
     }
   }
   return fallback || "";
+}
+
+function buildReviewId(data) {
+  var sessionId = pickLeadValue(data || {}, ["lead_session_id", "concierge_session_id"], "")
+    .replace(/[^a-zA-Z0-9_-]/g, "")
+    .substring(0, 72);
+  if (sessionId) return sessionId.indexOf("review-") === 0 ? sessionId : "review-" + sessionId;
+  return "review-" + new Date().getTime() + "-" + Math.floor(Math.random() * 1000000);
+}
+
+function prepareReviewSubmission(data) {
+  data["review_id"] = buildReviewId(data);
+  data["review_status"] = "Pending verification";
+  data["verification_status"] = "Pending project match";
+  data["verification_method"] = "";
+  return data;
 }
 
 function isValidLeadEmail(value) {
@@ -558,7 +585,14 @@ function normalizedLead(data) {
     reviewRating: pickLeadValue(data, ["rating", "review_rating"], ""),
     reviewPermission: pickLeadValue(data, ["permission_to_share_on_site"], "No"),
     reviewAuthenticity: pickLeadValue(data, ["genuine_customer_confirmation"], "Not recorded"),
-    reviewStatus: pickLeadValue(data, ["review_status"], "Pending approval")
+    reviewAcknowledgment: pickLeadValue(data, ["verification_process_acknowledgment"], "Not recorded"),
+    reviewStatus: pickLeadValue(data, ["review_status"], "Pending verification"),
+    reviewVerificationStatus: pickLeadValue(data, ["verification_status"], "Pending project match"),
+    reviewVerificationMethod: pickLeadValue(data, ["verification_method"], ""),
+    reviewId: pickLeadValue(data, ["review_id"], ""),
+    reviewProjectDate: pickLeadValue(data, ["project_completion_month", "project_date"], "Not entered"),
+    reviewProjectReference: pickLeadValue(data, ["project_reference", "invoice_number", "work_order_number"], "Not entered"),
+    reviewProjectAddress: pickLeadValue(data, ["project_address", "property_address", "address"], "Not entered")
   };
 }
 
@@ -604,7 +638,14 @@ function buildEmailBody(data) {
       "Review rating: " + (lead.reviewRating || "Not entered") + (lead.reviewRating ? " / 5" : ""),
       "Permission to publish: " + lead.reviewPermission,
       "Genuine customer confirmation: " + lead.reviewAuthenticity,
-      "Review status: " + lead.reviewStatus
+      "Verification process acknowledged: " + lead.reviewAcknowledgment,
+      "Review status: " + lead.reviewStatus,
+      "Verification status: " + lead.reviewVerificationStatus,
+      "Verification method: " + (lead.reviewVerificationMethod || "Not selected"),
+      "Review ID: " + (lead.reviewId || "Not assigned"),
+      "Project completion month: " + lead.reviewProjectDate,
+      "Private project address: " + lead.reviewProjectAddress,
+      "Private invoice/work-order reference: " + lead.reviewProjectReference
     );
   }
   lines.push(
@@ -672,7 +713,14 @@ function buildLeadEmailHtml(data, isReview) {
     emailInfoRow("Review rating", lead.reviewRating ? lead.reviewRating + " / 5" : "Not entered", true),
     emailInfoRow("Permission to publish", lead.reviewPermission, true),
     emailInfoRow("Genuine customer confirmation", lead.reviewAuthenticity, false),
-    emailInfoRow("Review status", lead.reviewStatus, false)
+    emailInfoRow("Verification process acknowledged", lead.reviewAcknowledgment, false),
+    emailInfoRow("Review status", lead.reviewStatus, true),
+    emailInfoRow("Verification status", lead.reviewVerificationStatus, true),
+    emailInfoRow("Verification method", lead.reviewVerificationMethod || "Not selected", false),
+    emailInfoRow("Review ID", lead.reviewId || "Not assigned", false),
+    emailInfoRow("Project completion month", lead.reviewProjectDate, false),
+    emailInfoRow("Private project address", lead.reviewProjectAddress, false),
+    emailInfoRow("Private invoice/work-order reference", lead.reviewProjectReference, false)
   ].join("") : "";
 
   var projectRows = reviewRows + [
@@ -1072,6 +1120,118 @@ function setupFollowUpBoard() {
   sheet.setColumnWidth(12, 380);
   sheet.setColumnWidth(13, 340);
   return { ok: true, sheet: sheet.getName(), columns: 18 };
+}
+
+function ensureReviewQueue() {
+  var ss = getLeadSpreadsheet();
+  var sheet = ss.getSheetByName("Website Reviews");
+  var headers = [
+    "Submitted", "Review ID", "Review Status", "Verification Status",
+    "Verification Method", "Verified At", "Reviewer Name", "Email (Private)",
+    "Phone (Private)", "Project Address (Private)", "City", "Project Type",
+    "Completion Month", "Invoice / Work Order (Private)", "Rating", "Review Text",
+    "Permission to Publish", "Genuine Confirmation", "Verification Acknowledgment",
+    "Source", "Page URL", "Publication Notes", "Published URL"
+  ];
+
+  if (!sheet) {
+    sheet = ss.insertSheet("Website Reviews");
+    sheet.setFrozenRows(1);
+  }
+  ensureSheetColumnCapacity(sheet, headers.length);
+  var headerRange = sheet.getRange(1, 1, 1, headers.length);
+  if (headerRange.getValues()[0].join("|") !== headers.join("|")) {
+    headerRange.setValues([headers]).setFontWeight("bold");
+    sheet.setFrozenRows(1);
+    sheet.setColumnWidth(1, 160);
+    sheet.setColumnWidth(2, 220);
+    sheet.setColumnWidth(8, 240);
+    sheet.setColumnWidth(10, 280);
+    sheet.setColumnWidth(16, 520);
+    sheet.setColumnWidth(22, 360);
+  }
+
+  var maxRows = Math.max(sheet.getMaxRows() - 1, 1);
+  var reviewStatusRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(["Pending verification", "Approved for publication", "Not publishable", "Removed"], true)
+    .setAllowInvalid(false)
+    .build();
+  var verificationRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(["Pending project match", "Verified All-Pro Project", "Unable to verify", "Rejected as fraudulent"], true)
+    .setAllowInvalid(false)
+    .build();
+  var methodRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(["", "Customer contact + project address", "Invoice / work order", "Scheduling record", "Project communications", "Project photos", "Multiple records"], true)
+    .setAllowInvalid(true)
+    .build();
+  sheet.getRange(2, 3, maxRows, 1).setDataValidation(reviewStatusRule);
+  sheet.getRange(2, 4, maxRows, 1).setDataValidation(verificationRule);
+  sheet.getRange(2, 5, maxRows, 1).setDataValidation(methodRule);
+  return sheet;
+}
+
+function syncReviewQueue(data) {
+  var lead = normalizedLead(data);
+  if (lead.leadType !== "review") {
+    return { logged: false, skipped: true, reason: lead.leadType };
+  }
+
+  var sheet = ensureReviewQueue();
+  var reviewId = lead.reviewId || buildReviewId(data);
+  data["review_id"] = reviewId;
+  if (sheet.getLastRow() > 1) {
+    var duplicate = sheet.getRange(2, 2, sheet.getLastRow() - 1, 1)
+      .createTextFinder(reviewId)
+      .matchEntireCell(true)
+      .findNext();
+    if (duplicate) return { logged: false, duplicate: true, reviewId: reviewId };
+  }
+
+  sheet.appendRow([
+    new Date(),
+    reviewId,
+    lead.reviewStatus,
+    lead.reviewVerificationStatus,
+    lead.reviewVerificationMethod,
+    "",
+    lead.name === "Name not entered" ? "" : lead.name,
+    lead.email === "Not entered" ? "" : lead.email,
+    lead.phone === "Not entered" ? "" : lead.phone,
+    lead.reviewProjectAddress === "Not entered" ? "" : lead.reviewProjectAddress,
+    lead.city === "Not entered" ? "" : lead.city,
+    lead.service === "Not selected" ? "" : lead.service,
+    lead.reviewProjectDate === "Not entered" ? "" : lead.reviewProjectDate,
+    lead.reviewProjectReference === "Not entered" ? "" : lead.reviewProjectReference,
+    lead.reviewRating,
+    lead.description === "No description entered." ? "" : lead.description.substring(0, 5000),
+    lead.reviewPermission,
+    lead.reviewAuthenticity,
+    lead.reviewAcknowledgment,
+    lead.source,
+    lead.pageUrl,
+    "",
+    ""
+  ]);
+  return { logged: true, row: sheet.getLastRow(), reviewId: reviewId };
+}
+
+function verifyWebsiteReview(reviewId, verificationMethod, publicationNotes) {
+  var id = String(reviewId || "").trim();
+  if (!id) throw new Error("Review ID is required.");
+  var sheet = ensureReviewQueue();
+  if (sheet.getLastRow() < 2) throw new Error("No website reviews are waiting.");
+  var match = sheet.getRange(2, 2, sheet.getLastRow() - 1, 1)
+    .createTextFinder(id)
+    .matchEntireCell(true)
+    .findNext();
+  if (!match) throw new Error("Review ID not found: " + id);
+  var row = match.getRow();
+  sheet.getRange(row, 3).setValue("Approved for publication");
+  sheet.getRange(row, 4).setValue("Verified All-Pro Project");
+  sheet.getRange(row, 5).setValue(String(verificationMethod || "Multiple records"));
+  sheet.getRange(row, 6).setValue(new Date());
+  sheet.getRange(row, 22).setValue(String(publicationNotes || ""));
+  return { ok: true, row: row, reviewId: id, status: "Verified All-Pro Project" };
 }
 
 function syncFollowUpBoard(data, delivery) {

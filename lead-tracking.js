@@ -271,7 +271,15 @@
   // ── Floating Call/Quote Button ──────────────────────────────────────────────
   (function injectFloatingCTA() {
     // Skip pages where a form or sticky CTA is already the primary conversion path.
-    const skip = ['/get-quote.html', '/thank-you.html', '/contact.html'];
+    const skip = [
+      '/get-quote.html',
+      '/thank-you.html',
+      '/contact.html',
+      '/reviews.html',
+      '/review-request.html',
+      '/review-verification-policy.html',
+      '/review-card.html'
+    ];
     if (skip.some(function(p){ return window.location.pathname.endsWith(p); })) return;
     if (doc.querySelector('.sticky-call, .nd-sticky, .fb-sticky, .li-sticky, .hero-ctas')) return;
     if (doc.querySelector('form[action*="formsubmit.co"]')) return;
