@@ -107,6 +107,16 @@ test("sets a clear customer response window", () => {
   );
 });
 
+test("expands the lead sheet before writing upgraded columns", () => {
+  const insertions = [];
+  const sheet = {
+    getMaxColumns() { return 31; },
+    insertColumnsAfter(column, count) { insertions.push([column, count]); }
+  };
+  context.ensureSheetColumnCapacity(sheet, 48);
+  assert.deepEqual(insertions, [[31, 17]]);
+});
+
 test("preserves website review rating, authenticity, and publication consent", () => {
   const data = {
     full_name: "Taylor Customer",

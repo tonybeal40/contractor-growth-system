@@ -1147,6 +1147,7 @@ function logToSheet(data, subject, delivery) {
     "Review Rating", "Permission to Publish", "Genuine Review Confirmation",
     "Review Status"
   ];
+  ensureSheetColumnCapacity(sheet, headers.length);
   var headerRange = sheet.getRange(1, 1, 1, headers.length);
   if (headerRange.getValues()[0].join("|") !== headers.join("|")) {
     headerRange.setValues([headers]).setFontWeight("bold");
@@ -1234,6 +1235,13 @@ function logToSheet(data, subject, delivery) {
     lead.reviewAuthenticity,
     lead.reviewStatus
   ]);
+}
+
+function ensureSheetColumnCapacity(sheet, requiredColumns) {
+  var currentColumns = sheet.getMaxColumns();
+  if (currentColumns < requiredColumns) {
+    sheet.insertColumnsAfter(currentColumns, requiredColumns - currentColumns);
+  }
 }
 
 function parseBoardDate(value) {
