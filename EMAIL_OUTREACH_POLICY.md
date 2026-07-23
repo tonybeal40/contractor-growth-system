@@ -11,6 +11,7 @@ This is the operating policy for Codex, OpenClaw, Wild Bill, Google Apps Script,
 - BCC Tony at `tonybeal40@gmail.com` on each approved marketing message.
 - Send to exactly one customer per message. Do not use a customer CC list, BCC list, mail merge, or multi-recipient batch.
 - Never imitate Bill from another mailbox or alter headers to make a message appear to come from him.
+- Preserve Bill's written `APPROVED` response and keep the campaign approval gate disabled until that response is received.
 
 ## Eligibility
 
@@ -24,6 +25,7 @@ This is the operating policy for Codex, OpenClaw, Wild Bill, Google Apps Script,
 - Wait at least 28 full days between marketing emails to the same subscriber.
 - The campaign runner sends at most one approved message per execution.
 - A person reviews the recipient, original project, subject, and body before sending.
+- Bill must approve the campaign policy and message before the campaign approval gate is enabled.
 - Stop after an unsubscribe, negative response, bounce, or uncertainty about identity or consent.
 
 ## Message Standard

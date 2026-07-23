@@ -244,6 +244,12 @@ test("requires explicit marketing consent and an active subscriber", () => {
   }, "campaign-2", 28, new Date("2026-07-23T12:00:00Z")), true);
 });
 
+test("requires Bill's explicit campaign approval", () => {
+  assert.equal(context.hasBillMarketingApproval({ billApproved: true }), true);
+  assert.equal(context.hasBillMarketingApproval({ billApproved: false }), false);
+  assert.equal(context.hasBillMarketingApproval({}), false);
+});
+
 test("builds seasonal campaign with consultation links and unsubscribe", () => {
   const settings = {
     estimateUrl: "https://allprometroeastconstruction.com/get-quote.html",

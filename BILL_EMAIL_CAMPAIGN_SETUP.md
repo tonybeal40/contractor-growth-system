@@ -12,18 +12,22 @@ The campaign must run as `williamosessionallpro@gmail.com`. Do not share Bill's 
    - `MARKETING_POSTAL_ADDRESS` = `1115 Priscilla Ct, New Athens, IL 62264`
    - `MARKETING_MIN_DAYS_BETWEEN` = `28`
    - `MARKETING_SEND_ENABLED` = `false`
+   - `MARKETING_BILL_APPROVED` = `false`
    - `MARKETING_CAMPAIGN_ID` = a unique monthly value such as `allpro-check-in-2026-08`
 6. While still signed in as Bill, run `setupMarketingCampaignSystem()` and approve the permissions.
 7. Run `sendSeasonalCampaignTest()`. Confirm Tony receives a message whose real From address is Bill's Gmail.
 8. Run `previewSeasonalCampaign()` and confirm the eligible count contains only explicit opt-ins.
-9. Set `MARKETING_SEND_ENABLED` to `true` only after the sender, consent, address, unsubscribe link, and message have been reviewed.
-10. Run `sendSeasonalCampaignBatch()` once for each approved recipient. Despite the legacy function name, the code sends exactly one person per execution.
+9. Ask Bill to reply `APPROVED` to the internal campaign-approval message. Preserve the reply in Gmail under `All-Pro Outreach/Approvals`.
+10. After that reply is received, set `MARKETING_BILL_APPROVED` to `true`.
+11. Set `MARKETING_SEND_ENABLED` to `true` only after the sender, consent, address, unsubscribe link, and message have been reviewed.
+12. Run `sendSeasonalCampaignBatch()` once for each approved recipient. Despite the legacy function name, the code sends exactly one person per execution.
 
 ## Monthly Operation
 
 - Use a new `MARKETING_CAMPAIGN_ID` for genuinely new monthly content.
 - The code still blocks anyone contacted fewer than 28 days ago.
 - Review the person's name and actual service interest before each execution.
+- Set `MARKETING_BILL_APPROVED` back to `false` whenever the campaign message or operating policy changes materially, then obtain a new approval from Bill.
 - Tony receives a BCC at `tonybeal40@gmail.com`.
 - Process `REMOVE`, unsubscribe requests, negative responses, and bounces before the next send.
 - The website review link is conditional and should only be used by customers for whom All-Pro completed work.

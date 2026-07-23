@@ -1991,6 +1991,7 @@ function marketingSettings() {
   if (isNaN(minimumDaysBetween)) minimumDaysBetween = 28;
   return {
     enabled: String(properties.getProperty("MARKETING_SEND_ENABLED") || "false").toLowerCase() === "true",
+    billApproved: String(properties.getProperty("MARKETING_BILL_APPROVED") || "false").toLowerCase() === "true",
     batchSize: 1,
     minimumDaysBetween: Math.max(28, minimumDaysBetween),
     postalAddress: String(properties.getProperty("MARKETING_POSTAL_ADDRESS") || "").trim(),
@@ -2185,6 +2186,10 @@ function isMarketingSubscriberEligible(record, campaignId, minimumDaysBetween, n
   );
 }
 
+function hasBillMarketingApproval(settings) {
+  return Boolean(settings && settings.billApproved === true);
+}
+
 function maskMarketingEmail(email) {
   var parts = normalizeMarketingEmail(email).split("@");
   if (parts.length !== 2) return "invalid";
@@ -2200,6 +2205,7 @@ function marketingSetupStatus() {
     .filter(function(record) { return isMarketingSubscriberEligible(record, settings.campaignId, settings.minimumDaysBetween); });
   return {
     enabled: settings.enabled,
+    billApproved: hasBillMarketingApproval(settings),
     batchSize: settings.batchSize,
     minimumDaysBetween: settings.minimumDaysBetween,
     senderEmail: settings.senderEmail,
@@ -2261,6 +2267,9 @@ function buildSeasonalMarketingEmail(record, settings, unsubscribeUrl) {
 }
 
 function requireMarketingSendReadiness(settings) {
+  if (!hasBillMarketingApproval(settings)) {
+    throw new Error("Bill must reply APPROVED and MARKETING_BILL_APPROVED must be true before sending.");
+  }
   if (!settings.postalAddress) throw new Error("Set MARKETING_POSTAL_ADDRESS to a valid business postal address before sending.");
   var webAppUrl = String(ScriptApp.getService().getUrl() || "").trim();
   if (!webAppUrl) throw new Error("Deploy this Apps Script as a web app before sending so unsubscribe links work.");
