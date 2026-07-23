@@ -1,6 +1,81 @@
 # Belleville + O'Fallon Lead Playbook
 
-Date: 2026-06-29
+Updated: 2026-07-22
+
+## Seven-Day Kitchen Lead Sprint
+
+Target: five qualified kitchen-remodel inquiries from Belleville and O'Fallon in seven days. This is a target, not a guarantee. Organic search cannot be placed above Google's paid ad slots, so the fastest responsible plan combines the two priority pages, local promotion, fast follow-up, and tightly controlled search ads if immediate volume is required.
+
+A qualified inquiry has a real name, working phone number, Belleville or O'Fallon project location, kitchen scope, and contact consent. Spam, vendors, job seekers, and duplicate tests do not count.
+
+### Priority URLs
+
+- Belleville: `https://allprometroeastconstruction.com/kitchen-remodel-belleville-il.html`
+- O'Fallon: `https://allprometroeastconstruction.com/kitchen-remodel-ofallon-il.html`
+
+Do not send this campaign to the homepage or the general Metro East kitchen page.
+
+### Trackable Promotion Links
+
+- Belleville Google Business Profile: `https://allprometroeastconstruction.com/kitchen-remodel-belleville-il.html?utm_source=google-business-profile&utm_medium=organic&utm_campaign=kitchen-sprint-july-2026`
+- O'Fallon Google Business Profile: `https://allprometroeastconstruction.com/kitchen-remodel-ofallon-il.html?utm_source=google-business-profile&utm_medium=organic&utm_campaign=kitchen-sprint-july-2026`
+- Belleville Nextdoor: `https://allprometroeastconstruction.com/kitchen-remodel-belleville-il.html?utm_source=nextdoor&utm_medium=organic-social&utm_campaign=kitchen-sprint-july-2026`
+- O'Fallon Nextdoor: `https://allprometroeastconstruction.com/kitchen-remodel-ofallon-il.html?utm_source=nextdoor&utm_medium=organic-social&utm_campaign=kitchen-sprint-july-2026`
+- Belleville Facebook: `https://allprometroeastconstruction.com/kitchen-remodel-belleville-il.html?utm_source=facebook&utm_medium=organic-social&utm_campaign=kitchen-sprint-july-2026`
+- O'Fallon Facebook: `https://allprometroeastconstruction.com/kitchen-remodel-ofallon-il.html?utm_source=facebook&utm_medium=organic-social&utm_campaign=kitchen-sprint-july-2026`
+
+### Daily Execution
+
+1. Publish one Belleville or O'Fallon kitchen post on the verified Google Business Profile using the matching tracked link.
+2. Post the same homeowner-first offer on the established Nextdoor and Facebook business profiles. Do not create fake discussions or impersonate customers.
+3. Reply to every real form or call lead within five minutes when possible and within the stated business-day response window at minimum.
+4. Record the source, city, service, status, and next follow-up in the lead sheet.
+5. Review Google Ads search terms each day and add irrelevant queries as negatives.
+6. Ask completed customers for an honest website review and, once access is confirmed, a Google review.
+
+### Search Ads for Immediate Visibility
+
+Use two location-limited ad groups and send each one to its matching city page. Validate traffic and bid forecasts in Keyword Planner before setting the budget.
+
+Belleville keywords:
+
+- `[kitchen remodel belleville il]`
+- `"kitchen remodeling belleville"`
+- `[kitchen contractor belleville il]`
+- `"kitchen renovation belleville il"`
+
+O'Fallon keywords:
+
+- `[kitchen remodel ofallon il]`
+- `"kitchen remodeling o'fallon"`
+- `[kitchen contractor ofallon il]`
+- `"kitchen renovation o'fallon il"`
+
+Sample responsive-search headlines:
+
+- Kitchen Remodel Belleville
+- Belleville Kitchen Estimates
+- O'Fallon Kitchen Remodel
+- Local Kitchen Scope Review
+- Call Bill: 618-581-0676
+- Written Kitchen Estimates
+
+Sample description:
+
+`Planning cabinets, counters, lighting or layout changes? Call Bill or request a written estimate.`
+
+Start with the negative-keyword list below. Keep Google search partners and display expansion off until the search-term quality is proven.
+
+### Seven-Day Scorecard
+
+- Qualified kitchen leads
+- Calls from each city page
+- Completed forms from each city page
+- Lead source and search term
+- Median response time
+- Appointments set
+- Estimates issued
+- Cost per qualified lead when ads are active
 
 ## Goal
 
