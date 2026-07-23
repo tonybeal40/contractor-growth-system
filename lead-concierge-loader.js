@@ -3,7 +3,7 @@
     if (!document.body || document.querySelector(".alc-launcher")) return;
 
     const style = document.createElement("style");
-    style.textContent = ".alc-loader{position:fixed;right:24px;bottom:24px;z-index:9996;min-height:50px;max-width:min(280px,calc(100vw - 32px));border:1px solid #254a40;border-radius:6px;padding:12px 18px;background:#2f5d50;color:#fff;box-shadow:0 10px 28px rgba(31,41,51,.24);font:800 16px/1.2 Arial,Helvetica,sans-serif;letter-spacing:0;cursor:pointer}.alc-loader:hover,.alc-loader:focus-visible{background:#254a40}.alc-loader:focus-visible{outline:3px solid #f2b27d;outline-offset:2px}@media(max-width:720px){.alc-loader{position:static;right:auto;bottom:auto;width:100%;min-height:46px;max-width:none;margin:0;padding:10px 14px;box-shadow:none;font-size:14px}}";
+    style.textContent = ".alc-loader{position:static;z-index:1;min-height:48px;max-width:280px;border:1px solid #254a40;border-radius:6px;padding:12px 18px;background:#2f5d50;color:#fff;box-shadow:0 8px 20px rgba(31,41,51,.16);font:800 16px/1.2 Arial,Helvetica,sans-serif;letter-spacing:0;cursor:pointer}.alc-loader:hover,.alc-loader:focus-visible{background:#254a40}.alc-loader:focus-visible{outline:3px solid #f2b27d;outline-offset:2px}body>.alc-loader{position:fixed;right:24px;bottom:24px;z-index:9996}@media(max-width:720px){.alc-loader{width:100%;min-height:46px;max-width:none;margin:0;padding:10px 14px;box-shadow:none;font-size:14px}body>.alc-loader{position:fixed;left:16px;right:16px;bottom:76px;width:auto;box-shadow:0 10px 28px rgba(31,41,51,.24)}}";
     document.head.appendChild(style);
 
     let button = document.querySelector(".alc-loader");

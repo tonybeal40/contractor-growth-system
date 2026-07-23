@@ -253,3 +253,26 @@ Direct All-Pro quote link:
 - Do not invent reviews, jobs, licenses, or service areas.
 - Do not call a lead "qualified" unless the source and reason are recorded.
 
+## Local Lead Engine
+
+Added July 23, 2026. Run the public opportunity scan and owned-channel post queue with:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools/local-lead-engine/run_daily.ps1
+```
+
+Review:
+
+- `tools/local-lead-engine/output/index.html` for public project requests
+- `tools/local-lead-engine/output/social-post-queue.html` for Facebook, Google Business Profile, Nextdoor, and Yelp copy
+
+The output directory is local and ignored by Git. Wild Bill may prepare and score records, but a person must open the source and approve any reply. An approved `NEXTDOOR_ACCESS_TOKEN` enables current public Nextdoor search; without it the scan uses configured public feeds and reviewed seed records.
+
+## Morning Monitoring
+
+GitHub's `Daily Site and Lead Health` workflow checks the public site and both
+live backend health routes each morning. Google Apps Script separately sends the
+prior 24-hour Sheet delivery digest after `installLeadAutomationTriggers` has
+been run in the live script project. Use `DAILY_MONITORING_SETUP.md` as the
+source of truth; do not report the Sheet monitor as active until its trigger is
+visible in Apps Script.

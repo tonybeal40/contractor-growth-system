@@ -220,3 +220,68 @@ test("publishes only approved verified reviews without private matching fields",
   row[2] = "Pending verification";
   assert.equal(context.toPublicWebsiteReview(row), null);
 });
+
+test("requires explicit marketing consent and an active subscriber", () => {
+  const eligible = {
+    email: "customer@example.com",
+    consentValue: "yes",
+    status: "Active",
+    token: "a".repeat(64),
+    lastCampaignId: ""
+  };
+  assert.equal(context.isMarketingSubscriberEligible(eligible, "campaign-1"), true);
+  assert.equal(context.isMarketingSubscriberEligible({ ...eligible, consentValue: "No" }, "campaign-1"), false);
+  assert.equal(context.isMarketingSubscriberEligible({ ...eligible, status: "Unsubscribed" }, "campaign-1"), false);
+  assert.equal(context.isMarketingSubscriberEligible({ ...eligible, lastCampaignId: "campaign-1" }, "campaign-1"), false);
+});
+
+test("builds seasonal campaign with consultation links and unsubscribe", () => {
+  const settings = {
+    estimateUrl: "https://allprometroeastconstruction.com/get-quote.html",
+    guideUrl: "https://allprometroeastconstruction.com/metro-east-home-service-guide.html",
+    phone: "618-581-0676",
+    postalAddress: "123 Business Street, Exampleville, IL 60000"
+  };
+  const content = context.buildSeasonalMarketingEmail(
+    { firstName: "Jamie" },
+    settings,
+    "https://script.google.com/example?unsubscribe=1"
+  );
+  assert.match(content.subject, /cleanup or indoor project/i);
+  assert.match(content.plain, /Free project consultation/);
+  assert.match(content.plain, /Unsubscribe:/);
+  assert.match(content.html, /Request a free estimate/);
+  assert.match(content.html, /ADVERTISEMENT FROM ALL-PRO/);
+});
+
+test("only treats clear standalone replies as automatic opt-outs", () => {
+  assert.equal(context.isExplicitOptOutReply("REMOVE ME"), true);
+  assert.equal(context.isExplicitOptOutReply("Please unsubscribe."), true);
+  assert.equal(context.isExplicitOptOutReply("I like the estimate, but please stop by Friday."), false);
+});
+
+test("daily lead monitor identifies only actionable delivery failures", () => {
+  const healthy = context.leadDeliveryIssueLabels({
+    email: "customer@example.com",
+    emailStatus: "sent",
+    smsStatus: "not configured",
+    confirmationStatus: "sent",
+    boardStatus: "logged",
+    deliveryNotes: ""
+  });
+  assert.deepEqual(Array.from(healthy), []);
+
+  const failed = context.leadDeliveryIssueLabels({
+    email: "customer@example.com",
+    emailStatus: "failed",
+    smsStatus: "failed",
+    confirmationStatus: "not sent",
+    boardStatus: "not logged",
+    deliveryNotes: "sheet timeout"
+  });
+  assert.equal(failed.length, 5);
+  assert.match(failed.join(" | "), /owner email: failed/);
+  assert.match(failed.join(" | "), /SMS: failed/);
+  assert.match(failed.join(" | "), /customer confirmation: not sent/);
+  assert.match(failed.join(" | "), /follow-up board: not logged/);
+});

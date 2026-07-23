@@ -75,6 +75,14 @@ If you need to change the email body or add fields:
 4. **Deploy → Manage deployments → ✏️ pencil → New version → Deploy**
    - URL stays the same — no change needed in `formsubmit-lead-tracking.js`
 
+### Activate the daily lead check
+
+After pasting the current script, run `installLeadAutomationTriggers` once and
+then run `sendDailyLeadHealthDigest` once as a delivery test. The installed
+morning trigger summarizes the previous 24 hours of Sheet leads and flags email,
+configured SMS, confirmation, or follow-up-board failures. See
+`DAILY_MONITORING_SETUP.md` for the full checklist.
+
 ---
 
 ## Recovering old leads from Gmail (one-time)

@@ -155,7 +155,7 @@ def validate(indexed: set[Path]) -> None:
     if leaked:
         raise RuntimeError("Private files leaked into artifact: " + ", ".join(sorted(leaked)))
 
-    forbidden_dirs = [".firecrawl", "scripts", "workers", "tmp", "leads-today"]
+    forbidden_dirs = [".firecrawl", "scripts", "workers", "tmp", "leads-today", "product", "tools"]
     leaked_dirs = [name for name in forbidden_dirs if (OUTPUT / name).exists()]
     if leaked_dirs:
         raise RuntimeError("Internal directories leaked into artifact: " + ", ".join(leaked_dirs))

@@ -85,6 +85,9 @@ function resolveAffiliateRoute(data) {
 // ── CORS pre-flight ───────────────────────────────────────────────────────────
 function doGet(e) {
   var params = e && e.parameter ? e.parameter : {};
+  if (params.action === "unsubscribe") {
+    return handleMarketingUnsubscribe(params);
+  }
   if (params.action === "verified-reviews") {
     return ContentService
       .createTextOutput(JSON.stringify(buildPublishedReviewFeed()))
@@ -1313,6 +1316,14 @@ function onOpen() {
     .addItem("Verify Selected Review", "verifySelectedWebsiteReview")
     .addItem("Mark Selected Unable to Verify", "markSelectedWebsiteReviewUnableToVerify")
     .addToUi();
+  SpreadsheetApp.getUi()
+    .createMenu("All-Pro Marketing")
+    .addItem("Set Up Marketing Queue", "setupMarketingCampaignSystem")
+    .addItem("Preview Eligible Subscribers", "previewSeasonalCampaign")
+    .addSeparator()
+    .addItem("Send Test to Tony", "sendSeasonalCampaignTest")
+    .addItem("Send Approved Batch", "sendSeasonalCampaignBatch")
+    .addToUi();
 }
 
 function openWebsiteReviewQueue() {
@@ -1801,14 +1812,119 @@ function sendWeeklyLeadReport() {
   return { ok: true, leads: weekly.length, searchConsole: search.configured, searchRows: search.rows.length };
 }
 
+function leadDigestCell(row, headers, label) {
+  var index = headerPosition(headers, label);
+  return index > -1 ? row[index] : "";
+}
+
+function leadDeliveryIssueLabels(record) {
+  var issues = [];
+  var emailStatus = String(record.emailStatus || "").trim().toLowerCase();
+  var smsStatus = String(record.smsStatus || "").trim().toLowerCase();
+  var confirmationStatus = String(record.confirmationStatus || "").trim().toLowerCase();
+  var boardStatus = String(record.boardStatus || "").trim().toLowerCase();
+  if (emailStatus !== "sent") issues.push("owner email: " + (emailStatus || "missing status"));
+  if (smsStatus === "failed") issues.push("SMS: failed");
+  if (record.email && confirmationStatus !== "sent") {
+    issues.push("customer confirmation: " + (confirmationStatus || "missing status"));
+  }
+  if (boardStatus !== "logged" && boardStatus !== "duplicate") {
+    issues.push("follow-up board: " + (boardStatus || "missing status"));
+  }
+  if (record.deliveryNotes) issues.push("delivery notes: " + String(record.deliveryNotes).substring(0, 180));
+  return issues;
+}
+
+function recentLeadDeliveryRecords(hoursBack) {
+  var sheet = getLeadSpreadsheet().getSheetByName("Leads");
+  if (!sheet || sheet.getLastRow() < 2) return [];
+  var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  var rows = sheet.getRange(2, 1, sheet.getLastRow() - 1, sheet.getLastColumn()).getValues();
+  var cutoff = Date.now() - Math.max(1, Number(hoursBack) || 24) * 3600000;
+  return rows.map(function(row, index) {
+    var received = parseBoardDate(leadDigestCell(row, headers, "Timestamp"));
+    if (!received || received.getTime() < cutoff) return null;
+    var record = {
+      rowNumber: index + 2,
+      received: received,
+      name: String(leadDigestCell(row, headers, "Name") || "Name not entered"),
+      phone: String(leadDigestCell(row, headers, "Phone") || "Not entered"),
+      email: String(leadDigestCell(row, headers, "Email") || ""),
+      service: String(leadDigestCell(row, headers, "Service") || "Not selected"),
+      city: String(leadDigestCell(row, headers, "City") || "Not entered"),
+      leadId: String(leadDigestCell(row, headers, "Lead ID") || ""),
+      emailStatus: String(leadDigestCell(row, headers, "Email Status") || ""),
+      smsStatus: String(leadDigestCell(row, headers, "SMS Status") || ""),
+      deliveryNotes: String(leadDigestCell(row, headers, "Delivery Notes") || ""),
+      confirmationStatus: String(leadDigestCell(row, headers, "Customer Confirmation") || ""),
+      boardStatus: String(leadDigestCell(row, headers, "Follow Up Board") || "")
+    };
+    record.issues = leadDeliveryIssueLabels(record);
+    return record;
+  }).filter(function(record) { return Boolean(record); });
+}
+
+function formatLeadDigestDate(value) {
+  return Utilities.formatDate(value, Session.getScriptTimeZone(), "M/d/yyyy h:mm a");
+}
+
+function sendDailyLeadHealthDigest() {
+  var records = recentLeadDeliveryRecords(24);
+  var problemRecords = records.filter(function(record) { return record.issues.length > 0; });
+  var quota = MailApp.getRemainingDailyQuota();
+  var sheetUrl = "https://docs.google.com/spreadsheets/d/1xcc0xo4UeN3EaZUMNn_qFJ-xgX6ZPg7l7sTMSLsT6GE/edit";
+  var subjectPrefix = problemRecords.length ? "[ACTION NEEDED] " : "";
+  var subject = subjectPrefix + "All-Pro daily lead check: " + records.length + " lead" + (records.length === 1 ? "" : "s") + ", " + problemRecords.length + " delivery issue" + (problemRecords.length === 1 ? "" : "s");
+  var plain = [
+    "ALL-PRO DAILY LEAD CHECK",
+    "========================",
+    "Window: previous 24 hours",
+    "Leads logged: " + records.length,
+    "Delivery issues: " + problemRecords.length,
+    "Mail quota remaining before this digest: " + quota,
+    "Lead Sheet: " + sheetUrl,
+    ""
+  ];
+  if (!records.length) plain.push("No website leads were logged in the previous 24 hours.");
+  records.forEach(function(record, index) {
+    plain.push(
+      (index + 1) + ". " + record.name + " | " + record.service + " | " + record.city,
+      "   Received: " + formatLeadDigestDate(record.received),
+      "   Phone: " + record.phone + (record.email ? " | Email: " + record.email : ""),
+      "   Delivery: " + (record.issues.length ? record.issues.join("; ") : "email, confirmation and follow-up logging passed"),
+      ""
+    );
+  });
+
+  var leadRows = records.map(function(record) {
+    var issueText = record.issues.length ? escapeEmailHtml(record.issues.join("; ")) : "All recorded delivery checks passed";
+    var issueColor = record.issues.length ? "#8a2d1b" : "#2f5d50";
+    return '<tr><td style="padding:14px;border-top:1px solid #dfe5e2;vertical-align:top;"><strong>' + escapeEmailHtml(record.name) + '</strong><br>' + escapeEmailHtml(record.service) + ' in ' + escapeEmailHtml(record.city) + '<br><span style="color:#52606d;">' + escapeEmailHtml(formatLeadDigestDate(record.received)) + '</span></td><td style="padding:14px;border-top:1px solid #dfe5e2;vertical-align:top;">' + escapeEmailHtml(record.phone) + (record.email ? '<br><a href="mailto:' + escapeEmailHtml(record.email) + '" style="color:#2f5d50;">' + escapeEmailHtml(record.email) + '</a>' : '') + '</td><td style="padding:14px;border-top:1px solid #dfe5e2;vertical-align:top;color:' + issueColor + ';font-weight:700;">' + issueText + '</td></tr>';
+  }).join("");
+  if (!leadRows) leadRows = '<tr><td colspan="3" style="padding:18px;border-top:1px solid #dfe5e2;">No website leads were logged in the previous 24 hours.</td></tr>';
+  var html = '<!doctype html><html><body style="margin:0;background:#f3f5f4;font-family:Arial,Helvetica,sans-serif;color:#1f2933;"><table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr><td align="center" style="padding:20px 10px;"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:760px;background:#fff;border:1px solid #dfe5e2;"><tr><td style="padding:22px;background:#1f2933;color:#fff;"><div style="font-size:12px;font-weight:800;color:#f2b27d;">ALL-PRO OPERATIONS</div><h1 style="margin:6px 0 0;font-size:26px;letter-spacing:0;">Daily lead health check</h1></td></tr><tr><td style="padding:20px;"><p style="margin:0 0 18px;font-size:17px;"><strong>' + records.length + '</strong> lead(s) logged and <strong style="color:' + (problemRecords.length ? '#8a2d1b' : '#2f5d50') + ';">' + problemRecords.length + '</strong> delivery issue(s) in the previous 24 hours.</p><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #dfe5e2;border-collapse:collapse;"><thead><tr style="background:#f7f3ea;text-align:left;"><th style="padding:12px;">Lead</th><th style="padding:12px;">Contact</th><th style="padding:12px;">Delivery</th></tr></thead><tbody>' + leadRows + '</tbody></table><p style="margin:20px 0 0;"><a href="' + sheetUrl + '" style="display:inline-block;padding:13px 18px;background:#c96a26;color:#fff;text-decoration:none;font-weight:800;border-radius:5px;">Open All-Pro Leads</a></p><p style="color:#52606d;font-size:13px;">Mail quota remaining before this digest: ' + quota + '.</p></td></tr></table></td></tr></table></body></html>';
+  MailApp.sendEmail({
+    to: CONFIG.ownerEmail,
+    cc: CONFIG.leadEmail,
+    subject: subject,
+    body: plain.join("\n"),
+    htmlBody: html,
+    name: "All-Pro Lead Monitor"
+  });
+  PropertiesService.getScriptProperties().setProperty("LAST_DAILY_LEAD_HEALTH_AT", new Date().toISOString());
+  return { ok: problemRecords.length === 0, leads: records.length, issues: problemRecords.length, quotaBeforeSend: quota };
+}
+
 function installLeadAutomationTriggers() {
-  var handlers = ["sendUncontactedLeadAlerts", "sendPendingReviewRequests", "sendWeeklyLeadReport"];
+  var handlers = ["sendUncontactedLeadAlerts", "sendPendingReviewRequests", "sendWeeklyLeadReport", "processMarketingOptOutReplies", "sendDailyLeadHealthDigest"];
   ScriptApp.getProjectTriggers().forEach(function(trigger) {
     if (handlers.indexOf(trigger.getHandlerFunction()) > -1) ScriptApp.deleteTrigger(trigger);
   });
   ScriptApp.newTrigger("sendUncontactedLeadAlerts").timeBased().everyHours(1).create();
   ScriptApp.newTrigger("sendPendingReviewRequests").timeBased().everyDays(1).atHour(9).create();
   ScriptApp.newTrigger("sendWeeklyLeadReport").timeBased().onWeekDay(ScriptApp.WeekDay.FRIDAY).atHour(8).create();
+  ScriptApp.newTrigger("processMarketingOptOutReplies").timeBased().everyDays(1).atHour(7).create();
+  ScriptApp.newTrigger("sendDailyLeadHealthDigest").timeBased().everyDays(1).atHour(8).create();
   setupFollowUpBoard();
   return automationSetupStatus();
 }
@@ -1853,6 +1969,461 @@ function leadIntelligenceSelfTest() {
   }
   if (vendor.lead_type !== "vendor_sales") throw new Error("Vendor classification self-test failed");
   return { ok: true, homeowner: homeowner, vendor: vendor };
+}
+
+// -- Opt-in seasonal email campaign -----------------------------------------
+
+var MARKETING_SUBSCRIBER_HEADERS = [
+  "Subscriber ID", "Email", "First Name", "Full Name", "City", "Service Interest",
+  "Source Sheet", "Source Row", "Consent Value", "Consent Recorded At", "Status",
+  "Unsubscribed At", "Unsubscribe Reason", "Unsubscribe Token", "Last Campaign ID",
+  "Last Sent At", "Send Count", "Last Error", "Notes", "Opt-Out Acknowledged At"
+];
+
+var MARKETING_LOG_HEADERS = [
+  "Sent At", "Campaign ID", "Subscriber ID", "Email", "Status", "Subject", "Error"
+];
+
+function marketingSettings() {
+  var properties = PropertiesService.getScriptProperties();
+  var batchSize = parseInt(properties.getProperty("MARKETING_BATCH_SIZE") || "5", 10);
+  if (isNaN(batchSize)) batchSize = 5;
+  return {
+    enabled: String(properties.getProperty("MARKETING_SEND_ENABLED") || "false").toLowerCase() === "true",
+    batchSize: Math.max(1, Math.min(batchSize, 25)),
+    postalAddress: String(properties.getProperty("MARKETING_POSTAL_ADDRESS") || "").trim(),
+    campaignId: String(properties.getProperty("MARKETING_CAMPAIGN_ID") || "seasonal-project-planning-2026-07").trim(),
+    senderName: "All-Pro Construction & Landscape",
+    estimateUrl: CONFIG.siteOrigin + "/get-quote.html",
+    guideUrl: CONFIG.siteOrigin + "/metro-east-home-service-guide.html",
+    phone: "618-581-0676"
+  };
+}
+
+function ensureMarketingSheet(name, headers) {
+  var ss = getLeadSpreadsheet();
+  var sheet = ss.getSheetByName(name);
+  if (!sheet) {
+    sheet = ss.insertSheet(name);
+    ensureSheetColumnCapacity(sheet, headers.length);
+    sheet.getRange(1, 1, 1, headers.length).setValues([headers]).setFontWeight("bold");
+    sheet.setFrozenRows(1);
+  } else {
+    ensureSheetColumnCapacity(sheet, headers.length);
+    var current = sheet.getRange(1, 1, 1, headers.length).getValues()[0];
+    var hasHeader = current.some(function(value) { return String(value || "").trim() !== ""; });
+    if (!hasHeader) {
+      sheet.getRange(1, 1, 1, headers.length).setValues([headers]).setFontWeight("bold");
+      sheet.setFrozenRows(1);
+    } else if (current.join("|") !== headers.join("|")) {
+      throw new Error(name + " headers do not match the approved campaign layout. No data was changed.");
+    }
+  }
+  return sheet;
+}
+
+function ensureMarketingSubscriberSheet() {
+  var sheet = ensureMarketingSheet("Marketing Subscribers", MARKETING_SUBSCRIBER_HEADERS);
+  sheet.setColumnWidth(2, 240);
+  sheet.setColumnWidth(4, 220);
+  sheet.setColumnWidth(6, 220);
+  sheet.setColumnWidth(13, 240);
+  sheet.setColumnWidth(18, 300);
+  var maxRows = Math.max(sheet.getMaxRows() - 1, 1);
+  var statusRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(["Active", "Unsubscribed", "Suppressed", "Invalid"], true)
+    .setAllowInvalid(false)
+    .build();
+  sheet.getRange(2, 11, maxRows, 1).setDataValidation(statusRule);
+  return sheet;
+}
+
+function ensureMarketingLogSheet() {
+  var sheet = ensureMarketingSheet("Marketing Campaign Log", MARKETING_LOG_HEADERS);
+  sheet.setColumnWidth(2, 240);
+  sheet.setColumnWidth(4, 240);
+  sheet.setColumnWidth(6, 360);
+  sheet.setColumnWidth(7, 320);
+  return sheet;
+}
+
+function headerPosition(headers, label) {
+  for (var i = 0; i < headers.length; i++) {
+    if (String(headers[i] || "").trim().toLowerCase() === String(label).trim().toLowerCase()) return i;
+  }
+  return -1;
+}
+
+function safeMarketingCellText(value, maxLength) {
+  var text = String(value === undefined || value === null ? "" : value).trim();
+  if (maxLength && text.length > maxLength) text = text.substring(0, maxLength);
+  if (/^[=+\-@]/.test(text)) text = "'" + text;
+  return text;
+}
+
+function normalizeMarketingEmail(value) {
+  return String(value || "").trim().toLowerCase();
+}
+
+function marketingSubscriberId(email) {
+  var bytes = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, normalizeMarketingEmail(email), Utilities.Charset.UTF_8);
+  var hex = bytes.map(function(value) {
+    var normalized = value < 0 ? value + 256 : value;
+    return ("0" + normalized.toString(16)).slice(-2);
+  }).join("");
+  return "subscriber:" + hex.substring(0, 24);
+}
+
+function syncMarketingSubscribers() {
+  var ss = getLeadSpreadsheet();
+  var source = ss.getSheetByName("Leads");
+  if (!source || source.getLastRow() < 2) return { ok: true, added: 0, refreshed: 0, eligibleSourceRows: 0 };
+  var sourceHeaders = source.getRange(1, 1, 1, source.getLastColumn()).getValues()[0];
+  var emailColumn = headerPosition(sourceHeaders, "Email");
+  var consentColumn = headerPosition(sourceHeaders, "Marketing Opt-In");
+  if (emailColumn < 0 || consentColumn < 0) throw new Error("Leads must contain Email and Marketing Opt-In columns.");
+
+  var nameColumn = headerPosition(sourceHeaders, "Name");
+  var cityColumn = headerPosition(sourceHeaders, "City");
+  var serviceColumn = headerPosition(sourceHeaders, "Service");
+  var timestampColumn = headerPosition(sourceHeaders, "Timestamp");
+  var rows = source.getRange(2, 1, source.getLastRow() - 1, source.getLastColumn()).getValues();
+  var subscribers = ensureMarketingSubscriberSheet();
+  var existingValues = subscribers.getLastRow() < 2 ? [] : subscribers.getRange(2, 1, subscribers.getLastRow() - 1, MARKETING_SUBSCRIBER_HEADERS.length).getValues();
+  var byEmail = {};
+  existingValues.forEach(function(row, index) {
+    var email = normalizeMarketingEmail(row[1]);
+    if (email) byEmail[email] = { rowNumber: index + 2, values: row };
+  });
+
+  var added = 0;
+  var refreshed = 0;
+  var eligibleSourceRows = 0;
+  rows.forEach(function(row, index) {
+    var email = normalizeMarketingEmail(row[emailColumn]);
+    var consent = row[consentColumn];
+    if (!hasRecordedConsent(consent) || !isValidLeadEmail(email)) return;
+    eligibleSourceRows++;
+    var fullName = nameColumn > -1 ? safeMarketingCellText(row[nameColumn], 160) : "";
+    var firstName = fullName ? fullName.split(/\s+/)[0] : "there";
+    var city = cityColumn > -1 ? safeMarketingCellText(row[cityColumn], 120) : "";
+    var service = serviceColumn > -1 ? safeMarketingCellText(row[serviceColumn], 180) : "";
+    var consentAt = timestampColumn > -1 ? row[timestampColumn] : "";
+    var existing = byEmail[email];
+    if (existing) {
+      subscribers.getRange(existing.rowNumber, 3, 1, 8).setValues([[
+        firstName, fullName, city, service, "Leads", index + 2, String(consent), consentAt
+      ]]);
+      refreshed++;
+      return;
+    }
+    var token = Utilities.getUuid().replace(/-/g, "") + Utilities.getUuid().replace(/-/g, "");
+    subscribers.appendRow([
+      marketingSubscriberId(email), email, firstName, fullName, city, service,
+      "Leads", index + 2, String(consent), consentAt, "Active", "", "", token,
+      "", "", 0, "", "Imported from an explicit website marketing opt-in", ""
+    ]);
+    byEmail[email] = { rowNumber: subscribers.getLastRow() };
+    added++;
+  });
+  return { ok: true, added: added, refreshed: refreshed, eligibleSourceRows: eligibleSourceRows };
+}
+
+function setupMarketingCampaignSystem() {
+  ensureMarketingSubscriberSheet();
+  ensureMarketingLogSheet();
+  var sync = syncMarketingSubscribers();
+  return { ok: true, sync: sync, settings: marketingSetupStatus() };
+}
+
+function marketingRowToRecord(row, rowNumber) {
+  return {
+    rowNumber: rowNumber,
+    subscriberId: String(row[0] || ""),
+    email: normalizeMarketingEmail(row[1]),
+    firstName: String(row[2] || "there").trim() || "there",
+    fullName: String(row[3] || ""),
+    city: String(row[4] || ""),
+    service: String(row[5] || ""),
+    sourceSheet: String(row[6] || ""),
+    sourceRow: parseInt(row[7] || 0, 10) || 0,
+    consentValue: String(row[8] || ""),
+    status: String(row[10] || ""),
+    token: String(row[13] || ""),
+    lastCampaignId: String(row[14] || ""),
+    sendCount: parseInt(row[16] || 0, 10) || 0,
+    acknowledgedAt: row[19] || ""
+  };
+}
+
+function isMarketingSubscriberEligible(record, campaignId) {
+  return Boolean(
+    record &&
+    isValidLeadEmail(record.email) &&
+    hasRecordedConsent(record.consentValue) &&
+    String(record.status || "").toLowerCase() === "active" &&
+    record.token &&
+    String(record.lastCampaignId || "") !== String(campaignId || "")
+  );
+}
+
+function maskMarketingEmail(email) {
+  var parts = normalizeMarketingEmail(email).split("@");
+  if (parts.length !== 2) return "invalid";
+  var local = parts[0];
+  return local.substring(0, Math.min(2, local.length)) + "***@" + parts[1];
+}
+
+function marketingSetupStatus() {
+  var settings = marketingSettings();
+  var sheet = ensureMarketingSubscriberSheet();
+  var values = sheet.getLastRow() < 2 ? [] : sheet.getRange(2, 1, sheet.getLastRow() - 1, MARKETING_SUBSCRIBER_HEADERS.length).getValues();
+  var eligible = values.map(function(row, index) { return marketingRowToRecord(row, index + 2); })
+    .filter(function(record) { return isMarketingSubscriberEligible(record, settings.campaignId); });
+  return {
+    enabled: settings.enabled,
+    batchSize: settings.batchSize,
+    postalAddressConfigured: Boolean(settings.postalAddress),
+    webAppUrlConfigured: Boolean(ScriptApp.getService().getUrl()),
+    campaignId: settings.campaignId,
+    eligibleCount: eligible.length,
+    eligible: eligible.slice(0, 25).map(function(record) { return maskMarketingEmail(record.email); }),
+    mailQuotaRemaining: MailApp.getRemainingDailyQuota()
+  };
+}
+
+function previewSeasonalCampaign() {
+  syncMarketingSubscribers();
+  return marketingSetupStatus();
+}
+
+function buildSeasonalMarketingEmail(record, settings, unsubscribeUrl) {
+  var firstName = String(record.firstName || "there").trim() || "there";
+  var subject = "Planning a cleanup or indoor project this year?";
+  var plain = [
+    "Hi " + firstName + ",",
+    "",
+    "This is an advertisement from All-Pro Construction & Landscape.",
+    "",
+    "If you are planning a last-minute property cleanup, fall or winter work, or an indoor kitchen, bathroom, or repair project, we would be glad to help you sort out the next step and see where the work may fit on our schedule.",
+    "",
+    "Free project consultation:",
+    "- Talk by phone",
+    "- Schedule an on-site conversation",
+    "- Reply with photos and questions about the property",
+    "",
+    "Request an estimate: " + settings.estimateUrl,
+    "Read our homeowner project guide: " + settings.guideUrl,
+    "Call All-Pro: " + settings.phone,
+    "",
+    "All-Pro Construction & Landscape",
+    settings.postalAddress,
+    "",
+    "Unsubscribe: " + unsubscribeUrl,
+    "You can also reply REMOVE and we will suppress future marketing email."
+  ].join("\n");
+  var html = '<!doctype html><html><body style="margin:0;padding:0;background:#f3f5f4;font-family:Arial,Helvetica,sans-serif;color:#1f2933;">' +
+    '<div style="display:none;max-height:0;overflow:hidden;opacity:0;">Free project consultation for seasonal cleanup, remodeling, and repairs.</div>' +
+    '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f3f5f4;"><tr><td align="center" style="padding:24px 12px;">' +
+    '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:620px;background:#ffffff;border:1px solid #dfe5e2;">' +
+    '<tr><td style="padding:10px 24px;background:#1f2933;color:#ffffff;font-size:12px;font-weight:700;">ADVERTISEMENT FROM ALL-PRO CONSTRUCTION &amp; LANDSCAPE</td></tr>' +
+    '<tr><td style="padding:30px 24px 18px;"><div style="font-size:13px;font-weight:800;color:#2f5d50;">METRO EAST PROJECT PLANNING</div>' +
+    '<h1 style="margin:8px 0 14px;font-size:30px;line-height:1.15;letter-spacing:0;">Need help planning the next project?</h1>' +
+    '<p style="margin:0 0 16px;line-height:1.65;">Hi ' + escapeEmailHtml(firstName) + ',</p>' +
+    '<p style="margin:0 0 16px;line-height:1.65;">If you are considering a last-minute property cleanup, fall or winter work, or an indoor kitchen, bathroom, or repair project, All-Pro can help you sort out the scope and see where it may fit on the schedule.</p>' +
+    '<div style="margin:22px 0;padding:18px;border-left:5px solid #2f5d50;background:#f7f3ea;"><strong>Free project consultation</strong><br><span style="line-height:1.65;">Talk by phone, meet at the property, or reply with photos and questions. We will focus on the problem you want solved and the next useful step.</span></div>' +
+    '<p style="margin:22px 0;"><a href="' + escapeEmailHtml(settings.estimateUrl) + '" style="display:inline-block;padding:14px 20px;background:#c96a26;color:#ffffff;text-decoration:none;font-weight:800;border-radius:5px;">Request a free estimate</a></p>' +
+    '<p style="margin:0 0 10px;line-height:1.6;"><a href="' + escapeEmailHtml(settings.guideUrl) + '" style="color:#2f5d50;font-weight:800;">Read the Metro East homeowner project guide</a></p>' +
+    '<p style="margin:0 0 22px;line-height:1.6;"><strong>Call:</strong> <a href="tel:6185810676" style="color:#2f5d50;">' + escapeEmailHtml(settings.phone) + '</a></p>' +
+    '</td></tr><tr><td style="padding:22px 24px;background:#f7f3ea;color:#52606d;font-size:12px;line-height:1.6;">' +
+    '<strong>All-Pro Construction &amp; Landscape</strong><br>' + escapeEmailHtml(settings.postalAddress) + '<br><br>' +
+    'You received this because you opted in to occasional All-Pro project emails. ' +
+    '<a href="' + escapeEmailHtml(unsubscribeUrl) + '" style="color:#2f5d50;font-weight:800;">Unsubscribe</a> or reply REMOVE.' +
+    '</td></tr></table></td></tr></table></body></html>';
+  return { subject: subject, plain: plain, html: html };
+}
+
+function requireMarketingSendReadiness(settings) {
+  if (!settings.postalAddress) throw new Error("Set MARKETING_POSTAL_ADDRESS to a valid business postal address before sending.");
+  var webAppUrl = String(ScriptApp.getService().getUrl() || "").trim();
+  if (!webAppUrl) throw new Error("Deploy this Apps Script as a web app before sending so unsubscribe links work.");
+  return webAppUrl;
+}
+
+function sendSeasonalCampaignTest() {
+  var settings = marketingSettings();
+  requireMarketingSendReadiness(settings);
+  var content = buildSeasonalMarketingEmail(
+    { firstName: "Tony" },
+    settings,
+    CONFIG.siteOrigin + "/privacy.html#marketing-email"
+  );
+  MailApp.sendEmail({
+    to: CONFIG.ownerEmail,
+    subject: "TEST - " + content.subject,
+    body: content.plain,
+    htmlBody: content.html,
+    name: settings.senderName,
+    replyTo: CONFIG.ownerEmail
+  });
+  return { ok: true, sentTo: CONFIG.ownerEmail, subject: "TEST - " + content.subject };
+}
+
+function appendMarketingLog(logSheet, values) {
+  logSheet.appendRow(values.map(function(value) { return safeMarketingCellText(value, 1000); }));
+}
+
+function sendSeasonalCampaignBatch() {
+  var lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+  try {
+    var settings = marketingSettings();
+    if (!settings.enabled) return { ok: false, sent: 0, reason: "MARKETING_SEND_ENABLED is false" };
+    var webAppUrl = requireMarketingSendReadiness(settings);
+    var sync = syncMarketingSubscribers();
+    var sheet = ensureMarketingSubscriberSheet();
+    var log = ensureMarketingLogSheet();
+    var values = sheet.getLastRow() < 2 ? [] : sheet.getRange(2, 1, sheet.getLastRow() - 1, MARKETING_SUBSCRIBER_HEADERS.length).getValues();
+    var quota = MailApp.getRemainingDailyQuota();
+    var maximum = Math.min(settings.batchSize, Math.max(0, quota - 10));
+    if (maximum < 1) return { ok: false, sent: 0, reason: "Email quota reserve reached", quotaRemaining: quota };
+    var sent = 0;
+    var errors = [];
+    for (var i = 0; i < values.length && sent < maximum; i++) {
+      var record = marketingRowToRecord(values[i], i + 2);
+      if (!isMarketingSubscriberEligible(record, settings.campaignId)) continue;
+      var unsubscribeUrl = webAppUrl + "?action=unsubscribe&token=" + encodeURIComponent(record.token);
+      var content = buildSeasonalMarketingEmail(record, settings, unsubscribeUrl);
+      try {
+        MailApp.sendEmail({
+          to: record.email,
+          subject: content.subject,
+          body: content.plain,
+          htmlBody: content.html,
+          name: settings.senderName,
+          replyTo: CONFIG.ownerEmail
+        });
+        var now = new Date();
+        sheet.getRange(record.rowNumber, 15, 1, 4).setValues([[
+          settings.campaignId, now, record.sendCount + 1, ""
+        ]]);
+        appendMarketingLog(log, [now, settings.campaignId, record.subscriberId, record.email, "sent", content.subject, ""]);
+        sent++;
+        Utilities.sleep(750);
+      } catch (err) {
+        var message = safeError(err);
+        sheet.getRange(record.rowNumber, 18).setValue(message);
+        appendMarketingLog(log, [new Date(), settings.campaignId, record.subscriberId, record.email, "failed", content.subject, message]);
+        errors.push(maskMarketingEmail(record.email) + ": " + message);
+      }
+    }
+    return { ok: errors.length === 0, sent: sent, errors: errors, sync: sync, quotaRemaining: MailApp.getRemainingDailyQuota() };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function updateSourceMarketingConsent(record, value) {
+  if (!record.sourceSheet || record.sourceRow < 2) return;
+  var ss = getLeadSpreadsheet();
+  var source = ss.getSheetByName(record.sourceSheet);
+  if (!source) return;
+  var headers = source.getRange(1, 1, 1, source.getLastColumn()).getValues()[0];
+  var consentColumn = headerPosition(headers, "Marketing Opt-In");
+  if (consentColumn < 0) return;
+  source.getRange(record.sourceRow, consentColumn + 1).setValue(value);
+}
+
+function suppressMarketingSubscriber(record, reason) {
+  var sheet = ensureMarketingSubscriberSheet();
+  var now = new Date();
+  sheet.getRange(record.rowNumber, 11, 1, 3).setValues([["Unsubscribed", now, safeMarketingCellText(reason, 240)]]);
+  updateSourceMarketingConsent(record, "No");
+  record.status = "Unsubscribed";
+  return record;
+}
+
+function marketingUnsubscribeHtml(title, message) {
+  return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>' +
+    escapeEmailHtml(title) + '</title></head><body style="margin:0;background:#f7f3ea;color:#1f2933;font-family:Arial,Helvetica,sans-serif;"><main style="max-width:620px;margin:10vh auto;padding:30px;background:#fff;border:1px solid #dfe5e2;"><h1 style="font-size:30px;letter-spacing:0;">' +
+    escapeEmailHtml(title) + '</h1><p style="font-size:17px;line-height:1.65;">' + escapeEmailHtml(message) + '</p><p><a href="' + CONFIG.siteOrigin + '" style="color:#2f5d50;font-weight:800;">Return to All-Pro</a></p></main></body></html>';
+}
+
+function handleMarketingUnsubscribe(params) {
+  var token = String(params && params.token || "").trim();
+  var generic = "Your request could not be verified. Reply REMOVE to the original email and we will take care of it.";
+  if (!/^[a-f0-9]{48,160}$/i.test(token)) {
+    return HtmlService.createHtmlOutput(marketingUnsubscribeHtml("Unsubscribe request", generic));
+  }
+  var sheet = ensureMarketingSubscriberSheet();
+  if (sheet.getLastRow() < 2) return HtmlService.createHtmlOutput(marketingUnsubscribeHtml("Unsubscribe request", generic));
+  var match = sheet.getRange(2, 14, sheet.getLastRow() - 1, 1).createTextFinder(token).matchEntireCell(true).findNext();
+  if (!match) return HtmlService.createHtmlOutput(marketingUnsubscribeHtml("Unsubscribe request", generic));
+  var rowNumber = match.getRow();
+  var row = sheet.getRange(rowNumber, 1, 1, MARKETING_SUBSCRIBER_HEADERS.length).getValues()[0];
+  var record = marketingRowToRecord(row, rowNumber);
+  if (record.status.toLowerCase() !== "unsubscribed") suppressMarketingSubscriber(record, "Website unsubscribe link");
+  return HtmlService.createHtmlOutput(marketingUnsubscribeHtml(
+    "You are unsubscribed",
+    "This email address has been removed from future All-Pro marketing messages. Estimate confirmations and direct replies about a project you request are separate."
+  ));
+}
+
+function extractMarketingReplyText(body) {
+  var text = String(body || "").replace(/\r/g, "");
+  text = text.split(/\nOn .+wrote:\n|\n-{2,}\s*Original Message\s*-{2,}/i)[0];
+  return text.trim().substring(0, 1000);
+}
+
+function isExplicitOptOutReply(body) {
+  var text = extractMarketingReplyText(body).replace(/\s+/g, " ").trim();
+  return /^(?:please\s+)?(?:unsubscribe|remove me|remove my email|take me off|stop|stop emails|no more emails|do not email me again|don't email me again)[.! ]*$/i.test(text);
+}
+
+function emailAddressFromHeader(value) {
+  var match = String(value || "").match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);
+  return match ? normalizeMarketingEmail(match[0]) : "";
+}
+
+function sendMarketingOptOutApology(email) {
+  MailApp.sendEmail({
+    to: email,
+    subject: "You have been removed from All-Pro emails",
+    body: "We are sorry the message was not useful. Your email address has been removed from future All-Pro marketing messages.\n\nAll-Pro Construction & Landscape\n618-581-0676",
+    name: "All-Pro Customer Care",
+    replyTo: CONFIG.ownerEmail
+  });
+}
+
+function processMarketingOptOutReplies() {
+  var sheet = ensureMarketingSubscriberSheet();
+  if (sheet.getLastRow() < 2) return { ok: true, removed: 0 };
+  var values = sheet.getRange(2, 1, sheet.getLastRow() - 1, MARKETING_SUBSCRIBER_HEADERS.length).getValues();
+  var byEmail = {};
+  values.forEach(function(row, index) {
+    var record = marketingRowToRecord(row, index + 2);
+    if (record.email) byEmail[record.email] = record;
+  });
+  var threads = GmailApp.search('in:inbox newer_than:30d {unsubscribe "remove me" "take me off" "stop emails" "no more emails"}', 0, 50);
+  var removed = 0;
+  threads.forEach(function(thread) {
+    var messages = thread.getMessages();
+    if (!messages.length) return;
+    var message = messages[messages.length - 1];
+    var email = emailAddressFromHeader(message.getFrom());
+    var record = byEmail[email];
+    if (!record || !isExplicitOptOutReply(message.getPlainBody())) return;
+    if (record.status.toLowerCase() !== "unsubscribed") {
+      suppressMarketingSubscriber(record, "Explicit email reply");
+      removed++;
+    }
+    if (!record.acknowledgedAt) {
+      sendMarketingOptOutApology(email);
+      sheet.getRange(record.rowNumber, 20).setValue(new Date());
+      record.acknowledgedAt = new Date();
+    }
+  });
+  return { ok: true, removed: removed };
 }
 
 function safeError(err) {

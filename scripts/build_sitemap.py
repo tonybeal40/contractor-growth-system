@@ -26,11 +26,13 @@ EXCLUDED_PARTS = {
     "lawnmex",
     "output",
     "outputs",
+    "product",
     "server",
     "scripts",
     "sql",
     "test",
     "tmp",
+    "tools",
     "workers",
 }
 

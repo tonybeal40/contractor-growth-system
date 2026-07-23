@@ -58,6 +58,7 @@ def jsonld(page: dict[str, Any]) -> str:
                 "name": BUSINESS,
                 "url": SITE,
                 "telephone": PHONE_E164,
+                "foundingDate": "2002",
                 "areaServed": {"@type": "City", "name": f"{page['city']}, {page['state']}"},
                 "address": {
                     "@type": "PostalAddress",

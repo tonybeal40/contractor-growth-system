@@ -1,0 +1,84 @@
+{
+  "business_name": "All-Pro Construction & Landscape",
+  "representative": {
+    "name": "Josh Barber",
+    "phone": "618-402-8775",
+    "email": "JoshBarber23@yahoo.com"
+  },
+  "website": "https://allprometroeastconstruction.com/josh-barber-highland-il.html",
+  "estimate_url": "https://allprometroeastconstruction.com/josh-barber-highland-il.html#estimate",
+  "max_age_days": 60,
+  "preferred_cities": [
+    "Highland",
+    "Troy",
+    "St. Jacob",
+    "Marine",
+    "Grantfork",
+    "Pierron",
+    "Pocahontas",
+    "Maryville",
+    "Edwardsville",
+    "Glen Carbon",
+    "Lebanon",
+    "Trenton",
+    "Breese",
+    "New Baden"
+  ],
+  "service_area_terms": [
+    "Highland",
+    "Troy",
+    "St. Jacob",
+    "Marine",
+    "Grantfork",
+    "Pierron",
+    "Pocahontas",
+    "Maryville",
+    "Edwardsville",
+    "Glen Carbon",
+    "Lebanon",
+    "Trenton",
+    "Breese",
+    "New Baden",
+    "Madison County",
+    "Clinton County",
+    "Metro East"
+  ],
+  "priority_services": [
+    "Kitchen Remodeling",
+    "Bathroom Remodeling",
+    "Landscaping"
+  ],
+  "service_keywords": {
+    "Kitchen Remodeling": ["kitchen remodel", "kitchen renovation", "cabinets", "countertops", "backsplash"],
+    "Bathroom Remodeling": ["bathroom remodel", "bath remodel", "shower remodel", "shower replacement", "tub replacement"],
+    "Landscaping": ["landscaping", "landscape design", "yard cleanup", "grading", "drainage", "mulch", "rock install"],
+    "Decks & Porches": ["deck builder", "new deck", "deck replacement", "deck repair", "porch rebuild", "porch repair"],
+    "Patios & Concrete": ["concrete patio", "paver patio", "patio expansion", "walkway", "concrete steps", "retaining wall"],
+    "Fencing": ["fence replacement", "new fence", "privacy fence", "fence repair"],
+    "Small Jobs & Repairs": ["handyman", "small job", "general contractor", "home repair", "property maintenance", "turnover repair"]
+  },
+  "intent_phrases": [
+    "looking for",
+    "need a contractor",
+    "need someone",
+    "recommendation",
+    "recommendations",
+    "who can",
+    "estimate",
+    "quote",
+    "want to remodel",
+    "want done",
+    "hiring",
+    "request for bids",
+    "invites bids"
+  ],
+  "rss_feeds": [],
+  "nextdoor": {
+    "enabled": true,
+    "token_env": "NEXTDOOR_ACCESS_TOKEN",
+    "endpoint": "https://nextdoor.com/content_api/v2/search_post",
+    "centers": [
+      {"name": "Highland", "lat": 38.7395, "lon": -89.6712, "radius_miles": 20}
+    ]
+  }
+}

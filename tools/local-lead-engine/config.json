@@ -1,0 +1,75 @@
+{
+  "business_name": "All-Pro Construction & Landscape",
+  "representative": {
+    "name": "Bill Session",
+    "phone": "618-581-0676",
+    "email": "williamosessionallpro@gmail.com"
+  },
+  "website": "https://allprometroeastconstruction.com/",
+  "estimate_url": "https://allprometroeastconstruction.com/get-quote.html",
+  "max_age_days": 60,
+  "preferred_cities": [
+    "Belleville",
+    "O'Fallon"
+  ],
+  "service_area_terms": [
+    "Belleville",
+    "O'Fallon",
+    "Shiloh",
+    "Swansea",
+    "Fairview Heights",
+    "Collinsville",
+    "Edwardsville",
+    "Glen Carbon",
+    "Maryville",
+    "Highland",
+    "Metro East",
+    "St. Clair County",
+    "Madison County",
+    "St. Louis",
+    "St Louis"
+  ],
+  "priority_services": [
+    "Kitchen Remodeling",
+    "Bathroom Remodeling",
+    "Landscaping"
+  ],
+  "service_keywords": {
+    "Kitchen Remodeling": ["kitchen remodel", "kitchen renovation", "cabinets", "countertops", "backsplash"],
+    "Bathroom Remodeling": ["bathroom remodel", "bath remodel", "shower remodel", "shower replacement", "tub replacement", "shower pan"],
+    "Landscaping": ["landscaping", "landscape design", "yard cleanup", "native plants", "grading", "drainage", "mulch", "rock install"],
+    "Decks & Porches": ["deck builder", "new deck", "deck replacement", "deck repair", "porch rebuild", "porch repair"],
+    "Patios & Concrete": ["concrete patio", "paver patio", "patio expansion", "walkway", "concrete steps", "retaining wall"],
+    "Fencing": ["fence replacement", "new fence", "privacy fence", "fence repair"],
+    "Small Jobs & Repairs": ["handyman", "small job", "general contractor", "home repair", "pergola repair"]
+  },
+  "intent_phrases": [
+    "looking for",
+    "need a contractor",
+    "need someone",
+    "recommendation",
+    "recommendations",
+    "who can",
+    "estimate",
+    "quote",
+    "want to remodel",
+    "want done",
+    "hiring"
+  ],
+  "rss_feeds": [
+    {
+      "name": "Reddit r/StLouis public search",
+      "enabled": false,
+      "url": "https://www.reddit.com/r/StLouis/search.rss?q=%28kitchen%20OR%20bathroom%20OR%20landscaping%20OR%20deck%29%20%28remodel%20OR%20contractor%20OR%20recommendation%29&restrict_sr=1&sort=new&t=month"
+    }
+  ],
+  "nextdoor": {
+    "enabled": true,
+    "token_env": "NEXTDOOR_ACCESS_TOKEN",
+    "endpoint": "https://nextdoor.com/content_api/v2/search_post",
+    "centers": [
+      {"name": "Belleville", "lat": 38.5201, "lon": -89.9839, "radius_miles": 18},
+      {"name": "O'Fallon", "lat": 38.5923, "lon": -89.9112, "radius_miles": 18}
+    ]
+  }
+}

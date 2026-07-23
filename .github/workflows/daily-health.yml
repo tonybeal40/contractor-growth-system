@@ -1,0 +1,61 @@
+name: Daily Site and Lead Health
+
+on:
+  schedule:
+    # 8:15 AM Central during daylight time; 7:15 AM during standard time.
+    - cron: "15 13 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: daily-site-health
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Validate generated SEO and lead routes
+        run: |
+          python scripts/seo_audit.py --fail-under 95
+          python scripts/audit_public_claims.py
+          python scripts/validate_priority_lead_pages.py
+          node --test test/allpro-form-handler.test.cjs
+          node --test workers/lead-concierge/test/*.test.js
+
+      - name: Test local lead and product engines
+        run: |
+          python -m unittest discover -s tools/local-lead-engine/tests -p "test_*.py"
+          python -m unittest discover -s product/contractor-growth-engine/tests -p "test_*.py"
+
+      - name: Audit live production routes
+        run: >-
+          python scripts/daily_site_health.py
+          --output tmp/daily-site-health.md
+          --json-output tmp/daily-site-health.json
+
+      - name: Add report to workflow summary
+        if: always()
+        run: cat tmp/daily-site-health.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload health report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: all-pro-daily-health-${{ github.run_number }}
+          path: |
+            tmp/daily-site-health.md
+            tmp/daily-site-health.json
+          if-no-files-found: warn
+          retention-days: 30

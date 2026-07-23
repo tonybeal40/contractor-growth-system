@@ -1,0 +1,98 @@
+{
+  "business": {
+    "name": "Example Home Works",
+    "short_name": "Example",
+    "slug": "example-home-works",
+    "domain": "https://www.example.com",
+    "phone_display": "(555) 555-0100",
+    "phone_e164": "+15555550100",
+    "email": "estimates@example.com",
+    "service_region": "Example County",
+    "description": "Example Home Works helps local homeowners plan and complete practical remodeling and outdoor projects with clear written estimates.",
+    "years_experience": null,
+    "credential_text": "",
+    "same_as": [],
+    "trust_items": [
+      {"title": "Local service", "detail": "Example County"},
+      {"title": "Written estimates", "detail": "Scope before scheduling"},
+      {"title": "Project photos", "detail": "Client-owned work only"},
+      {"title": "Clear contact", "detail": "Phone and email available"}
+    ]
+  },
+  "brand": {
+    "charcoal": "#1F2933",
+    "cream": "#F7F3EA",
+    "green": "#2F5D50",
+    "copper": "#C96A26"
+  },
+  "hero": {
+    "headline": "A Local Contractor for Remodeling and Outdoor Projects",
+    "summary": "Plan your project with a local team, a clear scope, and a written estimate before work begins.",
+    "image_url": "assets/demo-hero.jpg",
+    "image_alt": "Landscaped front yard beside a brick home"
+  },
+  "services": [
+    {
+      "slug": "kitchen-remodeling",
+      "name": "Kitchen Remodeling",
+      "summary": "Kitchen updates planned around the way the homeowner cooks, stores, gathers, and moves through the room.",
+      "details": [
+        "Cabinet, countertop, flooring, lighting, and finish planning",
+        "Written scope that identifies included work and owner selections",
+        "Clear next steps for layout changes, utilities, and permits"
+      ],
+      "image_url": "assets/demo-kitchen.webp",
+      "image_alt": "Bright kitchen with white cabinets and a large island",
+      "faqs": [
+        {
+          "question": "What should I prepare before a kitchen estimate?",
+          "answer": "Share your project address, preferred layout changes, must-have finishes, target timing, and a realistic investment range. Photos help the contractor prepare for the first conversation."
+        },
+        {
+          "question": "Will I receive a written scope?",
+          "answer": "The estimate process should identify the proposed scope, assumptions, owner selections, and next steps before construction is scheduled."
+        }
+      ]
+    },
+    {
+      "slug": "bathroom-remodeling",
+      "name": "Bathroom Remodeling",
+      "summary": "Bathroom improvements focused on durable wet-area work, safer daily use, and finishes that are practical to maintain.",
+      "details": [
+        "Tub, shower, vanity, flooring, lighting, and ventilation planning",
+        "Waterproofing and substrate conditions reviewed before finishes",
+        "Options for full remodels and clearly defined partial updates"
+      ],
+      "image_url": "assets/demo-bathroom.webp",
+      "image_alt": "Tiled walk-in shower with dark fixtures",
+      "faqs": [
+        {
+          "question": "Can you look at a shower or tub problem first?",
+          "answer": "Yes. Describe the leak, damage, safety concern, or finish problem and include photos so the team can determine the right first visit."
+        }
+      ]
+    }
+  ],
+  "cities": [
+    {
+      "slug": "exampleville",
+      "name": "Exampleville",
+      "region": "Example State",
+      "summary": "Exampleville homeowners often need practical updates to established homes, from tighter kitchen layouts to aging bathrooms and outdoor spaces that need better drainage or safer access. The estimate process starts by confirming the property, intended scope, and any access constraints.",
+      "local_notes": [
+        "Project planning should account for the home's age, access, and the local permit path before a final schedule is promised.",
+        "The team confirms that the address is inside the active service area before arranging an on-site estimate."
+      ],
+      "service_slugs": ["kitchen-remodeling", "bathroom-remodeling"]
+    }
+  ],
+  "form": {
+    "action": "https://forms.example.com/estimate",
+    "success_url": "https://www.example.com/thank-you.html",
+    "privacy_url": "https://www.example.com/privacy.html"
+  },
+  "legal": {
+    "effective_date": "2026-07-23",
+    "privacy_contact": "privacy@example.com"
+  }
+}

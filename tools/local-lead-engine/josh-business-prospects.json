@@ -1,0 +1,47 @@
+[
+  {
+    "company": "Terra Properties, Inc.",
+    "city": "Highland",
+    "public_url": "https://terra-properties.com/",
+    "public_contact": "Use the official company contact route",
+    "fit_reason": "The official site describes commercial and residential property management, maintenance, leasing, sales, and development.",
+    "status": "Research and relationship prospect",
+    "claim_guardrail": "Do not say Terra has an open project. Ask whether it keeps an overflow or specialty-contractor list."
+  },
+  {
+    "company": "Frey Properties",
+    "city": "Highland",
+    "public_url": "https://www.frey-properties.com/",
+    "public_contact": "Use the official company contact route",
+    "fit_reason": "The official site describes commercial and residential leasing plus property maintenance in Highland.",
+    "status": "Research and relationship prospect",
+    "claim_guardrail": "Do not imply its current maintenance team is unavailable. Offer a backup estimate lane for approved overflow work."
+  },
+  {
+    "company": "City of Highland",
+    "city": "Highland",
+    "public_url": "https://www.highlandil.gov/view_open_bids/index.php",
+    "public_contact": "Follow the instructions in each current bid document",
+    "fit_reason": "The city maintains an official open-bids page for formal public procurement.",
+    "status": "Procurement watch",
+    "claim_guardrail": "Use the formal bid process only. Verify scope, insurance, bonding, registration, and prevailing-wage requirements before responding."
+  },
+  {
+    "company": "Korte & Luitjohan Contractors",
+    "city": "Highland",
+    "public_url": "https://www.korteluitjohan.com/contact",
+    "public_contact": "Use the official company contact form or published office contact route",
+    "fit_reason": "The official site identifies a Highland-based general contractor serving Southern Illinois and the St. Louis Metro area.",
+    "status": "Trade-partner introduction prospect",
+    "claim_guardrail": "Do not imply Korte & Luitjohan needs subcontractors now. Ask whether it accepts qualified local trade or overflow introductions, and verify All-Pro's insurance and scope fit before discussing work."
+  },
+  {
+    "company": "Highland Chamber of Commerce",
+    "city": "Highland",
+    "public_url": "https://www.highlandillinois.com/",
+    "public_contact": "Use the official membership or contact route",
+    "fit_reason": "The chamber publishes local business resources and networking information for Highland-area companies.",
+    "status": "Local referral-network prospect",
+    "claim_guardrail": "Treat this as membership and relationship development, not a job lead. Confirm membership costs and benefits before committing."
+  }
+]

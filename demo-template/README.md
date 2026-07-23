@@ -1,5 +1,7 @@
 # OpenClaw Demo Template — Contractor Growth System
 
+> **Deprecated:** This is a one-off historical demo and must not be used for new clients. Use `product/contractor-growth-engine/`, which builds isolated output from verified client facts and has automated safety checks.
+
 **How to launch a new client demo in 2–3 hours.**
 
 ---
