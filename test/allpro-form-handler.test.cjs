@@ -100,6 +100,13 @@ test("requires a valid non-internal email and recorded consent for confirmations
   assert.equal(context.hasRecordedConsent(""), false);
 });
 
+test("sets a clear customer response window", () => {
+  assert.equal(
+    context.customerResponseWindowText(),
+    "We will be in touch within 24 hours. Requests received on weekends or holidays may be answered on the next business day."
+  );
+});
+
 test("preserves website review rating, authenticity, and publication consent", () => {
   const data = {
     full_name: "Taylor Customer",

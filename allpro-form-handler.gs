@@ -796,12 +796,14 @@ function sendCustomerConfirmation(data) {
   var route = resolveAffiliateRoute(data);
   var representative = route ? route.name : "Bill";
   var representativePhone = route ? route.phone : "618-581-0676";
+  var responseWindow = customerResponseWindowText();
   var subject = "We received your All-Pro estimate request";
   var body = [
     "Hi " + (lead.name === "Name not entered" ? "there" : lead.name.split(/\s+/)[0]) + ",",
     "",
     "Thanks for contacting All-Pro about your " + lead.service + " project in " + lead.city + ".",
     representative + " will review the information you sent and contact you about the next step.",
+    responseWindow,
     "",
     "Project summary: " + (lead.aiSummary || lead.description),
     "",
@@ -820,6 +822,7 @@ function sendCustomerConfirmation(data) {
     '<p style="margin-top:0;">Hi ' + escapeEmailHtml(lead.name === "Name not entered" ? "there" : lead.name.split(/\s+/)[0]) + ',</p>',
     '<p>Thanks for contacting All-Pro about your <strong>' + escapeEmailHtml(lead.service) + '</strong> project in <strong>' + escapeEmailHtml(lead.city) + '</strong>.</p>',
     '<p>' + escapeEmailHtml(representative) + ' will review your information and contact you about the next step.</p>',
+    '<div style="margin:18px 0;padding:15px;background:#eef5f2;border-left:5px solid #2f5d50;font-weight:800;color:#26332e;">' + escapeEmailHtml(responseWindow) + '</div>',
     '<div style="margin:18px 0;padding:15px;background:#f7f3ea;border-left:5px solid #2f5d50;">' + multilineEmailHtml(lead.aiSummary || lead.description) + '</div>',
     '<p>You can reply to this email with photos or additional project details.</p>',
     '<p><a href="tel:' + escapeEmailHtml(normalizeE164(representativePhone)) + '" style="display:inline-block;padding:12px 17px;background:#2f5d50;color:#ffffff;text-decoration:none;border-radius:6px;font-weight:800;">Call ' + escapeEmailHtml(representativePhone) + '</a></p>',
@@ -837,6 +840,10 @@ function sendCustomerConfirmation(data) {
   });
   result.sent = true;
   return result;
+}
+
+function customerResponseWindowText() {
+  return "We will be in touch within 24 hours. Requests received on weekends or holidays may be answered on the next business day.";
 }
 
 /**
