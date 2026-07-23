@@ -146,7 +146,7 @@
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://allprometroeastconstruction.com/"},{"@type":"ListItem","position":2,"name":"Reviews","item":"https://allprometroeastconstruction.com/reviews.html"}]}
 </script>
 <script defer src="lead-tracking.js?v=20260722c"></script>
-<link rel="stylesheet" href="/brand-refresh.css?v=20260722d">
+<link rel="stylesheet" href="/brand-refresh.css?v=20260722e">
 </head>
 <body class="review-hub">
   <header>
@@ -204,8 +204,10 @@
         <article class="content-block" id="approved-website-reviews">
           <h2>All-Pro Website Reviews</h2>
           <p>Customer reviews shared through the All-Pro website can appear here with the project type, Metro East city, rating, date, and verification status. Email addresses, phone numbers, exact addresses, and job references remain private.</p>
-          <p><strong>No customer reviews have been published in this section yet.</strong> The review form is open now for customers who want to share their experience.</p>
-          <a href="review-request.html#website-review" class="btn btn-primary">Write the First Website Review</a>
+          <div id="verified-review-list" class="verified-review-list" aria-live="polite">
+            <p class="verified-review-empty"><strong>No verified website reviews have been published yet.</strong> The review form is open now for customers who want to share their experience.</p>
+          </div>
+          <a id="verified-review-cta" href="review-request.html#website-review" class="btn btn-primary">Write the First Website Review</a>
         </article>
         <article class="content-block" id="website-review-policy">
           <h2>Verification and Privacy</h2>
@@ -272,6 +274,65 @@
       <a href="sitemap.xml">Sitemap</a>
     </div>
   </footer>
+  <script>
+  (function loadVerifiedWebsiteReviews() {
+    var list = document.getElementById("verified-review-list");
+    var cta = document.getElementById("verified-review-cta");
+    if (!list) return;
+
+    function readableMonth(value) {
+      if (!/^\d{4}-\d{2}$/.test(String(value || ""))) return "";
+      var date = new Date(value + "-01T12:00:00");
+      if (isNaN(date.getTime())) return "";
+      return new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" }).format(date);
+    }
+
+    function renderVerifiedReviews(payload) {
+      if (!payload || payload.ok !== true || !Array.isArray(payload.reviews)) return;
+      if (!payload.reviews.length) return;
+      list.textContent = "";
+      payload.reviews.forEach(function(review) {
+        var card = document.createElement("article");
+        card.className = "verified-review-card";
+        var header = document.createElement("div");
+        header.className = "verified-review-card-head";
+        var badge = document.createElement("span");
+        badge.className = "review-verification-badge";
+        badge.textContent = "\u2713 Verified All-Pro Project";
+        var stars = document.createElement("span");
+        stars.className = "verified-review-stars";
+        stars.setAttribute("aria-label", review.rating + " out of 5 stars");
+        stars.textContent = "\u2605".repeat(review.rating) + "\u2606".repeat(5 - review.rating);
+        header.appendChild(badge);
+        header.appendChild(stars);
+        var name = document.createElement("h3");
+        name.textContent = review.reviewer;
+        var details = document.createElement("p");
+        details.className = "verified-review-details";
+        details.textContent = [review.projectType, review.city, readableMonth(review.completionMonth)].filter(Boolean).join(" | ");
+        var quote = document.createElement("p");
+        quote.className = "verified-review-quote";
+        quote.textContent = review.review;
+        card.appendChild(header);
+        card.appendChild(name);
+        if (details.textContent) card.appendChild(details);
+        card.appendChild(quote);
+        list.appendChild(card);
+      });
+      if (cta) cta.textContent = "Write a Website Review";
+    }
+
+    fetch("https://script.google.com/macros/s/AKfycbwXlYCGiy_SCFsZE5lnujH3iKeslueXoTQ54DLFdt-UDvP7ldixk12-WG5owCgy9oLMIQ/exec?action=verified-reviews", {
+      method: "GET",
+      mode: "cors",
+      credentials: "omit",
+      cache: "no-store"
+    })
+      .then(function(response) { return response.ok ? response.json() : null; })
+      .then(renderVerifiedReviews)
+      .catch(function() { /* Keep the honest empty state when the feed is unavailable. */ });
+  })();
+  </script>
   <script src="formsubmit-lead-tracking.js?v=20260722a" defer></script>
 </body>
 </html>

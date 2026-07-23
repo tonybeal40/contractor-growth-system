@@ -83,7 +83,13 @@ function resolveAffiliateRoute(data) {
 }
 
 // ── CORS pre-flight ───────────────────────────────────────────────────────────
-function doGet() {
+function doGet(e) {
+  var params = e && e.parameter ? e.parameter : {};
+  if (params.action === "verified-reviews") {
+    return ContentService
+      .createTextOutput(JSON.stringify(buildPublishedReviewFeed()))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
   return ContentService
     .createTextOutput(JSON.stringify({ ok: true, service: "All-Pro Form Handler" }))
     .setMimeType(ContentService.MimeType.JSON);
@@ -1177,6 +1183,51 @@ function safeReviewSheetText(value, maxLength) {
   return text;
 }
 
+function publicReviewName(value) {
+  var parts = String(value || "").trim().split(/\s+/).filter(function(part) { return part; });
+  if (!parts.length) return "All-Pro customer";
+  if (parts.length === 1) return parts[0].substring(0, 80);
+  return parts[0].substring(0, 80) + " " + parts[parts.length - 1].charAt(0).toUpperCase() + ".";
+}
+
+function toPublicWebsiteReview(row) {
+  if (!row || row.length < 23) return null;
+  if (String(row[2] || "") !== "Approved for publication") return null;
+  if (String(row[3] || "") !== "Verified All-Pro Project") return null;
+  if (!hasRecordedConsent(row[16]) || !hasRecordedConsent(row[17]) || !hasRecordedConsent(row[18])) return null;
+  var rating = parseInt(row[14], 10);
+  var reviewText = String(row[15] || "").trim();
+  if (!reviewText || rating < 1 || rating > 5) return null;
+  var verifiedDate = "";
+  if (row[5] instanceof Date && !isNaN(row[5].getTime())) {
+    verifiedDate = row[5].toISOString().substring(0, 10);
+  } else {
+    verifiedDate = String(row[5] || "").substring(0, 10);
+  }
+  return {
+    reviewer: publicReviewName(row[6]),
+    city: String(row[10] || "Metro East").substring(0, 160),
+    projectType: String(row[11] || "Home project").substring(0, 240),
+    completionMonth: String(row[12] || "").substring(0, 10),
+    rating: rating,
+    review: reviewText.substring(0, 5000),
+    verifiedDate: verifiedDate,
+    badge: "Verified All-Pro Project"
+  };
+}
+
+function buildPublishedReviewFeed() {
+  var sheet = getLeadSpreadsheet().getSheetByName("Website Reviews");
+  if (!sheet || sheet.getLastRow() < 2) return { ok: true, count: 0, reviews: [] };
+  var rows = sheet.getRange(2, 1, sheet.getLastRow() - 1, 23).getValues();
+  var reviews = [];
+  for (var i = rows.length - 1; i >= 0 && reviews.length < 100; i--) {
+    var review = toPublicWebsiteReview(rows[i]);
+    if (review) reviews.push(review);
+  }
+  return { ok: true, count: reviews.length, reviews: reviews };
+}
+
 function syncReviewQueue(data) {
   var lead = normalizedLead(data);
   if (lead.leadType !== "review") {
@@ -1239,6 +1290,13 @@ function verifyWebsiteReview(reviewId, verificationMethod, publicationNotes) {
     .findNext();
   if (!match) throw new Error("Review ID not found: " + id);
   var row = match.getRow();
+  var rowValues = sheet.getRange(row, 1, 1, 23).getValues()[0];
+  if (!hasRecordedConsent(rowValues[16])) throw new Error("Publication permission is required.");
+  if (!hasRecordedConsent(rowValues[17])) throw new Error("Genuine customer confirmation is required.");
+  if (!hasRecordedConsent(rowValues[18])) throw new Error("Verification acknowledgment is required.");
+  if (!String(rowValues[15] || "").trim()) throw new Error("Review text is required.");
+  var rating = parseInt(rowValues[14], 10);
+  if (rating < 1 || rating > 5) throw new Error("A rating from 1 to 5 is required.");
   sheet.getRange(row, 3).setValue("Approved for publication");
   sheet.getRange(row, 4).setValue("Verified All-Pro Project");
   sheet.getRange(row, 5).setValue(method);

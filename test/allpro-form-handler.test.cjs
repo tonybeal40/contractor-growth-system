@@ -199,3 +199,24 @@ test("neutralizes spreadsheet formulas in private review fields", () => {
   assert.equal(context.safeReviewSheetText("  +1-618-555-0100", 500), "'  +1-618-555-0100");
   assert.equal(context.safeReviewSheetText("Normal review text", 500), "Normal review text");
 });
+
+test("publishes only approved verified reviews without private matching fields", () => {
+  const row = [
+    new Date("2026-07-22T12:00:00Z"), "review-public-1", "Approved for publication",
+    "Verified All-Pro Project", "Invoice / work order", new Date("2026-07-22T13:00:00Z"),
+    "Morgan Homeowner", "private@example.com", "618-555-0198", "456 Sample Avenue",
+    "O'Fallon", "Kitchen remodel", "2026-05", "INV-PRIVATE", "5",
+    "All-Pro communicated clearly and completed our kitchen project with care.",
+    "yes", "yes", "yes", "Review Request Page", "https://example.com", "Private note", ""
+  ];
+  const review = context.toPublicWebsiteReview(row);
+  assert.equal(review.reviewer, "Morgan H.");
+  assert.equal(review.rating, 5);
+  assert.equal(review.badge, "Verified All-Pro Project");
+  assert.equal(review.city, "O'Fallon");
+  assert.equal(JSON.stringify(review).includes("private@example.com"), false);
+  assert.equal(JSON.stringify(review).includes("456 Sample Avenue"), false);
+  assert.equal(JSON.stringify(review).includes("INV-PRIVATE"), false);
+  row[2] = "Pending verification";
+  assert.equal(context.toPublicWebsiteReview(row), null);
+});
