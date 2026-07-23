@@ -1,0 +1,63 @@
+name: Daily Public Opportunity Scan
+
+on:
+  schedule:
+    # 8:45 AM Central during daylight time; 7:45 AM during standard time.
+    - cron: "45 13 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: daily-public-opportunity-scan
+  cancel-in-progress: true
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEXTDOOR_ACCESS_TOKEN: ${{ secrets.NEXTDOOR_ACCESS_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Test opportunity engine
+        run: python -m unittest discover -s tools/local-lead-engine/tests -p "test_*.py"
+
+      - name: Build All-Pro public opportunity queue
+        run: >-
+          python tools/local-lead-engine/lead_engine.py scan
+          --config tools/local-lead-engine/config.json
+          --seed tools/local-lead-engine/initial-public-opportunities.json
+          --output tmp/public-opportunities
+
+      - name: Build Josh Highland public opportunity queue
+        run: >-
+          python tools/local-lead-engine/lead_engine.py scan
+          --config tools/local-lead-engine/config.josh-highland.json
+          --seed tools/local-lead-engine/initial-highland-opportunities.json
+          --output tmp/public-opportunities/josh-highland
+
+      - name: Explain source coverage
+        run: |
+          if [ -n "$NEXTDOOR_ACCESS_TOKEN" ]; then
+            echo "Nextdoor approved API token was available for this run." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Nextdoor approved API token is not configured; Nextdoor was skipped." >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "Queues contain public, review-required opportunities only. No outreach was sent." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload review queues
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-opportunity-review-${{ github.run_number }}
+          path: tmp/public-opportunities
+          if-no-files-found: error
+          retention-days: 14

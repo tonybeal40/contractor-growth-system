@@ -227,31 +227,42 @@ test("requires explicit marketing consent and an active subscriber", () => {
     consentValue: "yes",
     status: "Active",
     token: "a".repeat(64),
-    lastCampaignId: ""
+    lastCampaignId: "",
+    lastSentAt: ""
   };
   assert.equal(context.isMarketingSubscriberEligible(eligible, "campaign-1"), true);
   assert.equal(context.isMarketingSubscriberEligible({ ...eligible, consentValue: "No" }, "campaign-1"), false);
   assert.equal(context.isMarketingSubscriberEligible({ ...eligible, status: "Unsubscribed" }, "campaign-1"), false);
   assert.equal(context.isMarketingSubscriberEligible({ ...eligible, lastCampaignId: "campaign-1" }, "campaign-1"), false);
+  assert.equal(context.isMarketingSubscriberEligible({
+    ...eligible,
+    lastSentAt: new Date("2026-07-01T12:00:00Z")
+  }, "campaign-2", 28, new Date("2026-07-23T12:00:00Z")), false);
+  assert.equal(context.isMarketingSubscriberEligible({
+    ...eligible,
+    lastSentAt: new Date("2026-06-01T12:00:00Z")
+  }, "campaign-2", 28, new Date("2026-07-23T12:00:00Z")), true);
 });
 
 test("builds seasonal campaign with consultation links and unsubscribe", () => {
   const settings = {
     estimateUrl: "https://allprometroeastconstruction.com/get-quote.html",
     guideUrl: "https://allprometroeastconstruction.com/metro-east-home-service-guide.html",
+    reviewUrl: "https://allprometroeastconstruction.com/review",
     phone: "618-581-0676",
     postalAddress: "123 Business Street, Exampleville, IL 60000"
   };
   const content = context.buildSeasonalMarketingEmail(
-    { firstName: "Jamie" },
+    { firstName: "Jamie", service: "Kitchen remodeling", city: "Belleville" },
     settings,
     "https://script.google.com/example?unsubscribe=1"
   );
-  assert.match(content.subject, /cleanup or indoor project/i);
-  assert.match(content.plain, /Free project consultation/);
+  assert.match(content.subject, /Jamie, a quick check-in from Bill/i);
+  assert.match(content.plain, /Kitchen remodeling in Belleville/);
+  assert.match(content.plain, /honest review/);
   assert.match(content.plain, /Unsubscribe:/);
   assert.match(content.html, /Request a free estimate/);
-  assert.match(content.html, /ADVERTISEMENT FROM ALL-PRO/);
+  assert.match(content.html, /Bill here with All-Pro/);
 });
 
 test("only treats clear standalone replies as automatic opt-outs", () => {

@@ -1322,7 +1322,7 @@ function onOpen() {
     .addItem("Preview Eligible Subscribers", "previewSeasonalCampaign")
     .addSeparator()
     .addItem("Send Test to Tony", "sendSeasonalCampaignTest")
-    .addItem("Send Approved Batch", "sendSeasonalCampaignBatch")
+    .addItem("Send One Approved Email", "sendSeasonalCampaignBatch")
     .addToUi();
 }
 
@@ -1981,21 +1981,26 @@ var MARKETING_SUBSCRIBER_HEADERS = [
 ];
 
 var MARKETING_LOG_HEADERS = [
-  "Sent At", "Campaign ID", "Subscriber ID", "Email", "Status", "Subject", "Error"
+  "Sent At", "Campaign ID", "Subscriber ID", "Email", "Status", "Subject",
+  "Sender", "BCC", "Error"
 ];
 
 function marketingSettings() {
   var properties = PropertiesService.getScriptProperties();
-  var batchSize = parseInt(properties.getProperty("MARKETING_BATCH_SIZE") || "5", 10);
-  if (isNaN(batchSize)) batchSize = 5;
+  var minimumDaysBetween = parseInt(properties.getProperty("MARKETING_MIN_DAYS_BETWEEN") || "28", 10);
+  if (isNaN(minimumDaysBetween)) minimumDaysBetween = 28;
   return {
     enabled: String(properties.getProperty("MARKETING_SEND_ENABLED") || "false").toLowerCase() === "true",
-    batchSize: Math.max(1, Math.min(batchSize, 25)),
+    batchSize: 1,
+    minimumDaysBetween: Math.max(28, minimumDaysBetween),
     postalAddress: String(properties.getProperty("MARKETING_POSTAL_ADDRESS") || "").trim(),
     campaignId: String(properties.getProperty("MARKETING_CAMPAIGN_ID") || "seasonal-project-planning-2026-07").trim(),
-    senderName: "All-Pro Construction & Landscape",
+    senderName: "Bill at All-Pro Construction & Landscape",
+    senderEmail: CONFIG.leadEmail,
+    bccEmail: CONFIG.ownerEmail,
     estimateUrl: CONFIG.siteOrigin + "/get-quote.html",
     guideUrl: CONFIG.siteOrigin + "/metro-east-home-service-guide.html",
+    reviewUrl: CONFIG.reviewUrl,
     phone: "618-581-0676"
   };
 }
@@ -2043,7 +2048,9 @@ function ensureMarketingLogSheet() {
   sheet.setColumnWidth(2, 240);
   sheet.setColumnWidth(4, 240);
   sheet.setColumnWidth(6, 360);
-  sheet.setColumnWidth(7, 320);
+  sheet.setColumnWidth(7, 240);
+  sheet.setColumnWidth(8, 240);
+  sheet.setColumnWidth(9, 320);
   return sheet;
 }
 
@@ -2151,19 +2158,30 @@ function marketingRowToRecord(row, rowNumber) {
     status: String(row[10] || ""),
     token: String(row[13] || ""),
     lastCampaignId: String(row[14] || ""),
+    lastSentAt: row[15] || "",
     sendCount: parseInt(row[16] || 0, 10) || 0,
     acknowledgedAt: row[19] || ""
   };
 }
 
-function isMarketingSubscriberEligible(record, campaignId) {
+function marketingCooldownElapsed(record, minimumDaysBetween, now) {
+  if (!record || !record.lastSentAt) return true;
+  var sentAt = record.lastSentAt instanceof Date ? record.lastSentAt : new Date(record.lastSentAt);
+  if (isNaN(sentAt.getTime())) return false;
+  var comparison = now instanceof Date ? now : new Date();
+  var minimumDays = Math.max(28, parseInt(minimumDaysBetween || 28, 10) || 28);
+  return comparison.getTime() - sentAt.getTime() >= minimumDays * 24 * 60 * 60 * 1000;
+}
+
+function isMarketingSubscriberEligible(record, campaignId, minimumDaysBetween, now) {
   return Boolean(
     record &&
     isValidLeadEmail(record.email) &&
     hasRecordedConsent(record.consentValue) &&
     String(record.status || "").toLowerCase() === "active" &&
     record.token &&
-    String(record.lastCampaignId || "") !== String(campaignId || "")
+    String(record.lastCampaignId || "") !== String(campaignId || "") &&
+    marketingCooldownElapsed(record, minimumDaysBetween, now)
   );
 }
 
@@ -2179,10 +2197,13 @@ function marketingSetupStatus() {
   var sheet = ensureMarketingSubscriberSheet();
   var values = sheet.getLastRow() < 2 ? [] : sheet.getRange(2, 1, sheet.getLastRow() - 1, MARKETING_SUBSCRIBER_HEADERS.length).getValues();
   var eligible = values.map(function(row, index) { return marketingRowToRecord(row, index + 2); })
-    .filter(function(record) { return isMarketingSubscriberEligible(record, settings.campaignId); });
+    .filter(function(record) { return isMarketingSubscriberEligible(record, settings.campaignId, settings.minimumDaysBetween); });
   return {
     enabled: settings.enabled,
     batchSize: settings.batchSize,
+    minimumDaysBetween: settings.minimumDaysBetween,
+    senderEmail: settings.senderEmail,
+    bccEmail: settings.bccEmail,
     postalAddressConfigured: Boolean(settings.postalAddress),
     webAppUrlConfigured: Boolean(ScriptApp.getService().getUrl()),
     campaignId: settings.campaignId,
@@ -2199,47 +2220,43 @@ function previewSeasonalCampaign() {
 
 function buildSeasonalMarketingEmail(record, settings, unsubscribeUrl) {
   var firstName = String(record.firstName || "there").trim() || "there";
-  var subject = "Planning a cleanup or indoor project this year?";
+  var service = String(record.service || "").trim();
+  var city = String(record.city || "").trim();
+  var projectReference = service
+    ? "You previously asked us about " + service + (city ? " in " + city : "") + "."
+    : "You previously asked All-Pro about a home project.";
+  var subject = firstName + ", a quick check-in from Bill at All-Pro";
   var plain = [
     "Hi " + firstName + ",",
     "",
-    "This is an advertisement from All-Pro Construction & Landscape.",
+    "Bill here with All-Pro Construction & Landscape. " + projectReference,
     "",
-    "If you are planning a last-minute property cleanup, fall or winter work, or an indoor kitchen, bathroom, or repair project, we would be glad to help you sort out the next step and see where the work may fit on our schedule.",
+    "I wanted to let you know we are still around if you need help planning that project or something new. You can reply with a few details or photos, and I will tell you the most useful next step.",
     "",
-    "Free project consultation:",
-    "- Talk by phone",
-    "- Schedule an on-site conversation",
-    "- Reply with photos and questions about the property",
+    "Free estimate: " + settings.estimateUrl,
+    "Call or text Bill: " + settings.phone,
     "",
-    "Request an estimate: " + settings.estimateUrl,
-    "Read our homeowner project guide: " + settings.guideUrl,
-    "Call All-Pro: " + settings.phone,
+    "If All-Pro has completed work for you and you would like to share an honest review: " + settings.reviewUrl,
     "",
+    "Thanks,",
+    "Bill",
     "All-Pro Construction & Landscape",
     settings.postalAddress,
     "",
     "Unsubscribe: " + unsubscribeUrl,
     "You can also reply REMOVE and we will suppress future marketing email."
   ].join("\n");
-  var html = '<!doctype html><html><body style="margin:0;padding:0;background:#f3f5f4;font-family:Arial,Helvetica,sans-serif;color:#1f2933;">' +
-    '<div style="display:none;max-height:0;overflow:hidden;opacity:0;">Free project consultation for seasonal cleanup, remodeling, and repairs.</div>' +
-    '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f3f5f4;"><tr><td align="center" style="padding:24px 12px;">' +
-    '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:620px;background:#ffffff;border:1px solid #dfe5e2;">' +
-    '<tr><td style="padding:10px 24px;background:#1f2933;color:#ffffff;font-size:12px;font-weight:700;">ADVERTISEMENT FROM ALL-PRO CONSTRUCTION &amp; LANDSCAPE</td></tr>' +
-    '<tr><td style="padding:30px 24px 18px;"><div style="font-size:13px;font-weight:800;color:#2f5d50;">METRO EAST PROJECT PLANNING</div>' +
-    '<h1 style="margin:8px 0 14px;font-size:30px;line-height:1.15;letter-spacing:0;">Need help planning the next project?</h1>' +
-    '<p style="margin:0 0 16px;line-height:1.65;">Hi ' + escapeEmailHtml(firstName) + ',</p>' +
-    '<p style="margin:0 0 16px;line-height:1.65;">If you are considering a last-minute property cleanup, fall or winter work, or an indoor kitchen, bathroom, or repair project, All-Pro can help you sort out the scope and see where it may fit on the schedule.</p>' +
-    '<div style="margin:22px 0;padding:18px;border-left:5px solid #2f5d50;background:#f7f3ea;"><strong>Free project consultation</strong><br><span style="line-height:1.65;">Talk by phone, meet at the property, or reply with photos and questions. We will focus on the problem you want solved and the next useful step.</span></div>' +
-    '<p style="margin:22px 0;"><a href="' + escapeEmailHtml(settings.estimateUrl) + '" style="display:inline-block;padding:14px 20px;background:#c96a26;color:#ffffff;text-decoration:none;font-weight:800;border-radius:5px;">Request a free estimate</a></p>' +
-    '<p style="margin:0 0 10px;line-height:1.6;"><a href="' + escapeEmailHtml(settings.guideUrl) + '" style="color:#2f5d50;font-weight:800;">Read the Metro East homeowner project guide</a></p>' +
-    '<p style="margin:0 0 22px;line-height:1.6;"><strong>Call:</strong> <a href="tel:6185810676" style="color:#2f5d50;">' + escapeEmailHtml(settings.phone) + '</a></p>' +
-    '</td></tr><tr><td style="padding:22px 24px;background:#f7f3ea;color:#52606d;font-size:12px;line-height:1.6;">' +
-    '<strong>All-Pro Construction &amp; Landscape</strong><br>' + escapeEmailHtml(settings.postalAddress) + '<br><br>' +
+  var html = '<!doctype html><html><body style="margin:0;padding:24px;font-family:Arial,Helvetica,sans-serif;color:#1f2933;line-height:1.65;">' +
+    '<div style="max-width:620px;"><p>Hi ' + escapeEmailHtml(firstName) + ',</p>' +
+    '<p>Bill here with All-Pro Construction &amp; Landscape. ' + escapeEmailHtml(projectReference) + '</p>' +
+    '<p>I wanted to let you know we are still around if you need help planning that project or something new. You can reply with a few details or photos, and I will tell you the most useful next step.</p>' +
+    '<p><a href="' + escapeEmailHtml(settings.estimateUrl) + '">Request a free estimate</a><br>' +
+    'Call or text Bill: <a href="tel:6185810676">' + escapeEmailHtml(settings.phone) + '</a></p>' +
+    '<p>If All-Pro has completed work for you and you would like to share an honest review, <a href="' + escapeEmailHtml(settings.reviewUrl) + '">you can write one here</a>.</p>' +
+    '<p>Thanks,<br>Bill<br>All-Pro Construction &amp; Landscape</p>' +
+    '<p style="font-size:12px;color:#52606d;">' + escapeEmailHtml(settings.postalAddress) + '<br>' +
     'You received this because you opted in to occasional All-Pro project emails. ' +
-    '<a href="' + escapeEmailHtml(unsubscribeUrl) + '" style="color:#2f5d50;font-weight:800;">Unsubscribe</a> or reply REMOVE.' +
-    '</td></tr></table></td></tr></table></body></html>';
+    '<a href="' + escapeEmailHtml(unsubscribeUrl) + '">Unsubscribe</a> or reply REMOVE.</p></div></body></html>';
   return { subject: subject, plain: plain, html: html };
 }
 
@@ -2247,6 +2264,10 @@ function requireMarketingSendReadiness(settings) {
   if (!settings.postalAddress) throw new Error("Set MARKETING_POSTAL_ADDRESS to a valid business postal address before sending.");
   var webAppUrl = String(ScriptApp.getService().getUrl() || "").trim();
   if (!webAppUrl) throw new Error("Deploy this Apps Script as a web app before sending so unsubscribe links work.");
+  var effectiveSender = normalizeMarketingEmail(Session.getEffectiveUser().getEmail());
+  if (effectiveSender !== normalizeMarketingEmail(settings.senderEmail)) {
+    throw new Error("Marketing must run from " + settings.senderEmail + ". Connect or deploy the script under Bill's Google account before sending.");
+  }
   return webAppUrl;
 }
 
@@ -2264,7 +2285,8 @@ function sendSeasonalCampaignTest() {
     body: content.plain,
     htmlBody: content.html,
     name: settings.senderName,
-    replyTo: CONFIG.ownerEmail
+    replyTo: settings.senderEmail,
+    bcc: settings.bccEmail
   });
   return { ok: true, sentTo: CONFIG.ownerEmail, subject: "TEST - " + content.subject };
 }
@@ -2285,13 +2307,13 @@ function sendSeasonalCampaignBatch() {
     var log = ensureMarketingLogSheet();
     var values = sheet.getLastRow() < 2 ? [] : sheet.getRange(2, 1, sheet.getLastRow() - 1, MARKETING_SUBSCRIBER_HEADERS.length).getValues();
     var quota = MailApp.getRemainingDailyQuota();
-    var maximum = Math.min(settings.batchSize, Math.max(0, quota - 10));
+    var maximum = Math.min(1, settings.batchSize, Math.max(0, quota - 10));
     if (maximum < 1) return { ok: false, sent: 0, reason: "Email quota reserve reached", quotaRemaining: quota };
     var sent = 0;
     var errors = [];
     for (var i = 0; i < values.length && sent < maximum; i++) {
       var record = marketingRowToRecord(values[i], i + 2);
-      if (!isMarketingSubscriberEligible(record, settings.campaignId)) continue;
+      if (!isMarketingSubscriberEligible(record, settings.campaignId, settings.minimumDaysBetween)) continue;
       var unsubscribeUrl = webAppUrl + "?action=unsubscribe&token=" + encodeURIComponent(record.token);
       var content = buildSeasonalMarketingEmail(record, settings, unsubscribeUrl);
       try {
@@ -2301,19 +2323,25 @@ function sendSeasonalCampaignBatch() {
           body: content.plain,
           htmlBody: content.html,
           name: settings.senderName,
-          replyTo: CONFIG.ownerEmail
+          replyTo: settings.senderEmail,
+          bcc: settings.bccEmail
         });
         var now = new Date();
         sheet.getRange(record.rowNumber, 15, 1, 4).setValues([[
           settings.campaignId, now, record.sendCount + 1, ""
         ]]);
-        appendMarketingLog(log, [now, settings.campaignId, record.subscriberId, record.email, "sent", content.subject, ""]);
+        appendMarketingLog(log, [
+          now, settings.campaignId, record.subscriberId, record.email, "sent", content.subject,
+          settings.senderEmail, settings.bccEmail, ""
+        ]);
         sent++;
-        Utilities.sleep(750);
       } catch (err) {
         var message = safeError(err);
         sheet.getRange(record.rowNumber, 18).setValue(message);
-        appendMarketingLog(log, [new Date(), settings.campaignId, record.subscriberId, record.email, "failed", content.subject, message]);
+        appendMarketingLog(log, [
+          new Date(), settings.campaignId, record.subscriberId, record.email, "failed", content.subject,
+          settings.senderEmail, settings.bccEmail, message
+        ]);
         errors.push(maskMarketingEmail(record.email) + ": " + message);
       }
     }

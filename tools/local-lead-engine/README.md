@@ -4,6 +4,8 @@ This tool creates a reviewable queue of public project opportunities and a separ
 
 It is intentionally not a private-profile scraper. It does not bypass logins, collect private group content, harvest homeowner phone numbers, or send unsolicited messages. A captured opportunity contains a public source link and a `Reply on source` action so a person can read the full request, follow the community rules, and decide whether a helpful disclosed response is appropriate.
 
+The scheduled GitHub workflow runs this scanner every morning. It only sees sources that are both configured and authorized. Without an approved `NEXTDOOR_ACCESS_TOKEN` or an enabled public feed, it produces the review files but must not be described as active social-media coverage.
+
 ## Public Opportunity Scan
 
 ```powershell
@@ -35,6 +37,8 @@ $env:NEXTDOOR_ACCESS_TOKEN = "..."
 ```
 
 The official endpoint searches public posts by keyword, coordinates, and radius. Only posts from the last seven days are eligible in Nextdoor's API. Never commit the token.
+
+For GitHub Actions, add the same value as the repository secret `NEXTDOOR_ACCESS_TOKEN`. The workflow still runs safely when the secret is absent; Nextdoor scanning is simply skipped.
 
 The sample Reddit RSS query is disabled because anonymous Reddit search feeds can return `429 Too Many Requests`. Keep it off unless Reddit permits the traffic for your use case; use an approved Reddit API application for a production/commercial monitor.
 
