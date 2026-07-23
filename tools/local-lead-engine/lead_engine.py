@@ -107,7 +107,9 @@ def has_intent(text: str, config: dict) -> list[str]:
 
 
 def make_id(source_url: str, title: str) -> str:
-    return hashlib.sha256((source_url.strip().lower() + "|" + title.strip().lower()).encode("utf-8")).hexdigest()[:16]
+    normalized_url = source_url.strip().lower().rstrip("/")
+    identity = normalized_url or title.strip().lower()
+    return hashlib.sha256(identity.encode("utf-8")).hexdigest()[:16]
 
 
 def score_record(record: dict, config: dict, captured: datetime) -> tuple[int, str]:

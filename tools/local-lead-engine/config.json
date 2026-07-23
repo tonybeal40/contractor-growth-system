@@ -59,7 +59,7 @@
   "rss_feeds": [
     {
       "name": "Reddit r/StLouis public search",
-      "enabled": false,
+      "enabled": true,
       "url": "https://www.reddit.com/r/StLouis/search.rss?q=%28kitchen%20OR%20bathroom%20OR%20landscaping%20OR%20deck%29%20%28remodel%20OR%20contractor%20OR%20recommendation%29&restrict_sr=1&sort=new&t=month"
     }
   ],

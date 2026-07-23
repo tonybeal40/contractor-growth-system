@@ -2,6 +2,16 @@
 
 The campaign must run as `williamosessionallpro@gmail.com`. Do not share Bill's password with Codex, OpenClaw, or another person.
 
+## Current Account Policy
+
+- Keep `williamosessionallpro@gmail.com` as Bill's working Google Business Profile account and customer-outreach sender.
+- Send each approved customer message from Bill's Gmail to one recipient at a time.
+- BCC `tonybeal40@gmail.com` on every customer-outreach message so Tony receives a private copy.
+- Keep replies directed to Bill's Gmail. A BCC copies the original message only; it does not automatically forward later customer replies.
+- Keep Tony's Gmail as an additional Google Business Profile owner when Google permits it.
+- Add `billsessions@allprometroeastconstruction.com` later as an additional profile owner only after that mailbox can receive mail and is registered as a Google Account.
+- Do not switch customer outreach to the company-domain address until mailbox access and sender authentication are proven.
+
 ## Connect Bill
 
 1. Sign into Google as `williamosessionallpro@gmail.com` in a separate browser profile.

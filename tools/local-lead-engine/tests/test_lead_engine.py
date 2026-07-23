@@ -75,6 +75,18 @@ class LeadEngineTests(unittest.TestCase):
         self.assertEqual(item.representative_email, "JoshBarber23@yahoo.com")
         self.assertIn("josh-barber-highland-il.html#estimate", item.reply_draft)
 
+    def test_same_public_url_is_deduplicated_when_titles_differ(self):
+        captured = datetime(2026, 7, 23, tzinfo=timezone.utc)
+        base = {
+            "source": "Public community",
+            "source_url": "https://community.example.test/project/1/",
+            "published_at": "2026-07-22T12:00:00Z",
+            "summary": "A Belleville homeowner is looking for a contractor for a kitchen remodel estimate.",
+        }
+        first = engine.create_opportunity({**base, "title": "Kitchen remodeling help"}, self.config, captured)
+        second = engine.create_opportunity({**base, "source_url": base["source_url"].rstrip("/"), "title": "Looking for kitchen contractor recommendations"}, self.config, captured)
+        self.assertEqual(len(engine.dedupe([first, second])), 1)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -65,6 +65,10 @@ WEEKLY_KEYWORDS = (
     "metro-east-contractor-match.html",
     "metro-east-home-service-guide.html",
     "metro-east-pro-network.html",
+    "work-with-all-pro.html",
+    "construction-jobs-belleville-ofallon.html",
+    "subcontractor-opportunities-metro-east.html",
+    "bill-s-list-contractor-listing.html",
 )
 
 HIGH_VALUE_PATTERNS = (

@@ -17,6 +17,8 @@ Target output:
 - focused on Belleville, O'Fallon, Shiloh, Swansea, Fairview Heights, Collinsville, Edwardsville, Glen Carbon, Maryville, and Troy
 - sourced from public business websites, public business profiles, chambers, associations, or other lawful public business listings
 
+Start with owner-led residential service companies in Belleville and O'Fallon. A team size of 1 to 15 is a useful early-fit signal, not a hard eligibility rule. Do not target or exclude anyone based on age.
+
 ## Columns To Capture
 
 - Company name
@@ -31,6 +33,9 @@ Target output:
 - All-Pro competitor: yes / no / partial
 - Outreach status
 - Do-not-contact status
+- Approximate team-size signal, when the business publishes it
+- Hiring, partnership, or growth signal and the date observed
+- Website-review notes supported by a current public URL
 
 ## Best Categories First
 
@@ -64,6 +69,18 @@ Look for companies with public signs that they may value lead flow or website he
 - public hiring/sales language
 - paid ads already running
 - active social posts but no conversion page
+
+Label each signal as an observation, not a fact about the owner's needs. For example, write "quote form not found on the public website on 2026-07-23," not "this company needs a website." Recheck time-sensitive signals before outreach.
+
+## Three Honest Routes
+
+Every prospect should be offered only the route that fits:
+
+1. **Subcontractor capability profile** - for an established trade business interested in possible project or overflow work. Each project is separately reviewed and documented; no work is guaranteed.
+2. **Bill's List listing or affiliate page** - for a local company interested in a reviewed public profile, referral consideration, or its own representative page.
+3. **Website and local growth support** - for a company that asks for website, search-content, lead-form, or follow-up help. Link to TonyBeal.net and disclose any paid service plainly.
+
+Do not combine an employment offer, subcontractor arrangement, and paid marketing sale in a way that could confuse the recipient.
 
 ## Usefulness Standard
 
@@ -107,4 +124,5 @@ Email/contact form version:
 - Do not impersonate a homeowner or a neutral directory.
 - Honor do-not-contact and opt-out requests immediately.
 - Keep outreach short, honest, and personalized.
-
+- Never claim a company is hiring, wants leads, or needs website work unless a current public source supports that claim.
+- Use published business contact routes; do not harvest personal profiles or private group membership.

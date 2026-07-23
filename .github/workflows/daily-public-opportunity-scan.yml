@@ -45,6 +45,12 @@ jobs:
           --seed tools/local-lead-engine/initial-highland-opportunities.json
           --output tmp/public-opportunities/josh-highland
 
+      - name: Build owned-channel social post review queue
+        run: >-
+          python tools/local-lead-engine/social_publisher.py render
+          --campaigns tools/local-lead-engine/campaigns.json
+          --output tmp/public-opportunities/social-posts
+
       - name: Explain source coverage
         run: |
           if [ -n "$NEXTDOOR_ACCESS_TOKEN" ]; then
@@ -52,7 +58,7 @@ jobs:
           else
             echo "Nextdoor approved API token is not configured; Nextdoor was skipped." >> "$GITHUB_STEP_SUMMARY"
           fi
-          echo "Queues contain public, review-required opportunities only. No outreach was sent." >> "$GITHUB_STEP_SUMMARY"
+          echo "Queues contain public, review-required opportunities and owned-channel post drafts only. No outreach or social post was sent." >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload review queues
         uses: actions/upload-artifact@v4

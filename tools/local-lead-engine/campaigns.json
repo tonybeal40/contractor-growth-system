@@ -58,5 +58,35 @@
     "message": "Not every home project is a full remodel. If you are in Belleville, O'Fallon, or the surrounding Metro East and need a practical repair or smaller improvement, send the details and photos. All-Pro will tell you whether it fits our current services and the right next step. Call 618-581-0676 or start online.",
     "image_url": "",
     "proof_note": "Confirm the linked small-jobs page and current service availability before posting."
+  },
+  {
+    "id": "metro-east-construction-crew-opening",
+    "title": "Construction crew opportunities in Belleville and O'Fallon",
+    "city": "Belleville and O'Fallon",
+    "service": "Construction Employment",
+    "landing_url": "https://allprometroeastconstruction.com/construction-jobs-belleville-ofallon.html",
+    "message": "All-Pro is accepting applications for construction crew work around Belleville, O'Fallon, and the Metro East. We want dependable people with experience in remodeling, decks, landscaping, concrete, repairs, or related residential work. Listed pay is $25-$50 per hour depending on the role, demonstrated skill, tools, and experience. Review the opening and apply through the official page.",
+    "image_url": "",
+    "proof_note": "Use the approved All-Pro hiring graphic. Keep the visible pay range and employment terms consistent with the job page."
+  },
+  {
+    "id": "metro-east-subcontractor-network",
+    "title": "Local subcontractors: introduce your business to All-Pro",
+    "city": "Belleville and O'Fallon",
+    "service": "Subcontractor Opportunities",
+    "landing_url": "https://allprometroeastconstruction.com/subcontractor-opportunities-metro-east.html",
+    "message": "All-Pro is building a Metro East network of established residential trade businesses for possible project and overflow opportunities. Kitchen, bathroom, deck, landscaping, concrete, fencing, roofing, electrical, plumbing, HVAC, and handyman companies can submit a free capability profile. This is not a promise of work; each opportunity and payment arrangement is reviewed separately and put in writing.",
+    "image_url": "",
+    "proof_note": "Use an approved branded trade-network graphic. Do not describe subcontractors as hourly employees or promise projects."
+  },
+  {
+    "id": "bills-list-local-business-growth",
+    "title": "Free Bill's List profile and local growth options",
+    "city": "Belleville and O'Fallon",
+    "service": "Contractor Listing & Business Growth",
+    "landing_url": "https://allprometroeastconstruction.com/bill-s-list-contractor-listing.html",
+    "message": "Owner-led Metro East home-service companies can introduce their business to Bill's List. Start with a free listing request, or ask about an affiliate page, website updates, local search content, and lead follow-up systems. Listings and referrals are reviewed, not guaranteed, and any paid service or referral relationship is disclosed clearly.",
+    "image_url": "",
+    "proof_note": "Use a Bill's List branded graphic. Do not imply neutral ranking, guaranteed leads, or automatic approval."
   }
 ]
