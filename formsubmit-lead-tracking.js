@@ -8,6 +8,7 @@
   const CUSTOM_ENDPOINT = "https://script.google.com/macros/s/AKfycbwXlYCGiy_SCFsZE5lnujH3iKeslueXoTQ54DLFdt-UDvP7ldixk12-WG5owCgy9oLMIQ/exec";
   const LEAD_CONCIERGE_ENDPOINT = "https://lead-api.allprometroeastconstruction.com";
   const MAX_PROJECT_PHOTO_BYTES = 5 * 1024 * 1024;
+  const MAX_APPLICANT_RESUME_BYTES = 5 * 1024 * 1024;
   // ──────────────────────────────────────────────────────────────────────────
 
   const routing = {
@@ -67,6 +68,10 @@
 
   function deriveSource(params, referrer) {
     const referrerHost = hostnameFromUrl(referrer);
+
+    if (params.get("oppref")) {
+      return { source: "openai-ads", detail: params.get("oppref") };
+    }
 
     if (params.get("gclid")) {
       return { source: "google-ads", detail: params.get("gclid") };
@@ -172,7 +177,8 @@
       utmContent: params.get("utm_content") || "",
       gclid: params.get("gclid") || "",
       fbclid: params.get("fbclid") || "",
-      msclkid: params.get("msclkid") || ""
+      msclkid: params.get("msclkid") || "",
+      oppref: params.get("oppref") || ""
     };
 
     if (!storage) {
@@ -288,8 +294,10 @@
   }
 
   function isBusinessInquiryForm(form, formName) {
-    return /worker\s*\/\s*partner|contractor\s*listing|pro\s*network\s*contractor/i.test(formName) ||
+    return /worker\s*\/\s*partner|contractor\s*listing|pro\s*network\s*contractor|crew\s*application|employment\s*application/i.test(formName) ||
       !!findNamedField(form, "business_name") ||
+      !!findNamedField(form, "application_type") ||
+      !!findNamedField(form, "application_data_consent") ||
       !!findNamedField(form, "contractor_contact_consent") ||
       (!!findNamedField(form, "company") && !!findNamedField(form, "work_type"));
   }
@@ -467,7 +475,7 @@
   }
 
   function ensureProjectDescriptionField(form, formName) {
-    if (isReviewForm(formName) || findNamedField(form, "business_name") || hasProjectDescription(form)) {
+    if (isReviewForm(formName) || isBusinessInquiryForm(form, formName) || hasProjectDescription(form)) {
       return;
     }
 
@@ -585,6 +593,7 @@
     ensureHiddenField(form, "gclid", snapshot.firstTouch.gclid || snapshot.params.get("gclid") || "");
     ensureHiddenField(form, "fbclid", snapshot.firstTouch.fbclid || snapshot.params.get("fbclid") || "");
     ensureHiddenField(form, "msclkid", snapshot.firstTouch.msclkid || snapshot.params.get("msclkid") || "");
+    ensureHiddenField(form, "oppref", snapshot.firstTouch.oppref || snapshot.params.get("oppref") || "");
     ensureHiddenField(form, "lead_session_id", snapshot.sessionId);
     ensureHiddenField(form, "submission_time_local", new Date().toLocaleString());
     ensureHiddenField(form, "submission_time_utc", new Date().toISOString());
@@ -725,6 +734,36 @@
     return true;
   }
 
+  function selectedApplicantResume(form) {
+    const input = form.querySelector('input[type="file"][name="applicant_resume"]');
+    return input && input.files && input.files.length ? input.files[0] : null;
+  }
+
+  function validateApplicantResume(form) {
+    const input = form.querySelector('input[type="file"][name="applicant_resume"]');
+    const file = selectedApplicantResume(form);
+    if (!input || !file) {
+      return true;
+    }
+
+    input.setCustomValidity("");
+    const name = String(file.name || "").toLowerCase();
+    const allowedExtension = name.endsWith(".pdf") || name.endsWith(".docx");
+    const allowedType = !file.type || file.type === "application/pdf" ||
+      file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+    if (!allowedExtension || !allowedType) {
+      input.setCustomValidity("Please upload a PDF or DOCX resume.");
+    } else if (file.size > MAX_APPLICANT_RESUME_BYTES) {
+      input.setCustomValidity("Please choose a resume smaller than 5 MB.");
+    }
+
+    if (!input.checkValidity()) {
+      input.reportValidity();
+      return false;
+    }
+    return true;
+  }
+
   function addProjectPhotoPayload(form, data) {
     const file = selectedProjectPhoto(form);
     if (!file) {
@@ -747,6 +786,33 @@
       };
       reader.onerror = function () {
         reject(new Error("The selected project photo could not be read."));
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function addApplicantResumePayload(form, data) {
+    const file = selectedApplicantResume(form);
+    if (!file) {
+      return Promise.resolve(data);
+    }
+
+    return new Promise(function (resolve, reject) {
+      const reader = new FileReader();
+      reader.onload = function () {
+        const result = String(reader.result || "");
+        const comma = result.indexOf(",");
+        if (comma < 0) {
+          reject(new Error("The selected resume could not be read."));
+          return;
+        }
+        data.applicant_resume_name = file.name || "resume";
+        data.applicant_resume_type = file.type || "application/octet-stream";
+        data.applicant_resume_base64 = result.substring(comma + 1);
+        resolve(data);
+      };
+      reader.onerror = function () {
+        reject(new Error("The selected resume could not be read."));
       };
       reader.readAsDataURL(file);
     });
@@ -802,6 +868,8 @@
     const nextUrl = data["_next"] || (siteOrigin + "/thank-you.html?src=form");
     return enrichLeadPayload(form, data).then(function (enriched) {
       return addProjectPhotoPayload(form, enriched);
+    }).then(function (withPhoto) {
+      return addApplicantResumePayload(form, withPhoto);
     }).then(function (payload) {
       return postToEndpoint(payload);
     }).then(function (result) {
@@ -843,6 +911,11 @@
       trackSubmit(snapshot, getFormName(form));
 
       if (!validateProjectPhoto(form)) {
+        event.preventDefault();
+        return;
+      }
+
+      if (!validateApplicantResume(form)) {
         event.preventDefault();
         return;
       }

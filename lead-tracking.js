@@ -218,6 +218,7 @@
       gbraid: params.get('gbraid') || '',
       wbraid: params.get('wbraid') || '',
       msclkid: params.get('msclkid') || '',
+      oppref: params.get('oppref') || '',
       referrer: doc.referrer || '',
       landing_page: window.location.href,
     };

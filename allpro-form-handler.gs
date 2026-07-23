@@ -56,7 +56,7 @@ var CONFIG = {
   leadEmail:   "williamosessionallpro@gmail.com",  // Bill receives the primary lead email
   ownerEmail:  "tonybeal40@gmail.com",             // Tony receives the operations copy
   smsAlertTo:  "+16182925320",                    // Private lead alerts only
-  sheetName:   "All-Pro Leads",                    // Google Sheet tab name
+  sheetName:   "Leads",                            // Google Sheet tab name
   reviewEmail: "tonybeal40@gmail.com",             // Reviews go to Tony only
   siteOrigin:  "https://allprometroeastconstruction.com",
   thankYouUrl: "https://allprometroeastconstruction.com/thank-you.html?src=form",
@@ -64,6 +64,8 @@ var CONFIG = {
   sendCustomerConfirmation: true,
   followUpReminderMinutes: 30
 };
+
+var HANDLER_RELEASE = "2026-07-23-hiring-resume-v1";
 
 // Affiliate destinations are allowlisted here. Never trust an email address
 // supplied by a browser form as a delivery destination.
@@ -94,7 +96,12 @@ function doGet(e) {
       .setMimeType(ContentService.MimeType.JSON);
   }
   return ContentService
-    .createTextOutput(JSON.stringify({ ok: true, service: "All-Pro Form Handler" }))
+    .createTextOutput(JSON.stringify({
+      ok: true,
+      service: "All-Pro Form Handler",
+      release: HANDLER_RELEASE,
+      capabilities: ["homeowner-leads", "applicant-resumes", "website-reviews", "openai-attribution"]
+    }))
     .setMimeType(ContentService.MimeType.JSON);
 }
 
@@ -158,6 +165,7 @@ function doPost(e) {
   try {
     var data = parsePayload(e);
     var projectPhoto = extractProjectPhoto(data);
+    var applicantResume = extractApplicantResume(data);
 
     // Honeypot — discard spam
     if (data["_honey"] && data["_honey"].trim() !== "") {
@@ -190,13 +198,16 @@ function doPost(e) {
       confirmation: { sent: false, eligible: false },
       sheet: { logged: false },
       followUpBoard: { logged: false },
+      applicantBoard: { logged: false },
+      applicantConfirmation: { sent: false, eligible: false },
       reviewQueue: { logged: false },
       errors: []
     };
 
     // Email, SMS, and Sheet logging are independent so one outage cannot
     // prevent the other delivery paths from running.
-    try { sendLeadNotification(data, subject, isReview, projectPhoto.blob); } catch(mailErr) {
+    var emailAttachments = [projectPhoto.blob, applicantResume.blob].filter(function(blob) { return Boolean(blob); });
+    try { sendLeadNotification(data, subject, isReview, emailAttachments); } catch(mailErr) {
       console.warn("Lead email failed (non-fatal):", mailErr);
       delivery.errors.push("email: " + safeError(mailErr));
     }
@@ -211,10 +222,21 @@ function doPost(e) {
       }
     }
 
-    if (!isReview) {
+    if (!isReview && data["lead_type"] === "homeowner_project") {
       try { delivery.confirmation = sendCustomerConfirmation(data); } catch(confirmErr) {
         console.warn("Customer confirmation failed (non-fatal):", confirmErr);
         delivery.errors.push("confirmation: " + safeError(confirmErr));
+      }
+    }
+
+    if (!isReview && data["lead_type"] === "employment_application") {
+      try { delivery.applicantConfirmation = sendApplicantConfirmation(data); } catch(applicantConfirmErr) {
+        console.warn("Applicant confirmation failed (non-fatal):", applicantConfirmErr);
+        delivery.errors.push("applicant confirmation: " + safeError(applicantConfirmErr));
+      }
+      try { delivery.applicantBoard = syncApplicantBoard(data); } catch(applicantBoardErr) {
+        console.warn("Applicants board sync failed (non-fatal):", applicantBoardErr);
+        delivery.errors.push("applicants board: " + safeError(applicantBoardErr));
       }
     }
 
@@ -310,6 +332,56 @@ function extractProjectPhoto(data) {
   }
 }
 
+function extractApplicantResume(data) {
+  var encoded = String(data["applicant_resume_base64"] || "").trim();
+  delete data["applicant_resume_base64"];
+  if (!encoded) return { blob: null };
+
+  var maxBytes = 5 * 1024 * 1024;
+  var mimeType = String(data["applicant_resume_type"] || "").trim().toLowerCase();
+  var originalName = String(data["applicant_resume_name"] || data["applicant_resume"] || "resume").trim();
+  var safeName = originalName.replace(/[^a-zA-Z0-9._ -]/g, "_").substring(0, 100) || "resume";
+  var extension = safeName.toLowerCase().split(".").pop();
+  var allowedMimeTypes = [
+    "application/pdf",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "application/octet-stream"
+  ];
+  var allowedExtension = extension === "pdf" || extension === "docx";
+  if (!allowedExtension || allowedMimeTypes.indexOf(mimeType) === -1) {
+    data["applicant_resume_status"] = "Upload rejected: only PDF or DOCX resumes are accepted";
+    return { blob: null };
+  }
+
+  if (encoded.length > Math.ceil(maxBytes * 4 / 3) + 8) {
+    data["applicant_resume_status"] = "Upload rejected: resume exceeds 5 MB";
+    return { blob: null };
+  }
+
+  try {
+    var bytes = Utilities.base64Decode(encoded);
+    if (bytes.length > maxBytes) {
+      data["applicant_resume_status"] = "Upload rejected: resume exceeds 5 MB";
+      return { blob: null };
+    }
+    var headerMatches = extension === "pdf" ?
+      bytes.length >= 4 && bytes[0] === 37 && bytes[1] === 80 && bytes[2] === 68 && bytes[3] === 70 :
+      bytes.length >= 4 && bytes[0] === 80 && bytes[1] === 75 && bytes[2] === 3 && bytes[3] === 4;
+    if (!headerMatches) {
+      data["applicant_resume_status"] = "Upload rejected: file contents do not match the PDF or DOCX extension";
+      return { blob: null };
+    }
+    var resolvedType = extension === "pdf" ? "application/pdf" :
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+    data["applicant_resume_status"] = "Attached to private hiring email: " + safeName;
+    return { blob: Utilities.newBlob(bytes, resolvedType, safeName) };
+  } catch (resumeErr) {
+    data["applicant_resume_status"] = "Upload could not be decoded";
+    console.warn("Applicant resume decode failed (non-fatal):", resumeErr);
+    return { blob: null };
+  }
+}
+
 function isReviewSubmission(data) {
   var formName = (data["form_name"] || data["_subject"] || "").toLowerCase();
   var pagePath = (data["page_path"] || "").toLowerCase();
@@ -354,11 +426,14 @@ function hasRecordedConsent(value) {
 function classifyLeadSubmission(data, isReview) {
   if (isReview) return { type: "review", spamRisk: 0, reasons: [] };
   var text = Object.keys(data || {}).map(function(key) {
-    return key === "project_photo_base64" ? "" : String(data[key] || "");
+    return key === "project_photo_base64" || key === "applicant_resume_base64" ? "" : String(data[key] || "");
   }).join(" ").toLowerCase();
+  var employmentApplication = /employee\s*-?\s*construction\s+crew|crew\s+application|construction\s+crew\s+member/i.test(text) ||
+    /construction-jobs-belleville-ofallon/i.test(String(data["page_path"] || ""));
   var spam = /viagra|casino|payday\s+loan|crypto\s+investment|guest\s+post|backlinks?\s+for\s+sale/i;
   var vendor = /website\s*(design|redesign|development)|seo\s*(service|agency|audit)|digital\s+marketing|lead\s+generation\s+(service|agency)|social\s+media\s+marketing|noticed\s+your\s+(site|website)|built\s+(you|a)\s+(new\s+)?(site|website)|get\s+you\s+(more\s+)?leads/i;
   var partner = /free\s+listing|contractor\s+partner|business\s+listing|listing\s+interest|pro\s+network|join\s+(bill|our)/i;
+  if (employmentApplication) return { type: "employment_application", spamRisk: 0, reasons: [] };
   if (spam.test(text)) return { type: "spam", spamRisk: 95, reasons: ["high-confidence spam phrase"] };
   if (vendor.test(text)) return { type: "vendor_sales", spamRisk: 15, reasons: ["vendor sales language"] };
   if (partner.test(text) || pickLeadValue(data, ["listing_interest", "company_fit_notes", "license_insurance_notes"], "")) {
@@ -382,8 +457,8 @@ function missingLeadFields(data) {
   if (!pickLeadValue(data, ["phone", "phone_number", "mobile", "contact_phone"], "")) missing.push("phone");
   if (!pickLeadValue(data, ["email", "email_address", "replyto", "_replyto", "contact_email"], "")) missing.push("email");
   if (!pickLeadValue(data, ["city", "location", "service_area"], "")) missing.push("city");
-  if (!pickLeadValue(data, ["service", "service_needed", "project", "project_type", "job_type"], "")) missing.push("service");
-  if (!pickLeadValue(data, ["details", "message", "description", "project_details", "notes"], "")) missing.push("project details");
+  if (!pickLeadValue(data, ["service", "service_needed", "project", "project_type", "job_type", "application_type", "strongest_trade"], "")) missing.push("service or trade");
+  if (!pickLeadValue(data, ["details", "message", "description", "project_details", "notes", "skills_and_project_experience"], "")) missing.push("project or experience details");
   return missing;
 }
 
@@ -432,13 +507,23 @@ function deterministicLeadScore(data, classification, urgency) {
     reasons.push("useful project detail");
   }
   if (classification.type !== "homeowner_project") {
-    score = Math.min(score, classification.type === "contractor_partner" ? 35 : 10);
+    score = Math.min(score, classification.type === "contractor_partner" ? 35 :
+      (classification.type === "employment_application" ? 25 : 10));
   }
   return { score: Math.min(100, score), reasons: reasons };
 }
 
 function deterministicLeadSummary(data) {
-  var service = pickLeadValue(data, ["service", "service_needed", "project", "project_type", "job_type"], "Home project");
+  var classification = classifyLeadSubmission(data, false);
+  if (classification.type === "employment_application") {
+    var trade = pickLeadValue(data, ["strongest_trade"], "Construction crew");
+    var applicantCity = pickLeadValue(data, ["city", "location"], "Metro East");
+    var experience = pickLeadValue(data, ["years_experience"], "experience not entered");
+    var availability = pickLeadValue(data, ["availability"], "availability not entered");
+    return (trade + " applicant in " + applicantCity + "; " + experience + "; " + availability + ". " +
+      pickLeadValue(data, ["skills_and_project_experience"], "")).replace(/\s+/g, " ").trim().substring(0, 600);
+  }
+  var service = pickLeadValue(data, ["service", "service_needed", "project", "project_type", "job_type", "application_type"], "Home project");
   var city = pickLeadValue(data, ["city", "location", "service_area"], "Metro East");
   var details = pickLeadValue(data, ["details", "message", "description", "project_details", "notes"], "");
   var timeline = pickLeadValue(data, ["timeline", "preferred_timing"], "");
@@ -449,6 +534,7 @@ function deterministicLeadSummary(data) {
 }
 
 function deterministicNextStep(data, classification, missing, urgency) {
+  if (classification.type === "employment_application") return "Review the applicant's trade skills, work history, availability, resume, references, and job fit. Contact the applicant only through the hiring lane.";
   if (classification.type === "vendor_sales") return "Owner review only. Do not send to Bill as a homeowner job lead.";
   if (classification.type === "contractor_partner") return "Tony reviews the business details and decides whether to invite this company into Bill's List.";
   if (classification.type === "spam") return "Suppress outreach and retain only the intake audit record.";
@@ -479,7 +565,10 @@ function applyLeadIntelligence(data, isReview) {
   var deterministic = deterministicLeadScore(data, classification, urgency);
   var suppliedScore = parseInt(pickLeadValue(data, ["ai_lead_score"], ""), 10);
   var score = isNaN(suppliedScore) ? deterministic.score : Math.max(0, Math.min(100, suppliedScore));
-  if (classification.type !== "homeowner_project") score = Math.min(score, classification.type === "contractor_partner" ? 35 : 10);
+  if (classification.type !== "homeowner_project") {
+    score = Math.min(score, classification.type === "contractor_partner" ? 35 :
+      (classification.type === "employment_application" ? 25 : 10));
+  }
   var priority = score >= 80 ? "Hot" : (score >= 55 ? "Warm" : "Standard");
 
   data["lead_type"] = classification.type;
@@ -496,6 +585,7 @@ function applyLeadIntelligence(data, isReview) {
   data["qualification_mode"] = pickLeadValue(data, ["qualification_mode"], "deterministic");
   if (classification.type === "vendor_sales") data["routing_lane"] = "Owner Review";
   else if (classification.type === "contractor_partner") data["routing_lane"] = "Partner Review";
+  else if (classification.type === "employment_application") data["routing_lane"] = "Hiring Review";
   else if (classification.type === "spam") data["routing_lane"] = "Suppressed";
   else data["routing_lane"] = pickLeadValue(data, ["routing_lane"], "All-Pro First");
   data["lead_id"] = buildLeadId(data);
@@ -521,12 +611,13 @@ function buildSubject(data, isReview) {
   var priority = pickLeadValue(data, ["ai_priority"], "Standard").toUpperCase();
   var prefix;
   if (isReview) prefix = "⭐ NEW ALL-PRO REVIEW";
+  else if (leadType === "employment_application") prefix = "NEW CREW APPLICATION";
   else if (leadType === "vendor_sales") prefix = "VENDOR PITCH · OWNER REVIEW";
   else if (leadType === "contractor_partner") prefix = "BILL'S LIST PARTNER INQUIRY";
   else if (leadType === "spam") prefix = "SUPPRESSED INTAKE";
   else prefix = "🚨 " + priority + " " + (route ? route.name.toUpperCase() : "ALL-PRO") + " LEAD";
   var name    = pickLeadValue(data, ["name", "full_name", "customer_name", "contact_name", "owner_name", "contact_person", "business_name"], "Name not entered");
-  var service = pickLeadValue(data, ["service", "service_needed", "project", "project_type", "job_type", "work_type", "service_category", "main_service"], "Project details");
+  var service = pickLeadValue(data, ["service", "service_needed", "project", "project_type", "job_type", "work_type", "service_category", "main_service", "strongest_trade", "application_type"], "Project details");
   var city    = pickLeadValue(data, ["city", "location", "service_area", "cities_served", "cities_covered"], "Metro East");
   var phone   = pickLeadValue(data, ["phone", "phone_number", "mobile", "contact_phone", "public_phone", "business_phone"], "");
   var parts   = [prefix, name, service, city];
@@ -536,7 +627,7 @@ function buildSubject(data, isReview) {
 
 function normalizedLead(data) {
   var route = resolveAffiliateRoute(data);
-  var description = pickLeadValue(data, ["details", "message", "description", "notes", "review", "project_details", "company_fit_notes", "proof_links", "license_insurance_notes"], "");
+  var description = pickLeadValue(data, ["details", "message", "description", "notes", "review", "project_details", "company_fit_notes", "proof_links", "license_insurance_notes", "skills_and_project_experience"], "");
   var summary = pickLeadValue(data, ["project_summary"], "");
   var photoPlan = pickLeadValue(data, ["photos_ready"], "");
   var photoStatus = pickLeadValue(data, ["project_photo_status", "project_photo_name", "project_photo"], "");
@@ -548,7 +639,7 @@ function normalizedLead(data) {
     company: pickLeadValue(data, ["business_name", "company", "company_name"], ""),
     phone: pickLeadValue(data, ["phone", "phone_number", "mobile", "contact_phone", "public_phone", "business_phone"], "Not entered"),
     email: pickLeadValue(data, ["email", "email_address", "replyto", "_replyto", "contact_email", "business_email"], "Not entered"),
-    service: pickLeadValue(data, ["service", "service_needed", "project", "project_type", "job_type", "work_type", "service_category", "main_service"], "Not selected"),
+    service: pickLeadValue(data, ["service", "service_needed", "project", "project_type", "job_type", "work_type", "service_category", "main_service", "strongest_trade", "application_type"], "Not selected"),
     city: pickLeadValue(data, ["city", "location", "service_area", "cities_served", "cities_covered"], "Not entered"),
     address: pickLeadValue(data, ["address", "property_address", "project_address"], ""),
     website: pickLeadValue(data, ["website", "website_or_profile", "profile_url"], ""),
@@ -568,10 +659,11 @@ function normalizedLead(data) {
     firstTouch: pickLeadValue(data, ["first_touch_source"], ""),
     utmSource: pickLeadValue(data, ["utm_source"], ""),
     utmCampaign: pickLeadValue(data, ["utm_campaign"], ""),
+    openaiClickRef: pickLeadValue(data, ["oppref"], ""),
     referrer: pickLeadValue(data, ["referrer", "first_referrer"], ""),
     submitted: pickLeadValue(data, ["submission_time_local"], new Date().toLocaleString()),
     sessionId: pickLeadValue(data, ["lead_session_id"], "n/a"),
-    contactConsent: pickLeadValue(data, ["estimate_contact_consent", "contact_consent", "contractor_contact_consent", "consent"], "Not recorded"),
+    contactConsent: pickLeadValue(data, ["estimate_contact_consent", "contact_consent", "contractor_contact_consent", "application_contact_consent", "consent"], "Not recorded"),
     marketingConsent: pickLeadValue(data, ["email_marketing_opt_in"], "No"),
     salesRep: route ? route.name : "",
     affiliateId: route ? route.id : "",
@@ -591,6 +683,19 @@ function normalizedLead(data) {
     suggestedReply: pickLeadValue(data, ["suggested_reply"], ""),
     missingFields: pickLeadValue(data, ["missing_fields"], ""),
     qualificationMode: pickLeadValue(data, ["qualification_mode"], "deterministic"),
+    applicationType: pickLeadValue(data, ["application_type"], ""),
+    tradeFocus: pickLeadValue(data, ["strongest_trade"], ""),
+    yearsExperience: pickLeadValue(data, ["years_experience"], ""),
+    availability: pickLeadValue(data, ["availability"], ""),
+    earliestStartDate: pickLeadValue(data, ["earliest_start_date"], ""),
+    toolsAvailable: pickLeadValue(data, ["tools_available"], ""),
+    reliableTransportation: pickLeadValue(data, ["reliable_transportation"], ""),
+    portfolioLink: pickLeadValue(data, ["portfolio_link"], ""),
+    referenceNotes: pickLeadValue(data, ["reference_and_certification_notes"], ""),
+    resumeStatus: pickLeadValue(data, ["applicant_resume_status", "applicant_resume_name", "applicant_resume"], "Not attached"),
+    applicationDataConsent: pickLeadValue(data, ["application_data_consent"], "Not recorded"),
+    applicationAgeEligibility: pickLeadValue(data, ["age_eligibility_confirmation"], "Not recorded"),
+    applicationAccuracy: pickLeadValue(data, ["application_accuracy_ack"], "Not recorded"),
     reviewRating: pickLeadValue(data, ["rating", "review_rating"], ""),
     reviewPermission: pickLeadValue(data, ["permission_to_share_on_site"], "No"),
     reviewAuthenticity: pickLeadValue(data, ["genuine_customer_confirmation"], "Not recorded"),
@@ -641,6 +746,25 @@ function buildEmailBody(data) {
   }
   if (lead.estimateDetails) {
     lines.push("Estimate details: " + lead.estimateDetails);
+  }
+  if (lead.leadType === "employment_application") {
+    lines.push(
+      "",
+      "APPLICATION",
+      "Application type: " + (lead.applicationType || "Construction crew"),
+      "Strongest trade: " + (lead.tradeFocus || "Not entered"),
+      "Years of experience: " + (lead.yearsExperience || "Not entered"),
+      "Availability: " + (lead.availability || "Not entered"),
+      "Earliest start date: " + (lead.earliestStartDate || "Not entered"),
+      "Tools: " + (lead.toolsAvailable || "Not entered"),
+      "Transportation: " + (lead.reliableTransportation || "Not entered"),
+      "Portfolio: " + (lead.portfolioLink || "Not entered"),
+      "Resume: " + lead.resumeStatus,
+      "Reference/certification notes: " + (lead.referenceNotes || "Not entered"),
+      "Application data consent: " + lead.applicationDataConsent,
+      "Age 18+ confirmation: " + lead.applicationAgeEligibility,
+      "Accuracy acknowledgment: " + lead.applicationAccuracy
+    );
   }
   if (lead.leadType === "review") {
     lines.push(
@@ -702,11 +826,13 @@ function emailInfoRow(label, value, highlight) {
 
 function buildLeadEmailHtml(data, isReview) {
   var lead = normalizedLead(data);
-  var accent = isReview ? "#b45309" : (lead.leadType === "vendor_sales" ? "#64748b" : "#c96a26");
+  var isApplicant = lead.leadType === "employment_application";
+  var accent = isReview ? "#b45309" : (isApplicant ? "#2f5d50" : (lead.leadType === "vendor_sales" ? "#64748b" : "#c96a26"));
   var header = isReview ? "NEW CUSTOMER REVIEW" :
+    (isApplicant ? "NEW CREW APPLICATION" :
     (lead.leadType === "vendor_sales" ? "VENDOR PITCH - OWNER REVIEW" :
     (lead.leadType === "contractor_partner" ? "BILL'S LIST PARTNER INQUIRY" :
-    (lead.salesRep ? "NEW " + lead.salesRep.toUpperCase() + " LEAD" : "NEW WEBSITE LEAD")));
+    (lead.salesRep ? "NEW " + lead.salesRep.toUpperCase() + " LEAD" : "NEW WEBSITE LEAD"))));
   var phoneDigits = lead.phone.replace(/\D/g, "");
   var phoneHref = phoneDigits.length >= 10 ? "tel:+" + (phoneDigits.length === 10 ? "1" : "") + phoneDigits : "";
   var emailHref = lead.email !== "Not entered" ? "mailto:" + encodeURIComponent(lead.email) : "";
@@ -732,7 +858,23 @@ function buildLeadEmailHtml(data, isReview) {
     emailInfoRow("Private invoice/work-order reference", lead.reviewProjectReference, false)
   ].join("") : "";
 
-  var projectRows = reviewRows + [
+  var applicationRows = isApplicant ? [
+    emailInfoRow("Application type", lead.applicationType || "Construction crew", true),
+    emailInfoRow("Strongest trade", lead.tradeFocus || lead.service, true),
+    emailInfoRow("Years of experience", lead.yearsExperience || "Not entered", false),
+    emailInfoRow("Availability", lead.availability || "Not entered", false),
+    emailInfoRow("Earliest start date", lead.earliestStartDate || "Not entered", false),
+    emailInfoRow("Tools", lead.toolsAvailable || "Not entered", false),
+    emailInfoRow("Transportation", lead.reliableTransportation || "Not entered", false),
+    emailInfoRow("Portfolio", lead.portfolioLink || "Not entered", false),
+    emailInfoRow("Resume", lead.resumeStatus, true),
+    emailInfoRow("Reference / certification notes", lead.referenceNotes || "Not entered", false),
+    emailInfoRow("Application data consent", lead.applicationDataConsent, false),
+    emailInfoRow("Age 18+ confirmation", lead.applicationAgeEligibility, false),
+    emailInfoRow("Accuracy acknowledgment", lead.applicationAccuracy, false)
+  ].join("") : "";
+
+  var projectRows = reviewRows + applicationRows + [
     emailInfoRow("Assigned representative", lead.salesRep || "All-Pro team", true),
     emailInfoRow("Representative phone", lead.representativePhone, false),
     emailInfoRow("Representative email", lead.representativeEmail, false),
@@ -757,6 +899,7 @@ function buildLeadEmailHtml(data, isReview) {
     emailInfoRow("First touch", lead.firstTouch || lead.source, false),
     emailInfoRow("UTM source", lead.utmSource || "none", false),
     emailInfoRow("UTM campaign", lead.utmCampaign || "none", false),
+    emailInfoRow("OpenAI ad click reference", lead.openaiClickRef || "none", false),
     emailInfoRow("Contact consent", lead.contactConsent, false),
     emailInfoRow("Marketing opt-in", lead.marketingConsent, false),
     emailInfoRow("Submitted", lead.submitted, false),
@@ -776,38 +919,38 @@ function buildLeadEmailHtml(data, isReview) {
 
   return [
     '<!doctype html><html><body style="margin:0;padding:0;background:#f3f5f4;font-family:Arial,Helvetica,sans-serif;color:#1f2933;">',
-    '<div style="display:none;max-height:0;overflow:hidden;opacity:0;">New All-Pro lead from ' + escapeEmailHtml(lead.name) + ': ' + escapeEmailHtml(lead.service) + ' in ' + escapeEmailHtml(lead.city) + '.</div>',
+    '<div style="display:none;max-height:0;overflow:hidden;opacity:0;">' + (isApplicant ? 'New All-Pro crew application from ' : 'New All-Pro lead from ') + escapeEmailHtml(lead.name) + ': ' + escapeEmailHtml(lead.service) + ' in ' + escapeEmailHtml(lead.city) + '.</div>',
     '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f3f5f4;padding:20px 8px;"><tr><td align="center">',
     '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:680px;background:#ffffff;border:1px solid #dfe5e2;border-radius:8px;overflow:hidden;">',
     '<tr><td style="padding:20px 24px;background:#1f2933;border-top:7px solid ' + accent + ';">',
     '<div style="color:#f7f3ea;font-size:12px;font-weight:800;letter-spacing:1.2px;">ALL-PRO CONSTRUCTION &amp; LANDSCAPE</div>',
     '<div style="margin-top:7px;color:#ffffff;font-size:26px;font-weight:900;">' + header + '</div>',
     '<div style="margin-top:6px;color:#d8e4df;font-size:15px;">' + escapeEmailHtml(lead.service) + ' in ' + escapeEmailHtml(lead.city) + '</div>',
-    !isReview ? '<div style="display:inline-block;margin-top:10px;padding:5px 9px;background:' + accent + ';color:#ffffff;border-radius:4px;font-size:12px;font-weight:900;">' + escapeEmailHtml(lead.priority.toUpperCase()) + ' · ' + escapeEmailHtml(lead.leadScore || "0") + '/100</div>' : '',
+    !isReview && !isApplicant ? '<div style="display:inline-block;margin-top:10px;padding:5px 9px;background:' + accent + ';color:#ffffff;border-radius:4px;font-size:12px;font-weight:900;">' + escapeEmailHtml(lead.priority.toUpperCase()) + ' · ' + escapeEmailHtml(lead.leadScore || "0") + '/100</div>' : '',
     '</td></tr>',
     '<tr><td style="padding:22px 24px 8px;">',
-    '<div style="font-size:12px;font-weight:800;color:' + accent + ';letter-spacing:1px;">CONTACT THIS LEAD</div>',
+    '<div style="font-size:12px;font-weight:800;color:' + accent + ';letter-spacing:1px;">' + (isApplicant ? 'CONTACT THIS APPLICANT' : 'CONTACT THIS LEAD') + '</div>',
     '<div style="margin:6px 0 2px;font-size:25px;font-weight:900;color:#1f2933;">' + escapeEmailHtml(lead.name) + '</div>',
     lead.company && lead.company !== lead.name ? '<div style="margin-top:3px;font-size:16px;font-weight:800;color:#44524c;">' + escapeEmailHtml(lead.company) + '</div>' : '',
     '<div style="font-size:18px;font-weight:800;color:#2f5d50;">' + escapeEmailHtml(lead.phone) + '</div>',
     '<div style="margin-top:4px;font-size:15px;color:#44524c;">' + escapeEmailHtml(lead.email) + '</div>',
     '<div style="margin-top:14px;">' + actions.join("") + '</div>',
     '</td></tr>',
-    '<tr><td style="padding:14px 24px 0;"><div style="font-size:17px;font-weight:900;color:#1f2933;margin-bottom:8px;">Project details</div><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #e5e7eb;border-radius:6px;overflow:hidden;">' + projectRows + '</table></td></tr>',
-    '<tr><td style="padding:20px 24px 0;"><div style="font-size:17px;font-weight:900;color:#1f2933;margin-bottom:8px;">Homeowner description</div><div style="padding:16px;background:#f7f3ea;border-left:5px solid ' + accent + ';font-size:15px;line-height:1.6;color:#26332e;">' + multilineEmailHtml(lead.description) + '</div></td></tr>',
+    '<tr><td style="padding:14px 24px 0;"><div style="font-size:17px;font-weight:900;color:#1f2933;margin-bottom:8px;">' + (isApplicant ? 'Application details' : 'Project details') + '</div><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #e5e7eb;border-radius:6px;overflow:hidden;">' + projectRows + '</table></td></tr>',
+    '<tr><td style="padding:20px 24px 0;"><div style="font-size:17px;font-weight:900;color:#1f2933;margin-bottom:8px;">' + (isApplicant ? 'Skills and experience' : 'Homeowner description') + '</div><div style="padding:16px;background:#f7f3ea;border-left:5px solid ' + accent + ';font-size:15px;line-height:1.6;color:#26332e;">' + multilineEmailHtml(lead.description) + '</div></td></tr>',
     lead.projectSummary && lead.projectSummary !== lead.description ? '<tr><td style="padding:14px 24px 0;"><strong>Project summary:</strong><br><span style="line-height:1.5;">' + multilineEmailHtml(lead.projectSummary) + '</span></td></tr>' : '',
     lead.estimateDetails ? '<tr><td style="padding:14px 24px 0;"><strong>Estimator details:</strong><br><span style="line-height:1.5;">' + multilineEmailHtml(lead.estimateDetails) + '</span></td></tr>' : '',
-    !isReview ? '<tr><td style="padding:20px 24px 0;"><div style="font-size:17px;font-weight:900;color:#1f2933;margin-bottom:8px;">Lead qualification</div><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #e5e7eb;border-radius:6px;overflow:hidden;">' + qualificationRows + '</table></td></tr>' : '',
-    !isReview && lead.aiSummary ? '<tr><td style="padding:20px 24px 0;"><div style="font-size:17px;font-weight:900;color:#1f2933;margin-bottom:8px;">Project brief</div><div style="padding:16px;background:#eef5f2;border-left:5px solid #2f5d50;font-size:15px;line-height:1.6;color:#26332e;">' + multilineEmailHtml(lead.aiSummary) + '</div></td></tr>' : '',
-    !isReview && lead.suggestedReply ? '<tr><td style="padding:20px 24px 0;"><div style="font-size:17px;font-weight:900;color:#1f2933;margin-bottom:8px;">Ready-to-send customer reply</div><div style="padding:16px;background:#fff7ed;border:1px solid #fed7aa;font-size:15px;line-height:1.6;color:#26332e;">' + multilineEmailHtml(lead.suggestedReply) + '</div></td></tr>' : '',
+    !isReview && !isApplicant ? '<tr><td style="padding:20px 24px 0;"><div style="font-size:17px;font-weight:900;color:#1f2933;margin-bottom:8px;">Lead qualification</div><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #e5e7eb;border-radius:6px;overflow:hidden;">' + qualificationRows + '</table></td></tr>' : '',
+    !isReview && !isApplicant && lead.aiSummary ? '<tr><td style="padding:20px 24px 0;"><div style="font-size:17px;font-weight:900;color:#1f2933;margin-bottom:8px;">Project brief</div><div style="padding:16px;background:#eef5f2;border-left:5px solid #2f5d50;font-size:15px;line-height:1.6;color:#26332e;">' + multilineEmailHtml(lead.aiSummary) + '</div></td></tr>' : '',
+    !isReview && !isApplicant && lead.suggestedReply ? '<tr><td style="padding:20px 24px 0;"><div style="font-size:17px;font-weight:900;color:#1f2933;margin-bottom:8px;">Ready-to-send customer reply</div><div style="padding:16px;background:#fff7ed;border:1px solid #fed7aa;font-size:15px;line-height:1.6;color:#26332e;">' + multilineEmailHtml(lead.suggestedReply) + '</div></td></tr>' : '',
     '<tr><td style="padding:20px 24px 0;"><div style="font-size:17px;font-weight:900;color:#1f2933;margin-bottom:8px;">Source and consent</div><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #e5e7eb;border-radius:6px;overflow:hidden;">' + sourceRows + '</table></td></tr>',
     lead.pageUrl ? '<tr><td style="padding:16px 24px 0;font-size:13px;color:#5f6b66;word-break:break-all;"><strong>Submitted from:</strong> <a href="' + escapeEmailHtml(lead.pageUrl) + '" style="color:#2f5d50;">' + escapeEmailHtml(lead.pageUrl) + '</a></td></tr>' : '',
-    '<tr><td style="padding:22px 24px;background:#f7f3ea;font-size:13px;line-height:1.5;color:#52605a;">This alert was generated by the verified All-Pro website form handler. Replying to this email replies to the homeowner when an email address was provided.</td></tr>',
+    '<tr><td style="padding:22px 24px;background:#f7f3ea;font-size:13px;line-height:1.5;color:#52605a;">This alert was generated by the verified All-Pro website form handler. ' + (isApplicant ? 'The resume, when accepted, is attached to this private hiring email. Replying to this email replies to the applicant.' : 'Replying to this email replies to the homeowner when an email address was provided.') + '</td></tr>',
     '</table></td></tr></table></body></html>'
   ].join("");
 }
 
-function sendLeadNotification(data, subject, isReview, projectPhotoBlob) {
+function sendLeadNotification(data, subject, isReview, attachmentBlobs) {
   var body = buildEmailBody(data);
   var htmlBody = buildLeadEmailHtml(data, isReview);
   var replyTo = pickLeadValue(data, ["email", "email_address", "replyto", "_replyto", "contact_email", "business_email"], "");
@@ -821,11 +964,15 @@ function sendLeadNotification(data, subject, isReview, projectPhotoBlob) {
     subject: subject,
     body: body,
     htmlBody: htmlBody,
-    name: isReview ? "ALL-PRO REVIEW ALERT" : (route ? "ALL-PRO " + route.name.toUpperCase() + " LEAD ALERT" : "ALL-PRO NEW LEAD ALERT")
+    name: isReview ? "ALL-PRO REVIEW ALERT" :
+      (leadType === "employment_application" ? "ALL-PRO HIRING ALERT" :
+      (route ? "ALL-PRO " + route.name.toUpperCase() + " LEAD ALERT" : "ALL-PRO NEW LEAD ALERT"))
   };
   if (cc) options.cc = cc;
-  if (replyTo && leadType === "homeowner_project") options.replyTo = replyTo;
-  if (projectPhotoBlob) options.attachments = [projectPhotoBlob];
+  if (replyTo && (leadType === "homeowner_project" || leadType === "employment_application")) options.replyTo = replyTo;
+  if (attachmentBlobs && !Array.isArray(attachmentBlobs)) attachmentBlobs = [attachmentBlobs];
+  attachmentBlobs = (attachmentBlobs || []).filter(function(blob) { return Boolean(blob); });
+  if (attachmentBlobs.length) options.attachments = attachmentBlobs;
   MailApp.sendEmail(options);
 }
 
@@ -894,6 +1041,78 @@ function sendCustomerConfirmation(data) {
     htmlBody: html,
     name: "All-Pro Estimate Requests",
     replyTo: route ? route.email : CONFIG.leadEmail
+  });
+  result.sent = true;
+  return result;
+}
+
+function sendApplicantConfirmation(data) {
+  var lead = normalizedLead(data);
+  var result = { sent: false, eligible: false, reason: "" };
+  if (lead.leadType !== "employment_application") {
+    result.reason = "not-employment-application";
+    return result;
+  }
+  if (!isValidLeadEmail(lead.email)) {
+    result.reason = "no-valid-email";
+    return result;
+  }
+  if (!hasRecordedConsent(lead.contactConsent)) {
+    result.reason = "contact-consent-not-recorded";
+    return result;
+  }
+  if (!hasRecordedConsent(lead.applicationDataConsent) || !hasRecordedConsent(lead.applicationAccuracy)) {
+    result.reason = "application-consent-not-recorded";
+    return result;
+  }
+  if (!hasRecordedConsent(lead.applicationAgeEligibility)) {
+    result.reason = "age-eligibility-not-recorded";
+    return result;
+  }
+
+  result.eligible = true;
+  var firstName = lead.name === "Name not entered" ? "there" : lead.name.split(/\s+/)[0];
+  var trade = lead.tradeFocus || lead.service || "construction crew";
+  var subject = "We received your All-Pro crew application";
+  var body = [
+    "Hi " + firstName + ",",
+    "",
+    "Thank you for applying with All-Pro Construction & Landscape for " + trade + " work.",
+    "Bill and Tony will privately review the application information you submitted. If your experience fits a current opening, All-Pro will contact you about a possible next step.",
+    "",
+    "Submitting an application does not guarantee an interview, assignment, or job offer.",
+    "Do not reply with a Social Security number, driver's license or ID copy, bank information, medical information, criminal-history information, or other sensitive personal records. If any later-stage document is needed, All-Pro will request it through a separate process.",
+    "",
+    "For a reasonable accommodation with the application process, call Bill at 618-581-0676 or reply to this email.",
+    "",
+    "All-Pro Construction & Landscape",
+    CONFIG.siteOrigin + "/construction-jobs-belleville-ofallon.html",
+    "",
+    "This message confirms your application. It is not a marketing subscription."
+  ].join("\n");
+  var html = [
+    '<!doctype html><html><body style="margin:0;background:#f3f5f4;font-family:Arial,Helvetica,sans-serif;color:#1f2933;">',
+    '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="padding:20px 8px;background:#f3f5f4;"><tr><td align="center">',
+    '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:620px;background:#ffffff;border:1px solid #dfe5e2;border-radius:8px;overflow:hidden;">',
+    '<tr><td style="padding:22px 24px;background:#1f2933;border-top:7px solid #2f5d50;color:#ffffff;"><div style="font-size:12px;font-weight:800;">ALL-PRO CONSTRUCTION &amp; LANDSCAPE</div><div style="margin-top:7px;font-size:24px;font-weight:900;">Application received</div></td></tr>',
+    '<tr><td style="padding:24px;font-size:16px;line-height:1.6;">',
+    '<p style="margin-top:0;">Hi ' + escapeEmailHtml(firstName) + ',</p>',
+    '<p>Thank you for applying with All-Pro for <strong>' + escapeEmailHtml(trade) + '</strong> work.</p>',
+    '<p>Bill and Tony will privately review the information you submitted. If your experience fits a current opening, All-Pro will contact you about a possible next step.</p>',
+    '<div style="margin:18px 0;padding:15px;background:#f7f3ea;border-left:5px solid #2f5d50;"><strong>Submitting an application does not guarantee an interview, assignment, or job offer.</strong></div>',
+    '<p style="font-size:14px;">Do not reply with a Social Security number, ID copy, bank information, medical information, criminal-history information, or other sensitive records. Any later-stage documents will be requested separately if needed.</p>',
+    '<p>For a reasonable accommodation with the application process, call <a href="tel:+16185810676" style="color:#2f5d50;font-weight:800;">Bill at 618-581-0676</a> or reply to this email.</p>',
+    '<p style="margin-bottom:0;font-size:13px;color:#5f6b66;">This confirms your application and is not a marketing subscription.</p>',
+    '</td></tr></table></td></tr></table></body></html>'
+  ].join("");
+
+  MailApp.sendEmail({
+    to: lead.email,
+    subject: subject,
+    body: body,
+    htmlBody: html,
+    name: "All-Pro Hiring",
+    replyTo: CONFIG.leadEmail
   });
   result.sent = true;
   return result;
@@ -1100,6 +1319,89 @@ function ensureFollowUpBoard() {
     }
   }
   return sheet;
+}
+
+function ensureApplicantBoard() {
+  var ss = getLeadSpreadsheet();
+  var sheet = ss.getSheetByName("Applicants");
+  var headers = [
+    "Applied At", "Status", "Full Name", "Phone", "Email", "City",
+    "Strongest Trade", "Years Experience", "Availability", "Earliest Start Date",
+    "Tools", "Transportation", "Skills / Experience", "Portfolio",
+    "Reference / Certification Notes", "Resume", "Contact Consent", "Data Consent",
+    "Accuracy Acknowledgment", "Age 18+ Confirmation", "Application ID", "Source Page", "Reviewer Notes"
+  ];
+  if (!sheet) {
+    sheet = ss.insertSheet("Applicants");
+    sheet.setFrozenRows(1);
+  }
+  ensureSheetColumnCapacity(sheet, headers.length);
+  var headerRange = sheet.getRange(1, 1, 1, headers.length);
+  if (headerRange.getValues()[0].join("|") !== headers.join("|")) {
+    headerRange.setValues([headers]).setFontWeight("bold");
+    sheet.setFrozenRows(1);
+    sheet.setColumnWidth(1, 160);
+    sheet.setColumnWidth(3, 220);
+    sheet.setColumnWidth(5, 240);
+    sheet.setColumnWidth(7, 240);
+    sheet.setColumnWidth(13, 520);
+    sheet.setColumnWidth(14, 300);
+    sheet.setColumnWidth(15, 360);
+    sheet.setColumnWidth(16, 300);
+    sheet.setColumnWidth(22, 320);
+    sheet.setColumnWidth(23, 420);
+  }
+  var maxRows = Math.max(sheet.getMaxRows() - 1, 1);
+  var statusRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(["New", "Reviewing", "Contacted", "Interview", "Hold", "Hired", "Not Selected", "Withdrawn"], true)
+    .setAllowInvalid(false)
+    .build();
+  sheet.getRange(2, 2, maxRows, 1).setDataValidation(statusRule);
+  return sheet;
+}
+
+function syncApplicantBoard(data) {
+  var lead = normalizedLead(data);
+  if (lead.leadType !== "employment_application") {
+    return { logged: false, skipped: true, reason: lead.leadType };
+  }
+  var sheet = ensureApplicantBoard();
+  var applicationId = lead.leadId || buildLeadId(data);
+  if (sheet.getLastRow() >= 2) {
+    var duplicate = sheet.getRange(2, 21, sheet.getLastRow() - 1, 1)
+      .createTextFinder(applicationId)
+      .matchEntireCell(true)
+      .findNext();
+    if (duplicate) {
+      return { logged: false, duplicate: true, row: duplicate.getRow(), applicationId: applicationId };
+    }
+  }
+  sheet.appendRow([
+    new Date(),
+    "New",
+    safeReviewSheetText(lead.name === "Name not entered" ? "" : lead.name, 240),
+    safeReviewSheetText(lead.phone === "Not entered" ? "" : lead.phone, 80),
+    safeReviewSheetText(lead.email === "Not entered" ? "" : lead.email, 320),
+    safeReviewSheetText(lead.city === "Not entered" ? "" : lead.city, 200),
+    safeReviewSheetText(lead.tradeFocus || lead.service, 240),
+    safeReviewSheetText(lead.yearsExperience, 120),
+    safeReviewSheetText(lead.availability, 160),
+    safeReviewSheetText(lead.earliestStartDate, 80),
+    safeReviewSheetText(lead.toolsAvailable, 240),
+    safeReviewSheetText(lead.reliableTransportation, 160),
+    safeReviewSheetText(lead.description, 5000),
+    safeReviewSheetText(lead.portfolioLink, 600),
+    safeReviewSheetText(lead.referenceNotes, 3000),
+    safeReviewSheetText(lead.resumeStatus, 400),
+    safeReviewSheetText(lead.contactConsent, 80),
+    safeReviewSheetText(lead.applicationDataConsent, 80),
+    safeReviewSheetText(lead.applicationAccuracy, 80),
+    safeReviewSheetText(lead.applicationAgeEligibility, 80),
+    safeReviewSheetText(applicationId, 160),
+    safeReviewSheetText(lead.pageUrl, 1000),
+    ""
+  ]);
+  return { logged: true, row: sheet.getLastRow(), applicationId: applicationId };
 }
 
 function setupFollowUpBoard() {
@@ -1380,7 +1682,7 @@ function markSelectedWebsiteReviewUnableToVerify() {
 
 function syncFollowUpBoard(data, delivery) {
   var lead = normalizedLead(data);
-  if (lead.leadType === "review" || lead.leadType === "spam") {
+  if (lead.leadType === "review" || lead.leadType === "spam" || lead.leadType === "employment_application") {
     return { logged: false, skipped: true, reason: lead.leadType };
   }
   var sheet = ensureFollowUpBoard();
@@ -1449,7 +1751,7 @@ function logToSheet(data, subject, delivery) {
     "AI Summary", "Recommended Next Step", "Suggested Reply", "Missing Fields",
     "Qualification Mode", "Customer Confirmation", "Follow Up Board",
     "Review Rating", "Permission to Publish", "Genuine Review Confirmation",
-    "Review Status"
+    "Review Status", "Applicant Confirmation", "Applicants Board", "OpenAI Click Ref"
   ];
   ensureSheetColumnCapacity(sheet, headers.length);
   var headerRange = sheet.getRange(1, 1, 1, headers.length);
@@ -1478,6 +1780,11 @@ function logToSheet(data, subject, delivery) {
   var boardStatus = delivery.followUpBoard && delivery.followUpBoard.logged ? "logged" :
     (delivery.followUpBoard && delivery.followUpBoard.duplicate ? "duplicate" :
     (delivery.followUpBoard ? delivery.followUpBoard.reason || "not logged" : "not checked"));
+  var applicantConfirmationStatus = delivery.applicantConfirmation && delivery.applicantConfirmation.sent ? "sent" :
+    (delivery.applicantConfirmation ? delivery.applicantConfirmation.reason || "not sent" : "not checked");
+  var applicantBoardStatus = delivery.applicantBoard && delivery.applicantBoard.logged ? "logged" :
+    (delivery.applicantBoard && delivery.applicantBoard.duplicate ? "duplicate" :
+    (delivery.applicantBoard ? delivery.applicantBoard.reason || "not logged" : "not checked"));
   var lead = normalizedLead(data);
   var phone = lead.phone === "Not entered" ? "" : lead.phone;
   var email = lead.email === "Not entered" ? "" : lead.email;
@@ -1537,7 +1844,10 @@ function logToSheet(data, subject, delivery) {
     lead.reviewRating,
     lead.reviewPermission,
     lead.reviewAuthenticity,
-    lead.reviewStatus
+    lead.reviewStatus,
+    applicantConfirmationStatus,
+    applicantBoardStatus,
+    lead.openaiClickRef
   ]);
 }
 

@@ -6,6 +6,7 @@ const test = require("node:test");
 const vm = require("node:vm");
 
 const source = fs.readFileSync(path.join(__dirname, "..", "allpro-form-handler.gs"), "utf8");
+const sentEmails = [];
 const context = {
   Boolean,
   Date,
@@ -16,12 +17,23 @@ const context = {
   RegExp,
   String,
   console,
+  MailApp: {
+    sendEmail(options) {
+      sentEmails.push(options);
+    }
+  },
   Utilities: {
     Charset: { UTF_8: "utf8" },
     DigestAlgorithm: { SHA_256: "sha256" },
     computeDigest(_algorithm, value) {
       return Array.from(crypto.createHash("sha256").update(String(value), "utf8").digest())
         .map((byte) => (byte > 127 ? byte - 256 : byte));
+    },
+    base64Decode(value) {
+      return Array.from(Buffer.from(String(value), "base64"));
+    },
+    newBlob(bytes, type, name) {
+      return { bytes, type, name };
     },
     formatDate(value, _timeZone, pattern) {
       assert.equal(pattern, "yyyy-MM-dd");
@@ -44,6 +56,35 @@ function kitchenLead() {
     details: "Complete kitchen update with cabinets, counters, flooring, lighting, and a more useful family layout.",
     estimate_contact_consent: "yes",
     lead_session_id: "test-kitchen-1"
+  };
+}
+
+function crewApplicant() {
+  return {
+    full_name: "Jordan Carpenter",
+    phone: "618-555-0164",
+    email: "jordan@example.com",
+    city: "Belleville",
+    application_type: "Employee - Construction Crew Member",
+    strongest_trade: "Carpentry / Decks",
+    years_experience: "6-10 years",
+    availability: "Full-time",
+    earliest_start_date: "2026-08-01",
+    tools_available: "Own full trade tool set",
+    reliable_transportation: "Yes, to assigned locations",
+    skills_and_project_experience: "Builds residential decks, framing, stairs, rails, and punch-list carpentry with homeowner-site experience.",
+    portfolio_link: "https://example.com/work",
+    reference_and_certification_notes: "References available on request.",
+    application_contact_consent: "yes",
+    application_data_consent: "yes",
+    age_eligibility_confirmation: "yes",
+    application_accuracy_ack: "yes",
+    applicant_resume_status: "Attached to private hiring email: jordan-resume.pdf",
+    form_name: "All-Pro Construction Crew Application",
+    page_path: "/construction-jobs-belleville-ofallon.html",
+    page_url: "https://allprometroeastconstruction.com/construction-jobs-belleville-ofallon.html",
+    oppref: "gAAAAA-openai-click-reference",
+    lead_session_id: "applicant-test-1"
   };
 }
 
@@ -95,6 +136,91 @@ test("builds a noticeable email with qualification and reply sections", () => {
   assert.match(html, /Lead qualification/);
   assert.match(html, /Ready-to-send customer reply/);
   assert.match(html, /Jamie Homeowner/);
+});
+
+test("routes crew applications into a private hiring lane", () => {
+  const data = crewApplicant();
+  context.applyLeadIntelligence(data, false);
+  const subject = context.buildSubject(data, false);
+  const html = context.buildLeadEmailHtml(data, false);
+  assert.equal(data.lead_type, "employment_application");
+  assert.equal(data.routing_lane, "Hiring Review");
+  assert.match(subject, /NEW CREW APPLICATION/);
+  assert.match(html, /NEW CREW APPLICATION/);
+  assert.match(html, /Application details/);
+  assert.match(html, /Attached to private hiring email/);
+  assert.match(html, /gAAAAA-openai-click-reference/);
+  assert.doesNotMatch(html, /Lead qualification/);
+  assert.doesNotMatch(html, /Ready-to-send customer reply/);
+});
+
+test("accepts real PDF resumes, removes base64 data, and rejects spoofed files", () => {
+  const valid = {
+    applicant_resume_name: "jordan-resume.pdf",
+    applicant_resume_type: "application/pdf",
+    applicant_resume_base64: Buffer.from("%PDF-1.7\nresume").toString("base64")
+  };
+  const accepted = context.extractApplicantResume(valid);
+  assert.equal(accepted.blob.name, "jordan-resume.pdf");
+  assert.equal(accepted.blob.type, "application/pdf");
+  assert.equal("applicant_resume_base64" in valid, false);
+  assert.match(valid.applicant_resume_status, /Attached to private hiring email/);
+
+  const spoofed = {
+    applicant_resume_name: "malware.pdf",
+    applicant_resume_type: "application/pdf",
+    applicant_resume_base64: Buffer.from("MZ-not-a-pdf").toString("base64")
+  };
+  const rejected = context.extractApplicantResume(spoofed);
+  assert.equal(rejected.blob, null);
+  assert.equal("applicant_resume_base64" in spoofed, false);
+  assert.match(spoofed.applicant_resume_status, /file contents do not match/i);
+});
+
+test("confirms consented applications without marketing language", () => {
+  const data = crewApplicant();
+  context.applyLeadIntelligence(data, false);
+  sentEmails.length = 0;
+  const result = context.sendApplicantConfirmation(data);
+  assert.equal(result.sent, true);
+  assert.equal(result.eligible, true);
+  assert.equal(sentEmails.length, 1);
+  assert.equal(sentEmails[0].to, "jordan@example.com");
+  assert.match(sentEmails[0].subject, /crew application/i);
+  assert.match(sentEmails[0].body, /does not guarantee an interview/i);
+  assert.match(sentEmails[0].body, /not a marketing subscription/i);
+
+  const noConsent = crewApplicant();
+  noConsent.application_data_consent = "";
+  context.applyLeadIntelligence(noConsent, false);
+  const blocked = context.sendApplicantConfirmation(noConsent);
+  assert.equal(blocked.sent, false);
+  assert.equal(blocked.reason, "application-consent-not-recorded");
+});
+
+test("logs applications to the Applicants board and skips homeowner follow-up", () => {
+  const data = crewApplicant();
+  context.applyLeadIntelligence(data, false);
+  let appended = null;
+  const originalEnsureApplicantBoard = context.ensureApplicantBoard;
+  context.ensureApplicantBoard = () => ({
+    getLastRow() { return appended ? 2 : 1; },
+    appendRow(values) { appended = values; }
+  });
+  try {
+    const result = context.syncApplicantBoard(data);
+    assert.equal(result.logged, true);
+    assert.equal(appended[1], "New");
+    assert.equal(appended[2], "Jordan Carpenter");
+    assert.equal(appended[6], "Carpentry / Decks");
+    assert.match(appended[15], /jordan-resume.pdf/);
+    assert.equal(appended[20], "web:applicant-test-1");
+  } finally {
+    context.ensureApplicantBoard = originalEnsureApplicantBoard;
+  }
+  const followUp = context.syncFollowUpBoard(data, {});
+  assert.equal(followUp.skipped, true);
+  assert.equal(followUp.reason, "employment_application");
 });
 
 test("requires a valid non-internal email and recorded consent for confirmations", () => {

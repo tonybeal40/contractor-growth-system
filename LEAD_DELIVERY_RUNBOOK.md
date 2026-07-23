@@ -1,6 +1,6 @@
 # All-Pro Lead Delivery Runbook
 
-Last reviewed: July 17, 2026
+Last reviewed: July 23, 2026
 
 ## Delivery Paths
 
@@ -16,16 +16,16 @@ Inside Apps Script, email, SMS, and Sheet logging run independently so one failu
 - Spreadsheet ID: `1xcc0xo4UeN3EaZUMNn_qFJ-xgX6ZPg7l7sTMSLsT6GE`
 - Expected tab: `Leads`
 - Apps Script web app: `https://script.google.com/macros/s/AKfycbwXlYCGiy_SCFsZE5lnujH3iKeslueXoTQ54DLFdt-UDvP7ldixk12-WG5owCgy9oLMIQ/exec`
-- Live health check: responding successfully on July 17, 2026
-- The repository now contains a newer automation build that still requires an Apps Script new-version deployment.
+- Live health check: responding successfully on July 23, 2026
+- The repository contains release `2026-07-23-hiring-resume-v1`, which still requires an Apps Script new-version deployment.
 
 ## Deploy the Current Apps Script
 
-The repository handler includes a high-visibility HTML lead card while retaining a plain-text fallback. It normalizes different form field names and places contact, project, source, consent, delivery, qualification, and follow-up information into consistent sections. The automatic `Leads` log expands without deleting existing columns.
+The repository handler includes a high-visibility HTML lead card while retaining a plain-text fallback. It normalizes different form field names and places contact, project, source, consent, delivery, qualification, and follow-up information into consistent sections. The automatic `Leads` log expands without deleting existing columns. The July 23 release also routes employment applications into the private `Applicants` tab, validates PDF/DOCX resume signatures, and attaches accepted resumes to the private hiring email without writing file contents into Sheets.
 
-Deploy the repository handler as a new version to activate the July 17 intelligence, Follow Up Board, reminder, review, and scorecard features:
+Deploy the repository handler as a new version before publishing the July 23 applicant form changes:
 
-1. Open Apps Script project `1cJ3gn-Ca0cBbaGOlVDMWAzc0ECVyMod-mErpHqpZRw1nmzeApvR3_7P1`.
+1. Open the existing [All-Pro Apps Script project](https://script.google.com/home/projects/1Oki3GemB36oAdFgCC887QhI39Go8RW3AqArhlzAXT5BF-RlPg4aEzLWd/edit).
 2. Replace the editor contents with `allpro-form-handler.gs` from this repository.
 3. Save the project.
 4. Open **Project Settings** and add the Twilio Script Properties listed below.
@@ -34,7 +34,9 @@ Deploy the repository handler as a new version to activate the July 17 intellige
 7. Run `sendSmsTest`. Confirm the message reaches `618-292-5320`.
 8. Run `phase2SelfTest`. Confirm the email, customer confirmation, Sheet row, Follow Up Board row, and configured SMS.
 9. Open **Deploy > Manage deployments**, edit the existing web app, choose **New version**, and deploy without changing its URL.
-10. Submit one controlled public form and confirm both inboxes, the customer confirmation, `Leads`, `Follow Up Board`, and configured SMS.
+10. Open the existing web-app URL. It must include `"release":"2026-07-23-hiring-resume-v1"` and `"applicant-resumes"` in the JSON response.
+11. Submit one controlled public homeowner form and confirm both inboxes, the customer confirmation, `Leads`, `Follow Up Board`, and configured SMS.
+12. Submit one controlled crew application using a harmless sample PDF and confirm the private hiring email, attachment, applicant confirmation, and `Applicants` row. Remove the test row and email afterward.
 
 The new email subject starts with `NEW ALL-PRO LEAD` and includes the homeowner name, service, city, and phone. The HTML version includes one-tap call and email buttons; the plain-text version carries the same core information if an email client blocks HTML.
 

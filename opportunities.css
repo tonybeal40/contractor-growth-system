@@ -528,6 +528,30 @@ body.opportunity-page {
   outline: 3px solid rgba(47, 93, 80, 0.14);
 }
 
+.opp-field input[type="file"] {
+  padding: 8px;
+  background: #fdfdfb;
+}
+
+.opp-field input[type="file"]::file-selector-button {
+  min-height: 42px;
+  margin-right: 12px;
+  border: 0;
+  border-radius: 6px;
+  padding: 9px 13px;
+  background: var(--opp-green);
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.opp-file-note {
+  color: #68766f;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
 .opp-checks {
   display: grid;
   gap: 11px;
@@ -727,7 +751,7 @@ body.opportunity-page {
   }
 
   .opp-nav-links .opp-mobile-nav-link {
-    font-size: 0.78rem;
+    display: none;
   }
 
   .opp-nav-links .opp-nav-call {
