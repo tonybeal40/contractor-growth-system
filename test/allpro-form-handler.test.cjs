@@ -22,6 +22,10 @@ const context = {
     computeDigest(_algorithm, value) {
       return Array.from(crypto.createHash("sha256").update(String(value), "utf8").digest())
         .map((byte) => (byte > 127 ? byte - 256 : byte));
+    },
+    formatDate(value, _timeZone, pattern) {
+      assert.equal(pattern, "yyyy-MM-dd");
+      return new Date(value).toISOString().slice(0, 10);
     }
   }
 };
@@ -248,6 +252,29 @@ test("requires Bill's explicit campaign approval", () => {
   assert.equal(context.hasBillMarketingApproval({ billApproved: true }), true);
   assert.equal(context.hasBillMarketingApproval({ billApproved: false }), false);
   assert.equal(context.hasBillMarketingApproval({}), false);
+});
+
+test("spaces reviewed campaign sends and caps them at six per day", () => {
+  const settings = { dailyLimit: 6, minimumMinutesBetweenSends: 90 };
+  const now = new Date("2026-07-23T20:00:00Z");
+  const recent = context.marketingSendWindowFromRows([
+    [new Date("2026-07-23T19:00:00Z"), "campaign", "subscriber", "one@example.com", "sent"]
+  ], settings, now, "UTC");
+  assert.equal(recent.allowed, false);
+  assert.equal(recent.reason, "Wait until the next reviewed-send window");
+
+  const spaced = context.marketingSendWindowFromRows([
+    [new Date("2026-07-23T18:29:00Z"), "campaign", "subscriber", "one@example.com", "sent"]
+  ], settings, now, "UTC");
+  assert.equal(spaced.allowed, true);
+
+  const sixRows = Array.from({ length: 6 }, (_, index) => [
+    new Date(`2026-07-23T${String(9 + index).padStart(2, "0")}:00:00Z`),
+    "campaign", `subscriber-${index}`, `person-${index}@example.com`, "sent"
+  ]);
+  const capped = context.marketingSendWindowFromRows(sixRows, settings, now, "UTC");
+  assert.equal(capped.allowed, false);
+  assert.equal(capped.reason, "Daily marketing limit reached");
 });
 
 test("builds seasonal campaign with consultation links and unsubscribe", () => {

@@ -1988,12 +1988,18 @@ var MARKETING_LOG_HEADERS = [
 function marketingSettings() {
   var properties = PropertiesService.getScriptProperties();
   var minimumDaysBetween = parseInt(properties.getProperty("MARKETING_MIN_DAYS_BETWEEN") || "28", 10);
+  var dailyLimit = parseInt(properties.getProperty("MARKETING_DAILY_LIMIT") || "6", 10);
+  var minimumMinutesBetweenSends = parseInt(properties.getProperty("MARKETING_MIN_MINUTES_BETWEEN_SENDS") || "90", 10);
   if (isNaN(minimumDaysBetween)) minimumDaysBetween = 28;
+  if (isNaN(dailyLimit)) dailyLimit = 6;
+  if (isNaN(minimumMinutesBetweenSends)) minimumMinutesBetweenSends = 90;
   return {
     enabled: String(properties.getProperty("MARKETING_SEND_ENABLED") || "false").toLowerCase() === "true",
     billApproved: String(properties.getProperty("MARKETING_BILL_APPROVED") || "false").toLowerCase() === "true",
     batchSize: 1,
     minimumDaysBetween: Math.max(28, minimumDaysBetween),
+    dailyLimit: Math.max(1, Math.min(6, dailyLimit)),
+    minimumMinutesBetweenSends: Math.max(90, minimumMinutesBetweenSends),
     postalAddress: String(properties.getProperty("MARKETING_POSTAL_ADDRESS") || "").trim(),
     campaignId: String(properties.getProperty("MARKETING_CAMPAIGN_ID") || "seasonal-project-planning-2026-07").trim(),
     senderName: "Bill at All-Pro Construction & Landscape",
@@ -2190,6 +2196,44 @@ function hasBillMarketingApproval(settings) {
   return Boolean(settings && settings.billApproved === true);
 }
 
+function marketingSendWindowFromRows(rows, settings, now, timeZone) {
+  var comparison = now instanceof Date ? now : new Date();
+  var zone = String(timeZone || "America/Chicago");
+  var todayKey = Utilities.formatDate(comparison, zone, "yyyy-MM-dd");
+  var sentToday = 0;
+  var lastSentAt = null;
+  (rows || []).forEach(function(row) {
+    if (String(row[4] || "").toLowerCase() !== "sent") return;
+    var sentAt = row[0] instanceof Date ? row[0] : new Date(row[0]);
+    if (isNaN(sentAt.getTime())) return;
+    if (Utilities.formatDate(sentAt, zone, "yyyy-MM-dd") === todayKey) sentToday++;
+    if (!lastSentAt || sentAt.getTime() > lastSentAt.getTime()) lastSentAt = sentAt;
+  });
+  var dailyLimit = Math.max(1, Math.min(6, parseInt(settings.dailyLimit || 6, 10) || 6));
+  var spacingMinutes = Math.max(90, parseInt(settings.minimumMinutesBetweenSends || 90, 10) || 90);
+  var nextAllowedAt = lastSentAt ? new Date(lastSentAt.getTime() + spacingMinutes * 60 * 1000) : null;
+  var dailyLimitReached = sentToday >= dailyLimit;
+  var spacingActive = Boolean(nextAllowedAt && comparison.getTime() < nextAllowedAt.getTime());
+  return {
+    allowed: !dailyLimitReached && !spacingActive,
+    sentToday: sentToday,
+    dailyLimit: dailyLimit,
+    minimumMinutesBetweenSends: spacingMinutes,
+    lastSentAt: lastSentAt,
+    nextAllowedAt: nextAllowedAt,
+    reason: dailyLimitReached
+      ? "Daily marketing limit reached"
+      : (spacingActive ? "Wait until the next reviewed-send window" : "Ready")
+  };
+}
+
+function marketingSendWindow(logSheet, settings, now) {
+  var rows = logSheet.getLastRow() < 2
+    ? []
+    : logSheet.getRange(2, 1, logSheet.getLastRow() - 1, 5).getValues();
+  return marketingSendWindowFromRows(rows, settings, now, Session.getScriptTimeZone() || "America/Chicago");
+}
+
 function maskMarketingEmail(email) {
   var parts = normalizeMarketingEmail(email).split("@");
   if (parts.length !== 2) return "invalid";
@@ -2200,6 +2244,8 @@ function maskMarketingEmail(email) {
 function marketingSetupStatus() {
   var settings = marketingSettings();
   var sheet = ensureMarketingSubscriberSheet();
+  var log = ensureMarketingLogSheet();
+  var sendWindow = marketingSendWindow(log, settings);
   var values = sheet.getLastRow() < 2 ? [] : sheet.getRange(2, 1, sheet.getLastRow() - 1, MARKETING_SUBSCRIBER_HEADERS.length).getValues();
   var eligible = values.map(function(row, index) { return marketingRowToRecord(row, index + 2); })
     .filter(function(record) { return isMarketingSubscriberEligible(record, settings.campaignId, settings.minimumDaysBetween); });
@@ -2208,6 +2254,10 @@ function marketingSetupStatus() {
     billApproved: hasBillMarketingApproval(settings),
     batchSize: settings.batchSize,
     minimumDaysBetween: settings.minimumDaysBetween,
+    dailyLimit: settings.dailyLimit,
+    minimumMinutesBetweenSends: settings.minimumMinutesBetweenSends,
+    sentToday: sendWindow.sentToday,
+    nextAllowedAt: sendWindow.nextAllowedAt,
     senderEmail: settings.senderEmail,
     bccEmail: settings.bccEmail,
     postalAddressConfigured: Boolean(settings.postalAddress),
@@ -2314,6 +2364,17 @@ function sendSeasonalCampaignBatch() {
     var sync = syncMarketingSubscribers();
     var sheet = ensureMarketingSubscriberSheet();
     var log = ensureMarketingLogSheet();
+    var sendWindow = marketingSendWindow(log, settings);
+    if (!sendWindow.allowed) {
+      return {
+        ok: false,
+        sent: 0,
+        reason: sendWindow.reason,
+        sentToday: sendWindow.sentToday,
+        dailyLimit: sendWindow.dailyLimit,
+        nextAllowedAt: sendWindow.nextAllowedAt
+      };
+    }
     var values = sheet.getLastRow() < 2 ? [] : sheet.getRange(2, 1, sheet.getLastRow() - 1, MARKETING_SUBSCRIBER_HEADERS.length).getValues();
     var quota = MailApp.getRemainingDailyQuota();
     var maximum = Math.min(1, settings.batchSize, Math.max(0, quota - 10));

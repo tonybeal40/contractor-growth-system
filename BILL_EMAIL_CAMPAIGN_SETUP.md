@@ -11,6 +11,8 @@ The campaign must run as `williamosessionallpro@gmail.com`. Do not share Bill's 
 5. In Script Properties, set:
    - `MARKETING_POSTAL_ADDRESS` = `1115 Priscilla Ct, New Athens, IL 62264`
    - `MARKETING_MIN_DAYS_BETWEEN` = `28`
+   - `MARKETING_DAILY_LIMIT` = `6`
+   - `MARKETING_MIN_MINUTES_BETWEEN_SENDS` = `90`
    - `MARKETING_SEND_ENABLED` = `false`
    - `MARKETING_BILL_APPROVED` = `false`
    - `MARKETING_CAMPAIGN_ID` = a unique monthly value such as `allpro-check-in-2026-08`
@@ -26,6 +28,8 @@ The campaign must run as `williamosessionallpro@gmail.com`. Do not share Bill's 
 
 - Use a new `MARKETING_CAMPAIGN_ID` for genuinely new monthly content.
 - The code still blocks anyone contacted fewer than 28 days ago.
+- Up to six individually reviewed messages may be sent in one day, with at least 90 minutes between sends.
+- Each execution sends one person. Review the next person before running it again.
 - Review the person's name and actual service interest before each execution.
 - Set `MARKETING_BILL_APPROVED` back to `false` whenever the campaign message or operating policy changes materially, then obtain a new approval from Bill.
 - Tony receives a BCC at `tonybeal40@gmail.com`.

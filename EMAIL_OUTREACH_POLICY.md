@@ -24,6 +24,7 @@ This is the operating policy for Codex, OpenClaw, Wild Bill, Google Apps Script,
 
 - Wait at least 28 full days between marketing emails to the same subscriber.
 - The campaign runner sends at most one approved message per execution.
+- Send no more than six campaign messages per day and leave at least 90 minutes between individually reviewed sends.
 - A person reviews the recipient, original project, subject, and body before sending.
 - Bill must approve the campaign policy and message before the campaign approval gate is enabled.
 - Stop after an unsubscribe, negative response, bounce, or uncertainty about identity or consent.
