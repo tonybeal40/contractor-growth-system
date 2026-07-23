@@ -193,3 +193,9 @@ test("logs website reviews to the dedicated pending verification queue", () => {
   assert.equal(appended[14], "4");
   assert.equal(appended[16], "yes");
 });
+
+test("neutralizes spreadsheet formulas in private review fields", () => {
+  assert.equal(context.safeReviewSheetText("=IMPORTXML(\"https://example.com\")", 500), "'=IMPORTXML(\"https://example.com\")");
+  assert.equal(context.safeReviewSheetText("  +1-618-555-0100", 500), "'  +1-618-555-0100");
+  assert.equal(context.safeReviewSheetText("Normal review text", 500), "Normal review text");
+});

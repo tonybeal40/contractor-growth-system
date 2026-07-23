@@ -1170,6 +1170,13 @@ function ensureReviewQueue() {
   return sheet;
 }
 
+function safeReviewSheetText(value, maxLength) {
+  var text = String(value === undefined || value === null ? "" : value);
+  if (maxLength && text.length > maxLength) text = text.substring(0, maxLength);
+  if (/^\s*[=+\-@]/.test(text)) text = "'" + text;
+  return text;
+}
+
 function syncReviewQueue(data) {
   var lead = normalizedLead(data);
   if (lead.leadType !== "review") {
@@ -1189,26 +1196,26 @@ function syncReviewQueue(data) {
 
   sheet.appendRow([
     new Date(),
-    reviewId,
-    lead.reviewStatus,
-    lead.reviewVerificationStatus,
-    lead.reviewVerificationMethod,
+    safeReviewSheetText(reviewId, 100),
+    safeReviewSheetText(lead.reviewStatus, 80),
+    safeReviewSheetText(lead.reviewVerificationStatus, 80),
+    safeReviewSheetText(lead.reviewVerificationMethod, 100),
     "",
-    lead.name === "Name not entered" ? "" : lead.name,
-    lead.email === "Not entered" ? "" : lead.email,
-    lead.phone === "Not entered" ? "" : lead.phone,
-    lead.reviewProjectAddress === "Not entered" ? "" : lead.reviewProjectAddress,
-    lead.city === "Not entered" ? "" : lead.city,
-    lead.service === "Not selected" ? "" : lead.service,
-    lead.reviewProjectDate === "Not entered" ? "" : lead.reviewProjectDate,
-    lead.reviewProjectReference === "Not entered" ? "" : lead.reviewProjectReference,
-    lead.reviewRating,
-    lead.description === "No description entered." ? "" : lead.description.substring(0, 5000),
-    lead.reviewPermission,
-    lead.reviewAuthenticity,
-    lead.reviewAcknowledgment,
-    lead.source,
-    lead.pageUrl,
+    safeReviewSheetText(lead.name === "Name not entered" ? "" : lead.name, 200),
+    safeReviewSheetText(lead.email === "Not entered" ? "" : lead.email, 320),
+    safeReviewSheetText(lead.phone === "Not entered" ? "" : lead.phone, 80),
+    safeReviewSheetText(lead.reviewProjectAddress === "Not entered" ? "" : lead.reviewProjectAddress, 500),
+    safeReviewSheetText(lead.city === "Not entered" ? "" : lead.city, 160),
+    safeReviewSheetText(lead.service === "Not selected" ? "" : lead.service, 240),
+    safeReviewSheetText(lead.reviewProjectDate === "Not entered" ? "" : lead.reviewProjectDate, 80),
+    safeReviewSheetText(lead.reviewProjectReference === "Not entered" ? "" : lead.reviewProjectReference, 200),
+    safeReviewSheetText(lead.reviewRating, 20),
+    safeReviewSheetText(lead.description === "No description entered." ? "" : lead.description, 5000),
+    safeReviewSheetText(lead.reviewPermission, 40),
+    safeReviewSheetText(lead.reviewAuthenticity, 40),
+    safeReviewSheetText(lead.reviewAcknowledgment, 40),
+    safeReviewSheetText(lead.source, 240),
+    safeReviewSheetText(lead.pageUrl, 1000),
     "",
     ""
   ]);
@@ -1218,6 +1225,12 @@ function syncReviewQueue(data) {
 function verifyWebsiteReview(reviewId, verificationMethod, publicationNotes) {
   var id = String(reviewId || "").trim();
   if (!id) throw new Error("Review ID is required.");
+  var method = String(verificationMethod || "Multiple records").trim();
+  var allowedMethods = [
+    "Customer contact + project address", "Invoice / work order", "Scheduling record",
+    "Project communications", "Project photos", "Multiple records"
+  ];
+  if (allowedMethods.indexOf(method) === -1) throw new Error("Choose an approved verification method.");
   var sheet = ensureReviewQueue();
   if (sheet.getLastRow() < 2) throw new Error("No website reviews are waiting.");
   var match = sheet.getRange(2, 2, sheet.getLastRow() - 1, 1)
@@ -1228,10 +1241,72 @@ function verifyWebsiteReview(reviewId, verificationMethod, publicationNotes) {
   var row = match.getRow();
   sheet.getRange(row, 3).setValue("Approved for publication");
   sheet.getRange(row, 4).setValue("Verified All-Pro Project");
-  sheet.getRange(row, 5).setValue(String(verificationMethod || "Multiple records"));
+  sheet.getRange(row, 5).setValue(method);
   sheet.getRange(row, 6).setValue(new Date());
-  sheet.getRange(row, 22).setValue(String(publicationNotes || ""));
+  sheet.getRange(row, 22).setValue(safeReviewSheetText(publicationNotes, 2000));
   return { ok: true, row: row, reviewId: id, status: "Verified All-Pro Project" };
+}
+
+function onOpen() {
+  SpreadsheetApp.getUi()
+    .createMenu("All-Pro Reviews")
+    .addItem("Open Review Queue", "openWebsiteReviewQueue")
+    .addSeparator()
+    .addItem("Verify Selected Review", "verifySelectedWebsiteReview")
+    .addItem("Mark Selected Unable to Verify", "markSelectedWebsiteReviewUnableToVerify")
+    .addToUi();
+}
+
+function openWebsiteReviewQueue() {
+  var sheet = ensureReviewQueue();
+  sheet.activate();
+  SpreadsheetApp.getActive().toast("Website Reviews queue is ready.", "All-Pro Reviews", 5);
+}
+
+function selectedWebsiteReview_() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var row = sheet.getActiveRange().getRow();
+  if (sheet.getName() !== "Website Reviews" || row < 2) {
+    throw new Error("Select a review row in the Website Reviews tab first.");
+  }
+  var reviewId = String(sheet.getRange(row, 2).getValue() || "").trim();
+  if (!reviewId) throw new Error("The selected row does not have a Review ID.");
+  return { sheet: sheet, row: row, reviewId: reviewId };
+}
+
+function verifySelectedWebsiteReview() {
+  var selected = selectedWebsiteReview_();
+  var ui = SpreadsheetApp.getUi();
+  var methodResponse = ui.prompt(
+    "Verify selected review",
+    "Enter one verification method: Customer contact + project address; Invoice / work order; Scheduling record; Project communications; Project photos; or Multiple records.",
+    ui.ButtonSet.OK_CANCEL
+  );
+  if (methodResponse.getSelectedButton() !== ui.Button.OK) return;
+  var notesResponse = ui.prompt(
+    "Private verification note",
+    "Add a short internal note about the matched record. This note is not published.",
+    ui.ButtonSet.OK_CANCEL
+  );
+  if (notesResponse.getSelectedButton() !== ui.Button.OK) return;
+  verifyWebsiteReview(selected.reviewId, methodResponse.getResponseText(), notesResponse.getResponseText());
+  SpreadsheetApp.getActive().toast("Review marked Verified All-Pro Project.", "All-Pro Reviews", 6);
+}
+
+function markSelectedWebsiteReviewUnableToVerify() {
+  var selected = selectedWebsiteReview_();
+  var ui = SpreadsheetApp.getUi();
+  var response = ui.prompt(
+    "Unable to verify selected review",
+    "Add a private note explaining why the project could not be matched.",
+    ui.ButtonSet.OK_CANCEL
+  );
+  if (response.getSelectedButton() !== ui.Button.OK) return;
+  selected.sheet.getRange(selected.row, 3).setValue("Not publishable");
+  selected.sheet.getRange(selected.row, 4).setValue("Unable to verify");
+  selected.sheet.getRange(selected.row, 5, 1, 2).clearContent();
+  selected.sheet.getRange(selected.row, 22).setValue(safeReviewSheetText(response.getResponseText(), 2000));
+  SpreadsheetApp.getActive().toast("Review marked Unable to verify.", "All-Pro Reviews", 6);
 }
 
 function syncFollowUpBoard(data, delivery) {
