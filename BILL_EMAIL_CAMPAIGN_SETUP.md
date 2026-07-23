@@ -31,10 +31,11 @@ The campaign must run as `williamosessionallpro@gmail.com`. Do not share Bill's 
 - Up to six individually reviewed messages may be sent in one day, with at least 90 minutes between sends.
 - Each execution sends one person. Review the next person before running it again.
 - Review the person's name and actual service interest before each execution.
+- Keep the recurring message focused on current All-Pro scheduling availability. Do not describe a prior inquiry or imply that All-Pro completed work for the recipient.
 - Set `MARKETING_BILL_APPROVED` back to `false` whenever the campaign message or operating policy changes materially, then obtain a new approval from Bill.
 - Tony receives a BCC at `tonybeal40@gmail.com`.
 - Process `REMOVE`, unsubscribe requests, negative responses, and bounces before the next send.
-- The website review link is conditional and should only be used by customers for whom All-Pro completed work.
+- Do not place the website-review link in this recurring availability message. Use a separate review request only for customers for whom All-Pro completed work.
 
 ## Business Mailbox Later
 

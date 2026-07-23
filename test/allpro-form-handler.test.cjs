@@ -277,7 +277,7 @@ test("spaces reviewed campaign sends and caps them at six per day", () => {
   assert.equal(capped.reason, "Daily marketing limit reached");
 });
 
-test("builds seasonal campaign with consultation links and unsubscribe", () => {
+test("builds a generic availability campaign without project-history claims", () => {
   const settings = {
     estimateUrl: "https://allprometroeastconstruction.com/get-quote.html",
     guideUrl: "https://allprometroeastconstruction.com/metro-east-home-service-guide.html",
@@ -290,9 +290,13 @@ test("builds seasonal campaign with consultation links and unsubscribe", () => {
     settings,
     "https://script.google.com/example?unsubscribe=1"
   );
-  assert.match(content.subject, /Jamie, a quick check-in from Bill/i);
-  assert.match(content.plain, /Kitchen remodeling in Belleville/);
-  assert.match(content.plain, /honest review/);
+  assert.match(content.subject, /Jamie, All-Pro has scheduling availability/i);
+  assert.match(content.plain, /room on the schedule/i);
+  assert.doesNotMatch(content.plain, /previously asked/i);
+  assert.doesNotMatch(content.plain, /completed work/i);
+  assert.doesNotMatch(content.plain, /Kitchen remodeling in Belleville/i);
+  assert.doesNotMatch(content.plain, /review/i);
+  assert.match(content.plain, /promotional email/i);
   assert.match(content.plain, /Unsubscribe:/);
   assert.match(content.html, /Request a free estimate/);
   assert.match(content.html, /Bill here with All-Pro/);

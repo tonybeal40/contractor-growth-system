@@ -2276,42 +2276,38 @@ function previewSeasonalCampaign() {
 
 function buildSeasonalMarketingEmail(record, settings, unsubscribeUrl) {
   var firstName = String(record.firstName || "there").trim() || "there";
-  var service = String(record.service || "").trim();
-  var city = String(record.city || "").trim();
-  var projectReference = service
-    ? "You previously asked us about " + service + (city ? " in " + city : "") + "."
-    : "You previously asked All-Pro about a home project.";
-  var subject = firstName + ", a quick check-in from Bill at All-Pro";
+  var subject = firstName + ", All-Pro has scheduling availability";
   var plain = [
     "Hi " + firstName + ",",
     "",
-    "Bill here with All-Pro Construction & Landscape. " + projectReference,
+    "Bill here with All-Pro Construction & Landscape.",
     "",
-    "I wanted to let you know we are still around if you need help planning that project or something new. You can reply with a few details or photos, and I will tell you the most useful next step.",
+    "We currently have room on the schedule for remodeling, decks, fencing, concrete, landscaping, cleanup, and smaller repair projects around the Metro East.",
+    "",
+    "If you have something you would like us to look at, reply with a short description or a few photos. We will help you figure out the next step.",
     "",
     "Free estimate: " + settings.estimateUrl,
     "Call or text Bill: " + settings.phone,
-    "",
-    "If All-Pro has completed work for you and you would like to share an honest review: " + settings.reviewUrl,
     "",
     "Thanks,",
     "Bill",
     "All-Pro Construction & Landscape",
     settings.postalAddress,
     "",
+    "This is a promotional email from All-Pro Construction & Landscape.",
     "Unsubscribe: " + unsubscribeUrl,
     "You can also reply REMOVE and we will suppress future marketing email."
   ].join("\n");
   var html = '<!doctype html><html><body style="margin:0;padding:24px;font-family:Arial,Helvetica,sans-serif;color:#1f2933;line-height:1.65;">' +
     '<div style="max-width:620px;"><p>Hi ' + escapeEmailHtml(firstName) + ',</p>' +
-    '<p>Bill here with All-Pro Construction &amp; Landscape. ' + escapeEmailHtml(projectReference) + '</p>' +
-    '<p>I wanted to let you know we are still around if you need help planning that project or something new. You can reply with a few details or photos, and I will tell you the most useful next step.</p>' +
+    '<p>Bill here with All-Pro Construction &amp; Landscape.</p>' +
+    '<p>We currently have room on the schedule for remodeling, decks, fencing, concrete, landscaping, cleanup, and smaller repair projects around the Metro East.</p>' +
+    '<p>If you have something you would like us to look at, reply with a short description or a few photos. We will help you figure out the next step.</p>' +
     '<p><a href="' + escapeEmailHtml(settings.estimateUrl) + '">Request a free estimate</a><br>' +
     'Call or text Bill: <a href="tel:6185810676">' + escapeEmailHtml(settings.phone) + '</a></p>' +
-    '<p>If All-Pro has completed work for you and you would like to share an honest review, <a href="' + escapeEmailHtml(settings.reviewUrl) + '">you can write one here</a>.</p>' +
     '<p>Thanks,<br>Bill<br>All-Pro Construction &amp; Landscape</p>' +
     '<p style="font-size:12px;color:#52606d;">' + escapeEmailHtml(settings.postalAddress) + '<br>' +
-    'You received this because you opted in to occasional All-Pro project emails. ' +
+    'This is a promotional email from All-Pro Construction &amp; Landscape. ' +
     '<a href="' + escapeEmailHtml(unsubscribeUrl) + '">Unsubscribe</a> or reply REMOVE.</p></div></body></html>';
   return { subject: subject, plain: plain, html: html };
 }
