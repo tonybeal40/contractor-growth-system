@@ -416,15 +416,15 @@ test("builds a generic availability campaign without project-history claims", ()
     settings,
     "https://script.google.com/example?unsubscribe=1"
   );
-  assert.match(content.subject, /Jamie, All-Pro has scheduling availability/i);
-  assert.match(content.plain, /room on the schedule/i);
+  assert.equal(content.subject, "Planning a project with All-Pro");
+  assert.match(content.plain, /free project consultations and estimates/i);
   assert.doesNotMatch(content.plain, /previously asked/i);
   assert.doesNotMatch(content.plain, /completed work/i);
   assert.doesNotMatch(content.plain, /Kitchen remodeling in Belleville/i);
   assert.doesNotMatch(content.plain, /review/i);
   assert.match(content.plain, /promotional email/i);
   assert.match(content.plain, /Unsubscribe:/);
-  assert.match(content.html, /Request a free estimate/);
+  assert.match(content.html, /use our estimate form/i);
   assert.match(content.html, /Bill here with All-Pro/);
 });
 

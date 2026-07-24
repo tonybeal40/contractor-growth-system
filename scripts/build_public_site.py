@@ -57,7 +57,10 @@ BLOCKED_PUBLIC_TEXT = re.compile(
     r"@tmomail\.net|@txt\.att\.net|@vtext\.com|@email\.uscc\.net)",
     re.IGNORECASE,
 )
-CURRENT_FORM_ROUTER = "formsubmit-lead-tracking.js?v=20260722a"
+APPROVED_FORM_ROUTERS = {
+    "formsubmit-lead-tracking.js?v=20260722a",
+    "formsubmit-lead-tracking.js?v=20260723c",
+}
 LOCAL_REFERENCE_ATTRS = {
     "a": "href",
     "audio": "src",
@@ -189,7 +192,9 @@ def validate(indexed: set[Path]) -> None:
                 tracking_errors.append(f"{relative_page}: missing Microsoft Clarity")
 
         if parser.formsubmit_forms and not any(
-            CURRENT_FORM_ROUTER in source for source in parser.script_sources
+            router in source
+            for source in parser.script_sources
+            for router in APPROVED_FORM_ROUTERS
         ):
             form_errors.append(f"{relative_page}: missing current form router")
         for form in parser.formsubmit_forms:
