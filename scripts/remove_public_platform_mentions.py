@@ -149,7 +149,7 @@ def clean_page(path: Path, text: str) -> str:
     text = text.replace("â€”", "&mdash;")
     text = re.sub(
         r"formsubmit-lead-tracking\.js\?v=\d{8}[a-z]",
-        "formsubmit-lead-tracking.js?v=20260722a",
+        "formsubmit-lead-tracking.js?v=20260726a",
         text,
     )
     return text
