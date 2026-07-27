@@ -20,6 +20,14 @@ RATING_RE = re.compile(
 )
 TEXT_RULES = (
     (
+        "internal strategy wording",
+        re.compile(
+            r"(?:Why this page exists|stays compliant|Real CTA|Proof path|"
+            r"Review source label|The catch-all page|The proof page)",
+            re.I,
+        ),
+    ),
+    (
         "awkward legacy wording",
         re.compile(
             r"(?:Metro East and Metro East|service dating to 2002|"
@@ -213,6 +221,11 @@ def audit_generator(path: Path) -> list[Finding]:
         ("old generator radius", r"\b(?:50|60)[ -]mile\b"),
         ("old generator response promise", r"\b(?:within 24 hours|usually same day)\b"),
         ("old generator licensing claim", r"licensed.{0,25}insured|insured.{0,25}licensed"),
+        (
+            "internal generator wording",
+            r"Why this page exists|stays compliant|Real CTA|Proof path|Review source label|The catch-all page|The proof page",
+        ),
+        ("unverified generated review data", r"review_excerpt|review_author|[\"']@type[\"']\s*:\s*[\"']Review[\"']"),
     )
     for rule, pattern in rules:
         match = re.search(pattern, text, re.I)
@@ -226,6 +239,7 @@ def main() -> int:
     for path in target_paths():
         findings.extend(audit_file(path))
     findings.extend(audit_generator(ROOT / "generate-city-pages.ps1"))
+    findings.extend(audit_generator(ROOT / "scripts" / "generate_pages.py"))
 
     unique = sorted(set(findings), key=lambda item: (item.path.as_posix(), item.rule, item.context))
     if unique:
@@ -236,7 +250,7 @@ def main() -> int:
         if len(unique) > 100:
             print(f"... and {len(unique) - 100} more")
         return 1
-    print(f"Public claim audit passed for {len(target_paths())} public HTML files and the page generator.")
+    print(f"Public claim audit passed for {len(target_paths())} public HTML files and both page generators.")
     return 0
 
 

@@ -1,118 +1,112 @@
 {
   "service_proofs": {
     "deck-repair": {
-      "review_excerpt": "Bill explained what could actually be repaired, what needed replacement, and what could wait. That honesty mattered.",
-      "review_author": "Metro East deck customer",
       "image_urls": [
-        "https://allprometroeastconstruction.com/images/deck-build-metro-east-il.png",
-        "https://allprometroeastconstruction.com/images/deck-lighting-belleville-il.png"
+        "/images/deck-build-metro-east-il.webp",
+        "/images/deck-lighting-belleville-il.webp"
       ],
-      "proof_points": [
-        "Real deck repair pages now map to one city and one service instead of generic catch-all copy.",
-        "The estimate path goes straight to first-party capture instead of sending people into someone else's marketplace.",
-        "Repair pages support the 'small projects welcome' positioning inside TonyOS."
+      "image_alt": "Completed All-Pro deck project in the Metro East Illinois area",
+      "estimate_checks": [
+        "Deck boards, stairs, and railings that feel loose, soft, or uneven",
+        "Visible rot, fastener failure, and areas that may need closer inspection",
+        "Whether a focused repair or a larger replacement plan makes more sense"
       ]
     },
     "fence-contractor": {
-      "review_excerpt": "We needed a practical fence fix, not a giant sales pitch. The estimate was clear and the job scope made sense.",
-      "review_author": "Metro East fence customer",
       "image_urls": [
-        "https://allprometroeastconstruction.com/images/deck-build-metro-east-il.png",
-        "https://allprometroeastconstruction.com/images/contact-hero.jpg"
+        "/images/branding/site-hero-1920x900.jpg",
+        "/images/projects/metro-east-landscape-curb-appeal-wide.avif"
       ],
-      "proof_points": [
-        "Fence pages focus on the jobs homeowners actually search for: repair, gates, storm damage, and replacement planning.",
-        "The local service page feeds the same quote system as the rest of the site, which keeps routing clean.",
-        "This lane supports fast-close exterior jobs, not just long-cycle remodel leads."
+      "image_alt": "Residential outdoor project setting served by All-Pro in Metro East Illinois",
+      "estimate_checks": [
+        "Leaning posts, loose panels, damaged pickets, and gate alignment",
+        "Storm damage and sections that may be repaired without replacing the full fence",
+        "Access, material choices, layout, and the homeowner's privacy or safety goals"
       ]
     },
     "landscaping": {
-      "review_excerpt": "The cleanup and curb-appeal work made the whole place look better without turning it into a complicated project.",
-      "review_author": "Metro East landscaping customer",
       "image_urls": [
-        "https://allprometroeastconstruction.com/images/contact-hero.jpg",
-        "https://allprometroeastconstruction.com/images/deck-build-metro-east-il.png"
+        "/images/projects/metro-east-landscape-curb-appeal-wide.avif",
+        "/images/projects/metro-east-landscape-front-entry.avif"
       ],
-      "proof_points": [
-        "Landscaping pages now support one-time cleanup, mulch, rock, trimming, and curb-appeal intent instead of vague lawn copy.",
-        "The page structure is useful for Google and for homeowners comparing cleanup versus larger upgrade work.",
-        "This lane gives All-Pro a practical path into seasonal local demand without relying on directory ads."
+      "image_alt": "Completed All-Pro landscaping and curb appeal project in Metro East Illinois",
+      "estimate_checks": [
+        "Overgrown beds, tired edging, brush, and areas that need a cleaner layout",
+        "Mulch or decorative rock quantities, drainage concerns, and access",
+        "A practical scope that fits the property's priorities and available budget"
       ]
     },
     "pressure-washing": {
-      "review_excerpt": "The concrete and outdoor surfaces looked better fast, and the whole job felt simple from estimate to cleanup.",
-      "review_author": "Metro East pressure washing customer",
       "image_urls": [
-        "https://allprometroeastconstruction.com/images/deck-lighting-belleville-il.png",
-        "https://allprometroeastconstruction.com/images/contact-hero.jpg"
+        "/images/branding/site-hero-1920x900.jpg",
+        "/images/deck-build-metro-east-il.webp"
       ],
-      "proof_points": [
-        "Pressure washing pages target fast, high-intent cleanup searches that can turn into easy-close homeowner leads.",
-        "Each page stores source, page, city, and campaign fields so the close rate can be measured by market.",
-        "This service lane also creates natural internal links into landscaping, deck repair, and yard cleanup."
+      "image_alt": "Metro East outdoor living area served by All-Pro Construction and Landscape",
+      "estimate_checks": [
+        "Surface type, staining, drainage, and nearby landscaping or painted materials",
+        "Driveways, patios, walkways, decks, or fences that can be grouped into one visit",
+        "Areas that may need a gentler cleaning method instead of maximum pressure"
       ]
     },
     "yard-cleanup": {
-      "review_excerpt": "We had brush, debris, and cleanup work that kept getting pushed off. The estimate was straightforward and the property finally looked under control again.",
-      "review_author": "Metro East cleanup customer",
       "image_urls": [
-        "https://allprometroeastconstruction.com/images/contact-hero.jpg",
-        "https://allprometroeastconstruction.com/images/deck-build-metro-east-il.png"
+        "/images/projects/metro-east-landscape-flower-bed.avif",
+        "/images/projects/metro-east-landscape-finished-lawn.avif"
       ],
-      "proof_points": [
-        "Yard cleanup pages support seasonal demand, storm cleanup, and neglected-property searches without pretending to be a giant landscaping firm.",
-        "This page cluster gives the site a cleaner entry point for homeowners who need smaller practical work done now.",
-        "Cleanup pages can be routed directly or bundled into larger exterior jobs later."
+      "image_alt": "Finished All-Pro yard and landscape cleanup project in Metro East Illinois",
+      "estimate_checks": [
+        "Brush, debris, overgrowth, neglected beds, and material that may need hauling",
+        "Storm-related cleanup, trimming needs, and areas that should remain protected",
+        "The most useful first phase when the full property does not need work at once"
       ]
     },
     "handyman": {
-      "review_excerpt": "We had a list of small repairs and no one wanted the job. All-Pro treated it like real work and got us moving again.",
-      "review_author": "Metro East handyman customer",
       "image_urls": [
-        "https://allprometroeastconstruction.com/images/shower-remodel-belleville-il.png",
-        "https://allprometroeastconstruction.com/images/contact-hero.jpg"
+        "/images/shower-remodel-belleville-il.webp",
+        "/images/deck-lighting-belleville-il.webp"
       ],
-      "proof_points": [
-        "Handyman pages reinforce the 'small projects welcome' message from TonyOS instead of burying those jobs.",
-        "This cluster captures punch-list demand that often gets lost when sites only push big remodel offers.",
-        "The form fields make it easier to tell small-repair leads apart from larger remodel traffic."
+      "image_alt": "Completed All-Pro small home improvement project in Metro East Illinois",
+      "estimate_checks": [
+        "The complete repair list, project priorities, and any safety concerns",
+        "Whether several small items can be handled efficiently during one visit",
+        "Photos, measurements, access, and materials needed for a clear written scope"
       ]
     }
   },
   "city_proofs": {
     "belleville": {
-      "extra_note": "Belleville pages are the clearest current revenue cluster and should keep getting the strongest project proof and photo depth.",
-      "intro_hook": "This page is built for Belleville homeowners who want a real next step, not a city-name swap pasted onto generic contractor copy."
+      "extra_note": "Belleville homes range from established neighborhoods to newer properties, so the right scope depends on the age and condition of the specific project area.",
+      "intro_hook": "Get a clear local estimate for practical repairs, outdoor improvements, and home projects in Belleville."
     },
     "ofallon": {
-      "extra_note": "O'Fallon homeowners usually care about timeline, cleanliness, and getting fast outside work handled without drama.",
-      "intro_hook": "This page is built for O'Fallon homeowners who want outside work handled cleanly, quoted clearly, and scheduled without runaround."
+      "extra_note": "O'Fallon projects often focus on curb appeal, outdoor living, maintenance, and repairs that keep a busy property working well.",
+      "intro_hook": "Plan your O'Fallon project with a straightforward scope, direct local contact, and a written estimate."
     },
     "edwardsville": {
-      "extra_note": "Edwardsville pages should lean into communication, curb appeal, and cleaner-finish positioning.",
-      "intro_hook": "This page is built for Edwardsville homeowners who want a cleaner-finish contractor page with a direct, local estimate path."
+      "extra_note": "Edwardsville homeowners frequently ask about outdoor living, curb appeal, drainage, fencing, and well-organized repair work.",
+      "intro_hook": "Start an Edwardsville home project with clear questions, practical options, and a direct estimate request."
     },
     "collinsville": {
-      "extra_note": "Collinsville pages support practical repair and cleanup demand that often closes faster than long-cycle remodel work.",
-      "intro_hook": "This page is built for Collinsville homeowners who need practical outside work fixed before it spreads into a bigger mess."
+      "extra_note": "Collinsville properties often need weather-related repairs, cleanup, concrete attention, and exterior maintenance before small issues grow.",
+      "intro_hook": "Get a practical next step for repair, cleanup, and outdoor work at your Collinsville home."
     },
     "swansea": {
-      "extra_note": "Swansea creates a useful hyperlocal lane for smaller jobs and fast-close homeowner cleanup demand.",
-      "intro_hook": "This page is built for Swansea homeowners who want a smaller local job taken seriously instead of being ignored because it is not a giant remodel."
+      "extra_note": "Swansea homeowners often need focused repairs, landscape cleanup, fencing, washing, and smaller projects that still deserve a clear plan.",
+      "intro_hook": "Small projects are welcome in Swansea, with a clear estimate and a scope built around what your property actually needs."
     }
   },
   "combo_overrides": {
     "pressure-washing::belleville": {
-      "extra_note": "Belleville pressure washing queries are one of the easiest ways to turn cleanup intent into broader outdoor project discovery."
+      "extra_note": "Concrete, patios, walks, decks, and fences can often be reviewed together so the homeowner receives one clear cleanup plan."
     },
     "yard-cleanup::swansea": {
-      "extra_note": "Swansea cleanup work is a strong fit for the owner's small-project positioning and quick local response."
+      "extra_note": "Photos of overgrowth, debris, and access points can help the first conversation stay focused and useful."
     },
     "deck-repair::ofallon": {
-      "extra_note": "O'Fallon deck-repair traffic often sits close to bigger replacement and outdoor-living demand."
+      "extra_note": "A deck inspection should separate immediate safety repairs from appearance upgrades and longer-term replacement planning."
     },
     "handyman::collinsville": {
-      "extra_note": "Collinsville handyman searches are a good fit for bundled punch-list and outside repair work."
+      "extra_note": "A written punch list and a few photos make it easier to group repairs and identify the right first visit."
     }
   }
 }

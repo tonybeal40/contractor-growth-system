@@ -54,6 +54,8 @@ BLOCKED_FILENAMES = {
 BLOCKED_PUBLIC_TEXT = re.compile(
     r"(?:\bAngi\b|HomeAdvisor|Home Advisor|TonyOS|AllProOnly-|"
     r"LinkedIn Growth System|Documentation Available on Request|Public Review Profiles|"
+    r"Why this page exists|stays compliant|Real CTA|Proof path|Review source label|"
+    r"The catch-all page|The proof page|"
     r"@tmomail\.net|@txt\.att\.net|@vtext\.com|@email\.uscc\.net)",
     re.IGNORECASE,
 )
@@ -76,6 +78,7 @@ class PublicPageParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
         self.references: list[str] = []
+        self.image_sources: list[str] = []
         self.script_sources: list[str] = []
         self.formsubmit_forms: list[dict[str, str]] = []
 
@@ -84,6 +87,8 @@ class PublicPageParser(HTMLParser):
         attr_name = LOCAL_REFERENCE_ATTRS.get(tag.lower())
         if attr_name and values.get(attr_name):
             self.references.append(values[attr_name].strip())
+        if tag.lower() == "img" and values.get("src"):
+            self.image_sources.append(values["src"].strip())
         if tag.lower() == "script" and values.get("src"):
             self.script_sources.append(values["src"].strip())
         if tag.lower() == "form" and "formsubmit.co/" in values.get("action", ""):
@@ -221,6 +226,23 @@ def validate(indexed: set[Path]) -> None:
                     candidate.resolve().is_relative_to(OUTPUT) and candidate.resolve().is_file()
                     for candidate in candidates
                 )
+            except (OSError, ValueError):
+                valid = False
+            if not valid:
+                broken_references.append(f"{relative_page}: {raw}")
+
+        for raw in parser.image_sources:
+            parsed = urlparse(raw)
+            if parsed.scheme not in {"http", "https"}:
+                continue
+            if parsed.netloc.lower() not in {
+                "allprometroeastconstruction.com",
+                "www.allprometroeastconstruction.com",
+            }:
+                continue
+            target = OUTPUT / unquote(parsed.path).lstrip("/")
+            try:
+                valid = target.resolve().is_relative_to(OUTPUT) and target.resolve().is_file()
             except (OSError, ValueError):
                 valid = False
             if not valid:
