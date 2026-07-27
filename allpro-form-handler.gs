@@ -268,6 +268,7 @@ function doPost(e) {
 
     return jsonResponse({
       ok: delivery.email.sent || delivery.sheet.logged,
+      release: HANDLER_RELEASE,
       redirect: buildThankYouUrl(data),
       delivery: delivery,
       lead_id: data["lead_id"] || ""

@@ -29,6 +29,57 @@
     firstTouch: "allpro_first_touch"
   };
   const initializedForms = new WeakSet();
+  let endpointCapabilitiesPromise = null;
+
+  function requiredEndpointCapability(form, formName) {
+    if (isReviewForm(formName)) {
+      return "website-reviews";
+    }
+
+    if (
+      findNamedField(form, "applicant_resume") ||
+      findNamedField(form, "application_data_consent") ||
+      /crew\s*application|employment\s*application/i.test(formName)
+    ) {
+      return "applicant-resumes";
+    }
+
+    return "";
+  }
+
+  function fetchEndpointCapabilities() {
+    if (!endpointCapabilitiesPromise) {
+      endpointCapabilitiesPromise = fetch(CUSTOM_ENDPOINT, {
+        method: "GET",
+        cache: "no-store",
+        credentials: "omit"
+      }).then(function (response) {
+        if (!response.ok) {
+          throw new Error("All-Pro form endpoint health check returned HTTP " + response.status);
+        }
+        return response.json();
+      }).then(function (result) {
+        return Array.isArray(result && result.capabilities) ? result.capabilities : [];
+      }).catch(function () {
+        return [];
+      });
+    }
+
+    return endpointCapabilitiesPromise;
+  }
+
+  function requireEndpointCapability(form, formName) {
+    const required = requiredEndpointCapability(form, formName);
+    if (!required) {
+      return Promise.resolve();
+    }
+
+    return fetchEndpointCapabilities().then(function (capabilities) {
+      if (capabilities.indexOf(required) === -1) {
+        throw new Error("All-Pro form endpoint is missing the " + required + " capability");
+      }
+    });
+  }
 
   function safeStorage() {
     try {
@@ -866,7 +917,9 @@
     populateTracking(form, snapshot);
     const data = collectFormData(form);
     const nextUrl = data["_next"] || (siteOrigin + "/thank-you.html?src=form");
-    return enrichLeadPayload(form, data).then(function (enriched) {
+    return requireEndpointCapability(form, getFormName(form)).then(function () {
+      return enrichLeadPayload(form, data);
+    }).then(function (enriched) {
       return addProjectPhotoPayload(form, enriched);
     }).then(function (withPhoto) {
       return addApplicantResumePayload(form, withPhoto);

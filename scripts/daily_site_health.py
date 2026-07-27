@@ -24,6 +24,13 @@ FORM_HANDLER_URL = (
 CONCIERGE_HEALTH_PATH = "/api/lead-concierge/health"
 EXPECTED_PHONE = "tel:6185810676"
 EXPECTED_FORM_ACTION = "https://formsubmit.co/williamosessionallpro@gmail.com"
+EXPECTED_FORM_HANDLER_RELEASE = "2026-07-23-hiring-resume-v1"
+REQUIRED_FORM_HANDLER_CAPABILITIES = {
+    "homeowner-leads",
+    "applicant-resumes",
+    "website-reviews",
+    "openai-attribution",
+}
 
 
 @dataclass(frozen=True)
@@ -182,7 +189,13 @@ def text_asset_result(base_url: str, path: str, required: Iterable[str]) -> Chec
     )
 
 
-def json_health_result(label: str, url: str, expected_service: str | None = None) -> CheckResult:
+def json_health_result(
+    label: str,
+    url: str,
+    expected_service: str | None = None,
+    expected_release: str | None = None,
+    required_capabilities: set[str] | None = None,
+) -> CheckResult:
     try:
         status, final_url, body = fetch(url)
     except RuntimeError as error:
@@ -194,6 +207,16 @@ def json_health_result(label: str, url: str, expected_service: str | None = None
             problems.append("JSON did not report ok=true")
         if expected_service and payload.get("service") != expected_service:
             problems.append("unexpected service name")
+        if expected_release and payload.get("release") != expected_release:
+            problems.append(
+                f"stale deployment (expected release {expected_release}, "
+                f"received {payload.get('release') or 'none'})"
+            )
+        if required_capabilities:
+            capabilities = set(payload.get("capabilities") or [])
+            missing = sorted(required_capabilities - capabilities)
+            if missing:
+                problems.append("missing capabilities: " + ", ".join(missing))
     except (json.JSONDecodeError, AttributeError):
         problems.append("response was not valid health JSON")
     return CheckResult(
@@ -245,7 +268,13 @@ def run(base_url: str) -> list[CheckResult]:
                 "/llms.txt",
                 ["Kitchen Remodel Belleville IL", "Bathroom Remodel O'Fallon IL"],
             ),
-            json_health_result("Apps Script form handler", FORM_HANDLER_URL, "All-Pro Form Handler"),
+            json_health_result(
+                "Apps Script form handler",
+                FORM_HANDLER_URL,
+                "All-Pro Form Handler",
+                EXPECTED_FORM_HANDLER_RELEASE,
+                REQUIRED_FORM_HANDLER_CAPABILITIES,
+            ),
             json_health_result(
                 "Cloudflare lead concierge", urljoin(base_url, CONCIERGE_HEALTH_PATH)
             ),
