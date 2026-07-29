@@ -31,6 +31,20 @@ REQUIRED_FORM_HANDLER_CAPABILITIES = {
     "website-reviews",
     "openai-attribution",
 }
+CRAWLER_CHECK_PATH = "/kitchen-remodel-belleville-il.html"
+SEARCH_CRAWLERS = (
+    "Googlebot",
+    "bingbot",
+    "OAI-SearchBot",
+    "ChatGPT-User",
+    "PerplexityBot",
+    "Perplexity-User",
+    "Claude-SearchBot",
+    "Claude-User",
+    "Applebot",
+    "DuckAssistBot",
+)
+BLOCKED_TRAINING_CRAWLERS = ("GPTBot", "ClaudeBot")
 
 
 @dataclass(frozen=True)
@@ -107,12 +121,14 @@ class CheckResult:
     details: str
 
 
-def fetch(url: str, timeout: int = 25) -> tuple[int, str, str]:
+def fetch(
+    url: str,
+    timeout: int = 25,
+    user_agent: str = "AllProDailyHealth/1.0 (+https://allprometroeastconstruction.com/)",
+) -> tuple[int, str, str]:
     request = Request(
         url,
-        headers={
-            "User-Agent": "AllProDailyHealth/1.0 (+https://allprometroeastconstruction.com/)"
-        },
+        headers={"User-Agent": user_agent},
     )
     try:
         with urlopen(request, timeout=timeout) as response:
@@ -227,6 +243,47 @@ def json_health_result(
     )
 
 
+def crawler_policy_result(base_url: str) -> CheckResult:
+    url = urljoin(base_url.rstrip("/") + "/", CRAWLER_CHECK_PATH.lstrip("/"))
+    problems: list[str] = []
+    allowed = 0
+    blocked = 0
+
+    for user_agent in SEARCH_CRAWLERS:
+        try:
+            status, _, _ = fetch(url, user_agent=user_agent)
+        except RuntimeError as error:
+            problems.append(f"{user_agent}: {error}")
+            continue
+        if status != 200:
+            problems.append(f"{user_agent}: HTTP {status}, expected 200")
+        else:
+            allowed += 1
+
+    for user_agent in BLOCKED_TRAINING_CRAWLERS:
+        try:
+            status, _, _ = fetch(url, user_agent=user_agent)
+        except RuntimeError as error:
+            problems.append(f"{user_agent}: {error}")
+            continue
+        if status != 403:
+            problems.append(f"{user_agent}: HTTP {status}, expected 403")
+        else:
+            blocked += 1
+
+    details = (
+        "; ".join(problems)
+        if problems
+        else f"{allowed} search/user crawlers allowed; {blocked} training crawlers blocked"
+    )
+    return CheckResult(
+        "Search and AI crawler access",
+        url,
+        "FAIL" if problems else "PASS",
+        details,
+    )
+
+
 def render_markdown(results: list[CheckResult]) -> str:
     failures = [result for result in results if result.status == "FAIL"]
     generated = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -266,8 +323,13 @@ def run(base_url: str) -> list[CheckResult]:
             text_asset_result(
                 base_url,
                 "/llms.txt",
-                ["Kitchen Remodel Belleville IL", "Bathroom Remodel O'Fallon IL"],
+                [
+                    "Kitchen Remodel Belleville IL",
+                    "Bathroom Remodel O'Fallon IL",
+                    "review-request.html",
+                ],
             ),
+            crawler_policy_result(base_url),
             json_health_result(
                 "Apps Script form handler",
                 FORM_HANDLER_URL,

@@ -1,6 +1,6 @@
 # All-Pro AI Crawler Access Audit
 
-Last verified: July 15, 2026
+Last verified: July 29, 2026
 
 ## Cloudflare Policy
 
@@ -30,17 +30,23 @@ their training-only crawlers.
 The last-24-hours table showed successful access for Claude-SearchBot,
 OAI-SearchBot, ChatGPT-User, Googlebot, and BingBot.
 
-Live HTTP checks on July 15, 2026 returned `200` for OAI-SearchBot,
+Live HTTP checks on July 29, 2026 returned `200` for OAI-SearchBot,
 ChatGPT-User, PerplexityBot, Perplexity-User, Claude-SearchBot, Claude-User,
-Googlebot, bingbot, DuckAssistBot, and Applebot. The same priority remodel URL
+Googlebot, bingbot, DuckAssistBot, and Applebot. The same Belleville kitchen URL
 returned `403` for GPTBot and ClaudeBot, matching the intended policy.
 
 ## Site Directives
 
 `robots.txt` explicitly allows the search and assistant user agents above and
-disallows GPTBot, ClaudeBot, and Google-Extended. `llms.txt` contains audited
-business facts and links to the priority Belleville and O'Fallon kitchen and
-bathroom pages.
+disallows GPTBot, ClaudeBot, and Google-Extended. `llms.txt` remains an audited
+reference for services that choose to read it, with links to the priority
+Belleville and O'Fallon kitchen and bathroom pages. Google Search does not use
+`llms.txt` as a ranking signal; its AI search features rely on indexed web pages
+and the same core quality systems used by Search.
+
+The daily GitHub health audit now tests these crawler access rules against a
+priority Belleville remodel page. A future Cloudflare rule that blocks a search
+crawler will make the audit fail visibly.
 
 ## Recheck Procedure
 

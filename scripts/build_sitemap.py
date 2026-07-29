@@ -2,11 +2,12 @@
 from __future__ import annotations
 
 import re
+import subprocess
 import xml.etree.ElementTree as ET
 from datetime import date
 from html import unescape
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -118,6 +119,85 @@ def canonical_url(path: Path, html: str) -> str:
     return f"{SITE}/{rel}"
 
 
+def git_last_modified_dates() -> dict[str, str]:
+    """Return the newest committed date for each tracked path using one git call."""
+    try:
+        result = subprocess.run(
+            [
+                "git",
+                "log",
+                "--format=__ALLPRO_DATE__%cs",
+                "--name-only",
+                "--diff-filter=ACMRT",
+                "--",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return {}
+
+    dates: dict[str, str] = {}
+    current_date = ""
+    for raw_line in result.stdout.splitlines():
+        line = raw_line.strip()
+        if line.startswith("__ALLPRO_DATE__"):
+            current_date = line.removeprefix("__ALLPRO_DATE__")
+        elif line and current_date:
+            dates.setdefault(line.replace("\\", "/"), current_date)
+    return dates
+
+
+def working_tree_paths() -> set[str]:
+    """Treat meaningful uncommitted page changes as modified today for local builds."""
+    try:
+        result = subprocess.run(
+            ["git", "status", "--porcelain", "--untracked-files=all"],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return set()
+
+    paths: set[str] = set()
+    for raw_line in result.stdout.splitlines():
+        value = raw_line[3:].strip() if len(raw_line) > 3 else ""
+        if " -> " in value:
+            value = value.rsplit(" -> ", 1)[-1]
+        if value:
+            paths.add(value.strip('"').replace("\\", "/"))
+    return paths
+
+
+def last_modified(path: Path, committed: dict[str, str], changed: set[str]) -> str:
+    rel = path.relative_to(ROOT).as_posix()
+    if rel in changed:
+        return TODAY
+    if rel in committed:
+        return committed[rel]
+    if path.exists():
+        return date.fromtimestamp(path.stat().st_mtime).isoformat()
+    return TODAY
+
+
+def source_path_for_url(url: str) -> Path:
+    parsed = urlparse(url)
+    relative = unquote(parsed.path).lstrip("/")
+    if not relative:
+        relative = "index.html"
+    elif relative.endswith("/"):
+        relative += "index.html"
+    return ROOT / relative
+
+
 def priority_for(url: str) -> str:
     slug = url.rsplit("/", 1)[-1].lower()
     if url == SITE + "/":
@@ -138,8 +218,8 @@ def changefreq_for(url: str) -> str:
     return "monthly"
 
 
-def build_urls() -> list[str]:
-    urls: set[str] = set()
+def build_pages() -> dict[str, Path]:
+    pages: dict[str, Path] = {}
     for path in sorted(ROOT.rglob("*.html")):
         if is_excluded(path):
             continue
@@ -149,16 +229,18 @@ def build_urls() -> list[str]:
         url = canonical_url(path, html)
         parsed = urlparse(url)
         if parsed.netloc == "allprometroeastconstruction.com":
-            urls.add(url)
-    return sorted(urls, key=lambda item: (item != SITE + "/", item))
+            pages.setdefault(url, path)
+    return dict(sorted(pages.items(), key=lambda item: (item[0] != SITE + "/", item[0])))
 
 
-def write_sitemap(urls: list[str]) -> None:
+def write_sitemap(
+    pages: dict[str, Path], committed: dict[str, str], changed: set[str]
+) -> None:
     urlset = ET.Element("urlset", xmlns="http://www.sitemaps.org/schemas/sitemap/0.9")
-    for url in urls:
+    for url, source in pages.items():
         node = ET.SubElement(urlset, "url")
         ET.SubElement(node, "loc").text = url
-        ET.SubElement(node, "lastmod").text = TODAY
+        ET.SubElement(node, "lastmod").text = last_modified(source, committed, changed)
         ET.SubElement(node, "changefreq").text = changefreq_for(url)
         ET.SubElement(node, "priority").text = priority_for(url)
     tree = ET.ElementTree(urlset)
@@ -166,25 +248,39 @@ def write_sitemap(urls: list[str]) -> None:
     tree.write(ROOT / "sitemap.xml", encoding="utf-8", xml_declaration=True)
 
 
-def refresh_local_sitemap() -> int:
+def refresh_local_sitemap(committed: dict[str, str], changed: set[str]) -> int:
     path = ROOT / "sitemap-local.xml"
     if not path.exists():
         return 0
     ET.register_namespace("", "http://www.sitemaps.org/schemas/sitemap/0.9")
     tree = ET.parse(path)
-    nodes = tree.findall(".//{http://www.sitemaps.org/schemas/sitemap/0.9}lastmod")
-    for node in nodes:
-        node.text = TODAY
+    namespace = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
+    urls = tree.findall(f".//{namespace}url")
+    for node in urls:
+        location = node.find(f"{namespace}loc")
+        modified = node.find(f"{namespace}lastmod")
+        if location is None or not location.text:
+            continue
+        if modified is None:
+            modified = ET.SubElement(node, "lastmod")
+        modified.text = last_modified(
+            source_path_for_url(location.text.strip()), committed, changed
+        )
     ET.indent(tree, space="  ", level=0)
     tree.write(path, encoding="utf-8", xml_declaration=True)
-    return len(nodes)
+    return len(urls)
 
 
 def main() -> None:
-    urls = build_urls()
-    write_sitemap(urls)
-    local_urls = refresh_local_sitemap()
-    print(f"Wrote sitemap.xml with {len(urls)} URLs; refreshed {local_urls} local sitemap URLs")
+    pages = build_pages()
+    committed = git_last_modified_dates()
+    changed = working_tree_paths()
+    write_sitemap(pages, committed, changed)
+    local_urls = refresh_local_sitemap(committed, changed)
+    print(
+        f"Wrote sitemap.xml with {len(pages)} URLs and accurate lastmod dates; "
+        f"refreshed {local_urls} local sitemap URLs"
+    )
 
 
 if __name__ == "__main__":

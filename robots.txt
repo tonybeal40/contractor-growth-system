@@ -15,6 +15,7 @@ Disallow: /workers/
 # Training-only crawlers are separate from search and user-requested retrieval.
 User-agent: GPTBot
 User-agent: ClaudeBot
+User-agent: Google-Extended
 Content-Signal: search=no,ai-input=no,ai-train=no,use=none
 Disallow: /
 

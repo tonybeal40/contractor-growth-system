@@ -1,6 +1,6 @@
 # All-Pro SEO Pro Playbook
 
-Date: 2026-06-28
+Updated: 2026-07-29
 Site: https://allprometroeastconstruction.com/
 
 ## Position
@@ -14,6 +14,7 @@ The real edge for All-Pro is a public, repeatable local demand system:
 - First-party proof: photos, reviews, completed jobs, before/after detail, owner notes.
 - Fast conversion paths: smart estimator, quote form, phone, and small-job routing.
 - Clean entity signals: consistent business name, phone, service area, sameAs links, schema, sitemap, and crawlable internal links.
+- Accurate freshness signals: sitemap `lastmod` values must reflect meaningful page changes rather than being reset across the whole site.
 
 ## Source-Backed Rules
 
@@ -24,6 +25,8 @@ Google Search guidance continues to reward helpful, reliable, people-first conte
 Google structured data guidance supports using LocalBusiness, Service, FAQPage, ItemList, reviews, hours, service area, and business details when they match visible page content.
 
 Google's AI search guidance points in the same direction: clear technical structure, unique useful content, and expert-led details that go beyond generic copy.
+
+Google's July 2026 guidance also says there is no separate AI-search shortcut: `llms.txt` is not a Google ranking signal, unnecessary AI-only markup is not required, and scaled pages written mainly to capture query variations can violate spam policy. Keep the existing file for assistants that choose to read it, but put ranking effort into indexed HTML, real project evidence, accurate business profiles, useful photos, and Search Console measurement.
 
 Google's spam policies are the line: avoid hidden text, link abuse, hacked backlinks, fake reviews, auto-generated low-value pages, and doorway-page behavior.
 
@@ -74,6 +77,7 @@ Google's spam policies are the line: avoid hidden text, link abuse, hacked backl
    - Belleville first.
    - O'Fallon, Edwardsville, Collinsville, Swansea next.
    - Add more cities only when there is service proof, local language, or demand.
+   - Do not publish more city/service combinations merely to increase page count.
 
 5. Create AI-search-ready answers:
    - "How much does a deck repair cost in Belleville?"

@@ -15,7 +15,16 @@ HOST = "allprometroeastconstruction.com"
 SITE = f"https://{HOST}"
 KEY_FILE = ROOT / "43e62d9ef6ce435a94594c0230c592a1.txt"
 ENDPOINT = "https://api.indexnow.org/indexnow"
-SHARED_ASSETS = {"styles.css", "brand-refresh.css", "site-shell.css", "script.js"}
+SHARED_ASSETS = {
+    "styles.css",
+    "brand-refresh.css",
+    "site-shell.css",
+    "script.js",
+    "robots.txt",
+    "llms.txt",
+    "sitemap.xml",
+    "sitemap-local.xml",
+}
 PRIORITY_URLS = {
     f"{SITE}/",
     f"{SITE}/kitchen-remodel-belleville-il.html",

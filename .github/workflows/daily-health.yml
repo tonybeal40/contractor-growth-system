@@ -28,6 +28,7 @@ jobs:
 
       - name: Validate generated SEO and lead routes
         run: |
+          python scripts/build_sitemap.py
           python scripts/seo_audit.py --fail-under 95
           python scripts/audit_public_claims.py
           python scripts/validate_priority_lead_pages.py

@@ -27,6 +27,7 @@ jobs:
           fetch-depth: 0
       - name: Validate SEO and priority lead pages
         run: |
+          python scripts/build_sitemap.py
           python scripts/seo_audit.py --fail-under 95
           python scripts/validate_priority_lead_pages.py
           node --test workers/lead-concierge/test/*.test.js
