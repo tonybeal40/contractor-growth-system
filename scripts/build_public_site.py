@@ -61,6 +61,7 @@ BLOCKED_PUBLIC_TEXT = re.compile(
 )
 APPROVED_FORM_ROUTERS = {
     "formsubmit-lead-tracking.js?v=20260726a",
+    "formsubmit-lead-tracking.js?v=20260730a",
 }
 LOCAL_REFERENCE_ATTRS = {
     "a": "href",

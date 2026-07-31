@@ -16,6 +16,7 @@ PAGES = (
     "kitchen-remodel-ofallon-il.html",
     "bathroom-remodel-ofallon-il.html",
 )
+PROJECT_INTAKE_PAGE = "kitchen-bath-project-review-belleville-ofallon.html"
 FORM_ACTION = "https://formsubmit.co/williamosessionallpro@gmail.com"
 ANALYTICS_LOADER = "analytics-loader.js?v=20260714a"
 LEAD_TRACKING_LOADER = "lead-tracking.js?v=20260723c"
@@ -23,7 +24,7 @@ REMODEL_STYLESHEET = "remodel-lead-pages.css?v=20260723a"
 CONCIERGE_LOADER = "lead-concierge-loader.js?v=20260723a"
 CURRENT_FORM_ROUTER = "formsubmit-lead-tracking.js?v=20260726a"
 ACCEPTED_FORM_ROUTER = re.compile(
-    r"formsubmit-lead-tracking\.js\?v=20260726a",
+    r"formsubmit-lead-tracking\.js\?v=202607(?:26a|30a)",
     re.IGNORECASE,
 )
 
@@ -113,8 +114,49 @@ def check_all_form_routes() -> list[str]:
     return errors
 
 
+def check_project_intake() -> list[str]:
+    html = (ROOT / PROJECT_INTAKE_PAGE).read_text(encoding="utf-8")
+    errors: list[str] = []
+    form_name = value(r'<form\b[^>]*\bdata-form="([^"]+)"', html)
+    review_pattern = re.compile(
+        r"testimonial|review\s+request|(?:customer|website)\s+review",
+        re.IGNORECASE,
+    )
+
+    if f'action="{FORM_ACTION}"' not in html:
+        errors.append("missing the approved Bill FormSubmit action")
+    if not form_name:
+        errors.append("missing data-form label")
+    elif review_pattern.search(form_name):
+        errors.append("data-form label would route this homeowner request as a customer review")
+    for field in (
+        "full_name",
+        "phone",
+        "email",
+        "city",
+        "service",
+        "details",
+        "project_photo",
+        "estimate_contact_consent",
+    ):
+        if not re.search(rf'\bname="{field}"', html, re.IGNORECASE):
+            errors.append(f"missing {field} field")
+    if "formsubmit-lead-tracking.js?v=20260730a" not in html:
+        errors.append("missing the project-intake form router version")
+
+    for linking_page in ("index.html", *PAGES):
+        linking_html = (ROOT / linking_page).read_text(encoding="utf-8")
+        if PROJECT_INTAKE_PAGE not in linking_html:
+            errors.append(f"{linking_page} does not link to the project intake")
+
+    return errors
+
+
 def main() -> int:
     failures = {page: check_page(page) for page in PAGES}
+    project_intake_errors = check_project_intake()
+    if project_intake_errors:
+        failures[PROJECT_INTAKE_PAGE] = project_intake_errors
     failures = {page: errors for page, errors in failures.items() if errors}
     route_errors = check_all_form_routes()
 
@@ -127,7 +169,7 @@ def main() -> int:
             print(f"  - {error}")
         return 1
 
-    print(f"Validated {len(PAGES)} priority remodel pages and all FormSubmit routes.")
+    print(f"Validated {len(PAGES)} priority remodel pages, the project intake, and all FormSubmit routes.")
     return 0
 
 

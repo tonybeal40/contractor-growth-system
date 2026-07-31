@@ -341,7 +341,8 @@
   }
 
   function isReviewForm(formName) {
-    return /review/i.test(formName) || /reviews\.html$/i.test(window.location.pathname);
+    return /testimonial|review\s+request|(?:customer|website)\s+review/i.test(formName) ||
+      /(?:review-request|reviews)\.html$/i.test(window.location.pathname);
   }
 
   function isBusinessInquiryForm(form, formName) {
