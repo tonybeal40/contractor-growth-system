@@ -23,7 +23,9 @@ TEXT_RULES = (
         "internal strategy wording",
         re.compile(
             r"(?:Why this page exists|stays compliant|Real CTA|Proof path|"
-            r"Review source label|The catch-all page|The proof page)",
+            r"Review source label|The catch-all page|The proof page|"
+            r"research layer|What this becomes|Fresh local service clusters|"
+            r"Want the system to sort it|guide layer)",
             re.I,
         ),
     ),
@@ -246,7 +248,9 @@ def audit_generator(path: Path) -> list[Finding]:
         ("unsupported marketing statistic", r"42% more map clicks"),
         (
             "internal generator wording",
-            r"Why this page exists|stays compliant|Real CTA|Proof path|Review source label|The catch-all page|The proof page",
+            r"Why this page exists|stays compliant|Real CTA|Proof path|Review source label|"
+            r"The catch-all page|The proof page|research layer|What this becomes|"
+            r"Fresh local service clusters|Want the system to sort it|guide layer",
         ),
         ("unverified generated review data", r"review_excerpt|review_author|[\"']@type[\"']\s*:\s*[\"']Review[\"']"),
     )
