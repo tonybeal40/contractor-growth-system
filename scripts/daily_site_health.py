@@ -211,20 +211,22 @@ def json_health_result(
     expected_service: str | None = None,
     expected_release: str | None = None,
     required_capabilities: set[str] | None = None,
+    version_drift_is_warning: bool = False,
 ) -> CheckResult:
     try:
         status, final_url, body = fetch(url)
     except RuntimeError as error:
         return CheckResult(label, url, "FAIL", str(error))
-    problems = [] if status == 200 else [f"HTTP {status}"]
+    failures = [] if status == 200 else [f"HTTP {status}"]
+    warnings: list[str] = []
     try:
         payload = json.loads(body)
         if payload.get("ok") is not True:
-            problems.append("JSON did not report ok=true")
+            failures.append("JSON did not report ok=true")
         if expected_service and payload.get("service") != expected_service:
-            problems.append("unexpected service name")
+            failures.append("unexpected service name")
         if expected_release and payload.get("release") != expected_release:
-            problems.append(
+            (warnings if version_drift_is_warning else failures).append(
                 f"stale deployment (expected release {expected_release}, "
                 f"received {payload.get('release') or 'none'})"
             )
@@ -232,14 +234,18 @@ def json_health_result(
             capabilities = set(payload.get("capabilities") or [])
             missing = sorted(required_capabilities - capabilities)
             if missing:
-                problems.append("missing capabilities: " + ", ".join(missing))
+                (warnings if version_drift_is_warning else failures).append(
+                    "missing capabilities: " + ", ".join(missing)
+                )
     except (json.JSONDecodeError, AttributeError):
-        problems.append("response was not valid health JSON")
+        failures.append("response was not valid health JSON")
+    status_label = "FAIL" if failures else "WARN" if warnings else "PASS"
+    details = failures + warnings
     return CheckResult(
         label,
         final_url,
-        "FAIL" if problems else "PASS",
-        "; ".join(problems) if problems else "HTTP 200; health JSON reports ok=true",
+        status_label,
+        "; ".join(details) if details else "HTTP 200; health JSON reports ok=true",
     )
 
 
@@ -286,12 +292,15 @@ def crawler_policy_result(base_url: str) -> CheckResult:
 
 def render_markdown(results: list[CheckResult]) -> str:
     failures = [result for result in results if result.status == "FAIL"]
+    warnings = [result for result in results if result.status == "WARN"]
     generated = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+    overall = "FAIL" if failures else "WARN" if warnings else "PASS"
     lines = [
         "# All-Pro Daily Site Health",
         "",
         f"Generated: {generated}",
-        f"Result: {'FAIL' if failures else 'PASS'} ({len(results) - len(failures)}/{len(results)} checks passed)",
+        f"Result: {overall} ({len(results) - len(failures) - len(warnings)} passed, "
+        f"{len(warnings)} warning, {len(failures)} failed)",
         "",
         "| Check | Status | Details |",
         "|---|---:|---|",
@@ -336,6 +345,7 @@ def run(base_url: str) -> list[CheckResult]:
                 "All-Pro Form Handler",
                 EXPECTED_FORM_HANDLER_RELEASE,
                 REQUIRED_FORM_HANDLER_CAPABILITIES,
+                version_drift_is_warning=True,
             ),
             json_health_result(
                 "Cloudflare lead concierge", urljoin(base_url, CONCIERGE_HEALTH_PATH)

@@ -55,59 +55,14 @@
 <link rel="preconnect" href="https://formsubmit.co" crossorigin>
 <link rel="stylesheet" href="styles.css?v=20260722b">
 <style>
-/* ── Revenue Engine Additions ── */
-.pricing-anchors{background:linear-gradient(135deg,#1a1a1a 0%,#2a1a1a 100%);border-top:3px solid #c8102e;border-bottom:3px solid #c8102e;padding:1.25rem 1.5rem;text-align:center}
-.pricing-anchors strong{display:block;color:#fff;font-size:1rem;font-weight:800;letter-spacing:.02em;margin-bottom:.75rem}
-.pricing-anchor-list{display:flex;flex-wrap:wrap;justify-content:center;gap:.75rem 1.5rem;margin-bottom:.6rem}
-.pricing-anchor-list span{color:rgba(255,255,255,.7);font-size:.9rem}
-.pricing-anchor-list span strong{display:inline;font-size:.9rem;color:#fff;margin-bottom:0}
-.pricing-anchors>p{color:rgba(255,255,255,.55);font-size:.82rem;margin-top:.4rem}
-
-/* ── Fast Track section ── */
-.fast-track{background:linear-gradient(135deg,#0d0d0d 0%,#1a0000 100%);border-top:1px solid rgba(200,16,46,.25);border-bottom:1px solid rgba(200,16,46,.25);padding:3.5rem 0}
-.fast-track-inner{max-width:780px;margin:0 auto;text-align:center;padding:0 1.5rem}
-.ft-badge{display:inline-block;background:rgba(200,16,46,.15);border:1px solid rgba(200,16,46,.45);color:#c8102e;font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.35rem .9rem;border-radius:30px;margin-bottom:1rem}
-.fast-track h2{font-size:clamp(1.7rem,4vw,2.4rem);font-weight:900;color:#fff;margin-bottom:.6rem}
-.fast-track>div>p{color:rgba(255,255,255,.6);font-size:1rem;margin-bottom:1.75rem}
-.ft-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.75rem;margin-bottom:1.75rem;max-width:620px;margin-left:auto;margin-right:auto}
-.ft-item{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.8rem 1rem;color:#fff;font-size:.92rem;font-weight:600}
-.ft-cta{display:flex;flex-direction:column;align-items:center;gap:.6rem}
-.ft-note{color:rgba(255,255,255,.45);font-size:.8rem}
-
-/* ── Why-us extras ── */
 .why-us-headline{font-size:1.1rem;font-weight:800;color:#c8102e;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.25rem}
-
-/* ── Money page hub ── */
-.money-pages{background:linear-gradient(180deg,#0b0b0b 0%,#141414 100%);padding:4rem 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
-.money-pages-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
-.money-page-card{display:block;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:1.25rem;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
-.money-page-card:hover{transform:translateY(-3px);border-color:rgba(200,16,46,.45);box-shadow:0 10px 30px rgba(0,0,0,.28)}
-.money-page-card strong{display:block;color:#fff;font-size:1.02rem;margin-bottom:.45rem}
-.money-page-card span{display:block;color:rgba(255,255,255,.7);font-size:.92rem;line-height:1.5}
-.money-page-links{display:flex;flex-wrap:wrap;gap:.9rem 1.25rem;margin-top:1.4rem}
-.money-page-links a{color:#ff8a9e;font-size:.92rem;font-weight:700}
-
-/* ── Local decision engine ── */
-.decision-engine{background:#080f1e;padding:4.5rem 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
-.decision-engine .section-header h2{color:#fff}
-.decision-engine .section-header p{color:#a9b4c5}
-.decision-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
-.decision-card{display:flex;flex-direction:column;min-height:260px;background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.25rem;box-shadow:0 18px 44px rgba(0,0,0,.22)}
-.decision-card strong{display:block;color:#fff;font-size:1.02rem;margin-bottom:.5rem}
-.decision-card p{color:#c9d2df;font-size:.9rem;line-height:1.6;margin-bottom:1rem}
-.decision-links{display:grid;gap:.55rem;margin-top:auto}
-.decision-links a{display:flex;justify-content:space-between;gap:.75rem;color:#fff;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:.68rem .78rem;font-size:.86rem;font-weight:800;transition:border-color .2s ease,background .2s ease,transform .2s ease}
-.decision-links a::after{content:"→";color:#ff6f86}
-.decision-links a:hover{background:rgba(200,16,46,.14);border-color:rgba(200,16,46,.42);transform:translateY(-1px)}
 .home-page .btn.btn-red,.home-page .btn.btn-primary,.home-page .sticky-call a[href="contact.html"]{background:#a94f16!important;border-color:#91400f!important;color:#fff!important}
 .home-page .section-tag{color:#8f3d0d!important}
 .home-page .author-meta{color:#5f6b66!important}
 .home-page .social-nextdoor span{color:#00280f!important;opacity:1!important}
 .home-page .footer-col .footer-heading{margin-bottom:1.2rem;color:#fff!important;font-size:.72rem;font-weight:800;line-height:1.3;letter-spacing:.14em;text-transform:uppercase}
 .alc-loader{position:static;z-index:1;min-height:48px;max-width:280px;border:1px solid #254a40;border-radius:6px;padding:12px 18px;background:#2f5d50;color:#fff;box-shadow:0 8px 20px rgba(31,41,51,.16);font:800 16px/1.2 Arial,Helvetica,sans-serif;letter-spacing:0;cursor:pointer}.alc-loader:hover,.alc-loader:focus-visible{background:#254a40}.alc-loader:focus-visible{outline:3px solid #f2b27d;outline-offset:2px}
-@media (max-width:900px){.decision-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:720px){.alc-loader{width:100%;min-height:46px;max-width:none;margin:0;padding:10px 14px;box-shadow:none;font-size:14px}}
-@media (max-width:620px){.decision-grid{grid-template-columns:1fr}.decision-card{min-height:auto}}
 </style>
 <script type="application/ld+json">
 {
@@ -155,7 +110,6 @@
   },
   "sameAs": [
     "https://www.facebook.com/metroeastconstructionIL",
-    "https://allprometroeastconstruction.com/reviews.html",
     "https://allprometroeastconstruction.com/reviews.html",
     "https://www.linkedin.com/company/all-pro-metro-metro-east-construction/",
     "https://www.houzz.com/pro/tony-beal35/all-pro-construction",
@@ -315,19 +269,6 @@
   </div>
 </section>
 
-  <section class="estimate-banner pricing-anchors">
-    <strong>Early Planning Ranges — Final Price Follows the Scope</strong>
-    <div class="pricing-anchor-list">
-      <span>🛁 Bathroom Remodels: <strong>$5K–$25K+</strong></span>
-      <span>🍳 Kitchen Remodels: <strong>$8K–$35K+</strong></span>
-      <span>🪵 Deck Builds: <strong>$5K–$20K+</strong></span>
-      <span>🌿 Landscaping: <strong>$1K–$10K+</strong></span>
-      <span>🏗️ Concrete &amp; Patios: <strong>$1K–$8K</strong></span>
-      <span>🔩 Fencing: <strong>$1,500–$8,000</strong></span>
-    </div>
-    <p>These broad planning examples are not quotes. Project size, selections, site conditions, access, permits, and trade work affect the written estimate.</p>
-  </section>
-
 <section class="photo-section bath-feature-section">
   <!-- SVG sharpening filter for service photos -->
   <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
@@ -460,172 +401,14 @@
         </div>
       </article>
     </div>
-    <div class="home-service-chips reveal reveal-delay-4" aria-label="Popular service pages">
-      <a href="decks.html">Decks</a>
-      <a href="bathroom-remodel.html">Bathroom Remodels</a>
-      <a href="kitchen-remodel.html">Kitchen Remodels</a>
-      <a href="landscaping-ofallon-il.html">Landscaping O'Fallon</a>
-      <a href="concrete.html">Concrete</a>
-      <a href="fencing.html">Fencing</a>
-      <a href="metro-east-contractor-match.html">Contractor Match</a>
-      <a href="metro-east-pro-network.html">Metro East Pro Network</a>
-      <a href="work-with-all-pro.html">Jobs &amp; Contractor Opportunities</a>
-    </div>
-  </div>
-</section>
-
-<section class="money-pages" id="belleville-projects">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-tag">Start Here</div>
-      <h2>Remodel Pages Built<br>For Bigger Jobs</h2>
-      <p>Start with focused kitchen and bathroom pages for Belleville and O'Fallon, plus decks, patios, landscaping, fencing, and full remodeling work across Metro East.</p>
-    </div>
-    <div class="money-pages-grid">
-      <a href="bathroom-remodel-belleville-il.html" class="money-page-card reveal reveal-delay-1">
-        <strong>Bathroom Remodel Belleville, IL</strong>
-        <span>Walk-in showers, full bath rebuilds, tile, vanities, plumbing updates, and estimate-ready next steps.</span>
-      </a>
-      <a href="kitchen-remodel-belleville-il.html" class="money-page-card reveal reveal-delay-2">
-        <strong>Kitchen Remodel Belleville, IL</strong>
-        <span>Cabinets, counters, islands, lighting, layout decisions, and the questions serious kitchen buyers actually ask.</span>
-      </a>
-      <a href="sunroom-belleville-il.html" class="money-page-card reveal reveal-delay-3">
-        <strong>Sunroom Addition Belleville, IL</strong>
-        <span>3-season and 4-season rooms, permit expectations, foundation requirements, and value-focused planning.</span>
-      </a>
-      <a href="deck-builder-belleville-il.html" class="money-page-card reveal reveal-delay-4">
-        <strong>Deck Builder Belleville, IL</strong>
-        <span>New decks, replacements, framing, stairs, railing options, and project scope that supports larger tickets.</span>
-      </a>
-      <a href="patio-contractor-belleville-il.html" class="money-page-card reveal reveal-delay-1">
-        <strong>Patio Contractor Belleville, IL</strong>
-        <span>Concrete, paver, drainage, and retaining-wall work for outdoor living projects that can bundle into larger jobs.</span>
-      </a>
-      <a href="remodeling-belleville-il.html" class="money-page-card reveal reveal-delay-2">
-        <strong>General Remodeling Belleville, IL</strong>
-        <span>A clear starting point for homeowners who need several improvements or want help defining the right project scope.</span>
-      </a>
-    </div>
-    <div class="money-page-links reveal reveal-delay-3">
-      <a href="blog/bathroom-remodel-cost-belleville-il.html">Bathroom remodel cost guide →</a>
-      <a href="blog/kitchen-remodel-cost-belleville-il.html">Kitchen remodel cost guide →</a>
-      <a href="sunroom.html">Main sunroom service page →</a>
-      <a href="estimator.html">Smart estimator →</a>
-      <a href="kitchen-remodel-ofallon-il.html">Kitchen remodel O'Fallon →</a>
-      <a href="bathroom-remodel-ofallon-il.html">Bathroom remodel O'Fallon →</a>
-      <a href="kitchen-bath-project-review-belleville-ofallon.html">Start a kitchen or bathroom project review →</a>
-    </div>
-    <div class="money-page-links reveal reveal-delay-4">
-      <a href="deck-repair-belleville-il.html">Deck repair in Belleville →</a>
-      <a href="fence-contractor-belleville-il.html">Fence contractor in Belleville →</a>
-      <a href="pressure-washing-belleville-il.html">Pressure washing in Belleville →</a>
-      <a href="landscaping-ofallon-il.html">Landscaping in O'Fallon →</a>
-      <a href="handyman-belleville-il.html">Handyman in Belleville →</a>
-      <a href="yard-cleanup-belleville-il.html">Yard cleanup in Belleville →</a>
-      <a href="deck-repair-ofallon-il.html">Deck repair in O'Fallon →</a>
-      <a href="pressure-washing-edwardsville-il.html">Pressure washing in Edwardsville →</a>
-      <a href="handyman-collinsville-il.html">Handyman in Collinsville →</a>
-      <a href="fence-contractor-swansea-il.html">Fence contractor in Swansea →</a>
-        <a href="yard-cleanup-ofallon-il.html">Yard cleanup in O'Fallon →</a>
-        <a href="metro-east-contractor-match.html">Metro East contractor match desk →</a>
-        <a href="metro-east-pro-network.html">Metro East pro network →</a>
-        <a href="metro-east-home-service-guide.html">Metro East home service guide →</a>
-        <a href="metro-east-homeowner-problem-solver.html">Homeowner problem solver →</a>
-        <a href="deck-boards-rotting-belleville-il.html">Deck boards rotting in Belleville →</a>
-        <a href="fence-leaning-after-storm-ofallon-il.html">Fence leaning after a storm in O'Fallon →</a>
-        <a href="small-handyman-jobs-ofallon-il.html">Small handyman jobs in O'Fallon →</a>
-        <a href="how-metro-east-project-match-works.html">How project match works →</a>
-      </div>
-  </div>
-</section>
-
-<section class="decision-engine" id="project-routes">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-tag">Find The Right Starting Point</div>
-      <h2>Built Like A Project Desk,<br>Not A Brochure.</h2>
-      <p>Most homeowners do not need another generic contractor page. They need the right path based on the job, the city, and how urgent the work is.</p>
-    </div>
-    <div class="decision-grid">
-      <div class="decision-card reveal reveal-delay-1">
-        <strong>Serious Remodels</strong>
-        <p>Start here for bigger indoor or value-building projects where scope, finish, and sequencing matter.</p>
-        <div class="decision-links">
-          <a href="kitchen-remodel-belleville-il.html">Kitchen Remodel Belleville</a>
-          <a href="bathroom-remodel-belleville-il.html">Bathroom Remodel Belleville</a>
-          <a href="kitchen-remodel-ofallon-il.html">Kitchen Remodel O'Fallon</a>
-          <a href="bathroom-remodel-ofallon-il.html">Bathroom Remodel O'Fallon</a>
-          <a href="sunroom-belleville-il.html">Sunroom Addition Belleville</a>
-        </div>
-      </div>
-      <div class="decision-card reveal reveal-delay-2">
-        <strong>Outdoor Living</strong>
-        <p>Use these pages for decks, patios, fences, concrete, drainage, and exterior upgrades around the home.</p>
-        <div class="decision-links">
-          <a href="deck-builder-belleville-il.html">Deck Builder Belleville</a>
-          <a href="patio-contractor-belleville-il.html">Patio Contractor Belleville</a>
-          <a href="fence-contractor-belleville-il.html">Fence Contractor Belleville</a>
-        </div>
-      </div>
-      <div class="decision-card reveal reveal-delay-3">
-        <strong>Fast Small Jobs</strong>
-        <p>For practical repairs, cleanup, pressure washing, fence fixes, deck repairs, and jobs big contractors ignore.</p>
-        <div class="decision-links">
-          <a href="handyman-belleville-il.html">Handyman Belleville</a>
-          <a href="deck-repair-belleville-il.html">Deck Repair Belleville</a>
-          <a href="yard-cleanup-belleville-il.html">Yard Cleanup Belleville</a>
-        </div>
-      </div>
-      <div class="decision-card reveal reveal-delay-1">
-        <strong>City Service Hubs</strong>
-        <p>Pick your local city page when you want nearby proof, service coverage, and pages built around your area.</p>
-        <div class="decision-links">
-          <a href="ofallon-il.html">O'Fallon Contractor</a>
-          <a href="edwardsville-il.html">Edwardsville Contractor</a>
-          <a href="collinsville-il.html">Collinsville Contractor</a>
-        </div>
-      </div>
-      <div class="decision-card reveal reveal-delay-2">
-        <strong>Before You Hire</strong>
-        <p>Cost guides, permit questions, and contractor red flags that help homeowners make a cleaner decision.</p>
-        <div class="decision-links">
-          <a href="metro-east-project-estimate-checklist.html">Estimate Checklist</a>
-          <a href="deck-cost-guide-belleville-il.html">Deck Cost Guide</a>
-          <a href="do-i-need-permit-deck-belleville-il.html">Deck Permit Guide</a>
-        </div>
-      </div>
-      <div class="decision-card reveal reveal-delay-3">
-        <strong>Proof And Reviews</strong>
-        <p>See real work, customer reviews, and the trust signals that matter before asking for an estimate.</p>
-        <div class="decision-links">
-          <a href="jobs-completed-metro-east.html">Completed Jobs</a>
-          <a href="reviews.html">Customer Reviews</a>
-          <a href="https://nextdoor.com/page/all-pro-landscape-construction-belleville-il" target="_blank" rel="noopener">Nextdoor Page</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAST TRACK -->
-<section class="fast-track" id="fast-track">
-  <div class="container">
-    <div class="fast-track-inner">
-      <div class="ft-badge">⚡ Limited Availability</div>
-      <h2>Need It Done Fast?</h2>
-      <p>We hold a few spots each week specifically for smaller, focused jobs. These fill up quickly — especially spring through fall.</p>
-      <div class="ft-grid">
-        <div class="ft-item">🪵 Deck Repairs &amp; Board Replacements</div>
-        <div class="ft-item">🔩 Fence Installs &amp; Fixes</div>
-        <div class="ft-item">🏗️ Concrete Patches &amp; Small Pads</div>
-        <div class="ft-item">🌿 Yard Grading &amp; Cleanup</div>
-      </div>
-      <div class="ft-cta">
-        <a href="estimator.html" class="btn btn-red">⚡ Claim a Fast Track Spot →</a>
-        <a href="handyman-projects-metro-east.html" style="color:rgba(255,255,255,.55);font-size:.88rem;text-decoration:underline;">See all small projects we handle →</a>
-        <span class="ft-note">Most small jobs completed in 1–3 days · Written estimate first · No obligation</span>
-      </div>
+    <div class="home-service-chips reveal reveal-delay-4" aria-label="Priority project pages">
+      <a href="kitchen-remodel-belleville-il.html">Belleville Kitchens</a>
+      <a href="bathroom-remodel-belleville-il.html">Belleville Bathrooms</a>
+      <a href="kitchen-remodel-ofallon-il.html">O'Fallon Kitchens</a>
+      <a href="bathroom-remodel-ofallon-il.html">O'Fallon Bathrooms</a>
+      <a href="decks.html">Decks &amp; Porches</a>
+      <a href="landscaping-ofallon-il.html">O'Fallon Landscaping</a>
+      <a href="metro-east-contractor-match.html">Not Sure? Start Here</a>
     </div>
   </div>
 </section>
@@ -651,12 +434,12 @@
       <div class="process-step reveal reveal-delay-3">
         <div class="process-num">3</div>
         <h3>We Do the Work</h3>
-        <p>Our crew shows up when we say we will, works clean, and keeps you updated throughout.</p>
+        <p>After the scope and schedule are agreed, the work is completed with project updates and cleanup expectations established up front.</p>
       </div>
       <div class="process-step reveal reveal-delay-4">
         <div class="process-num">4</div>
-        <h3>You Love It</h3>
-        <p>Final walkthrough with you. If anything isn't right, we fix it &mdash; no questions asked.</p>
+        <h3>Final Walkthrough</h3>
+        <p>We review the completed scope with you and document any remaining questions or closeout items.</p>
       </div>
     </div>
   </div>
@@ -879,174 +662,12 @@
         <a href="collinsville-il.html" class="area-pill">Collinsville, IL</a>
         <a href="swansea-il.html" class="area-pill">Swansea, IL</a>
         <a href="shiloh-il.html" class="area-pill">Shiloh, IL</a>
-        <a href="lebanon-il.html" class="area-pill">Lebanon, IL</a>
-        <a href="waterloo-il.html" class="area-pill">Waterloo, IL</a>
-        <a href="columbia-il.html" class="area-pill">Columbia, IL</a>
-        <a href="scott-afb-il.html" class="area-pill">Scott AFB, IL</a>
-        <a href="mascoutah-il.html" class="area-pill">Mascoutah, IL</a>
         <a href="highland-il.html" class="area-pill">Highland, IL</a>
-        <a href="millstadt-il.html" class="area-pill">Millstadt, IL</a>
-        <a href="breese-il.html" class="area-pill">Breese, IL</a>
         <a href="troy-il.html" class="area-pill">Troy, IL</a>
         <a href="maryville-il.html" class="area-pill">Maryville, IL</a>
         <a href="glen-carbon-il.html" class="area-pill">Glen Carbon, IL</a>
         <a href="granite-city-il.html" class="area-pill">Granite City, IL</a>
-        <a href="alton-il.html" class="area-pill">Alton, IL</a>
-        <a href="cahokia-heights-il.html" class="area-pill">Cahokia, IL</a>
-        <a href="east-st-louis-il.html" class="area-pill">East St. Louis, IL</a>
-        <a href="jerseyville-il.html" class="area-pill">Jerseyville, IL</a>
-        <a href="nashville-il.html" class="area-pill">Nashville, IL</a>
-        <a href="okawville-il.html" class="area-pill">Okawville, IL</a>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- SERVICE AREA MAP -->
-<section class="service-area-map">
-  <div class="container">
-    <div class="map-section-heading">📍 Our Service Area — Metro East Illinois</div>
-    <p class="map-section-sub">Click any city pin to see contractor services for that area. Serving 35+ communities across Metro East.</p>
-    <div id="allpro-map" aria-hidden="true" style="height:460px;width:100%;border-radius:10px;border:1px solid rgba(255,255,255,.08);box-shadow:0 4px 24px rgba(0,0,0,.45);"></div>
-    <div class="zip-coverage">
-      <strong>Zip Codes Served:</strong> 62220, 62221, 62223, 62025, 62034, 62056, 62234, 62035, 62249, 62258, 62269, 62285, 62294, 62298, 62201, 62203, 62205, 62206, 62208, 62226, 62232, 62236, 62260, 62264, 62281, 62048, 62062, 62095, 62010, 62018, 62024, 62084, 62088 &amp; more.
-    </div>
-  </div>
-</section>
-<script>
-(function(){
-  var mapLoaded=false;
-  function loadLeafletMap(){
-    if(mapLoaded)return; mapLoaded=true;
-    var css=document.createElement('link');
-    css.rel='stylesheet'; css.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'; css.crossOrigin='';
-    document.head.appendChild(css);
-    var js=document.createElement('script');
-    js.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'; js.crossOrigin='';
-    js.onload=function(){
-      var mapEl=document.getElementById('allpro-map');
-      if(!mapEl)return;
-      var map=L.map('allpro-map',{scrollWheelZoom:false,zoomControl:true});
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-        attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',maxZoom:13
-      }).addTo(map);
-      function pin(c){return L.divIcon({className:'',html:'<div style="width:16px;height:16px;background:'+c+';border:2.5px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.5);cursor:pointer;"></div>',iconSize:[16,16],iconAnchor:[8,8],popupAnchor:[0,-12]});}
-      var cities=[
-        ["Belleville","index.html",38.5201,-89.9840],
-        ["O'Fallon","ofallon-il.html",38.5895,-89.9112],
-        ["Edwardsville","edwardsville-il.html",38.8117,-89.9534],
-        ["Fairview Heights","fairview-heights-il.html",38.5945,-89.9940],
-        ["Collinsville","collinsville-il.html",38.6706,-89.9845],
-        ["Swansea","swansea-il.html",38.5323,-89.9985],
-        ["Shiloh","shiloh-il.html",38.5587,-89.9012],
-        ["Mascoutah","mascoutah-il.html",38.4923,-89.7923],
-        ["Highland","highland-il.html",38.7440,-89.6784],
-        ["Waterloo","waterloo-il.html",38.3359,-90.1501],
-        ["Columbia","columbia-il.html",38.4437,-90.1984],
-        ["Alton","alton-il.html",38.8906,-90.1840],
-        ["Bethalto","bethalto-il.html",38.9123,-90.0423],
-        ["Breese","breese-il.html",38.6095,-89.5273],
-        ["Cahokia Heights","cahokia-heights-il.html",38.5673,-90.1834],
-        ["Centralia","centralia-il.html",38.5248,-89.1334],
-        ["Dupo","dupo-il.html",38.5112,-90.1267],
-        ["East St. Louis","east-st-louis-il.html",38.6245,-90.1534],
-        ["Freeburg","freeburg-il.html",38.4312,-89.9162],
-        ["Glen Carbon","glen-carbon-il.html",38.7523,-89.9595],
-        ["Godfrey","godfrey-il.html",38.9540,-90.0501],
-        ["Granite City","granite-city-il.html",38.7017,-90.1484],
-        ["Jerseyville","jerseyville-il.html",39.1201,-90.3284],
-        ["Lebanon","lebanon-il.html",38.6054,-89.8062],
-        ["Maryville","maryville-il.html",38.7229,-89.9584],
-        ["Millstadt","millstadt-il.html",38.4601,-89.9817],
-        ["Nashville","nashville-il.html",38.3437,-89.3762],
-        ["New Baden","new-baden-il.html",38.5387,-89.7062],
-        ["Okawville","okawville-il.html",38.4318,-89.5484],
-        ["Red Bud","red-bud-il.html",38.2118,-89.9940],
-        ["Scott AFB","scott-afb-il.html",38.5446,-89.8512],
-        ["Smithton","smithton-il.html",38.4062,-89.9901],
-        ["Sparta","sparta-il.html",38.1237,-89.7018],
-        ["Trenton","trenton-il.html",38.5973,-89.6812],
-        ["Troy","troy-il.html",38.7301,-89.8884],
-        ["Wood River","wood-river-il.html",38.8611,-90.0840]
-      ];
-      var bounds=[];
-      cities.forEach(function(c){
-        var ll=[c[2],c[3]]; bounds.push(ll);
-        L.marker(ll,{icon:pin('#c8102e')}).addTo(map).bindPopup(
-          '<div style="text-align:center;min-width:130px;font-family:sans-serif;">'+
-          '<strong style="font-size:.92rem;color:#111;">'+c[0]+', IL</strong><br>'+
-          '<a href="'+c[1]+'" style="color:#c8102e;font-size:.8rem;font-weight:700;text-decoration:none;">View Services &rarr;</a>'+
-          '</div>'
-        );
-      });
-      map.fitBounds(bounds,{padding:[30,30]});
-    };
-    document.head.appendChild(js);
-  }
-  var section=document.querySelector('.service-area-map');
-  if(section&&'IntersectionObserver' in window){
-    var obs=new IntersectionObserver(function(e){if(e[0].isIntersecting){loadLeafletMap();obs.disconnect();}},{rootMargin:'300px 0px'});
-    obs.observe(section);
-  } else {
-    window.addEventListener('load',loadLeafletMap);
-  }
-})();
-</script>
-
-<!-- HOMEOWNER GUIDES STRIP -->
-<section style="background:#141414;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);padding:3rem 0;">
-  <div class="container">
-    <div style="text-align:center;margin-bottom:1.75rem;">
-      <div class="section-tag" style="display:inline-block;margin-bottom:.5rem;">Free Resources</div>
-      <h2 style="font-size:1.7rem;font-weight:900;color:#fff;margin:0;">Homeowner Guides — Know Before You Build</h2>
-      <p style="color:rgba(255,255,255,.5);font-size:.95rem;margin-top:.5rem;">Real costs, local rules, and honest advice for Metro East homeowners.</p>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;max-width:980px;margin:0 auto;">
-      <a href="metro-east-project-estimate-checklist.html" style="display:block;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.1rem 1.25rem;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(200,16,46,.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)'">
-        <div style="font-size:1.4rem;margin-bottom:.4rem;">📝</div>
-        <div style="font-weight:800;color:#fff;font-size:.95rem;margin-bottom:.25rem;">Project Estimate Checklist</div>
-        <div style="color:rgba(255,255,255,.45);font-size:.82rem;">What to send before Bill gives a number</div>
-      </a>
-      <a href="deck-cost-guide-belleville-il.html" style="display:block;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.1rem 1.25rem;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(200,16,46,.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)'">
-        <div style="font-size:1.4rem;margin-bottom:.4rem;">🪵</div>
-        <div style="font-weight:800;color:#fff;font-size:.95rem;margin-bottom:.25rem;">Deck Cost Guide</div>
-        <div style="color:rgba(255,255,255,.45);font-size:.82rem;">How much does a deck cost in Belleville IL?</div>
-      </a>
-      <a href="fence-cost-guide-metro-east.html" style="display:block;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.1rem 1.25rem;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(200,16,46,.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)'">
-        <div style="font-size:1.4rem;margin-bottom:.4rem;">🔧</div>
-        <div style="font-weight:800;color:#fff;font-size:.95rem;margin-bottom:.25rem;">Fence Cost Guide</div>
-        <div style="color:rgba(255,255,255,.45);font-size:.82rem;">Cost per foot for wood, vinyl & chain-link</div>
-      </a>
-      <a href="concrete-patio-cost-guide-metro-east.html" style="display:block;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.1rem 1.25rem;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(200,16,46,.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)'">
-        <div style="font-size:1.4rem;margin-bottom:.4rem;">🏗️</div>
-        <div style="font-weight:800;color:#fff;font-size:.95rem;margin-bottom:.25rem;">Concrete Patio Cost</div>
-        <div style="color:rgba(255,255,255,.45);font-size:.82rem;">Plain vs stamped — real Metro East prices</div>
-      </a>
-      <a href="wood-vs-composite-decking-guide.html" style="display:block;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.1rem 1.25rem;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(200,16,46,.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)'">
-        <div style="font-size:1.4rem;margin-bottom:.4rem;">⚖️</div>
-        <div style="font-weight:800;color:#fff;font-size:.95rem;margin-bottom:.25rem;">Wood vs Composite Decking</div>
-        <div style="color:rgba(255,255,255,.45);font-size:.82rem;">Which is right for Metro East weather?</div>
-      </a>
-      <a href="deck-repair-vs-replace-guide.html" style="display:block;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.1rem 1.25rem;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(200,16,46,.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)'">
-        <div style="font-size:1.4rem;margin-bottom:.4rem;">🔍</div>
-        <div style="font-weight:800;color:#fff;font-size:.95rem;margin-bottom:.25rem;">Repair vs Replace Your Deck</div>
-        <div style="color:rgba(255,255,255,.45);font-size:.82rem;">10-minute inspection guide</div>
-      </a>
-      <a href="do-i-need-permit-deck-belleville-il.html" style="display:block;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.1rem 1.25rem;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(200,16,46,.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)'">
-        <div style="font-size:1.4rem;margin-bottom:.4rem;">📋</div>
-        <div style="font-weight:800;color:#fff;font-size:.95rem;margin-bottom:.25rem;">Do I Need a Deck Permit?</div>
-        <div style="color:rgba(255,255,255,.45);font-size:.82rem;">Belleville, O'Fallon, Edwardsville rules</div>
-      </a>
-      <a href="how-to-hire-a-contractor-metro-east.html" style="display:block;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.1rem 1.25rem;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(200,16,46,.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)'">
-        <div style="font-size:1.4rem;margin-bottom:.4rem;">🤝</div>
-        <div style="font-weight:800;color:#fff;font-size:.95rem;margin-bottom:.25rem;">How to Hire a Contractor</div>
-        <div style="color:rgba(255,255,255,.45);font-size:.82rem;">7 questions to ask before you sign</div>
-      </a>
-      <a href="how-to-avoid-bad-contractor.html" style="display:block;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.1rem 1.25rem;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(200,16,46,.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)'">
-        <div style="font-size:1.4rem;margin-bottom:.4rem;">🚩</div>
-        <div style="font-weight:800;color:#fff;font-size:.95rem;margin-bottom:.25rem;">Avoid Contractor Scams</div>
-        <div style="color:rgba(255,255,255,.45);font-size:.82rem;">Red flags & protection checklist</div>
-      </a>
     </div>
   </div>
 </section>
@@ -1192,17 +813,8 @@
           <li><a href="decks.html">Decks &amp; Porches</a></li>
           <li><a href="landscaping.html">Landscaping</a></li>
           <li><a href="fencing.html">Fencing</a></li>
-          <li><a href="lawn-maintenance-metro-east.html">Lawn &amp; Maintenance</a></li>
-          <li><a href="tree-service-metro-east.html">Tree Service</a></li>
-          <li><a href="mulch-rock-metro-east.html">Mulch &amp; Rock</a></li>
-          <li><a href="landscape-cleanup-metro-east.html">Landscape Cleanup</a></li>
           <li><a href="concrete.html">Concrete</a></li>
           <li><a href="patios.html">Patios &amp; Walls</a></li>
-          <li><a href="remodeling.html">Remodeling</a></li>
-          <li><a href="bathroom-remodel-belleville-il.html">Bathroom Remodel</a></li>
-          <li><a href="kitchen-remodel-belleville-il.html">Kitchen Remodel</a></li>
-          <li><a href="shower-remodel-belleville-il.html">Shower Remodel</a></li>
-          <li><a href="sunroom.html">Sunroom Additions</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1225,17 +837,9 @@
         <ul>
           <li><a href="metro-east-project-estimate-checklist.html">Project Estimate Checklist</a></li>
           <li><a href="deck-cost-guide-belleville-il.html">Deck Cost Guide</a></li>
-          <li><a href="fence-cost-guide-metro-east.html">Fence Cost Guide</a></li>
           <li><a href="concrete-patio-cost-guide-metro-east.html">Concrete Patio Cost Guide</a></li>
-          <li><a href="wood-vs-composite-decking-guide.html">Wood vs Composite Decking</a></li>
-          <li><a href="deck-repair-vs-replace-guide.html">Repair vs Replace Your Deck</a></li>
-          <li><a href="do-i-need-permit-deck-belleville-il.html">Do I Need a Deck Permit?</a></li>
           <li><a href="how-to-hire-a-contractor-metro-east.html">How to Hire a Contractor</a></li>
-          <li><a href="how-to-avoid-bad-contractor.html">Avoid Contractor Scams</a></li>
           <li><a href="jobs-completed-metro-east.html">Completed Projects</a></li>
-          <li><a href="jobs-completed-belleville-il.html">Belleville Project Proof</a></li>
-          <li><a href="jobs-completed-ofallon-il.html">O'Fallon Project Proof</a></li>
-          <li><a href="jobs-completed-edwardsville-il.html">Edwardsville Project Proof</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1247,9 +851,6 @@
           <li><a href="facebook.html">👍 Facebook</a></li>
           <li><a href="review-request.html">Leave a Review</a></li>
           <li><a href="work-with-all-pro.html">Work With All-Pro</a></li>
-          <li><a href="construction-jobs-belleville-ofallon.html">Construction Crew Jobs</a></li>
-          <li><a href="subcontractor-opportunities-metro-east.html">Subcontractor Opportunities</a></li>
-          <li><a href="bill-s-list-contractor-listing.html">Contractor Listing Review</a></li>
           <li><span>New Athens, IL 62264</span></li>
           <li><span>Written estimates</span></li>
         </ul>

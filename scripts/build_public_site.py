@@ -42,6 +42,7 @@ PUBLIC_EXTRA_HTML = {
     "thank-you.html",
     "unsubscribe-allpro-r4h8.html",
 }
+MANAGED_NOINDEX_MARKER = 'data-indexing-policy="local-service-cluster"'
 PUBLIC_DIRECTORIES = {".well-known", "downloads", "images"}
 BLOCKED_FILENAMES = {
     "allpro-ads-replies-private-n8m4q1.html",
@@ -133,6 +134,11 @@ def build() -> tuple[set[Path], int]:
     html_files = {path for path in indexed if path.suffix.lower() == ".html"}
     html_files.update(Path(name) for name in PUBLIC_EXTRA_HTML)
     html_files.update(path.relative_to(ROOT) for path in (ROOT / "blog").glob("*.html"))
+    html_files.update(
+        path.relative_to(ROOT)
+        for path in ROOT.glob("*.html")
+        if MANAGED_NOINDEX_MARKER in path.read_text(encoding="utf-8", errors="ignore")
+    )
 
     for relative in sorted(html_files):
         copy_file(relative)
