@@ -1,31 +1,19 @@
-TODAY'S LEAD GEN CHECKLIST -- All-Pro Metro East
-=================================================
+ALL-PRO REMODEL CAMPAIGN CHECKLIST
 
-IMMEDIATE (next 2 hours):
-[ ] Text 5-10 past customers using 02-review-request-sms.txt
-    -> Each new Google review = local pack ranking boost
-[ ] Post 1 Facebook post from 03-facebook-posts.txt WITH a real photo
-[ ] Post 1 GBP update from 01-gbp-posts.txt WITH a real photo
-    -> business.google.com > Posts > Add Update
+BEFORE POSTING
+[ ] Confirm the Google Business Profile is controlled by Bill or an approved manager.
+[ ] Use the exact business name, phone, website, and service area from the source-of-truth record.
+[ ] Use a real project image only when permission and city evidence are recorded.
+[ ] If proof is incomplete, use a planning graphic or label the image as a Metro East example.
+[ ] Confirm current availability with Bill before mentioning openings or start dates.
 
-TODAY (this afternoon):
-[ ] Set up Google Local Services Ads
-    -> ads.google.com/local-services-ads
-    -> $10/day, pay per CALL only, shows Google Guaranteed badge
-    -> Services: Decks, Fencing, Landscaping, Tree Service, Remodeling
-    -> Area: Belleville IL + 25mi radius
-    -> Upload license + insurance for the Google Guarantee badge
-[ ] Post 2nd Facebook post (tree trimming or spring cleanup)
-[ ] Share Facebook post to Belleville/O'Fallon community groups
+PUBLISH AND TRACK
+[ ] Publish one relevant update with the matching UTM-tagged landing page.
+[ ] Check that the landing page form, phone button, and thank-you route work.
+[ ] Review GA4 source/medium and the lead email for the campaign fields.
+[ ] Respond to calls, messages, and form requests promptly, without promising a fixed response time publicly.
 
-THIS WEEK:
-[ ] 1 GBP post per day (16 ready in 01-gbp-posts.txt)
-[ ] 2-3 Facebook posts this week (5 ready in 03-facebook-posts.txt)
-[ ] Day 3 review request follow-up SMS for non-responders
-[ ] Add real before/after job photos to GBP (42% more map clicks)
-
-FILES IN: leads-today/
-  01-gbp-posts.txt          -- 16 GBP post captions
-  02-review-request-sms.txt -- 5 SMS templates
-  03-facebook-posts.txt     -- 5 Facebook posts
-  00-TODAYS-CHECKLIST.txt   -- this file
+NEVER PUBLISH
+[ ] No invented customer quotes, star ratings, project locations, timelines, or outcomes.
+[ ] No licensing, insurance, warranty, or guarantee claim unless current documentation supports it.
+[ ] No fake scarcity or availability language.

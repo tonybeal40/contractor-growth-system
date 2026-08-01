@@ -1,174 +1,124 @@
-services = [
-    ("Deck Build", "deck"),
-    ("Privacy Fence", "fencing"),
-    ("Concrete Patio", "patio"),
-    ("Tree Trimming", "tree service"),
-    ("Mulch & Rock Install", "landscaping"),
-    ("Spring Cleanup", "landscape cleanup"),
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parent
+PHONE = "(618) 581-0676"
+SITE = "https://allprometroeastconstruction.com"
+
+
+def write(name: str, content: str) -> None:
+    (ROOT / name).write_text(content.strip() + "\n", encoding="utf-8")
+
+
+gbp_posts = [
+    (
+        "Belleville kitchen remodel planning",
+        "Planning a kitchen remodel in Belleville? Start with the layout, cabinet plan, appliance locations, lighting, plumbing, and flooring before buying finish materials.",
+        f"{SITE}/kitchen-remodel-belleville-il.html?utm_source=google_business_profile&utm_medium=organic&utm_campaign=remodel_focus_202608&utm_content=kitchen_belleville",
+    ),
+    (
+        "Belleville bathroom remodel planning",
+        "A useful bathroom estimate separates finishes from waterproofing, plumbing, ventilation, electrical work, and possible moisture repair. Send a room photo or request a written estimate.",
+        f"{SITE}/bathroom-remodel-belleville-il.html?utm_source=google_business_profile&utm_medium=organic&utm_campaign=remodel_focus_202608&utm_content=bathroom_belleville",
+    ),
+    (
+        "O'Fallon kitchen remodel planning",
+        "Before ordering cabinets or counters, decide what stays, what moves, and which trade work belongs in the same written scope. All-Pro evaluates focused updates and larger kitchen remodels.",
+        f"{SITE}/kitchen-remodel-ofallon-il.html?utm_source=google_business_profile&utm_medium=organic&utm_campaign=remodel_focus_202608&utm_content=kitchen_ofallon",
+    ),
+    (
+        "O'Fallon bathroom remodel planning",
+        "Trying to choose between a focused bathroom update, a tub-to-shower conversion, or a full rebuild? Start with the problem, the room condition, and one coordinated scope.",
+        f"{SITE}/bathroom-remodel-ofallon-il.html?utm_source=google_business_profile&utm_medium=organic&utm_campaign=remodel_focus_202608&utm_content=bathroom_ofallon",
+    ),
 ]
 
-cities = [
-    "Belleville IL", "O'Fallon IL", "Edwardsville IL",
-    "Collinsville IL", "Fairview Heights IL", "Swansea IL",
-    "Shiloh IL", "Maryville IL", "Glen Carbon IL", "Troy IL",
+lines = [
+    "GOOGLE BUSINESS PROFILE POSTS - PROOF-SAFE REMODEL CAMPAIGN",
+    "Use a real photo only when the project record and city are confirmed.",
+    "Otherwise use a planning graphic, material detail, or accurately labeled Metro East example.",
+    "Never add a testimonial, city, availability claim, or result that cannot be verified.",
+    "",
 ]
+for index, (title, copy, url) in enumerate(gbp_posts, start=1):
+    lines.extend(
+        [
+            f"-- POST {index}: {title} --",
+            copy,
+            "",
+            f"Request a free written estimate or call {PHONE}.",
+            url,
+            "",
+        ]
+    )
+write("01-gbp-posts.txt", "\n".join(lines))
 
-pairs = [
-    ("Deck Build", "Belleville IL"), ("Privacy Fence", "O'Fallon IL"),
-    ("Concrete Patio", "Edwardsville IL"), ("Tree Trimming", "Collinsville IL"),
-    ("Mulch & Rock Install", "Fairview Heights IL"), ("Spring Cleanup", "Swansea IL"),
-    ("Composite Deck", "Shiloh IL"), ("Bathroom Remodel", "Maryville IL"),
-    ("Privacy Fence", "Glen Carbon IL"), ("Tree Trimming", "Troy IL"),
-    ("Deck Build", "O'Fallon IL"), ("Spring Cleanup", "Belleville IL"),
-    ("Mulch & Rock Install", "Collinsville IL"), ("Concrete Patio", "Edwardsville IL"),
-    ("Privacy Fence", "Fairview Heights IL"), ("Tree Trimming", "Belleville IL"),
-]
-ctas = [
-    "Call/text us at (618) 581-0676 for a FREE quote.",
-    "Free estimates -- call or text (618) 581-0676.",
-    "Book your project now: (618) 581-0676.",
-    "Limited spring openings left -- call (618) 581-0676 today!",
-]
 
-# GBP Posts
-lines = ["="*60, "GOOGLE BUSINESS PROFILE POSTS -- COPY & PASTE TODAY",
-         "Go to: business.google.com > Posts > Add Update",
-         "Post 1-2 per day. Use your own before/after photo.", "="*60, ""]
-for i, (svc, city) in enumerate(pairs):
-    cta = ctas[i % len(ctas)]
-    tag = city.replace(" ","").replace("'","")
-    svc2 = svc.replace(" ","")
-    lines.append(f"-- POST {i+1} --")
-    lines.append(f"Before/After: {svc} in {city}")
-    lines.append("")
-    lines.append(f"Just finished this {svc.lower()} project in {city} and the homeowners love it!")
-    lines.append("")
-    lines.append(f"{cta}")
-    lines.append("allprometroeastconstruction.com")
-    lines.append("")
-    lines.append(f"#{tag} #MetroEastIL #{svc2} #AllProMetroEast #ContractorIL")
-    lines.append("")
-with open("01-gbp-posts.txt","w",encoding="utf-8") as f:
-    f.write("\n".join(lines))
-print(f"GBP: {len(pairs)} posts")
+review_sms = """
+REVIEW REQUEST SMS TEMPLATES
+Send only to an actual customer. Ask for an honest review without offering an incentive or screening by rating.
 
-# SMS
-sms = [
-    ("SHORT (best open rate)",
-     "Hey [Name]! It's William at All-Pro Metro East. Really appreciate you trusting us with your [project]. Mind leaving a quick Google review? Takes 60 sec: https://allprometroeastconstruction.com/review.html"),
-    ("DECK/OUTDOOR",
-     "Hi [Name], William from All-Pro here! Hope you're loving the new [deck/patio/fence]. A Google review would help other Metro East homeowners find us: https://allprometroeastconstruction.com/review.html -- thanks!"),
-    ("LANDSCAPING",
-     "Hey [Name]! Loving how the yard looks? If happy, please leave us a Google review -- really helps: https://allprometroeastconstruction.com/review.html -- All-Pro, William"),
-    ("REMODELING",
-     "Hi [Name], William at All-Pro. Hope you're enjoying the [bathroom/kitchen] every day! A quick Google review would mean a lot: https://allprometroeastconstruction.com/review.html Thanks!"),
-    ("FOLLOW-UP (day 3 if no response)",
-     "Hey [Name], no pressure at all! If you get a chance, a Google review helps our small local business so much. Even just stars: https://allprometroeastconstruction.com/review.html -- William, All-Pro"),
-]
-lines2 = ["="*60,"REVIEW REQUEST SMS TEMPLATES -- SEND TODAY",
-         "Replace [Name] and [project] before sending.",
-          "Get your link: business.google.com > Read Reviews > Get more reviews","="*60,""]
-for label, msg in sms:
-    lines2.append(f"-- {label} --")
-    lines2.append(msg)
-    lines2.append("")
-with open("02-review-request-sms.txt","w",encoding="utf-8") as f:
-    f.write("\n".join(lines2))
-print(f"SMS: {len(sms)} templates")
+-- FIRST REQUEST --
+Hi [Name], it is William at All-Pro. Thank you for choosing us for your [project]. If you would like to share your honest experience, here is our website review form: https://allprometroeastconstruction.com/review.html
 
-# Facebook posts
-fb = [
-    ("Tree Service Promo",
-"""Spring tree work season is HERE -- schedule is filling fast!
-
-All-Pro Metro East Construction is booking tree trimming, removal, and stump grinding across Belleville, O'Fallon, Collinsville, Edwardsville, and 35+ more Metro East cities.
-
-Free estimates. Licensed & insured.
-(618) 581-0676 | allprometroeastconstruction.com
-
-#MetroEastIL #TreeService #BellevilleIL #OFallonIL #SpringCleanup"""),
-    ("Mulch/Rock Before & After",
-"""BEFORE & AFTER -- Mulch & Decorative Rock Install in [City], IL!
-
-We refreshed the flower beds with fresh hardwood mulch + river rock edging. Total transformation in ONE day.
-
-Free quote: (618) 581-0676
-allprometroeastconstruction.com
-
-#MetroEastLandscaping #MulchInstall #CurbAppeal #AllProMetroEast"""),
-    ("Spring Cleanup Deal",
-"""Spring Cleanup Specials -- Metro East IL!
-
-Leaf removal, bed edging, weeding, debris hauling. We service Belleville, O'Fallon, Swansea, Collinsville, Edwardsville + 35 more cities.
-
-FREE ESTIMATES -- limited spring slots open NOW.
-(618) 581-0676 | allprometroeastconstruction.com
-
-#SpringCleanup #MetroEastIL #LandscapingIL"""),
-    ("Deck Build Social Proof",
-"""Just wrapped up this beautiful composite deck build in [City], IL!
-
-All-Pro Metro East builds decks, pergolas, patios, and privacy fencing. On time, on budget.
-
-Free estimates. 35+ Metro East cities.
-(618) 581-0676 | allprometroeastconstruction.com
-
-#DeckBuilder #MetroEastIL #OutdoorLiving #AllPro"""),
-    ("Urgency / Limited Slots",
-"""Only a few project slots left for May!
-
-Thinking about: landscaping, spring cleanup, tree trimming, new deck, patio, or privacy fence?
-
-Get your FREE estimate NOW before we're booked out.
-
-(618) 581-0676 | allprometroeastconstruction.com
-
-#MetroEastIL #HomeImprovement #BellevilleIL"""),
-]
-lines3 = ["="*60,"FACEBOOK POSTS -- POST 1-2 TODAY, SCHEDULE THE REST",
-          "Add a real before/after photo. Replace [City] with actual city.","="*60,""]
-for label, post in fb:
-    lines3.append(f"-- {label} --")
-    lines3.append(post)
-    lines3.append("")
-with open("03-facebook-posts.txt","w",encoding="utf-8") as f:
-    f.write("\n".join(lines3))
-print(f"Facebook: {len(fb)} posts")
-
-# Checklist
-checklist = """TODAY'S LEAD GEN CHECKLIST -- All-Pro Metro East
-=================================================
-
-IMMEDIATE (next 2 hours):
-[ ] Text 5-10 past customers using 02-review-request-sms.txt
-    -> Each new Google review = local pack ranking boost
-[ ] Post 1 Facebook post from 03-facebook-posts.txt WITH a real photo
-[ ] Post 1 GBP update from 01-gbp-posts.txt WITH a real photo
-    -> business.google.com > Posts > Add Update
-
-TODAY (this afternoon):
-[ ] Set up Google Local Services Ads
-    -> ads.google.com/local-services-ads
-    -> $10/day, pay per CALL only, shows Google Guaranteed badge
-    -> Services: Decks, Fencing, Landscaping, Tree Service, Remodeling
-    -> Area: Belleville IL + 25mi radius
-    -> Upload license + insurance for the Google Guarantee badge
-[ ] Post 2nd Facebook post (tree trimming or spring cleanup)
-[ ] Share Facebook post to Belleville/O'Fallon community groups
-
-THIS WEEK:
-[ ] 1 GBP post per day (16 ready in 01-gbp-posts.txt)
-[ ] 2-3 Facebook posts this week (5 ready in 03-facebook-posts.txt)
-[ ] Day 3 review request follow-up SMS for non-responders
-[ ] Add real before/after job photos to GBP (42% more map clicks)
-
-FILES IN: leads-today/
-  01-gbp-posts.txt          -- 16 GBP post captions
-  02-review-request-sms.txt -- 5 SMS templates
-  03-facebook-posts.txt     -- 5 Facebook posts
-  00-TODAYS-CHECKLIST.txt   -- this file
+-- ONE FOLLOW-UP --
+Hi [Name], William from All-Pro here. One quick follow-up in case the review link got buried. We appreciate honest feedback: https://allprometroeastconstruction.com/review.html Thank you.
 """
-with open("00-TODAYS-CHECKLIST.txt","w",encoding="utf-8") as f:
-    f.write(checklist)
-print("Checklist written")
-print("All done!")
+write("02-review-request-sms.txt", review_sms)
+
+
+facebook_posts = """
+FACEBOOK POSTS - REMODEL PLANNING CAMPAIGN
+Use a verified project photo only when the city and permission are documented. Otherwise use a planning graphic or accurately labeled inspiration image.
+
+-- BELLEVILLE KITCHEN --
+Planning a kitchen remodel in Belleville? A clear scope should connect cabinets, counters, appliances, lighting, plumbing, flooring, and finish work before materials are ordered.
+
+Request a free written estimate: https://allprometroeastconstruction.com/kitchen-remodel-belleville-il.html?utm_source=facebook&utm_medium=organic_social&utm_campaign=remodel_focus_202608&utm_content=kitchen_belleville
+Call (618) 581-0676.
+
+-- BELLEVILLE BATHROOM --
+Bathroom problems are not always surface-deep. Waterproofing, ventilation, plumbing, subfloor condition, and hidden moisture should be considered before new tile and fixtures cover the room.
+
+Start here: https://allprometroeastconstruction.com/bathroom-remodel-belleville-il.html?utm_source=facebook&utm_medium=organic_social&utm_campaign=remodel_focus_202608&utm_content=bathroom_belleville
+Call (618) 581-0676.
+
+-- O'FALLON KITCHEN --
+Focused update or full kitchen remodel? Decide what stays, what moves, and what needs repair before choosing the finish level. All-Pro provides written estimates after reviewing the actual scope.
+
+Start here: https://allprometroeastconstruction.com/kitchen-remodel-ofallon-il.html?utm_source=facebook&utm_medium=organic_social&utm_campaign=remodel_focus_202608&utm_content=kitchen_ofallon
+Call (618) 581-0676.
+
+-- O'FALLON BATHROOM --
+Compare a focused update, tub-to-shower conversion, walk-in shower, or full bathroom rebuild based on the room condition and the problem you need to solve.
+
+Start here: https://allprometroeastconstruction.com/bathroom-remodel-ofallon-il.html?utm_source=facebook&utm_medium=organic_social&utm_campaign=remodel_focus_202608&utm_content=bathroom_ofallon
+Call (618) 581-0676.
+"""
+write("03-facebook-posts.txt", facebook_posts)
+
+
+checklist = """
+ALL-PRO REMODEL CAMPAIGN CHECKLIST
+
+BEFORE POSTING
+[ ] Confirm the Google Business Profile is controlled by Bill or an approved manager.
+[ ] Use the exact business name, phone, website, and service area from the source-of-truth record.
+[ ] Use a real project image only when permission and city evidence are recorded.
+[ ] If proof is incomplete, use a planning graphic or label the image as a Metro East example.
+[ ] Confirm current availability with Bill before mentioning openings or start dates.
+
+PUBLISH AND TRACK
+[ ] Publish one relevant update with the matching UTM-tagged landing page.
+[ ] Check that the landing page form, phone button, and thank-you route work.
+[ ] Review GA4 source/medium and the lead email for the campaign fields.
+[ ] Respond to calls, messages, and form requests promptly, without promising a fixed response time publicly.
+
+NEVER PUBLISH
+[ ] No invented customer quotes, star ratings, project locations, timelines, or outcomes.
+[ ] No licensing, insurance, warranty, or guarantee claim unless current documentation supports it.
+[ ] No fake scarcity or availability language.
+"""
+write("00-TODAYS-CHECKLIST.txt", checklist)
+
+print("Generated proof-safe GBP, Facebook, review, and campaign checklist files.")

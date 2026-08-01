@@ -20,7 +20,7 @@ PROJECT_INTAKE_PAGE = "kitchen-bath-project-review-belleville-ofallon.html"
 FORM_ACTION = "https://formsubmit.co/williamosessionallpro@gmail.com"
 ANALYTICS_LOADER = "analytics-loader.js?v=20260714a"
 LEAD_TRACKING_LOADER = "lead-tracking.js?v=20260723c"
-REMODEL_STYLESHEET = "remodel-lead-pages.css?v=20260723a"
+REMODEL_STYLESHEET = "remodel-lead-pages.css?v=20260801b"
 CONCIERGE_LOADER = "lead-concierge-loader.js?v=20260723a"
 CURRENT_FORM_ROUTER = "formsubmit-lead-tracking.js?v=20260726a"
 ACCEPTED_FORM_ROUTER = re.compile(
@@ -52,9 +52,27 @@ def check_page(filename: str) -> list[str]:
         errors.append("lead form must use POST")
     if not re.search(r"<form\b[^>]*\bdata-form=\"[^\"]+\"", html, re.IGNORECASE):
         errors.append("lead form is missing data-form label")
-    for field in ("full_name", "phone", "email", "estimate_contact_consent"):
+    for field in (
+        "full_name",
+        "phone",
+        "email",
+        "project_zip",
+        "contact_method",
+        "budget_range",
+        "project_photo",
+        "estimate_contact_consent",
+    ):
         if not re.search(rf'\bname="{field}"', html, re.IGNORECASE):
             errors.append(f"missing {field} field")
+    if 'enctype="multipart/form-data"' not in html:
+        errors.append("lead form must support an optional project photo")
+    permit_url = (
+        "https://www.belleville.net/345/Health-Housing-Building"
+        if "belleville" in filename
+        else "https://www.ofallon.org/200/Residential-Construction-Home-Improvement-Permit-Applications"
+    )
+    if permit_url not in html:
+        errors.append("missing official city permit guidance")
     if CURRENT_FORM_ROUTER not in html:
         errors.append("missing current shared form tracking script")
     if REMODEL_STYLESHEET not in html:

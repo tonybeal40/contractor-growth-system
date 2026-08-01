@@ -49,3 +49,16 @@ The current repository contains real Metro East project photos but no project re
 - confirmation that the photo may appear on the public website.
 
 Until then, the public O'Fallon proof page must label the images as Metro East examples.
+
+## Priority Remodel Proof Queue
+
+Collect and verify these four records first because they support the highest-value local search pages:
+
+1. Belleville kitchen remodel
+2. Belleville bathroom remodel
+3. O'Fallon kitchen remodel
+4. O'Fallon bathroom remodel
+
+For each project, capture one wide before photo, one problem/detail photo, one wide after photo, and one finished detail photo. Record the city evidence, scope, materials or selections that can be verified, the problem solved, and the completion month. A short homeowner comment may be used only with written permission.
+
+Do not publish an exact address, customer surname, project cost, or outcome that cannot be supported. If a city cannot be confirmed, label the project as a Metro East example rather than assigning it to a priority city.

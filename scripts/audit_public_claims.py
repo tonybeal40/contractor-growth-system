@@ -70,6 +70,19 @@ TEXT_RULES = (
         "uncorroborated workmanship promise",
         re.compile(r"(?:backed by a workmanship guarantee|full workmanship warranty|guaranteed workmanship)", re.I),
     ),
+    (
+        "absolute schedule, budget, or popularity claim",
+        re.compile(
+            r"(?:(?:done|complete(?:d|s)?|deliver(?:ed|ing|s)?|keep(?:ing|s)?|staying)"
+            r".{0,50}\bon schedule\b|"
+            r"(?:done|complete(?:d|s)?|deliver(?:ed|ing|s)?|keep(?:ing|s)?|staying)"
+            r".{0,50}\bon budget\b|"
+            r"\bon time,?\s*(?:and\s+)?on budget\b|\bsquarely on budget\b|"
+            r"\bno surprise costs?\b|\bno schedule creep\b|\b#1 most requested\b|"
+            r"handles every trade, every detail)",
+            re.I,
+        ),
+    ),
 )
 INSURANCE_RE = re.compile(
     r"(?:\blicensed\s*(?:,|and|&|&amp;)?\s*insured\b|"
@@ -221,6 +234,16 @@ def audit_generator(path: Path) -> list[Finding]:
         ("old generator radius", r"\b(?:50|60)[ -]mile\b"),
         ("old generator response promise", r"\b(?:within 24 hours|usually same day)\b"),
         ("old generator licensing claim", r"licensed.{0,25}insured|insured.{0,25}licensed"),
+        ("invented project completion claim", r"just (?:finished|wrapped up) this"),
+        ("invented customer reaction", r"homeowners? love(?:s|d)? it"),
+        ("unverified scarcity claim", r"limited .{0,30}(?:openings|slots)|only a few .{0,30}slots"),
+        (
+            "absolute schedule, budget, or popularity claim",
+            r"on time,?\s*(?:and\s+)?on budget|(?:done|complete(?:d|s)?|deliver(?:ed|ing|s)?|"
+            r"keep(?:ing|s)?|staying).{0,50}on (?:schedule|budget)|squarely on budget|"
+            r"no surprise costs?|no schedule creep|#1 most requested|handles every trade, every detail",
+        ),
+        ("unsupported marketing statistic", r"42% more map clicks"),
         (
             "internal generator wording",
             r"Why this page exists|stays compliant|Real CTA|Proof path|Review source label|The catch-all page|The proof page",
@@ -240,6 +263,7 @@ def main() -> int:
         findings.extend(audit_file(path))
     findings.extend(audit_generator(ROOT / "generate-city-pages.ps1"))
     findings.extend(audit_generator(ROOT / "scripts" / "generate_pages.py"))
+    findings.extend(audit_generator(ROOT / "leads-today" / "gen.py"))
 
     unique = sorted(set(findings), key=lambda item: (item.path.as_posix(), item.rule, item.context))
     if unique:
@@ -250,7 +274,7 @@ def main() -> int:
         if len(unique) > 100:
             print(f"... and {len(unique) - 100} more")
         return 1
-    print(f"Public claim audit passed for {len(target_paths())} public HTML files and both page generators.")
+    print(f"Public claim audit passed for {len(target_paths())} public HTML files and three page/campaign generators.")
     return 0
 
 

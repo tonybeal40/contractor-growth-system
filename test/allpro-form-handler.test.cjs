@@ -51,6 +51,7 @@ function kitchenLead() {
     email: "jamie@example.com",
     service: "Kitchen remodel",
     city: "Belleville",
+    project_zip: "62220",
     timeline: "As soon as possible",
     budget_range: "$25,000 or more",
     details: "Complete kitchen update with cabinets, counters, flooring, lighting, and a more useful family layout.",
@@ -136,6 +137,8 @@ test("builds a noticeable email with qualification and reply sections", () => {
   assert.match(html, /Lead qualification/);
   assert.match(html, /Ready-to-send customer reply/);
   assert.match(html, /Jamie Homeowner/);
+  assert.match(html, /Address \/ ZIP/);
+  assert.match(html, /62220/);
 });
 
 test("routes crew applications into a private hiring lane", () => {

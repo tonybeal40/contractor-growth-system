@@ -31,7 +31,7 @@
 
 .remodel-lead-page .page-hero {
   padding: calc(var(--nav-h) + 3rem) 0 3rem;
-  overflow: visible;
+  overflow-x: clip;
   background: var(--remodel-cream);
   border-bottom: 1px solid var(--remodel-border);
   color: var(--remodel-charcoal);
@@ -55,6 +55,7 @@
 .remodel-lead-page .page-hero-inner {
   width: min(1180px, calc(100% - 40px));
   max-width: none;
+  min-width: 0;
   margin: 0 auto;
   padding: 0;
 }
@@ -102,6 +103,8 @@
 
 .kitchen-priority-page .kitchen-hero-media {
   margin: 0;
+  max-width: 100%;
+  min-width: 0;
   overflow: hidden;
   border: 1px solid var(--remodel-border);
   border-radius: 6px;
@@ -136,6 +139,7 @@
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 32px;
   margin: 0 auto;
+  min-width: 0;
   padding: 28px 0;
   align-items: center;
 }
@@ -218,6 +222,7 @@
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 26px;
+  min-width: 0;
 }
 
 .remodel-lead-page .remodel-hero-actions .btn-primary,
@@ -231,6 +236,7 @@
   border-radius: 4px;
   font-weight: 800;
   text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .remodel-lead-page .remodel-hero-actions .btn-primary {
@@ -266,6 +272,7 @@
 
 .remodel-lead-page .content-section {
   padding: 48px 0 64px;
+  overflow-x: clip;
   background: #fff;
 }
 
@@ -276,6 +283,7 @@
   grid-template-columns: minmax(0, 1fr) 360px;
   gap: 42px;
   margin: 0 auto;
+  min-width: 0;
   padding: 0;
   align-items: start;
 }
@@ -331,6 +339,25 @@
 
 .remodel-lead-page .answer-engine > h3 {
   margin-top: 0;
+}
+
+.remodel-lead-page .remodel-local-source {
+  margin: 1.75rem 0;
+  padding: 1rem 1.1rem;
+  border-left: 5px solid var(--remodel-green);
+  background: #eef3ef;
+}
+
+.remodel-lead-page .remodel-local-source h3 {
+  margin-top: 0;
+}
+
+.remodel-lead-page .remodel-local-source p:last-child {
+  margin-bottom: 0;
+}
+
+.remodel-lead-page .remodel-local-source a {
+  font-weight: 800;
 }
 
 .remodel-lead-page .decision-grid {
@@ -400,6 +427,9 @@
   background: #fff;
   box-shadow: 0 12px 30px rgba(31, 41, 51, .10);
   color: var(--remodel-charcoal);
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .remodel-lead-page .sidebar-card > h3 {
@@ -417,6 +447,8 @@
   display: grid;
   gap: 13px;
   margin-top: 18px;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .remodel-lead-page .remodel-field {
@@ -434,6 +466,7 @@
 .remodel-lead-page .remodel-field input,
 .remodel-lead-page .remodel-field select,
 .remodel-lead-page .remodel-field textarea {
+  box-sizing: border-box;
   width: 100%;
   min-width: 0;
   min-height: 46px;
@@ -469,6 +502,14 @@
   grid-template-columns: 20px minmax(0, 1fr);
   gap: 8px;
   align-items: start;
+  min-width: 0;
+}
+
+.remodel-lead-page .remodel-consent label,
+.remodel-lead-page .sidebar-card > h3,
+.remodel-lead-page .content-body h2,
+.remodel-lead-page .content-body h3 {
+  overflow-wrap: anywhere;
 }
 
 .remodel-lead-page .remodel-consent input {
@@ -602,7 +643,8 @@
 @media (max-width: 600px) {
   .remodel-lead-page .page-hero-inner,
   .remodel-lead-page .content-inner {
-    width: min(100% - 28px, 1180px);
+    width: min(1180px, calc(100% - 28px));
+    max-width: calc(100% - 28px);
   }
 
   .remodel-lead-page .page-hero-inner h1 {
@@ -624,6 +666,8 @@
 
   .remodel-lead-page .remodel-hero-actions .btn-primary,
   .remodel-lead-page .remodel-hero-actions .btn-call {
+    box-sizing: border-box;
+    max-width: 100%;
     width: 100%;
   }
 
@@ -650,7 +694,8 @@
   }
 
   .kitchen-priority-page .kitchen-scope-offer-inner {
-    width: min(100% - 28px, 1180px);
+    width: min(1180px, calc(100% - 28px));
+    max-width: calc(100% - 28px);
     gap: 18px;
     padding: 24px 0;
   }
