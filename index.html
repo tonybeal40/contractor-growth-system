@@ -47,7 +47,7 @@
 <link rel="icon" type="image/png" href="/images/branding/logo-square.png">
 <link rel="shortcut icon" href="/images/branding/logo-square.png">
 <link rel="apple-touch-icon" href="/images/branding/logo-square.png">
-<!-- Only preload the true LCP image (hero logo) — removed competing below-fold image preloads -->
+<!-- Preload the navigation brand asset; project images load through the responsive hero layout. -->
 <link rel="preload" as="image" href="/images/branding/logo-nav.webp" type="image/webp" fetchpriority="high">
 <!-- DNS prefetch for 3rd parties to speed up connections -->
 <link rel="dns-prefetch" href="https://formsubmit.co">
@@ -169,6 +169,7 @@
 </script>
 <link rel="stylesheet" href="/brand-refresh.css?v=20260721c">
 <link rel="stylesheet" href="/project-review.css?v=20260730a">
+<link rel="stylesheet" href="/design-refresh.css?v=20260802a">
 <!-- Microsoft Clarity -->
 <script>
   (function(){
@@ -213,8 +214,9 @@
       <li><a href="get-quote.html" class="nav-cta">Free Estimate</a></li>
     </ul>
     <div class="nav-phone">
-      📞 <strong><a href="tel:6185810676" style="color:inherit;">618-581-0676</a></strong>
+      <span class="nav-phone-label">Call</span> <strong><a href="tel:6185810676" style="color:inherit;">618-581-0676</a></strong>
     </div>
+    <a class="nav-mobile-cta" href="get-quote.html">Estimate</a>
     <div class="nav-social">
       <a href="https://www.facebook.com/metroeastconstructionIL" class="social-icon social-facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.84c0-2.52 1.49-3.91 3.77-3.91 1.09 0 2.23.2 2.23.2v2.47h-1.26c-1.24 0-1.63.78-1.63 1.57v1.89h2.78l-.44 2.91h-2.34V22C18.34 21.24 22 17.08 22 12.06z"/></svg></a>
       <a href="https://www.linkedin.com/company/all-pro-metro-metro-east-construction/" class="social-icon social-linkedin" aria-label="LinkedIn" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
@@ -229,35 +231,32 @@
 <section class="home-hero" aria-labelledby="home-title">
   <div class="home-shell home-hero-grid">
     <div class="home-hero-copy">
-      <picture>
-        <source srcset="/images/branding/logo-nav.webp" type="image/webp">
-        <img src="/images/branding/logo-web-sm.png" alt="All-Pro Metro East Construction logo" class="home-hero-logo" width="91" height="80" loading="eager" fetchpriority="high" decoding="async">
-      </picture>
-      <div class="home-eyebrow">Belleville, O'Fallon, Edwardsville &amp; Metro East IL</div>
+      <div class="home-eyebrow">Local contractor serving Metro East since 2002</div>
       <h1 id="home-title">Metro East Contractor for Remodels, Decks &amp; Outdoor Projects</h1>
       <p class="home-hero-sub">Bathroom remodels, kitchen remodels, decks, patios, fencing, landscaping, concrete, and small jobs. Clear written estimates, local proof, and direct local follow-through.</p>
       <div class="home-hero-actions">
         <a href="get-quote.html" class="btn btn-red">Get Free Estimate</a>
         <a href="tel:6185810676" class="btn btn-outline">Call Bill</a>
-        <button class="alc-loader" type="button" aria-haspopup="dialog">Plan My Project</button>
       </div>
-      <p class="hero-photo-start">Kitchen or bathroom project? <a href="kitchen-bath-project-review-belleville-ofallon.html">Start with details and one optional photo.</a></p>
+      <div class="home-project-tools">
+        <button class="alc-loader" type="button" aria-haspopup="dialog">Not sure where to start? Plan my project</button>
+        <a class="hero-photo-start" href="kitchen-bath-project-review-belleville-ofallon.html">Kitchen or bath project? Send details and one optional photo.</a>
+      </div>
       <div class="home-quick-facts" aria-label="All-Pro trust signals">
-        <span>Direct local contact</span>
-        <span>Belleville &amp; O'Fallon focus</span>
-        <span>Written estimates</span>
+        <span>Owner-led service</span>
+        <span>Belleville, O'Fallon &amp; Metro East</span>
+        <span>Clear written estimates</span>
       </div>
     </div>
-    <aside class="home-hero-media" aria-label="All-Pro project proof and brand">
-      <div class="home-logo-panel">
-        <img src="/images/branding/logo-nav.webp" alt="All-Pro Construction logo" width="180" height="180" loading="eager" decoding="async">
-        <strong>All-Pro Metro East Construction</strong>
-        <span>Local project proof. Written estimates. Metro East service.</span>
-      </div>
+    <aside class="home-hero-media" aria-label="Recent All-Pro project work">
       <div class="home-photo-stack">
         <img src="images/deck-build-metro-east-il.webp" alt="Metro East deck build by All-Pro Construction" width="360" height="240" loading="eager" decoding="async">
         <img src="images/shower-remodel-belleville-il.webp" alt="Belleville IL bathroom shower remodel by All-Pro Construction" width="220" height="180" loading="lazy" decoding="async">
         <img src="images/projects/metro-east-landscape-front-entry.avif?v=96049fa" alt="Metro East landscape refresh and curb appeal project by All-Pro Construction" width="220" height="180" loading="lazy" decoding="async">
+      </div>
+      <div class="home-media-caption">
+        <strong>Real work from local projects</strong>
+        <span>Decks, remodels, landscaping and outdoor improvements across Metro East Illinois.</span>
       </div>
     </aside>
   </div>
@@ -480,27 +479,6 @@
             <div class="why-item-text">
               <h3>Work Reviewed Before Closeout</h3>
               <p>The completed scope is reviewed so questions and remaining items can be addressed clearly.</p>
-            </div>
-          </li>
-          <li class="why-item">
-            <div class="why-item-icon">⏰</div>
-            <div class="why-item-text">
-              <h3>Scheduling With Clear Updates</h3>
-              <p>Timing and access are discussed before work begins, with updates when the schedule changes.</p>
-            </div>
-          </li>
-          <li class="why-item">
-            <div class="why-item-icon">🧹</div>
-            <div class="why-item-text">
-              <h3>Respect for Your Property</h3>
-              <p>Site access, material staging, cleanup expectations, and occupied areas are discussed before work begins.</p>
-            </div>
-          </li>
-          <li class="why-item">
-            <div class="why-item-icon">💬</div>
-            <div class="why-item-text">
-              <h3>A Clear Next Step</h3>
-              <p>Homeowners receive a direct contact path for questions before, during, and after the scheduled work.</p>
             </div>
           </li>
         </ul>
