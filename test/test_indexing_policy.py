@@ -21,16 +21,30 @@ class IndexingPolicyTests(unittest.TestCase):
         )
         self.assertEqual(result, ("concrete", "belleville"))
 
-    def test_does_not_treat_a_specialty_service_as_a_city(self):
-        self.assertIsNone(
+    def test_recognizes_a_managed_specialty_service(self):
+        self.assertEqual(
             apply_indexing_policy.split_local_page(
                 Path("concrete-contractor-belleville-il.html")
-            )
+            ),
+            ("concrete-contractor", "belleville"),
         )
+
+    def test_does_not_treat_a_problem_page_as_a_city_service_page(self):
         self.assertIsNone(
             apply_indexing_policy.split_local_page(
                 Path("concrete-patio-drainage-problem-belleville-il.html")
             )
+        )
+
+    def test_limits_full_service_clusters_to_core_cities(self):
+        self.assertTrue(
+            apply_indexing_policy.should_index("kitchen-remodel", "belleville")
+        )
+        self.assertTrue(
+            apply_indexing_policy.should_index("kitchen-remodel", "ofallon")
+        )
+        self.assertFalse(
+            apply_indexing_policy.should_index("kitchen-remodel", "edwardsville")
         )
 
 
