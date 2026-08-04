@@ -85,7 +85,7 @@
 }
 
 .home-page .nav-phone-label {
-  color: #748079;
+  color: #5f6b66;
   font-size: .7rem;
   font-weight: 800;
   letter-spacing: .06em;
@@ -401,6 +401,11 @@
   border-radius: 0 !important;
   background: transparent !important;
   color: var(--apr-copper-dark) !important;
+}
+
+.home-page .why .section-tag {
+  border-bottom-color: #ffd0a3 !important;
+  color: #ffd0a3 !important;
 }
 
 .home-page .home-lane-grid {
