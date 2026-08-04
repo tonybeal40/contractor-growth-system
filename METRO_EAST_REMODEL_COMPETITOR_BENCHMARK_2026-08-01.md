@@ -2,6 +2,8 @@
 
 Date reviewed: August 1, 2026
 
+Technical scorecard updated: August 4, 2026
+
 This is a focused benchmark of contractors visible for Belleville and O'Fallon kitchen and bathroom remodeling searches. It is not a claim that every Metro East contractor was reviewed, and search results vary by location, device, history, and time.
 
 ## What Strong Local Competitors Do Well
@@ -46,6 +48,37 @@ Local snapshot at the time of review:
 
 These checks improve crawlability and usefulness; they do not guarantee a first-page ranking or a particular number of leads.
 
+## August 4 Scorecard
+
+This is a practical benchmark, not a claim that All-Pro was measured against every contractor in the world. National companies operate with much larger review, photography, staffing, advertising, and software budgets, while All-Pro needs to win a focused local market.
+
+| Area | Current score | What the score means |
+| --- | ---: | --- |
+| Repository technical SEO | 10/10 | 152 indexable pages averaged 100 in the static audit with no recorded title, meta, canonical, H1, or indexability issue. |
+| Live homepage Lighthouse | 9.8/10 | Mobile lab scores: 93 performance, 100 accessibility, 100 best practices, and 100 SEO. Lab scores vary between runs. |
+| Responsive layout | 10/10 tested set | No horizontal overflow was found across nine priority routes at 320, 375, 390, 430, 1280, or 1440 pixels. |
+| Homeowner conversion path | 8.5/10 | Phone, estimate, photo-first project review, and project-match paths are clear. Instant operational follow-up still depends on the current Apps Script/Twilio deployment. |
+| City/service usefulness | 8.5/10 | Belleville and O'Fallon kitchen and bathroom pages are substantially more useful than thin city pages and contain cost drivers, scope, process, FAQs, and complete forms. |
+| Verified local project proof | 5/10 | Belleville has limited city-confirmed evidence; O'Fallon still relies on honestly labeled Metro East examples. Four verified kitchen/bath case studies remain the biggest content gap. |
+| Review and listing authority | 4.5/10 | The website review system exists, but Google Business Profile control, duplicate listing cleanup, review volume, and cross-platform fact consistency remain unresolved growth constraints. |
+| National brand depth | 5.5/10 | The site lacks the project-library depth, named team/process proof, warranty detail, and customer project portal shown by mature national remodelers. |
+
+Overall: the website itself is approximately **8.5/10 against typical local contractor sites**, while the full search-and-reputation engine is closer to **6.5/10** until verified projects, reviews, listings, and immediate follow-up catch up. No responsible audit can promise first position in Google or AI answers.
+
+## What National Leaders Add
+
+Strong national remodelers do more than publish service keywords. Power Home Remodeling publishes a detailed consultation-to-installation process and a customer project-tracking system. Neil Kelly publishes a five-stage process, team information, galleries, timelines, warranty detail, and deep project education. Those assets make the business easier to verify and lower homeowner uncertainty.
+
+All-Pro should adapt the useful pattern at local scale:
+
+1. Turn every completed Belleville or O'Fallon job into a permissioned project record with before/after photos, scope, problem, result, month, and city.
+2. Publish a plain-language workmanship and communication commitment that matches what Bill can consistently deliver.
+3. Track each lead from new to contacted, estimate scheduled, won, lost, and review requested.
+4. Respond to form and Opportunity Alert requests in minutes during business hours, not the next day.
+5. Keep the website focused on the homeowner's decision; keep internal SEO and AI strategy language private.
+
+The strongest defensible opportunity is a **Metro East project-proof system**: faster local response plus a growing library of genuine, city-confirmed work and verified reviews. Competitors can copy keywords. They cannot copy All-Pro's documented projects, customers, response history, and local relationships.
+
 ## Highest-Value Competitive Gap
 
 The main gap is verified city-specific project proof. Several competitors have deeper galleries or identifiable local case studies. All-Pro should not fill this gap with stock claims or projects assigned to a city without evidence.
@@ -82,5 +115,9 @@ Each case study should state the starting problem, supported scope, major select
 - https://www.metroeastbuilds.com/
 - https://metroeastkitchens.com/
 - https://ofallonremodel.com/
+- https://www.powerhrg.com/support/our-process/
+- https://www.powerhrg.com/support/project-pulse/
+- https://www.neilkelly.com/process/
+- https://www.neilkelly.com/faq/
 
 Do not copy competitor wording, testimonials, photos, or project claims. Use the benchmark only to identify homeowner questions, technical gaps, and evidence All-Pro should collect from its own work.

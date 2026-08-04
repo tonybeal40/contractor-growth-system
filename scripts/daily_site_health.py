@@ -24,12 +24,13 @@ FORM_HANDLER_URL = (
 CONCIERGE_HEALTH_PATH = "/api/lead-concierge/health"
 EXPECTED_PHONE = "tel:6185810676"
 EXPECTED_FORM_ACTION = "https://formsubmit.co/williamosessionallpro@gmail.com"
-EXPECTED_FORM_HANDLER_RELEASE = "2026-07-23-hiring-resume-v1"
+EXPECTED_FORM_HANDLER_RELEASE = "2026-08-04-nextdoor-opportunity-inbox-v1"
 REQUIRED_FORM_HANDLER_CAPABILITIES = {
     "homeowner-leads",
     "applicant-resumes",
     "website-reviews",
     "openai-attribution",
+    "nextdoor-opportunity-inbox",
 }
 CRAWLER_CHECK_PATH = "/kitchen-remodel-belleville-il.html"
 SEARCH_CRAWLERS = (

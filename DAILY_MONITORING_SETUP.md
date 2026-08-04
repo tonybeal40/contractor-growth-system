@@ -51,8 +51,13 @@ The digest reports:
    existing public web-app URL continues to use the latest form code.
 5. Open **Triggers** and confirm these handlers are present:
    `sendUncontactedLeadAlerts`, `sendPendingReviewRequests`,
-   `sendWeeklyLeadReport`, `processMarketingOptOutReplies`, and
-   `sendDailyLeadHealthDigest`.
+   `sendWeeklyLeadReport`, `processMarketingOptOutReplies`,
+   `sendDailyLeadHealthDigest`, and `scanNextdoorLeadInbox`.
+
+`scanNextdoorLeadInbox` runs hourly. It creates a private, deduplicated review
+queue from owned Nextdoor notification emails and never posts or replies on
+Nextdoor. Any response must come from the All-Pro Business Page or an eligible
+Opportunity Alert, not a personal account.
 
 GitHub can confirm that the public form endpoint responds, but it cannot read a
 private Google Sheet without storing Google credentials. The Apps Script digest

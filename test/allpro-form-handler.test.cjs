@@ -462,3 +462,71 @@ test("daily lead monitor identifies only actionable delivery failures", () => {
   assert.match(failed.join(" | "), /customer confirmation: not sent/);
   assert.match(failed.join(" | "), /follow-up board: not logged/);
 });
+
+test("normalizes Nextdoor message and post URLs without tracking parameters", () => {
+  assert.equal(
+    context.stableNextdoorUrl("https://nextdoor.com/p/bPd5G5cGbDLN?utm_source=email&post=123"),
+    "https://nextdoor.com/p/bPd5G5cGbDLN"
+  );
+  assert.equal(
+    context.stableNextdoorUrl("https://nextdoor.com/inbox/messaging:abc123?ct=tracking"),
+    "https://nextdoor.com/inbox/messaging:abc123"
+  );
+});
+
+test("queues direct Nextdoor messages as high-priority business-page actions", () => {
+  const candidates = context.parseNextdoorInboxCandidates({
+    id: "gmail-message-ari",
+    subject: "Ari just messaged you",
+    body: [
+      "Ari from Nextdoor Belleville Hwy 161 & 159 messaged you",
+      "https://nextdoor.com/inbox/messaging:ari-thread?utm_source=email"
+    ].join("\n"),
+    received: new Date("2026-08-04T15:00:00Z")
+  });
+  assert.equal(candidates.length, 1);
+  assert.equal(candidates[0].type, "Direct message");
+  assert.equal(candidates[0].priority, "High");
+  assert.equal(candidates[0].neighborhood, "Belleville Hwy 161 & 159");
+  assert.equal(candidates[0].sourceUrl, "https://nextdoor.com/inbox/messaging:ari-thread");
+  assert.match(candidates[0].summary, /All-Pro Business Page/);
+  const repeatedNotification = context.parseNextdoorInboxCandidates({
+    id: "different-gmail-message-id",
+    subject: "Ari just messaged you",
+    body: "https://nextdoor.com/inbox/messaging:ari-thread?utm_source=reminder"
+  });
+  assert.equal(repeatedNotification[0].opportunityId, candidates[0].opportunityId);
+});
+
+test("keeps real Nextdoor project requests and ignores unrelated neighborhood posts", () => {
+  const candidates = context.parseNextdoorInboxCandidates({
+    id: "gmail-digest-1",
+    subject: "Top posts near you",
+    body: [
+      "Posts:",
+      "I need a contractor to replace ceiling drywall, vinyl flooring and painting due to water damage.",
+      "https://nextdoor.com/p/projectRequest123?utm_source=email",
+      "Red Flowering Plants",
+      "https://nextdoor.com/p/gardenPost456?utm_source=email"
+    ].join("\n"),
+    received: new Date("2026-08-03T15:00:00Z")
+  });
+  assert.equal(candidates.length, 1);
+  assert.equal(candidates[0].type, "Public request");
+  assert.equal(candidates[0].priority, "High");
+  assert.equal(candidates[0].sourceUrl, "https://nextdoor.com/p/projectRequest123");
+  assert.equal(candidates[0].opportunityId, "nextdoor:post:projectRequest123");
+  assert.match(candidates[0].notes, /Do not promote from a personal Nextdoor account/);
+});
+
+test("does not re-queue Nextdoor mention notifications as sales opportunities", () => {
+  const candidates = context.parseNextdoorInboxCandidates({
+    id: "gmail-mention-1",
+    subject: "Tony mentioned All-Pro in a post",
+    body: [
+      "I need a contractor for a kitchen remodel.",
+      "https://nextdoor.com/p/mentionPost123"
+    ].join("\n")
+  });
+  assert.deepEqual(Array.from(candidates), []);
+});

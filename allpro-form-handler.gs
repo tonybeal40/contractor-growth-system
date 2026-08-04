@@ -65,7 +65,7 @@ var CONFIG = {
   followUpReminderMinutes: 30
 };
 
-var HANDLER_RELEASE = "2026-07-23-hiring-resume-v1";
+var HANDLER_RELEASE = "2026-08-04-nextdoor-opportunity-inbox-v1";
 
 // Affiliate destinations are allowlisted here. Never trust an email address
 // supplied by a browser form as a delivery destination.
@@ -100,7 +100,7 @@ function doGet(e) {
       ok: true,
       service: "All-Pro Form Handler",
       release: HANDLER_RELEASE,
-      capabilities: ["homeowner-leads", "applicant-resumes", "website-reviews", "openai-attribution"]
+      capabilities: ["homeowner-leads", "applicant-resumes", "website-reviews", "openai-attribution", "nextdoor-opportunity-inbox"]
     }))
     .setMimeType(ContentService.MimeType.JSON);
 }
@@ -2226,8 +2226,278 @@ function sendDailyLeadHealthDigest() {
   return { ok: problemRecords.length === 0, leads: records.length, issues: problemRecords.length, quotaBeforeSend: quota };
 }
 
+function decodeNextdoorEmailText(value) {
+  return String(value || "")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<br\s*\/?\s*>/gi, "\n")
+    .replace(/<\/(?:p|div|li|tr|h[1-6])>/gi, "\n")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;|&#160;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;|&#34;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/\r/g, "")
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function stableNextdoorUrl(value) {
+  var cleaned = String(value || "").replace(/&amp;/gi, "&");
+  var match = cleaned.match(/^https?:\/\/(?:[a-z0-9-]+\.)?nextdoor\.com\/(inbox\/messaging:[^/?#\s"'<>]+|p\/[A-Za-z0-9_-]+)/i);
+  return match ? "https://nextdoor.com/" + match[1] : "";
+}
+
+function nextdoorSourceUrls(value) {
+  var text = String(value || "").replace(/&amp;/gi, "&");
+  var pattern = /https?:\/\/(?:[a-z0-9-]+\.)?nextdoor\.com\/(?:inbox\/messaging:[^\s"'<>]+|p\/[A-Za-z0-9_-]+[^\s"'<>]*)/gi;
+  var urls = [];
+  var seen = {};
+  var match;
+  while ((match = pattern.exec(text)) !== null) {
+    var stable = stableNextdoorUrl(match[0]);
+    if (stable && !seen[stable]) {
+      seen[stable] = true;
+      urls.push({ url: stable, index: match.index });
+    }
+  }
+  return urls;
+}
+
+function isRelevantNextdoorOpportunity(value) {
+  var text = String(value || "").toLowerCase();
+  if (!text || /(for sale|free stuff|garage sale|lost pet|found pet|community event)/i.test(text)) return false;
+  var service = /(contractor|remodel|kitchen|bathroom|deck|porch|patio|concrete|drywall|floor|paint|fenc|landscap|weed|lawn|grass|tree|gutter|roof|siding|window|door|handyman|power wash|pressure wash|retaining wall|demolition|repair)/i.test(text);
+  var intent = /(need|looking|recommend|help|estimate|quote|someone|who can|who does|wanting to|replace|repair|remove|install|build|pour|redo)/i.test(text);
+  return service && intent;
+}
+
+function nextdoorOpportunityPriority(value, type) {
+  if (type === "Direct message") return "High";
+  var text = String(value || "").toLowerCase();
+  if (/(water damage|kitchen|bathroom|remodel|deck|concrete|drywall|flooring|roof|demolition)/i.test(text)) return "High";
+  return "Medium";
+}
+
+function nextdoorTitleBeforeUrl(text, urlIndex) {
+  var before = String(text || "").substring(Math.max(0, Number(urlIndex) - 500), Number(urlIndex));
+  var lines = before.split(/\n/).map(function(line) {
+    return line.replace(/\s+/g, " ").trim();
+  }).filter(function(line) {
+    return Boolean(line) && !/^posts?:?$/i.test(line) && !/^view (?:message|post)/i.test(line);
+  });
+  return lines.length ? lines[lines.length - 1].substring(0, 260) : "";
+}
+
+function parseNextdoorInboxCandidates(message) {
+  message = message || {};
+  var messageId = String(message.id || "").trim();
+  var subject = decodeNextdoorEmailText(message.subject || "");
+  var body = decodeNextdoorEmailText(message.body || "");
+  var htmlText = decodeNextdoorEmailText(message.htmlBody || "");
+  var combined = [subject, body, htmlText].filter(function(value) { return Boolean(value); }).join("\n");
+  var urls = nextdoorSourceUrls(combined);
+  var received = message.received || new Date();
+  var directMatch = subject.match(/^(.+?)\s+just messaged you\s*$/i);
+
+  if (directMatch) {
+    var directUrl = "";
+    for (var i = 0; i < urls.length; i++) {
+      if (urls[i].url.indexOf("/inbox/messaging:") > -1) {
+        directUrl = urls[i].url;
+        break;
+      }
+    }
+    if (!directUrl) return [];
+    var person = directMatch[1].trim().substring(0, 120);
+    var neighborhoodMatch = combined.match(/from Nextdoor\s+(.+?)\s+messaged you/i);
+    var conversationId = directUrl.split("messaging:")[1] || messageId;
+    return [{
+      received: received,
+      priority: "High",
+      type: "Direct message",
+      title: person + " sent a Nextdoor message",
+      neighborhood: neighborhoodMatch ? neighborhoodMatch[1].trim().substring(0, 160) : "Nextdoor",
+      summary: "Open this message. If it is business-related, respond from the All-Pro Business Page or another Nextdoor-approved business channel.",
+      sourceUrl: directUrl,
+      opportunityId: "nextdoor:message:" + conversationId,
+      messageId: messageId,
+      notes: "Review the conversation before replying. Use the All-Pro Business Page or another Nextdoor-approved business channel."
+    }];
+  }
+
+  if (/mentioned/i.test(subject)) return [];
+
+  var candidates = [];
+  urls.forEach(function(item) {
+    if (item.url.indexOf("/p/") === -1) return;
+    var title = nextdoorTitleBeforeUrl(combined, item.index);
+    if (!isRelevantNextdoorOpportunity(title)) return;
+    var slug = item.url.split("/p/")[1] || "post";
+    candidates.push({
+      received: received,
+      priority: nextdoorOpportunityPriority(title, "Public request"),
+      type: "Public request",
+      title: title,
+      neighborhood: "Metro East",
+      summary: title,
+      sourceUrl: item.url,
+      opportunityId: "nextdoor:post:" + slug,
+      messageId: messageId,
+      notes: "Public request, not a confirmed lead. Respond only through the All-Pro Business Page or an eligible Opportunity Alert. Do not promote from a personal Nextdoor account."
+    });
+  });
+  return candidates;
+}
+
+function ensureNextdoorOpportunityInbox() {
+  var ss = getLeadSpreadsheet();
+  var sheetName = "Nextdoor Opportunity Inbox";
+  var headers = [
+    "Received", "Priority", "Opportunity Type", "Person / Request", "Neighborhood",
+    "Summary", "Source URL", "Status", "Assigned To", "Opportunity ID",
+    "Gmail Message ID", "Notes"
+  ];
+  var sheet = ss.getSheetByName(sheetName);
+  if (!sheet) {
+    sheet = ss.insertSheet(sheetName);
+    sheet.getRange(1, 1, 1, headers.length).setValues([headers]).setFontWeight("bold");
+    sheet.setFrozenRows(1);
+  } else {
+    ensureSheetColumnCapacity(sheet, headers.length);
+    var headerRange = sheet.getRange(1, 1, 1, headers.length);
+    if (headerRange.getValues()[0].join("|") !== headers.join("|")) {
+      headerRange.setValues([headers]).setFontWeight("bold");
+      sheet.setFrozenRows(1);
+    }
+  }
+  sheet.setColumnWidth(1, 165);
+  sheet.setColumnWidth(4, 360);
+  sheet.setColumnWidth(6, 520);
+  sheet.setColumnWidth(7, 360);
+  sheet.setColumnWidth(12, 420);
+  var maxRows = Math.max(sheet.getMaxRows() - 1, 1);
+  var statusRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(["Review", "Opened", "Replied on Source", "Qualified Lead", "No Fit", "Closed"], true)
+    .setAllowInvalid(true)
+    .build();
+  sheet.getRange(2, 8, maxRows, 1).setDataValidation(statusRule);
+  return sheet;
+}
+
+function existingNextdoorOpportunityIds(sheet) {
+  var ids = {};
+  if (!sheet || sheet.getLastRow() < 2) return ids;
+  sheet.getRange(2, 10, sheet.getLastRow() - 1, 1).getValues().forEach(function(row) {
+    var value = String(row[0] || "").trim();
+    if (value) ids[value] = true;
+  });
+  return ids;
+}
+
+function sendNextdoorOpportunityDigest(candidates) {
+  if (!candidates || !candidates.length) return { sent: false, reason: "no-new-opportunities" };
+  var directCount = candidates.filter(function(item) { return item.type === "Direct message"; }).length;
+  var subject = (directCount ? "[ACTION] " : "") + candidates.length + " new Nextdoor opportunit" + (candidates.length === 1 ? "y" : "ies") + " for All-Pro";
+  var plain = ["ALL-PRO NEXTDOOR OPPORTUNITY INBOX", "==================================", ""];
+  var cards = [];
+  candidates.forEach(function(item, index) {
+    plain.push(
+      (index + 1) + ". " + item.priority + " · " + item.type,
+      item.title,
+      item.neighborhood,
+      item.sourceUrl,
+      ""
+    );
+    cards.push(
+      '<div style="margin:0 0 14px;padding:16px;border:1px solid #dfe5e2;border-left:6px solid ' + (item.priority === "High" ? "#c96a26" : "#2f5d50") + ';background:#ffffff;">' +
+      '<div style="font-size:12px;font-weight:900;color:#52606d;">' + escapeEmailHtml(item.priority.toUpperCase()) + ' · ' + escapeEmailHtml(item.type.toUpperCase()) + '</div>' +
+      '<div style="margin-top:5px;font-size:19px;font-weight:900;color:#1f2933;">' + escapeEmailHtml(item.title) + '</div>' +
+      '<div style="margin-top:5px;color:#52606d;">' + escapeEmailHtml(item.neighborhood) + '</div>' +
+      '<p style="margin:12px 0 0;"><a href="' + escapeEmailHtml(item.sourceUrl) + '" style="display:inline-block;padding:11px 15px;background:#2f5d50;color:#ffffff;text-decoration:none;border-radius:5px;font-weight:800;">Open on Nextdoor</a></p>' +
+      '</div>'
+    );
+  });
+  var html = '<!doctype html><html><body style="margin:0;padding:20px;background:#f3f5f4;font-family:Arial,Helvetica,sans-serif;color:#1f2933;">' +
+    '<div style="max-width:680px;margin:0 auto;"><h1 style="font-size:24px;">New Nextdoor opportunities</h1>' +
+    '<p>Review these on Nextdoor. Reply only from the All-Pro Business Page or through an eligible Opportunity Alert. Public posts are opportunities, not confirmed leads, and no reply has been sent automatically.</p>' +
+    cards.join("") + '</div></body></html>';
+  MailApp.sendEmail({
+    to: CONFIG.ownerEmail,
+    cc: CONFIG.leadEmail,
+    subject: subject,
+    body: plain.join("\n"),
+    htmlBody: html,
+    name: "All-Pro Opportunity Monitor"
+  });
+  return { sent: true, count: candidates.length, directMessages: directCount };
+}
+
+function scanNextdoorLeadInbox() {
+  var query = 'newer_than:3d -in:spam -in:trash {from:no-reply@rs.email.nextdoor.com from:no-reply@is.email.nextdoor.com from:reply@rs.email.nextdoor.com}';
+  var threads = GmailApp.search(query, 0, 50);
+  var sheet = ensureNextdoorOpportunityInbox();
+  var existing = existingNextdoorOpportunityIds(sheet);
+  var candidates = [];
+  var scannedMessages = 0;
+
+  threads.forEach(function(thread) {
+    thread.getMessages().forEach(function(message) {
+      scannedMessages++;
+      var parsed = parseNextdoorInboxCandidates({
+        id: message.getId(),
+        subject: message.getSubject(),
+        body: message.getPlainBody(),
+        htmlBody: message.getBody(),
+        received: message.getDate()
+      });
+      parsed.forEach(function(candidate) {
+        if (!existing[candidate.opportunityId]) {
+          existing[candidate.opportunityId] = true;
+          candidates.push(candidate);
+        }
+      });
+    });
+  });
+
+  candidates.sort(function(left, right) {
+    return new Date(left.received).getTime() - new Date(right.received).getTime();
+  });
+  if (candidates.length) {
+    var rows = candidates.map(function(item) {
+      return [
+        item.received,
+        item.priority,
+        item.type,
+        safeReviewSheetText(item.title, 500),
+        safeReviewSheetText(item.neighborhood, 240),
+        safeReviewSheetText(item.summary, 1600),
+        item.sourceUrl,
+        "Review",
+        "Tony / Bill",
+        item.opportunityId,
+        item.messageId,
+        safeReviewSheetText(item.notes, 1000)
+      ];
+    });
+    sheet.getRange(sheet.getLastRow() + 1, 1, rows.length, rows[0].length).setValues(rows);
+  }
+  var alert = sendNextdoorOpportunityDigest(candidates);
+  PropertiesService.getScriptProperties().setProperty("LAST_NEXTDOOR_INBOX_SCAN_AT", new Date().toISOString());
+  return {
+    ok: true,
+    scannedMessages: scannedMessages,
+    added: candidates.length,
+    directMessages: candidates.filter(function(item) { return item.type === "Direct message"; }).length,
+    publicRequests: candidates.filter(function(item) { return item.type === "Public request"; }).length,
+    alert: alert,
+    sheet: sheet.getName()
+  };
+}
+
 function installLeadAutomationTriggers() {
-  var handlers = ["sendUncontactedLeadAlerts", "sendPendingReviewRequests", "sendWeeklyLeadReport", "processMarketingOptOutReplies", "sendDailyLeadHealthDigest"];
+  var handlers = ["sendUncontactedLeadAlerts", "sendPendingReviewRequests", "sendWeeklyLeadReport", "processMarketingOptOutReplies", "sendDailyLeadHealthDigest", "scanNextdoorLeadInbox"];
   ScriptApp.getProjectTriggers().forEach(function(trigger) {
     if (handlers.indexOf(trigger.getHandlerFunction()) > -1) ScriptApp.deleteTrigger(trigger);
   });
@@ -2236,7 +2506,9 @@ function installLeadAutomationTriggers() {
   ScriptApp.newTrigger("sendWeeklyLeadReport").timeBased().onWeekDay(ScriptApp.WeekDay.FRIDAY).atHour(8).create();
   ScriptApp.newTrigger("processMarketingOptOutReplies").timeBased().everyDays(1).atHour(7).create();
   ScriptApp.newTrigger("sendDailyLeadHealthDigest").timeBased().everyDays(1).atHour(8).create();
+  ScriptApp.newTrigger("scanNextdoorLeadInbox").timeBased().everyHours(1).create();
   setupFollowUpBoard();
+  ensureNextdoorOpportunityInbox();
   return automationSetupStatus();
 }
 
@@ -2248,7 +2520,9 @@ function automationSetupStatus() {
     }),
     sms: smsSetupStatus(),
     searchConsole: searchConsoleSetupStatus(),
-    followUpBoard: ensureFollowUpBoard().getName()
+    followUpBoard: ensureFollowUpBoard().getName(),
+    nextdoorOpportunityInbox: ensureNextdoorOpportunityInbox().getName(),
+    lastNextdoorInboxScanAt: PropertiesService.getScriptProperties().getProperty("LAST_NEXTDOOR_INBOX_SCAN_AT") || "not yet run"
   };
 }
 
