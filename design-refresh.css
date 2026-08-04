@@ -511,8 +511,10 @@
 
 .home-page .why-item h3,
 .home-page .why-item p,
+.home-page .metric-big,
 .home-page .metric-card strong,
 .home-page .metric-label,
+.home-page .metric-sub,
 .home-page .bill-name,
 .home-page .bill-title,
 .home-page .bill-quote {
@@ -521,6 +523,7 @@
 
 .home-page .why-item p,
 .home-page .metric-label,
+.home-page .metric-sub,
 .home-page .bill-title,
 .home-page .bill-quote {
   opacity: .78;
