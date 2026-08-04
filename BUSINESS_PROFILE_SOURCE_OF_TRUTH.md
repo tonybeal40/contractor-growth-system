@@ -1,6 +1,6 @@
 # All-Pro Business Profile Source of Truth
 
-Last audited: July 15, 2026
+Last audited: August 4, 2026
 
 Use this record when updating Google, Bing, Apple Business Connect, Facebook, Nextdoor, Angi/HomeAdvisor, Yelp, Birdeye, website schema, and future directory listings.
 
@@ -27,7 +27,7 @@ Do not use Tony's SMS alert number, 618-292-5320, as the public business phone. 
 | --- | --- | --- |
 | Website | All-Pro Construction & Landscape; (618) 581-0676; 1115 Priscilla Ct in structured data | Canonical contact data is present. Years and review totals must be kept time-stamped rather than treated as permanent. |
 | BBB | All Pro Construction & Landscape, LLC; 1115 Priscilla Ct; (618) 581-0676; started 2002 | Matches canonical record. |
-| Angi/HomeAdvisor | All-Pro Construction & Landscape; 1115 Priscilla Ct; 4.5/65; 24 years; old website shown as all-prolandscaping.com | Replace the old website with https://allprometroeastconstruction.com/. |
+| Angi/HomeAdvisor | All-Pro Construction & Landscape; public HomeAdvisor profile checked August 4, 2026 showed 4.7/40; old website may still appear on connected profiles | Replace any old website with https://allprometroeastconstruction.com/ and treat rating/review totals as time-stamped observations, not permanent website claims. |
 | Birdeye | All-Pro Landscape Construction; 1115 Priscilla Ct; New Athens, IL 62264 | Update the display name to All-Pro Construction & Landscape, add the canonical phone and website, and confirm hours. |
 | Nextdoor - Belleville duplicate | All-Pro Landscape Construction; 10 Bunker Hill Rd, Belleville, IL 62221; (618) 581-0676 | Wrong address. Claim or merge this duplicate; do not leave 10 Bunker Hill Rd as the business address. |
 | Nextdoor - New Athens duplicate | All-Pro Construction & Landscape; 1115 Priscilla Ct; (618) 620-1012 | Wrong phone. Change to (618) 581-0676, add canonical website, and request duplicate merge. |
@@ -42,7 +42,7 @@ Do not use Tony's SMS alert number, 618-292-5320, as the public business phone. 
 - BBB lists William "Bill" Session as president and the business start date as January 1, 2002.
 - BBB, Angi/HomeAdvisor, and Birdeye show 1115 Priscilla Ct, New Athens, IL 62264.
 - BBB and the preferred website contact use (618) 581-0676.
-- The Angi/HomeAdvisor profile observed July 15, 2026 shows 4.5 out of 5 from 65 reviews and lists free estimates.
+- The public HomeAdvisor profile checked August 4, 2026 showed 4.7 out of 5 from 40 reviews and listed free estimates. Rating and review totals can change and should not be presented as permanent facts without a visible source and date.
 
 ## Claims Requiring Current Proof
 

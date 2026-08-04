@@ -24,6 +24,14 @@ SCRIPT_RE = re.compile(
 
 EXACT_REPLACEMENTS = (
     (
+        "Bill Sessions",
+        "Bill Session",
+    ),
+    (
+        "William Sessions",
+        "William Session",
+    ),
+    (
         "<strong>Estimate within 24 hours</strong>",
         "<strong>Request a written estimate</strong>",
     ),

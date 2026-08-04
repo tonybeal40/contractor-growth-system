@@ -19,6 +19,7 @@ RATING_RE = re.compile(
     re.I,
 )
 TEXT_RULES = (
+    ("wrong owner surname", re.compile(r"\b(?:Bill|William) Sessions\b", re.I)),
     (
         "internal strategy wording",
         re.compile(
@@ -196,9 +197,17 @@ def scan_text(path: Path, value: str) -> list[Finding]:
 
 
 def audit_file(path: Path, source: str | None = None) -> list[Finding]:
+    document = source if source is not None else path.read_text(encoding="utf-8", errors="replace")
     parser = PublicTextParser()
-    parser.feed(source if source is not None else path.read_text(encoding="utf-8", errors="replace"))
+    parser.feed(document)
     findings: list[Finding] = []
+    if re.search(
+        r'<div\s+class=["\']big["\']>\s*(?:50|60)\s*</div>\s*'
+        r'<div\s+class=["\']big-label["\']>\s*Mile Radius\s*</div>',
+        document,
+        re.I | re.S,
+    ):
+        findings.append(Finding(path, "split exact service radius", "Replace the unsupported numeric radius with a non-numeric service-area label."))
     for value in parser.public_strings:
         findings.extend(scan_text(path, value))
 
