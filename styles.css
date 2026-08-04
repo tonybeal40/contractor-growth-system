@@ -3086,6 +3086,74 @@ body.home-page {
   border-color: #e4ddd0;
 }
 
+.home-page .allpro-team-card {
+  grid-column: 1 / -1;
+  margin: 0 0 .25rem;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e4ddd0;
+  border-radius: 8px;
+  box-shadow: 0 14px 34px rgba(15,33,27,.1);
+}
+
+.home-page .allpro-team-card > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
+  background: #e9ece9;
+}
+
+.home-page .allpro-team-card figcaption {
+  padding: 1.2rem 1.25rem 1.3rem;
+}
+
+.home-page .allpro-team-kicker {
+  display: block;
+  margin-bottom: .35rem;
+  color: #a94f16;
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.home-page .allpro-team-card h3 {
+  margin: 0 0 .45rem;
+  color: #14231d;
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.home-page .allpro-team-card p {
+  margin: 0;
+  color: #52645b;
+  font-size: .92rem;
+  line-height: 1.6;
+}
+
+.home-page .allpro-team-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .65rem;
+  margin-top: 1rem;
+}
+
+.home-page .allpro-team-actions .btn {
+  min-height: 44px;
+  padding: .68rem 1rem;
+}
+
+.home-page .allpro-team-card small {
+  display: block;
+  margin-top: .85rem;
+  color: #68786f;
+  font-size: .72rem;
+  line-height: 1.45;
+}
+
 .home-page .bill-name {
   color: #14231d;
 }
@@ -3209,6 +3277,20 @@ body.home-page {
 
   .home-page .footer-grid {
     grid-template-columns: 1fr;
+  }
+
+  .home-page .allpro-team-card figcaption {
+    padding: 1rem;
+  }
+
+  .home-page .allpro-team-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .home-page .allpro-team-actions .btn {
+    width: 100%;
+    max-width: none;
   }
 }
 
