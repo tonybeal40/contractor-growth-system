@@ -63,6 +63,7 @@ WEEKLY_KEYWORDS = (
     "index.html",
     "get-quote.html",
     "estimator.html",
+    "contractor-estimate-comparison.html",
     "metro-east-contractor-match.html",
     "metro-east-home-service-guide.html",
     "metro-east-pro-network.html",
@@ -202,7 +203,12 @@ def priority_for(url: str) -> str:
     slug = url.rsplit("/", 1)[-1].lower()
     if url == SITE + "/":
         return "1.00"
-    if slug in {"get-quote.html", "metro-east-contractor-match.html", "metro-east-pro-network.html"}:
+    if slug in {
+        "contractor-estimate-comparison.html",
+        "get-quote.html",
+        "metro-east-contractor-match.html",
+        "metro-east-pro-network.html",
+    }:
         return "0.92"
     if any(term in slug for term in HIGH_VALUE_PATTERNS):
         return "0.82"
