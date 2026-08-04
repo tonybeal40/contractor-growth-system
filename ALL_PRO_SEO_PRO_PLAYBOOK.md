@@ -1,6 +1,6 @@
 # All-Pro SEO Pro Playbook
 
-Updated: 2026-07-29
+Updated: 2026-08-04
 Site: https://allprometroeastconstruction.com/
 
 ## Position
@@ -32,45 +32,53 @@ Google's spam policies are the line: avoid hidden text, link abuse, hacked backl
 
 ## Current Site Strengths
 
-- The homepage already has a dark, premium visual direction.
+- The homepage has a consistent warm-cream, deep-green, charcoal, and copper visual system.
 - The repo already contains a local page generator and data model.
 - The site already has many service/city pages, a sitemap, reviews, real project photos, and quote capture.
-- The strongest public promise is clear: owner on every job, written estimate, small projects welcome, 23 years local.
+- The strongest public promise is clear: direct local contact, written estimates after scope review, small projects welcome, and service in Metro East Illinois since 2002.
+
+## National Contractor-Site Benchmark
+
+The useful patterns from leading U.S. home-service sites are not extra keywords. They are proof, depth, and an easy route from research to an estimate.
+
+- Archadeck pairs detailed outdoor-living services with project galleries, a clearly explained process, FAQs, and local-builder pages.
+- Re-Bath combines a short lead form, real design galleries, a step-by-step process, cost questions, and unique local branch pages.
+- Kitchen Tune-Up supports commercial pages with planning tools, product catalogs, warranty information, inspiration content, and portfolios.
+- The Grounds Guys and Mr. Handyman use strong location finders, local service pages, customer reviews, and practical cost or planning resources.
+- This Old House wins informational searches through original expert-led guides, video, named contributors, and a deep, browseable topic library.
+
+All-Pro cannot and should not copy their national footprint. It can beat them for Metro East intent by being more specific and more verifiable: real local projects, clearly labeled cities, owner notes, local permit links, current reviews, and direct follow-up.
 
 ## What Changed In This Pass
 
-- Sharpened the homepage title and meta description around Belleville, Metro East, remodeling, decks, landscaping, and small repairs.
-- Reworked the hero H1 and subcopy to say the money offer plainly.
-- Changed the hero card from a generic service checklist into direct high-intent starting points.
-- Added an ItemList JSON-LD block for key service routes.
-- Added a dark "project desk" section that routes homeowners by intent:
-  - Serious remodels
-  - Outdoor living
-  - Fast small jobs
-  - City service hubs
-  - Before-you-hire guides
-  - Proof and reviews
+- Concentrated the indexable city/service clusters on Belleville and O'Fallon, the two current lead priorities.
+- Kept secondary city pages available to visitors while removing repetitive service variations from Google and Bing sitemaps.
+- Preserved indexable city hubs for Edwardsville, Glen Carbon, Maryville, Collinsville, Swansea, Shiloh, Highland, Troy, Fairview Heights, and Granite City.
+- Reduced the primary sitemap from 317 URLs to 151 higher-value URLs.
+- Kept campaign landing pages and thin comparison/blog stubs live but out of Search until they contain enough original evidence to deserve indexing.
+- Updated the sitemap builder so `noindex` pages cannot remain in the secondary local sitemap.
+- Kept city-confirmed project pages indexable and preserved honest labels where a photo's exact city is not documented.
 
 ## Next Build Order
 
-1. Upgrade the five highest-money pages:
-   - `bathroom-remodel-belleville-il.html`
-   - `kitchen-remodel-belleville-il.html`
-   - `deck-builder-belleville-il.html`
-   - `handyman-belleville-il.html`
-   - `deck-repair-belleville-il.html`
-
-2. Add real proof blocks to each:
+1. Build one proof packet after every completed project:
    - Job photo
+   - Before photo when available
    - Scope
    - City
    - Problem solved
    - Owner note from Bill
-   - Related service links
+   - Customer review request
 
-3. Build the review engine:
+2. Restore and fully complete the Google Business Profile:
+   - Exact business name, phone, website, category, service area, and hours
+   - New project photos every month
+   - Service entries for the work All-Pro actually performs
+   - Prompt, professional replies to every genuine review
+
+3. Keep the review engine simple and policy-safe:
    - Add one review ask card after every completed job.
-   - Add direct Google, Nextdoor, Angi, and HomeAdvisor routing.
+   - Use the website review form now and add the direct Google review route after profile access is confirmed.
    - Keep review requests real and never incentivized in a way that violates platform rules.
 
 4. Expand only where local value exists:
@@ -86,6 +94,12 @@ Google's spam policies are the line: avoid hidden text, link abuse, hacked backl
    - "What should I ask before hiring a contractor?"
    - "What small jobs does All-Pro handle?"
 
+6. Measure outcomes instead of page count:
+   - Search Console impressions and clicks by query and page
+   - Google Business Profile calls, website clicks, and direction requests
+   - Estimate starts, completed forms, qualified leads, and booked work
+   - New referring domains and new genuine reviews each month
+
 ## Sources
 
 - Google local ranking guidance: https://support.google.com/business/answer/7091
@@ -94,3 +108,9 @@ Google's spam policies are the line: avoid hidden text, link abuse, hacked backl
 - LocalBusiness structured data: https://developers.google.com/search/docs/appearance/structured-data/local-business
 - AI optimization guidance: https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
 - Google spam policies: https://developers.google.com/search/docs/essentials/spam-policies
+- Archadeck: https://www.archadeck.com/
+- Re-Bath: https://www.rebath.com/
+- Kitchen Tune-Up: https://www.kitchentuneup.com/
+- The Grounds Guys: https://www.groundsguys.com/
+- Mr. Handyman: https://www.mrhandyman.com/
+- This Old House: https://www.thisoldhouse.com/

@@ -255,20 +255,30 @@ def refresh_local_sitemap(committed: dict[str, str], changed: set[str]) -> int:
     ET.register_namespace("", "http://www.sitemaps.org/schemas/sitemap/0.9")
     tree = ET.parse(path)
     namespace = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
-    urls = tree.findall(f".//{namespace}url")
+    root = tree.getroot()
+    urls = root.findall(f"{namespace}url")
+    retained = 0
     for node in urls:
         location = node.find(f"{namespace}loc")
         modified = node.find(f"{namespace}lastmod")
         if location is None or not location.text:
+            root.remove(node)
+            continue
+        source = source_path_for_url(location.text.strip())
+        if (
+            not source.is_file()
+            or is_excluded(source)
+            or has_noindex(read_text(source))
+        ):
+            root.remove(node)
             continue
         if modified is None:
             modified = ET.SubElement(node, "lastmod")
-        modified.text = last_modified(
-            source_path_for_url(location.text.strip()), committed, changed
-        )
+        modified.text = last_modified(source, committed, changed)
+        retained += 1
     ET.indent(tree, space="  ", level=0)
     tree.write(path, encoding="utf-8", xml_declaration=True)
-    return len(urls)
+    return retained
 
 
 def main() -> None:
