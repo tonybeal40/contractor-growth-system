@@ -128,6 +128,15 @@
 
 .home-page .home-hero-copy {
   max-width: 650px;
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.home-page .home-hero-media {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 .home-page .home-eyebrow {
@@ -655,13 +664,25 @@
   }
 
   .home-page .home-hero-grid {
+    width: min(100% - 28px, 1180px);
+    grid-template-columns: minmax(0, 1fr);
     gap: 1.55rem;
     padding-top: 2rem;
     padding-bottom: 2.5rem;
   }
 
+  .home-page .home-hero-grid > *,
+  .home-page .home-hero-copy > * {
+    min-width: 0;
+    max-width: 100%;
+  }
+
   .home-page .home-hero-copy {
-    display: contents;
+    display: grid;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .home-page .home-eyebrow { order: 1; }
@@ -678,9 +699,10 @@
   }
 
   .home-page .home-hero h1 {
+    width: 100%;
     font-size: clamp(2.15rem, 10.2vw, 2.8rem);
     line-height: 1.02;
-    overflow-wrap: normal;
+    overflow-wrap: anywhere;
   }
 
   .home-page .home-hero-sub {
@@ -689,6 +711,7 @@
   }
 
   .home-page .home-hero-actions {
+    width: 100%;
     grid-template-columns: 1fr 1fr;
   }
 
@@ -725,9 +748,17 @@
   }
 
   .home-page .home-photo-stack {
-    grid-template-columns: 1.25fr .75fr;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr);
     grid-template-rows: repeat(2, 116px);
     gap: .5rem;
+  }
+
+  .home-page .home-photo-stack img {
+    width: 100%;
+    min-width: 0;
   }
 
   .home-page .why-visual {
