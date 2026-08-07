@@ -34,6 +34,10 @@ jobs:
           python scripts/validate_priority_lead_pages.py
           python -m unittest discover -s test -p "test_*.py"
           node --test workers/lead-concierge/test/*.test.js
+      - name: Remove blocked platform references
+        run: |
+          python scripts/remove_public_platform_mentions.py
+          python -c "from pathlib import Path; import re; path = Path('llms.txt'); text = path.read_text(encoding='utf-8'); text = re.sub(r'https?://(?:www\.)?angi\.com/[^\s)]+', 'https://allprometroeastconstruction.com/reviews.html', text, flags=re.IGNORECASE); text = re.sub(r'\bAngi\b', 'customer reviews', text, flags=re.IGNORECASE); path.write_text(text, encoding='utf-8')"
       - name: Build public site artifact
         run: python scripts/build_public_site.py
       - name: Setup Pages
