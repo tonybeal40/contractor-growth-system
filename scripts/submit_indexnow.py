@@ -18,6 +18,7 @@ ENDPOINT = "https://api.indexnow.org/indexnow"
 SHARED_ASSETS = {
     "styles.css",
     "brand-refresh.css",
+    "company-facts.css",
     "site-shell.css",
     "script.js",
     "robots.txt",
@@ -27,6 +28,7 @@ SHARED_ASSETS = {
 }
 PRIORITY_URLS = {
     f"{SITE}/",
+    f"{SITE}/all-pro-company-facts.html",
     f"{SITE}/kitchen-remodel-belleville-il.html",
     f"{SITE}/bathroom-remodel-belleville-il.html",
     f"{SITE}/deck-builder-belleville-il.html",

@@ -31,9 +31,11 @@
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "GeneralContractor",
+      "@type": ["HomeAndConstructionBusiness", "GeneralContractor"],
       "@id": "https://allprometroeastconstruction.com/#business",
       "name": "All-Pro Construction & Landscape",
+      "legalName": "All Pro Construction & Landscape, LLC",
+      "alternateName": "All-Pro Metro East Construction",
       "url": "https://allprometroeastconstruction.com/",
       "telephone": "+1-618-581-0676",
       "image": "https://allprometroeastconstruction.com/images/branding/logo-square.png",
@@ -60,9 +62,15 @@
         }
       ],
       "sameAs": [
+        "https://www.google.com/maps/search/?api=1&query=All-Pro%20Landscape%20Construction&query_place_id=ChIJKzqCfZ8idogRP03O0_iO2U8",
+        "https://www.angi.com/companylist/us/il/new-athens/all-pro-construction-and-landscape-reviews-6233409.htm",
+        "https://www.bbb.org/us/il/new-athens/profile/landscape-contractors/all-pro-construction-landscape-llc-0734-310038833",
+        "https://reviews.birdeye.com/all-pro-landscape-construction-167051434418294",
         "https://www.facebook.com/metroeastconstructionIL",
         "https://www.linkedin.com/company/all-pro-metro-metro-east-construction/",
-        "https://www.houzz.com/pro/tony-beal35/all-pro-construction"
+        "https://www.houzz.com/pro/tony-beal35/all-pro-construction",
+        "https://yelp.com/biz/all-pro-construction-and-landscape-new-athens-2",
+        "https://nextdoor.com/page/all-pro-landscape-construction-belleville-il"
       ],
       "foundingDate": "2002"
     },
@@ -83,6 +91,25 @@
           "name": "Illinois"
         }
       }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://allprometroeastconstruction.com/#website",
+      "url": "https://allprometroeastconstruction.com/",
+      "name": "All-Pro Construction & Landscape",
+      "publisher": {"@id":"https://allprometroeastconstruction.com/#business"}
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://allprometroeastconstruction.com/kitchen-remodel-ofallon-il.html#webpage",
+      "url": "https://allprometroeastconstruction.com/kitchen-remodel-ofallon-il.html",
+      "name": "Kitchen Remodel O'Fallon IL | All-Pro Construction",
+      "description": "Planning an O'Fallon, IL kitchen remodel? Compare layout, cabinet, counter and lighting scope, then request a free written estimate from local All-Pro.",
+      "isPartOf": {"@id":"https://allprometroeastconstruction.com/#website"},
+      "about": {"@id":"https://allprometroeastconstruction.com/#business"},
+      "mainEntity": {"@id":"https://allprometroeastconstruction.com/kitchen-remodel-ofallon-il.html#service"},
+      "dateModified": "2026-08-06",
+      "inLanguage": "en-US"
     }
   ]
 }
@@ -97,7 +124,7 @@
 ]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://allprometroeastconstruction.com/"},{"@type":"ListItem","position":2,"name":"Kitchen Remodel","item":"https://allprometroeastconstruction.com/kitchen-remodel.html"},{"@type":"ListItem","position":3,"name":"Kitchen Remodel O'Fallon IL","item":"https://allprometroeastconstruction.com/kitchen-remodel-ofallon-il.html"}]}
+{"@context":"https://schema.org","@type":"BreadcrumbList","@id":"https://allprometroeastconstruction.com/kitchen-remodel-ofallon-il.html#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://allprometroeastconstruction.com/"},{"@type":"ListItem","position":2,"name":"Kitchen Remodel","item":"https://allprometroeastconstruction.com/kitchen-remodel.html"},{"@type":"ListItem","position":3,"name":"Kitchen Remodel O'Fallon IL","item":"https://allprometroeastconstruction.com/kitchen-remodel-ofallon-il.html"}]}
 </script>
 <link rel="stylesheet" href="/brand-refresh.css?v=20260721c">
 <link rel="stylesheet" href="/remodel-lead-pages.css?v=20260801b">
@@ -338,6 +365,7 @@
         <ul>
           <li><a href="tel:6185810676">&#128222; 618-581-0676</a></li>
           <li><a href="index.html#contact">Free Estimate &#x2192;</a></li>
+          <li><a href="all-pro-company-facts.html">Company &amp; Service Facts</a></li>
           <li><span>O'Fallon, IL &middot; Metro East Service Area</span></li>
         </ul>
       </div>

@@ -57,6 +57,7 @@ class PageSpec:
 
 PAGES = (
     PageSpec("/", "Homepage"),
+    PageSpec("/all-pro-company-facts.html", "Company and service facts"),
     PageSpec("/get-quote.html", "Free estimate", True),
     PageSpec("/contact.html", "Contact", True),
     PageSpec("/kitchen-remodel-belleville-il.html", "Belleville kitchen", True),
@@ -334,6 +335,7 @@ def run(base_url: str) -> list[CheckResult]:
                 base_url,
                 "/llms.txt",
                 [
+                    "Company and Service Facts",
                     "Kitchen Remodel Belleville IL",
                     "Bathroom Remodel O'Fallon IL",
                     "review-request.html",

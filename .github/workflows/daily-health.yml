@@ -32,6 +32,7 @@ jobs:
           python scripts/build_sitemap.py
           python scripts/seo_audit.py --fail-under 95
           python scripts/audit_public_claims.py
+          python scripts/validate_ai_search_assets.py
           python scripts/validate_priority_lead_pages.py
           python -m unittest discover -s test -p "test_*.py"
           node --test test/allpro-form-handler.test.cjs
