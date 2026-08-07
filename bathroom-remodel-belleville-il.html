@@ -29,9 +29,11 @@
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "GeneralContractor",
+      "@type": ["HomeAndConstructionBusiness", "GeneralContractor"],
       "@id": "https://allprometroeastconstruction.com/#business",
       "name": "All-Pro Construction & Landscape",
+      "legalName": "All Pro Construction & Landscape, LLC",
+      "alternateName": "All-Pro Metro East Construction",
       "url": "https://allprometroeastconstruction.com/",
       "telephone": "+1-618-581-0676",
       "image": "https://allprometroeastconstruction.com/images/branding/logo-square.png",
@@ -58,9 +60,15 @@
         }
       ],
       "sameAs": [
+        "https://www.google.com/maps/search/?api=1&query=All-Pro%20Landscape%20Construction&query_place_id=ChIJKzqCfZ8idogRP03O0_iO2U8",
+        "https://www.angi.com/companylist/us/il/new-athens/all-pro-construction-and-landscape-reviews-6233409.htm",
+        "https://www.bbb.org/us/il/new-athens/profile/landscape-contractors/all-pro-construction-landscape-llc-0734-310038833",
+        "https://reviews.birdeye.com/all-pro-landscape-construction-167051434418294",
         "https://www.facebook.com/metroeastconstructionIL",
         "https://www.linkedin.com/company/all-pro-metro-metro-east-construction/",
-        "https://www.houzz.com/pro/tony-beal35/all-pro-construction"
+        "https://www.houzz.com/pro/tony-beal35/all-pro-construction",
+        "https://yelp.com/biz/all-pro-construction-and-landscape-new-athens-2",
+        "https://nextdoor.com/page/all-pro-landscape-construction-belleville-il"
       ],
       "foundingDate": "2002"
     },
@@ -81,6 +89,25 @@
           "name": "Illinois"
         }
       }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://allprometroeastconstruction.com/#website",
+      "url": "https://allprometroeastconstruction.com/",
+      "name": "All-Pro Construction & Landscape",
+      "publisher": {"@id":"https://allprometroeastconstruction.com/#business"}
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://allprometroeastconstruction.com/bathroom-remodel-belleville-il.html#webpage",
+      "url": "https://allprometroeastconstruction.com/bathroom-remodel-belleville-il.html",
+      "name": "Bathroom Remodel Belleville IL | All-Pro Construction",
+      "description": "Planning a bathroom remodel in Belleville, IL? Compare shower, tile, vanity and moisture-repair scope, then request a free written estimate from All-Pro.",
+      "isPartOf": {"@id":"https://allprometroeastconstruction.com/#website"},
+      "about": {"@id":"https://allprometroeastconstruction.com/#business"},
+      "mainEntity": {"@id":"https://allprometroeastconstruction.com/bathroom-remodel-belleville-il.html#service"},
+      "dateModified": "2026-08-06",
+      "inLanguage": "en-US"
     }
   ]
 }
@@ -94,7 +121,7 @@
 ]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://allprometroeastconstruction.com/"},{"@type":"ListItem","position":2,"name":"Bathroom Remodel","item":"https://allprometroeastconstruction.com/bathroom-remodel.html"},{"@type":"ListItem","position":3,"name":"Bathroom Remodel Belleville IL","item":"https://allprometroeastconstruction.com/bathroom-remodel-belleville-il.html"}]}
+{"@context":"https://schema.org","@type":"BreadcrumbList","@id":"https://allprometroeastconstruction.com/bathroom-remodel-belleville-il.html#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://allprometroeastconstruction.com/"},{"@type":"ListItem","position":2,"name":"Bathroom Remodel","item":"https://allprometroeastconstruction.com/bathroom-remodel.html"},{"@type":"ListItem","position":3,"name":"Bathroom Remodel Belleville IL","item":"https://allprometroeastconstruction.com/bathroom-remodel-belleville-il.html"}]}
 </script>
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 <link rel="stylesheet" href="/brand-refresh.css?v=20260721c">
@@ -284,7 +311,6 @@
         <h4 style="font-size:0.85rem;color:var(--muted);margin-bottom:0.75rem;">Read Our Reviews</h4>
         <ul style="list-style:none;">
           <li style="font-size:0.8rem;padding:0.2rem 0;"><a href="reviews.html">Customer Reviews</a></li>
-          <li style="font-size:0.8rem;padding:0.2rem 0;"><a href="reviews.html">Customer Reviews</a></li>
           <li style="font-size:0.8rem;padding:0.2rem 0;"><a href="https://www.houzz.com/pro/tony-beal35/all-pro-construction" target="_blank" rel="noopener" style="color:var(--light);">&#x2192; Houzz portfolio</a></li>
         </ul>
       </div>
@@ -339,6 +365,7 @@
         <ul>
           <li><a href="tel:6185810676">&#128222; 618-581-0676</a></li>
           <li><a href="index.html#contact">Free Estimate &#x2192;</a></li>
+          <li><a href="all-pro-company-facts.html">Company &amp; Service Facts</a></li>
           <li><span>Belleville, IL &middot; Call to confirm availability</span></li>
         </ul>
       </div>

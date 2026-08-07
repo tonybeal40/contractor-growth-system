@@ -61,6 +61,7 @@ EXCLUDED_FILES = {
 
 WEEKLY_KEYWORDS = (
     "index.html",
+    "all-pro-company-facts.html",
     "get-quote.html",
     "estimator.html",
     "contractor-estimate-comparison.html",
@@ -204,6 +205,7 @@ def priority_for(url: str) -> str:
     if url == SITE + "/":
         return "1.00"
     if slug in {
+        "all-pro-company-facts.html",
         "contractor-estimate-comparison.html",
         "get-quote.html",
         "metro-east-contractor-match.html",
